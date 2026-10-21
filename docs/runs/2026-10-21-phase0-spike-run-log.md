@@ -82,16 +82,45 @@ Reviewer thread `01a15e2c-83cf-7050-acb7-c28bda594a7d` (Astra high).
 R19 (`296493f`): the page fills the screen; on the phone screenshots the text block is a small box
 with wide margins.
 
-## Checkpoint (paused 2026-10-21, machine out of memory)
+## Checkpoint (paused 2026-10-21, machine out of memory; resume on another machine)
 
-Fix round not sent. head `296493f` + this log, local only, **not pushed**: two kept MEDIUMs are
-open, and the skill's rule is that an open MEDIUM blocks the push.
+The owner said to commit and push everything, so this push overrides the rule that an open MEDIUM
+blocks a push. **Phase 0 is not done.**
+
+State at pause:
+- `57a2da8` Confine asset output and preserve unrelated files (finding 1 fix, by the writer)
+- `54b4a50` Resolve touches across complete line bands (finding 2 fix, by the writer)
+- `4b56a8a` **WIP** fill the screen (R19). The writer was stopped mid-edit and Claude committed its
+  tree as-is. Unverified: gates not run (the Python here has no pytest; Flutter was skipped for
+  memory). It may not compile.
+- Claude has not read the diffs of these three commits. Round-2 review not run.
+
+## Resume on a new machine
+
+1. Clone `ahmadjz/grey-mushaf` and run `/quran-quick docs/runs/2026-10-21-phase0-spike-run-log.md`.
+2. **Assets are not in git (R16).** Copy them from the old machine, or download them again from
+   qul.tarteel.ai (free sign-in): resource 19 (SQLite), resource 47 (SQLite) and resource 240 (TTF).
+   Unzip them to:
+   - `assets-src/qul-v4/layout/qpc-v4-tajweed-15-lines.db`
+   - `assets-src/qul-v4/words/qpc-v4.db`
+   - `assets-src/qul-v4/fonts/p1.ttf … p604.ttf`
+
+   Then run `python3 scripts/bundle_mushaf.py` to fill the gitignored `app/assets/mushaf/`. The
+   owner's `.ai` pages (`1441-AI-hafs.zip` → `ai-pages/`) are only needed for the line comparison.
+3. Tooling: Flutter (at `~/development/flutter/bin` on the old machine), Android SDK, an emulator, and
+   Python with pytest (`uv run --with pytest` worked for the writer).
+4. Codex threads `01a15dfc…` (writer) and `01a15e2c…` (reviewer) do not exist on the new machine.
+   Start a new writer thread at medium effort and give it this log.
 
 ## Next action
 
-Step 7: on writer thread `01a15dfc-a310-7542-9ea2-457897c8fb58` (or a new medium thread if it has
-expired), send: finding 1 (confine bundler output, delete only its own files, refuse symlinks), finding 2
-(line-band nearest-word hit testing, regression at 2:282:7 overhang), and R19 (page fills the screen,
-minimal chrome, ≥90% of the limiting dimension on phone and tablet). Retry Medium_Phone_API_37.0
-for the phone proof. Then round-2 review on `01a15e2c-83cf-7050-acb7-c28bda594a7d` (gestures +
-layout changed), Step 8.
+Step 7, continued. The new writer:
+- (a) reads `296493f..4b56a8a` and finishes R19: page fills the screen, minimal chrome, text block
+  ≥ 90% of the limiting dimension on phone and tablet, pages 1–2 at the same text size;
+- (b) gets the gates green: pytest, flutter analyze, flutter test;
+- (c) re-takes the screenshots as `docs/runs/shots/phase0-r19-*`: page 48 with 2:282:7 revealed via
+  its overhang, page 1, spread 1|2, spread 47|48. Retry `Medium_Phone_API_37.0` for the phone proof;
+- (d) squashes or rewrites nothing that is already pushed. It fixes forward.
+
+Then Claude reads the diff. A round-2 review runs on a new high-effort thread (gestures and layout
+changed). Then Step 8, the exit check and the report.

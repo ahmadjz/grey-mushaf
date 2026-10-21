@@ -95,6 +95,8 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 20. **Surah names and the basmallah headings are always black.** They are not words: they are never
     grey, never revealed and never counted. The basmallah that is ayah 1:1 on page 1 is a word like
     any other.
+21. **A surah heading reads "سورة" plus the name,** in the mushaf calligraphy. The size and spacing of
+    the heading and the basmallah match the printed 1441 pages (the owner's .ai pages).
 
 ## Phases
 

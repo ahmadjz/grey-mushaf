@@ -1,0 +1,36 @@
+# source and generated assets: large, and not ours to redistribute
+*.zip
+*.pdf
+*.ai
+/*.png
+/*.jpg
+ai-pages/
+assets-src/
+*.ttf
+*.otf
+*.woff
+*.woff2
+*.sqlite
+*.db
+qul/
+docs/runs/shots/
+
+# secrets
+.env
+.env.*
+*.jks
+*.keystore
+key.properties
+local.properties
+
+# backend data
+pb_data/
+
+# build outputs
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.gradle/
+__pycache__/
+.venv/

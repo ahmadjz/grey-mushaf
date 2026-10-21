@@ -15,7 +15,9 @@ The default source is `assets-src/qul-v4`: layout database in
 `layout/qpc-v4-tajweed-15-lines.db`, words in `words/qpc-v4.db`, and
 `fonts/p1.ttf` through `fonts/p604.ttf`. The generated `app/assets/mushaf/`
 directory is gitignored. No assets are fetched by the app. `--all` bundles all
-604 pages; `--source` and `--output` can override paths. Fonts are copied unchanged.
+604 pages. `--source` can override the input path; `--output` must remain under
+`app/assets/mushaf/`. Symlinked outputs are refused, and cleanup only removes
+files named in the previous generated manifest. Fonts are copied unchanged.
 Assets and their notices must remain outside the public repository.
 
 Long-press a word, then drag to reveal crossed words. Lift to restore page swiping.

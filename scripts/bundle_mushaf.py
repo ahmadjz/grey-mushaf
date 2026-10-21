@@ -8,10 +8,39 @@ import sqlite3
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def checked_output(output: Path, selected: list[int]) -> tuple[Path, set[int]]:
+    """Only the fixed, gitignored asset tree can hold generated bundles."""
+    root = ROOT.resolve()
+    allowed = root / 'app/assets/mushaf'
+    output = output.absolute()
+    if '..' in output.parts or not output.is_relative_to(allowed):
+        raise ValueError(f'Output must be under {allowed}')
+    for path in [output, *output.parents]:
+        if path.is_symlink():
+            raise ValueError(f'Refusing symlink in output path: {path}')
+    if output.exists():
+        if not output.is_dir():
+            raise ValueError('Output must be a directory')
+        for path in output.iterdir():
+            if path.is_symlink():
+                raise ValueError(f'Refusing symlinked output: {path}')
+    manifest = output / 'pages.json'
+    previous = json.loads(manifest.read_text()) if manifest.exists() else []
+    if not isinstance(previous, list) or any(type(p) is not int or not 1 <= p <= 604 for p in previous):
+        raise ValueError('Invalid output manifest')
+    for page in selected:
+        for name in (f'{page}.json', f'p{page}.ttf'):
+            target = output / name
+            if target.exists() and (page not in previous or not target.is_file()):
+                raise ValueError(f'Refusing to overwrite unowned output: {target}')
+    return output, set(previous)
+
+
 def bundle(source: Path, output: Path, pages: list[int]) -> None:
     selected = sorted(set(pages))
     if not selected or any(p < 1 or p > 604 for p in selected):
         raise ValueError('Choose pages between 1 and 604')
+    output, previous = checked_output(output, selected)
     documents = {}
     with sqlite3.connect(f'{(source / "layout/qpc-v4-tajweed-15-lines.db").resolve().as_uri()}?mode=ro', uri=True) as layout, sqlite3.connect(f'{(source / "words/qpc-v4.db").resolve().as_uri()}?mode=ro', uri=True) as words:
         words.row_factory = sqlite3.Row
@@ -37,11 +66,10 @@ def bundle(source: Path, output: Path, pages: list[int]) -> None:
     for page, document in documents.items():
         (output / f'{page}.json').write_text(json.dumps(document, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
         shutil.copyfile(source / f'fonts/p{page}.ttf', output / f'p{page}.ttf')
-    # Remove only generated page/font files from an earlier selection.
-    for item in output.iterdir():
-        stem = item.stem.removeprefix('p') if item.suffix == '.ttf' else item.stem
-        if item.suffix in {'.json', '.ttf'} and stem.isdecimal() and int(stem) not in selected:
-            item.unlink()
+    # Only entries named by our previous manifest are eligible for deletion.
+    for page in previous - set(selected):
+        for name in (f'{page}.json', f'p{page}.ttf'):
+            (output / name).unlink(missing_ok=True)
     (output / 'pages.json').write_text(json.dumps(selected, separators=(',', ':')), encoding='utf-8')
 
 

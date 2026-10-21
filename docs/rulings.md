@@ -97,6 +97,9 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     any other.
 21. **A surah heading reads "سورة" plus the name,** in the mushaf calligraphy. The size and spacing of
     the heading and the basmallah match the printed 1441 pages (the owner's .ai pages).
+22. **The basmallah heading has two forms, as printed.** Page 2 shows the compact basmallah. Every
+    other page shows the wide, stretched basmallah traced from the owner's page-50 .ai file. The
+    traced artwork stays on the owner's machine and is packed into the APK, never into the repo.
 
 ## Phases
 

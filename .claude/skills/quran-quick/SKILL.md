@@ -13,8 +13,10 @@ judgement. Codex spends its tokens on reading code, writing it, running it and r
 ## Setup
 
 - Every Codex call goes through `mcp__codex-bridge__codex` with `model: "gpt-6-astra"`,
-  `config: {"model_reasoning_effort": "medium"}`, `sandbox: "danger-full-access"`,
-  `approval-policy: "never"` and `cwd: /home/ahmadjz/Documents/Quran`.
+  `sandbox: "danger-full-access"`, `approval-policy: "never"` and `cwd: /home/ahmadjz/Documents/Quran`.
+  The writer thread runs at `config: {"model_reasoning_effort": "medium"}`. The review thread runs at
+  `"high"`: a 2026-10-21 audit of the UIS low-claude MRs found that medium reviews passed defects that
+  high caught.
 - The first call of every thread sets `developer-instructions` to the contents of
   `.claude/codex-worker-rules.md`. Replies go through `mcp__codex-bridge__codex-reply`.
 - If codex-bridge is not connected, stop and tell the owner. Never substitute `codex exec` or a
@@ -53,10 +55,19 @@ path and reconcile it with `git status` and `git log` before doing anything.
    agree. Export work also checks page count and line breaks on sample pages.
    It returns one evidence line per check, `base..head`, and anything `not run`. Claude copies them
    into the run log and never fills a `not run` from Codex's prose.
-5. **Review (new Astra thread).** Never the writer's thread. The brief is `base..head`, the rulings
-   touched, the must-check list from Step 1, and "report only". Ask for severity, `file:line`, the
-   ruling it breaks, and a concrete failure. For a UI change, the reviewer runs the app itself where it
-   can and marks each finding `seen live` or `from code`.
+5. **Review (new Astra high thread).** Never the writer's thread. The brief is `base..head`, the
+   rulings touched, the must-check list from Step 1, and "report only". Ask for severity, `file:line`,
+   the ruling it breaks, and a concrete failure. For a UI change, the reviewer runs the app itself where
+   it can and marks each finding `seen live` or `from code`. Every brief also demands the following.
+   The reviewer reports a demand that does not apply as `not applicable: <why>`.
+   - Map every ruling the change touches to the test that proves it. Flag a ruling with no test, or a
+     test that asserts the opposite.
+   - For every PocketBase response the app reads, test nullable fields as `null` and optional fields
+     omitted.
+   - Test the whole flow through the real callers, not only the changed function. Examples: a reveal
+     surviving an app restart and then a sync, a drag across a line break, a spread with pages 1|2.
+   - Prove a claimed race or sync-conflict fix with fault injection that pauses the other side at
+     the bad moment, never with sleeps or a single passing run.
 6. **Claude checks.** Read `git diff --stat base..head`, then the diff. For each finding, read the cited
    lines and about 15 around them, then keep it or drop it with one line why. Treat "no findings" with
    no checks run as unreviewed and send it back once. Look at the screenshot Codex produced.

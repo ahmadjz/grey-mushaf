@@ -60,6 +60,8 @@ class _ReaderState extends State<Reader> {
   final _counts = <int, int>{};
   final _targets = <int, GlobalKey>{};
   final _visited = <int>{};
+  final _bands = <String, GlobalKey>{};
+  final _bandWords = <String, List<int>>{};
   bool _dragging = false;
   bool? _spread;
   int _selected = 0;
@@ -73,16 +75,36 @@ class _ReaderState extends State<Reader> {
   }
 
   int? _wordAt(Offset point) {
-    for (final entry in _targets.entries) {
+    String? nearestBand;
+    var distance = double.infinity;
+    for (final entry in _bands.entries) {
       final box = entry.value.currentContext?.findRenderObject();
-      if (box is RenderBox &&
-          box.attached &&
-          box.hasSize &&
-          (Offset.zero & box.size).contains(box.globalToLocal(point))) {
-        return entry.key;
+      if (box is! RenderBox || !box.attached || !box.hasSize) continue;
+      final rect = Rect.fromPoints(
+        box.localToGlobal(Offset.zero),
+        box.localToGlobal(box.size.bottomRight(Offset.zero)),
+      );
+      // Adjacent slots use half-open vertical intervals: exactly one line.
+      if (point.dy < rect.top || point.dy >= rect.bottom) continue;
+      final dx = (point.dx - point.dx.clamp(rect.left, rect.right)).abs();
+      if (dx < distance) {
+        distance = dx;
+        nearestBand = entry.key;
       }
     }
-    return null;
+    int? nearestWord;
+    distance = double.infinity;
+    for (final id in _bandWords[nearestBand] ?? <int>[]) {
+      final box = _targets[id]?.currentContext?.findRenderObject();
+      if (box is! RenderBox || !box.attached || !box.hasSize) continue;
+      final center = box.localToGlobal(box.size.center(Offset.zero));
+      final dx = (point.dx - center.dx).abs();
+      if (dx < distance) {
+        distance = dx;
+        nearestWord = id;
+      }
+    }
+    return nearestWord;
   }
 
   void _revealAt(Offset point) {
@@ -288,6 +310,9 @@ class _ReaderState extends State<Reader> {
   Widget _line(int page, Map<String, dynamic> line) {
     final words = line['words'] as List;
     final kind = line['type'];
+    final band = '$page-${line['number']}';
+    final bandKey = _bands.putIfAbsent(band, GlobalKey.new);
+    _bandWords[band] = [for (final word in words) word['id'] as int];
     if (kind != 'ayah') {
       // Deliberate spike placeholders; the V4 heading font is not supplied.
       final title = kind == 'basmallah'
@@ -298,6 +323,7 @@ class _ReaderState extends State<Reader> {
               _ => 'سورة ${line['surah']}',
             };
       return SizedBox(
+        key: bandKey,
         height: 38,
         child: Center(
           child: Text(
@@ -312,6 +338,7 @@ class _ReaderState extends State<Reader> {
       key: ValueKey('line-$page-${line['number']}'),
       height: 38,
       child: LayoutBuilder(
+        key: bandKey,
         builder: (context, constraints) {
           TextStyle style(double size) => TextStyle(
             fontFamily: 'mushaf-$page',

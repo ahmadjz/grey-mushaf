@@ -120,6 +120,73 @@ void main() {
     );
   });
 
+  testWidgets('page 48 overhang and line-band gaps reveal the nearest word', (
+    tester,
+  ) async {
+    await mount(tester);
+    final page = pages.singleWhere((p) => p['page'] == 48);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(key: const ValueKey('dense'), pages: [page]),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final lines = page['lines'] as List;
+    final words = lines.first['words'] as List;
+    final id =
+        words[6]['id'] as int; // 2:282:7, ink overhang beyond its advance.
+    final rect = tester.getRect(word(id));
+    final band = tester.getRect(find.byKey(const ValueKey('line-48-1')));
+    final overhang = Offset(rect.left - 0.5, rect.center.dy);
+    await tester.longPressAt(overhang);
+    await tester.pump();
+    expect(status(tester, id), contains('black; reveals 1'));
+    await tester.tapAt(overhang);
+    await tester.pump();
+    expect(status(tester, id), contains('grey; reveals 1'));
+    // Entire line slot, including its top edge, belongs to words.
+    final gesture = await tester.startGesture(
+      Offset(rect.center.dx, band.top + 0.1),
+    );
+    await tester.pump(const Duration(milliseconds: 600));
+    final next = (lines[1]['words'] as List).first['id'] as int;
+    await gesture.moveTo(tester.getCenter(word(next)));
+    await gesture.moveTo(overhang);
+    await tester.pump();
+    expect(status(tester, id), contains('black; reveals 2'));
+    expect(status(tester, next), contains('black; reveals 1'));
+    await gesture.up();
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets(
+    'drag through spread gutter assigns the nearest line edge without counting twice',
+    (tester) async {
+      await mount(tester, landscape: true);
+      await tester.drag(find.byType(PageView), const Offset(1000, 0));
+      await tester.pumpAndSettle();
+      final right = pages.singleWhere((p) => p['page'] == 47);
+      final left = pages.singleWhere((p) => p['page'] == 48);
+      final rightId =
+          ((right['lines'] as List).first['words'] as List).last['id'] as int;
+      final leftId =
+          ((left['lines'] as List).first['words'] as List).first['id'] as int;
+      final a = tester.getRect(word(rightId));
+      final b = tester.getRect(word(leftId));
+      final gutter = Offset((a.left + b.right) / 2 + 1, a.center.dy);
+      final gesture = await tester.startGesture(gutter);
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(status(tester, rightId), contains('black; reveals 1'));
+      await gesture.moveTo(b.center);
+      await gesture.moveTo(a.center);
+      await tester.pump();
+      expect(status(tester, leftId), contains('black; reveals 1'));
+      expect(status(tester, rightId), contains('black; reveals 1'));
+      await gesture.up();
+      await tester.pumpAndSettle();
+    },
+  );
+
   testWidgets(
     'pages 1, 2, 48 render the layout database line ranges without wrapping',
     (tester) async {

@@ -31,7 +31,7 @@ def font_metrics(path: Path) -> dict[str, int]:
     raise ValueError(f'Missing font metrics: {path}')
 
 
-def glyph_ink(path: Path) -> dict[int, list[int] | None]:
+def glyph_ink(path: Path, *, outlines: bool = False) -> dict[int, list[int] | None]:
     """Horizontal ink bounds of QUL's Unicode TrueType glyphs, including COLR layers.
 
     Composite glyph headers already bound their transformed components. Positions
@@ -79,8 +79,46 @@ def glyph_ink(path: Path) -> dict[int, list[int] | None]:
             if start == end:
                 return None
             start *= 1 if long_loca else 2
-            _, x_min, _, x_max, _ = struct.unpack_from('>hhhhh', tables[b'glyf'], start)
-            return [x_min, x_max]
+            glyf = tables[b'glyf']
+            contours, x_min, _, x_max, _ = struct.unpack_from('>hhhhh', glyf, start)
+            if not outlines:
+                return [x_min, x_max]
+            if contours == 0:
+                return None
+            if contours < 0:
+                raise ValueError('Surah outline metrics require simple glyphs')
+            # This IcoMoon font has padded stored boxes. Decode the simple
+            # contours' actual points, including quadratic control points.
+            count = struct.unpack_from('>H', glyf, start+10+2*(contours-1))[0]+1
+            cursor = start+10+2*contours
+            instructions = struct.unpack_from('>H', glyf, cursor)[0]
+            cursor += 2+instructions
+            flags = []
+            while len(flags) < count:
+                flag = glyf[cursor]
+                cursor += 1
+                repeat = glyf[cursor] if flag & 8 else 0
+                cursor += bool(flag & 8)
+                flags.extend([flag]*(repeat+1))
+            if len(flags) != count:
+                raise ValueError('Invalid surah outline flags')
+            coordinates = []
+            for short, same in ((2,16), (4,32)):
+                axis, position = [], 0
+                for flag in flags:
+                    if flag & short:
+                        delta = glyf[cursor] * (1 if flag & same else -1)
+                        cursor += 1
+                    elif flag & same:
+                        delta = 0
+                    else:
+                        delta = struct.unpack_from('>h', glyf, cursor)[0]
+                        cursor += 2
+                    position += delta
+                    axis.append(position)
+                coordinates.append(axis)
+            xs, ys = coordinates
+            return [min(xs), min(ys), max(xs), max(ys)]
         layers = {}
         if b'COLR' in tables:
             colr = tables[b'COLR']
@@ -94,6 +132,9 @@ def glyph_ink(path: Path) -> dict[int, list[int] | None]:
         result = {}
         for code, gid in mapping.items():
             if not gid:
+                continue
+            if outlines:
+                result[code] = glyph_bounds(gid)
                 continue
             bounds = [b for layer in layers.get(gid, [gid]) if (b := glyph_bounds(layer))]
             result[code] = [min(b[0] for b in bounds), max(b[1] for b in bounds)] if bounds else None
@@ -221,6 +262,7 @@ def bundle(source: Path, output: Path, pages: list[int]) -> None:
     output, previous, owned = checked_output(output, selected)
     fonts = {f'p{p}.ttf': source / f'fonts/p{p}.ttf' for p in selected}
     wide = False
+    surah_bounds = None
     documents = {}
     with sqlite3.connect(f'{(source / "layout/qpc-v4-tajweed-15-lines.db").resolve().as_uri()}?mode=ro', uri=True) as layout, sqlite3.connect(f'{(source / "words/qpc-v4.db").resolve().as_uri()}?mode=ro', uri=True) as words:
         words.row_factory = sqlite3.Row
@@ -247,8 +289,19 @@ def bundle(source: Path, output: Path, pages: list[int]) -> None:
                               'surah': int(surah) if surah else None, 'words': entries})
                 if kind == 'surah_name':
                     fonts['surah-name-v4.ttf'] = source / 'surah-names/surah-name-v4.ttf'
+                    if surah_bounds is None:
+                        if not fonts['surah-name-v4.ttf'].is_file():
+                            raise ValueError('Missing surah-name-v4.ttf heading font')
+                        surah_bounds = glyph_ink(fonts['surah-name-v4.ttf'], outlines=True)
+                    try:
+                        bounds = [surah_bounds[0xe000], surah_bounds[0xe000+int(surah)]]
+                        if not all(bounds):
+                            raise KeyError(surah)
+                    except KeyError as exc:
+                        raise ValueError(f'Missing surah heading glyph: {surah}') from exc
                     lines[-1]['heading'] = {'kind': 'surah', 'font': 'surah-name-v4',
-                                            'parts': ['surah-icon', f'surah{int(surah):03}']}
+                                            'parts': ['surah-icon', f'surah{int(surah):03}'],
+                                            'bounds': bounds}
                 elif kind == 'basmallah':
                     if page == 2:
                         fonts['p1.ttf'] = source / 'fonts/p1.ttf'

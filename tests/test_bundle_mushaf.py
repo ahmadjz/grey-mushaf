@@ -19,7 +19,11 @@ def ink_font(empty=None):
     struct.pack_into('>H', head, 18, 2500)
     struct.pack_into('>hhhh', head, 36, -300, -1500, 2800, 3300)
     struct.pack_into('>h', head, 50, 1)  # long loca
-    glyphs = [b''] + [struct.pack('>hhhhh', 1, 0, -100, 1000, 2000)] * count
+    simple = struct.pack('>hhhhh', 1, 0, -100, 1000, 2000)
+    # Deliberately padded header; the actual contour is (10,0)..(900,1800).
+    simple += struct.pack('>HH', 3, 0) + bytes([1]*4)
+    simple += struct.pack('>8h', 10, 890, 0, -890, 0, 0, 1800, 0)
+    glyphs = [b''] + [simple] * count
     glyphs += [b'' if c == empty else struct.pack('>hhhhh', -1, -300, -1500, 2800, 3300) for c in chars]
     offsets = [0]
     for glyph in glyphs:
@@ -81,7 +85,7 @@ def test_bundles_only_selected_pages_preserving_words_and_non_word_lines(source,
     page = json.loads((out / '1.json').read_text())
     assert page['page'] == 1
     assert page['font'] == {'unitsPerEm': 2500, 'yMin': -1500, 'yMax': 3300}
-    assert page['lines'][0] == {'number': 1, 'type': 'surah_name', 'centered': True, 'surah': 1, 'words': [], 'heading': {'kind': 'surah', 'font': 'surah-name-v4', 'parts': ['surah-icon', 'surah001']}}
+    assert page['lines'][0] == {'number': 1, 'type': 'surah_name', 'centered': True, 'surah': 1, 'words': [], 'heading': {'kind': 'surah', 'font': 'surah-name-v4', 'parts': ['surah-icon', 'surah001'], 'bounds': [[10, 0, 900, 1800]] * 2}}
     assert page['lines'][1]['words'] == [
         {'id': 1, 'location': '1:1:1', 'text': 'glyph-a', 'ink': [[-300, 2800]] * 7},
         {'id': 2, 'location': '1:1:2', 'text': 'glyph-bc', 'ink': [[-300, 2800]] * 8},
@@ -257,3 +261,8 @@ def test_vector_trace_preserves_curves_holes_and_excludes_adjacent_lines():
 def test_trace_requires_local_page50(tmp_path):
     with pytest.raises(ValueError, match='page-50'):
         module.trace_basmallah(tmp_path / 'missing.ai')
+
+
+def test_surah_metrics_use_outline_points_not_padded_glyph_headers(source):
+    bounds = module.glyph_ink(source / 'surah-names/surah-name-v4.ttf', outlines=True)
+    assert bounds[0xe001] == [10,0,900,1800]

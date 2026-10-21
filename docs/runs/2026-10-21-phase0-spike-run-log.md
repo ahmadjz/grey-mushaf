@@ -284,7 +284,9 @@ Claude read the fix diff and the tail screenshot. No third round (skill rule).
   writer 15/15 on p48; database line-range test `widget_test.dart`.
 - Long-press reveal: seen live (`phase0-r19-fix-*-page1-tail`, `*-page48-overhang`).
 - Drag reveal with swipe off: seen live on the tablet spread (`*-spread47-48-gutter`), tests.
-- Tap re-grey: widget tests. Live only through the margin-bug repro before the fix.
+- Tap re-grey: seen live on `Medium_Phone` at `3477b33` (Claude): long-press `1:1:1` → black,
+  reveals 1; tap → grey, reveals stays 1; tap on grey → no change
+  (`phase0-tap-{1-revealed,2-regreyed}.png`).
 - Portrait page and landscape spread (R4), page fill (R19): seen live on phone and tablet, table above.
 - Plain black/grey (R17): zero unequal-RGB pixels in every screenshot.
 - Licence status: R16 (personal use only).

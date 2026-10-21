@@ -2,6 +2,7 @@ import importlib.util
 import json
 from pathlib import Path
 import sqlite3
+import struct
 
 import pytest
 
@@ -33,7 +34,11 @@ def source(tmp_path, monkeypatch):
             (3, '2:1:1', 2, 1, 1, 'glyph-d'),
         ])
     for page in (1, 2):
-        (src / f'fonts/p{page}.ttf').write_bytes(f'font-{page}'.encode())
+        head = bytearray(54)
+        struct.pack_into('>H', head, 18, 2500)
+        struct.pack_into('>hhhh', head, 36, -100, -1500, 3000, 3300)
+        font = struct.pack('>IHHHH', 0x10000, 1, 0, 0, 0) + struct.pack('>4sIII', b'head', 0, 28, 54) + head
+        (src / f'fonts/p{page}.ttf').write_bytes(font)
     return src
 
 
@@ -44,13 +49,14 @@ def test_bundles_only_selected_pages_preserving_words_and_non_word_lines(source,
     assert json.loads((out / 'pages.json').read_text()) == [1, 2]
     page = json.loads((out / '1.json').read_text())
     assert page['page'] == 1
+    assert page['font'] == {'unitsPerEm': 2500, 'yMin': -1500, 'yMax': 3300}
     assert page['lines'][0] == {'number': 1, 'type': 'surah_name', 'centered': True, 'surah': 1, 'words': []}
     assert page['lines'][1]['words'] == [
         {'id': 1, 'location': '1:1:1', 'text': 'glyph-a'},
         {'id': 2, 'location': '1:1:2', 'text': 'glyph-bc'},
     ]
     assert json.loads((out / '2.json').read_text())['lines'][0]['words'] == []
-    assert (out / 'p2.ttf').read_bytes() == b'font-2'
+    assert (out / 'p2.ttf').read_bytes() == (source / 'fonts/p2.ttf').read_bytes()
     assert sorted(p.name for p in out.iterdir()) == ['1.json', '2.json', 'p1.ttf', 'p2.ttf', 'pages.json']
 
 

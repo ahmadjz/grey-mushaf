@@ -187,6 +187,83 @@ void main() {
     },
   );
 
+  for (final size in [const Size(411.43, 866), const Size(915, 370)]) {
+    testWidgets(
+      'reader fills $size and opening pages use normal-page font size',
+      (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+        await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
+        await tester.pumpAndSettle();
+        expect(find.byType(AppBar), findsNothing);
+        expect(find.byKey(const ValueKey('counts')), findsNothing);
+        final firstWord = tester.widget<Text>(
+          find.descendant(of: word(1), matching: find.byType(Text)),
+        );
+        final openingSize = firstWord.style!.fontSize!;
+        final openingFirst = tester.getRect(
+          find.byKey(const ValueKey('line-1-2')),
+        );
+        final openingLast = tester.getRect(
+          find.byKey(const ValueKey('line-1-8')),
+        );
+        expect(
+          openingLast.bottom - openingFirst.top,
+          lessThan(size.height * .8),
+        );
+        final openingPage = tester.getRect(
+          find.byKey(const ValueKey('page-1')),
+        );
+        expect(
+          (openingFirst.top + openingLast.bottom) / 2,
+          closeTo(openingPage.center.dy, openingFirst.height),
+        );
+        final controller = tester
+            .widget<PageView>(find.byType(PageView))
+            .controller!;
+        controller.jumpToPage(size.width > size.height ? 1 : 3);
+        await tester.pumpAndSettle();
+        final page = tester.getRect(find.byKey(const ValueKey('page-48')));
+        final first = tester.getRect(find.byKey(const ValueKey('line-48-1')));
+        final last = tester.getRect(find.byKey(const ValueKey('line-48-15')));
+        expect(
+          page.width,
+          closeTo(size.width / (size.width > size.height ? 2 : 1), 1),
+        );
+        expect(first.width, greaterThan(page.width - 9));
+        expect(first.top - page.top, lessThanOrEqualTo(4));
+        expect(page.bottom - last.bottom, lessThanOrEqualTo(26));
+        for (var i = 1; i < 15; i++) {
+          final a = tester.getRect(find.byKey(ValueKey('line-48-$i')));
+          final b = tester.getRect(find.byKey(ValueKey('line-48-${i + 1}')));
+          expect(a.bottom, closeTo(b.top, .01));
+        }
+        final data = pages.singleWhere((p) => p['page'] == 48);
+        final sizes = <double>{};
+        for (final line in data['lines'] as List) {
+          for (final w in line['words'] as List) {
+            final text = tester.widget<Text>(
+              find.descendant(
+                of: word(w['id'] as int),
+                matching: find.byType(Text),
+              ),
+            );
+            sizes.add(text.style!.fontSize!);
+          }
+        }
+        expect(
+          sizes.length,
+          1,
+          reason: 'uniform font size, not per-line shrink',
+        );
+        expect(openingSize, closeTo(sizes.single, .01));
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
+
   testWidgets(
     'pages 1, 2, 48 render the layout database line ranges without wrapping',
     (tester) async {

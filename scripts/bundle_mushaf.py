@@ -4,8 +4,27 @@ import json
 from pathlib import Path
 import shutil
 import sqlite3
+import struct
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def font_metrics(path: Path) -> dict[str, int]:
+    """Read the TrueType head ink bounds; keep the font itself unchanged."""
+    data = path.read_bytes()
+    try:
+        count = struct.unpack_from('>H', data, 4)[0]
+        for index in range(count):
+            tag, _, offset, length = struct.unpack_from('>4sIII', data, 12 + index * 16)
+            if tag == b'head' and length >= 54 and offset + length <= len(data):
+                units = struct.unpack_from('>H', data, offset + 18)[0]
+                low = struct.unpack_from('>h', data, offset + 38)[0]
+                high = struct.unpack_from('>h', data, offset + 42)[0]
+                if units > 0 and high > low:
+                    return {'unitsPerEm': units, 'yMin': low, 'yMax': high}
+    except struct.error as exc:
+        raise ValueError(f'Invalid font metrics: {path}') from exc
+    raise ValueError(f'Missing font metrics: {path}')
 
 
 def checked_output(output: Path, selected: list[int]) -> tuple[Path, set[int]]:
@@ -60,7 +79,7 @@ def bundle(source: Path, output: Path, pages: list[int]) -> None:
                     raise ValueError(f'Empty ayah on page {page}, line {number}')
                 lines.append({'number': number, 'type': kind, 'centered': bool(centered),
                               'surah': int(surah) if surah else None, 'words': entries})
-            documents[page] = {'page': page, 'lines': lines}
+            documents[page] = {'page': page, 'font': font_metrics(source / f'fonts/p{page}.ttf'), 'lines': lines}
     # Validate every selected page before writing any outputs.
     output.mkdir(parents=True, exist_ok=True)
     for page, document in documents.items():

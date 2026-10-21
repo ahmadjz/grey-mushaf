@@ -175,236 +175,245 @@ class _ReaderState extends State<Reader> {
     }
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.transparent,
-        title: const Text('Grey Mushaf', style: TextStyle(color: Colors.black)),
-        actions: [
-          DropdownButton<int>(
-            key: const ValueKey('page-picker'),
-            value: widget.pages.isEmpty
-                ? null
-                : widget.pages[_selected]['page'] as int,
-            items: [
-              for (final p in widget.pages)
-                DropdownMenuItem(
-                  value: p['page'] as int,
-                  child: Text('Page ${p['page']}'),
-                ),
-            ],
-            onChanged: _dragging
-                ? null
-                : (number) {
-                    final index = groups.indexWhere(
-                      (g) => g.any((p) => p['page'] == number),
-                    );
-                    if (index >= 0) _controller.jumpToPage(index);
-                  },
-          ),
-          const SizedBox(width: 16),
-        ],
-      ),
       body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
+            final slotHeight = (constraints.maxHeight - 24) / 15;
+            final fontSize = _fontSize(pageWidth - 4, slotHeight);
+            void select(int number) {
+              final index = groups.indexWhere(
+                (g) => g.any((p) => p['page'] == number),
+              );
+              if (index >= 0) _controller.jumpToPage(index);
+            }
+
+            return GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onLongPressStart: _start,
+              onLongPressMoveUpdate: _move,
+              onLongPressEnd: (_) => _end(),
+              onLongPressCancel: _end,
+              onTapUp: (details) {
+                final id = _wordAt(details.globalPosition);
+                if (id != null && _black.contains(id))
+                  setState(() => _black.remove(id));
+              },
+              child: PageView.builder(
+                key: ValueKey(spread),
+                controller: _controller,
+                reverse: true,
+                physics: _dragging
+                    ? const NeverScrollableScrollPhysics()
+                    : const PageScrollPhysics(),
+                itemCount: groups.length,
+                onPageChanged: (index) => setState(
+                  () => _selected = widget.pages.indexOf(groups[index].first),
+                ),
+                itemBuilder: (context, index) => Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    for (final page in groups[index])
+                      Expanded(
+                        child: _page(page, fontSize, slotHeight, select),
+                      ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  TextStyle _style(int page, double size) => TextStyle(
+    fontFamily: 'mushaf-$page',
+    fontSize: size,
+    height: 1,
+    color: Colors.black,
+  );
+
+  double _width(Map<String, dynamic> word, int page, double size) {
+    final painter = TextPainter(
+      text: TextSpan(text: word['text'] as String, style: _style(page, size)),
+      textDirection: TextDirection.rtl,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    return width;
+  }
+
+  double _inkHeight(Map<String, dynamic> page) {
+    final font = page['font'] as Map<String, dynamic>;
+    return ((font['yMax'] as num) - (font['yMin'] as num)) /
+        (font['unitsPerEm'] as num);
+  }
+
+  double _fontSize(double width, double height) {
+    var widest = 1.0;
+    var tallest = 1.0;
+    // One size across the bundle: opening pages share the normal-page size.
+    // Include their bounds too so their diacritics cannot exceed the slots.
+    for (final page in widget.pages) {
+      tallest = math.max(tallest, _inkHeight(page));
+      for (final line in page['lines'] as List) {
+        final words = line['words'] as List;
+        if (words.isEmpty) continue;
+        final lineWidth =
+            words.fold<double>(
+              0,
+              (sum, w) => sum + _width(w, page['page'] as int, 100),
+            ) /
+            100;
+        widest = math.max(widest, lineWidth + (words.length - 1) * .09);
+      }
+    }
+    return math.min(width / widest, height / tallest);
+  }
+
+  Widget _page(
+    Map<String, dynamic> page,
+    double fontSize,
+    double slotHeight,
+    ValueChanged<int> select,
+  ) {
+    final number = page['page'] as int;
+    final lines = page['lines'] as List;
+    final height = number <= 2
+        ? fontSize * widget.pages.map(_inkHeight).reduce(math.max)
+        : slotHeight;
+    return SizedBox(
+      key: ValueKey('page-$number'),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
         child: Column(
           children: [
             Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onLongPressStart: _start,
-                onLongPressMoveUpdate: _move,
-                onLongPressEnd: (_) => _end(),
-                onLongPressCancel: _end,
-                onTapUp: (details) {
-                  final id = _wordAt(details.globalPosition);
-                  if (id != null && _black.contains(id)) {
-                    setState(() => _black.remove(id));
-                  }
-                },
-                child: PageView.builder(
-                  key: ValueKey(spread),
-                  controller: _controller,
-                  reverse: true,
-                  physics: _dragging
-                      ? const NeverScrollableScrollPhysics()
-                      : const PageScrollPhysics(),
-                  itemCount: groups.length,
-                  onPageChanged: (index) => setState(() {
-                    _selected = widget.pages.indexOf(groups[index].first);
-                  }),
-                  itemBuilder: (context, index) {
-                    final group = groups[index];
-                    return Row(
-                      textDirection: TextDirection.rtl,
-                      children: [
-                        for (final page in group) Expanded(child: _page(page)),
-                      ],
-                    );
-                  },
+              child: Column(
+                mainAxisAlignment: number <= 2
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
+                children: [
+                  for (final line in lines)
+                    _line(page, line as Map<String, dynamic>, fontSize, height),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 20,
+              child: PopupMenuButton<int>(
+                key: ValueKey('page-picker-$number'),
+                enabled: !_dragging,
+                tooltip: 'Choose page',
+                onSelected: select,
+                itemBuilder: (_) => [
+                  for (final p in widget.pages)
+                    PopupMenuItem(
+                      value: p['page'] as int,
+                      child: Text('Page ${p['page']}'),
+                    ),
+                ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    '$number',
+                    style: const TextStyle(fontSize: 12, color: Colors.black),
+                  ),
                 ),
               ),
             ),
-            Text(
-              'Revealed ${_black.length} · Reveals ${_counts.values.fold(0, (a, b) => a + b)}',
-              key: const ValueKey('counts'),
-              style: const TextStyle(color: Colors.black),
-            ),
-            const Text(
-              'Long-press and drag to reveal · Tap black to re-grey',
-              style: TextStyle(fontSize: 11, color: Colors.black54),
-            ),
-            const SizedBox(height: 8),
           ],
         ),
       ),
     );
   }
 
-  Widget _page(Map<String, dynamic> page) {
+  Widget _line(
+    Map<String, dynamic> page,
+    Map<String, dynamic> line,
+    double size,
+    double height,
+  ) {
     final number = page['page'] as int;
-    final lines = page['lines'] as List;
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Center(
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: SizedBox(
-            key: ValueKey('page-$number'),
-            width: 420,
-            height: 660,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black26),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: number <= 2
-                            ? MainAxisAlignment.center
-                            : MainAxisAlignment.start,
-                        children: [
-                          for (final line in lines)
-                            _line(number, line as Map<String, dynamic>),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      '$number',
-                      style: const TextStyle(fontSize: 18, color: Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _line(int page, Map<String, dynamic> line) {
     final words = line['words'] as List;
-    final kind = line['type'];
-    final band = '$page-${line['number']}';
+    final band = '$number-${line['number']}';
     final bandKey = _bands.putIfAbsent(band, GlobalKey.new);
     _bandWords[band] = [for (final word in words) word['id'] as int];
-    if (kind != 'ayah') {
+    Widget content;
+    if (line['type'] != 'ayah') {
       // Deliberate spike placeholders; the V4 heading font is not supplied.
-      final title = kind == 'basmallah'
+      final title = line['type'] == 'basmallah'
           ? 'بسم الله الرحمن الرحيم'
           : switch (line['surah']) {
               1 => 'سورة الفاتحة',
               2 => 'سورة البقرة',
               _ => 'سورة ${line['surah']}',
             };
-      return SizedBox(
-        key: bandKey,
-        height: 38,
-        child: Center(
-          child: Text(
-            title,
-            textDirection: TextDirection.rtl,
-            style: const TextStyle(fontSize: 20, color: Colors.black),
+      content = Center(
+        child: Text(
+          title,
+          textDirection: TextDirection.rtl,
+          textScaler: TextScaler.noScaling,
+          style: TextStyle(
+            fontSize: math.min(size, height / 1.5),
+            color: Colors.black,
           ),
         ),
       );
+    } else {
+      content = Row(
+        textDirection: TextDirection.rtl,
+        mainAxisAlignment: line['centered'] == true
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.spaceBetween,
+        children: [
+          for (var i = 0; i < words.length; i++) ...[
+            if (i > 0 && line['centered'] == true) SizedBox(width: size * .09),
+            _word(words[i] as Map<String, dynamic>, page, size, height),
+          ],
+        ],
+      );
     }
     return SizedBox(
-      key: ValueKey('line-$page-${line['number']}'),
-      height: 38,
-      child: LayoutBuilder(
-        key: bandKey,
-        builder: (context, constraints) {
-          TextStyle style(double size) => TextStyle(
-            fontFamily: 'mushaf-$page',
-            fontSize: size,
-            height: 1,
-            color: Colors.black,
-          );
-          double width(Map<String, dynamic> word, double size) {
-            final painter = TextPainter(
-              text: TextSpan(text: word['text'] as String, style: style(size)),
-              textDirection: TextDirection.rtl,
-            )..layout();
-            final result = painter.width;
-            painter.dispose();
-            return result;
-          }
-
-          final natural = words.fold<double>(
-            0,
-            (sum, w) => sum + width(w as Map<String, dynamic>, 32),
-          );
-          final gap = 3.0;
-          final fontSize = math.min(
-            32.0,
-            32 * (constraints.maxWidth - gap * (words.length - 1)) / natural,
-          );
-          return Row(
-            textDirection: TextDirection.rtl,
-            mainAxisAlignment: line['centered'] == true
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.spaceBetween,
-            children: [
-              for (var i = 0; i < words.length; i++) ...[
-                if (i > 0 && line['centered'] == true) SizedBox(width: gap),
-                _word(
-                  words[i] as Map<String, dynamic>,
-                  style(fontSize),
-                  width(words[i], fontSize),
-                ),
-              ],
-            ],
-          );
-        },
-      ),
+      key: ValueKey('line-$number-${line['number']}'),
+      height: height,
+      width: double.infinity,
+      child: SizedBox(key: bandKey, child: content),
     );
   }
 
-  Widget _word(Map<String, dynamic> word, TextStyle style, double width) {
+  Widget _word(
+    Map<String, dynamic> word,
+    Map<String, dynamic> page,
+    double size,
+    double height,
+  ) {
     final id = word['id'] as int;
     final black = _black.contains(id);
+    final font = page['font'] as Map<String, dynamic>;
+    final baseline =
+        (height - _inkHeight(page) * size) / 2 +
+        size * (font['yMax'] as num) / (font['unitsPerEm'] as num);
     return Semantics(
       key: ValueKey('word-$id'),
+      container: true,
       label:
           '${word['location']}; ${black ? 'black' : 'grey'}; reveals ${_counts[id] ?? 0}',
       child: SizedBox(
         key: _targets.putIfAbsent(id, GlobalKey.new),
-        width: width,
-        height: 38,
-        child: Center(
-          child: FlatInk(
-            color: black ? Colors.black : const Color(0xFFB0B0B0),
+        width: _width(word, page['page'] as int, size),
+        height: height,
+        child: FlatInk(
+          color: black ? Colors.black : const Color(0xFFB0B0B0),
+          child: Baseline(
+            baseline: baseline,
+            baselineType: TextBaseline.alphabetic,
             child: Text(
               word['text'] as String,
               textDirection: TextDirection.rtl,
               textScaler: TextScaler.noScaling,
-              style: style,
+              style: _style(page['page'] as int, size),
             ),
           ),
         ),

@@ -39,11 +39,16 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     user can sign in and enable sync, and then every signed-in device shares the same weak words,
     bookmarks and last page. Signing out keeps the local data.
 
-## R11–R12 (2026-10-21, Claude's defaults, the owner may overrule)
+## R11 (2026-10-21, owner)
 
-11. **Backend:** a dedicated PocketBase instance on the VPS behind the existing Caddy, giving auth,
-    database and realtime in one binary. The devices keep local SQLite as the source of truth while
-    offline.
+11. **Backend and accounts:** a dedicated PocketBase instance on the VPS behind the existing Caddy,
+    with no Firebase. Anyone can sign up, with Google sign-in or email and password. Verification
+    and password-reset emails go out through a free Gmail app password over SMTP. The devices keep
+    local SQLite as the source of truth while offline. Each user can read and write only their own
+    records.
+
+## R12 (2026-10-21, Claude's default, the owner may overrule)
+
 12. **Conflicts:** each word's state is the last action by server receive order. Actions carry a UUID
     and a device id, so retries are idempotent and there are no clock-skew ties. Reveal counts are
     stored as append-only events and summed, never overwritten.

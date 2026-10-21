@@ -76,7 +76,7 @@ path and reconcile it with `git status` and `git log` before doing anything.
 {slug} · {one line}
   rulings   N new (R12–R14), M Claude defaults
   codex     writer {thread} · reviewer {thread}
-  gate      flutter analyze ok · flutter test 42 passed
+  gate      flutter analyze ok · flutter test 42 passed · pytest 6 passed
   live      emulator Pixel 7: long-press reveal seen (docs/runs/shots/…png); not observed: Boox
   review    r1 0/1/2 (C/H/M) → 3 fixed · r2 not needed
   pushed    main a1b2c3d

@@ -55,7 +55,7 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 
 ## R13–R15 (2026-10-21, owner)
 
-13. **Google Play release.** This replaces R8's "sideloaded APK, no store". The package id is
+13. *(Replaced by R16: no Play release.)* **Google Play release.** This replaced R8's "sideloaded APK, no store". The package id is
     `tech.ahmadjz.greymushaf` and can never change. Play requires:
     - in-app and web account deletion;
     - a privacy policy and the Data safety form;
@@ -69,6 +69,19 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     V4 data and fonts) must have terms that allow free redistribution in a public app. Assets never
     go in the public repo: they are fetched at build time or on first launch.
 
+## R16–R18 (2026-10-21, owner)
+
+16. **Personal use only, no public release.** This replaces R13 and R15's public-app clause. The
+    1441 word fonts (QUL V4, from the King Fahad Complex) say "charitable only, publishing not
+    permitted without prior permission", so the app is not published on Google Play or anywhere
+    else. It is for the owner and friends who test it. The repo stays public, and the assets still
+    never go in it.
+17. **Revealed words are plain black,** like the printed 1441 mushaf. Grey words are plain grey. The
+    tajweed colours in the fonts are never shown.
+18. **The mushaf ships inside the APK.** The build takes the fonts and word data from the owner's
+    own machine (downloaded from QUL with the owner's sign-in) and packs them into the APK, so it
+    reads offline from the first launch. Nothing is downloaded on first open.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be
@@ -77,5 +90,5 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 1. **Offline reader:** grey pages, reveal and re-grey, navigation by page, surah and juz, bookmarks,
    last page, B/W mode.
 2. **Sync and export,** plus accounts and the web page for privacy, account deletion and donations.
-3. **Play release:** the closed test, then production.
+3. ~~**Play release**~~: dropped by R16. Friends install the APK directly.
 4. **Handwriting, stats, search by text.**

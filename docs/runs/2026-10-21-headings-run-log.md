@@ -126,6 +126,7 @@ The follow-up above is superseded by Round 2: after R23 the writer fixed the cli
 
 Reviewer thread `01a15fce-f385-72d0-99ea-6efc4d3d9788` (Astra high) refused at start: Codex usage
 limit, resets 2026-10-27 09:32. No review ran. Commits `feef9a7..572b8b5` stay local and unpushed.
+Retry on a new thread `01a15fe4-3463-7512-8859-9c4577d403a7` (same day, full brief): same refusal.
 
 ## Next action
 

@@ -82,6 +82,14 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     own machine (downloaded from QUL with the owner's sign-in) and packs them into the APK, so it
     reads offline from the first launch. Nothing is downloaded on first open.
 
+## R19 (2026-10-21, owner)
+
+19. **The page fills the screen.** Words must be as large as the screen allows, above all on a
+    phone. Margins, borders and empty space around the page stay as thin as possible, and the
+    text block scales to the available width and height in portrait and in the landscape spread.
+    The special pages 1–2 keep their short centred layout (R5) at the same text size as other
+    pages.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

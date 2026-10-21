@@ -29,6 +29,12 @@ class SqliteRevealStore implements RevealStore {
     final db = await openDatabase(
       databasePath ?? path.join(await getDatabasesPath(), 'reveals.db'),
       version: 1,
+      onDowngrade: (db, oldVersion, newVersion) {
+        throw StateError(
+          'Database version $oldVersion is newer than supported version $newVersion. '
+          'Use a newer app to open this data.',
+        );
+      },
       onConfigure: (db) => db.execute('PRAGMA foreign_keys = ON'),
       onCreate: (db, version) async {
         await db.execute(

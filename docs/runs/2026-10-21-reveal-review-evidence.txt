@@ -1,0 +1,58 @@
+Reveal persistence review fixes — base afe671b
+
+Changes: app/lib/main.dart:93 queues words crossed after failure but waits for Retry to drain; app/lib/reveal_store.dart:32 refuses newer schemas through onDowngrade.
+
+Red-first drag regression: expected 4 save calls when word 3 became due; actual 3 (word 3 dropped). After fix: ordered commits for words 1–4, grey before each commit, black/count 1 afterwards; revisiting creates no extra count.
+
+Red-first downgrade regression on Android SQLite: expected user_version 2, actual 1. After fix: clear StateError, version 2 retained, all four tables unchanged, file bytes identical.
+
+Focused save-feedback tests: PASS, 2. Initial paired run stalled on repeated bundle loading; interrupted and changed test setup to load the bundle once. Final run completed.
+
+Focused real-SQLite downgrade test: PASS, 1.
+
+flutter analyze: PASS, no issues (3.2s).
+
+heavy flutter test: PASS, 33 tests.
+
+heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter test integration_test -d emulator-5554: PASS, 3 tests.
+
+Offline debug APK: PASS, BUILD SUCCESSFUL in 8s. From app/android/: heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false ./gradlew --offline --no-daemon -Ptarget=lib/main.dart -Ptarget-platform=android-x64 assembleDebug.
+
+Medium_Phone, Android API 37, 4096 MB configured guest RAM (MemTotal 4008492 kB).
+
+Live proof: installed final offline APK; dragged across four words and revisited, semantics black/count 1 each. Stopped the app, set only the proof database user_version to 2, relaunched, checked error text in Android semantics and byte-for-byte database preservation.
+
+Screenshots inspected: docs/runs/shots/review-drag-four-committed.png and docs/runs/shots/review-newer-schema-refused.png (gitignored).
+
+Cleanup: no accounts or tokens. Integration fixtures reveals.db, persistence-test.db and downgrade-test.db deleted by tests. Live database/journal, /sdcard/quran-review.xml and local database copy deleted. IDs below name all durable proof records from this review run. Metadata keys: device_id and identity_version. Reveal-event IDs equal their reveal-action UUID; word-state IDs are word keys.
+
+quran-review-downgrade-red.log
+
+Downgrade proof identifiers: device=c38e2356-db3c-4455-a3f9-4cfc0c7c04ac; action=ed8c2285-bfdc-4bf7-9829-790ef3e6e841; word=qul-v4-hafs:1:1:1; metadata=device_id,identity_version
+
+quran-review-downgrade-green.log
+
+Downgrade proof identifiers: device=feaa24c0-afb6-4cf0-b435-b9fc3dc30471; action=e3aafcb4-652a-4f44-861e-902b51049a0a; word=qul-v4-hafs:1:1:1; metadata=device_id,identity_version
+
+quran-review-integration.log
+
+Startup proof identifiers: [{key: device_id, value: 6e7c5d63-d084-4a82-a8cf-dcf937fe8ecc}, {key: identity_version, value: qul-v4-hafs:1}]; [{action_uuid: 1eb124e2-d2d7-4e3a-b5f5-e1ec72fa0cb2, word_key: qul-v4-hafs:1:1:1}]
+
+SQLite proof identifiers: [{key: device_id, value: 3a749631-2b42-442d-813a-31bfd2611ecd}, {key: identity_version, value: qul-v4-hafs:1}]; [{action_uuid: 377de95f-8cef-472e-bf8c-4caa9362b066, word_key: qul-v4-hafs:1:1:1}, {action_uuid: 9ad06570-e1e8-41c4-9226-5a8e2367c6a4, word_key: qul-v4-hafs:1:1:1}, {action_uuid: c5bdcd0e-4fed-4755-8d65-95ade91d56b6, word_key: qul-v4-hafs:1:1:1}, {action_uuid: d3d656a8-6121-4761-a9bb-b51c61d5f340, word_key: qul-v4-hafs:1:1:1}, {action_uuid: bf361b70-da4f-4a39-9fdf-02b26dbb3a5b, word_key: qul-v4-hafs:1:1:2}]
+
+Downgrade proof identifiers: device=117c4933-3907-4281-9b45-ee9502f8c2c3; action=3b20b383-41cd-46be-a747-83a8d83c58a5; word=qul-v4-hafs:1:1:1; metadata=device_id,identity_version
+
+Live drag/revisit: PASS, words 1:1:1..4 black, each count 1.
+local_metadata: [["device_id", "5864ee50-a8ea-4feb-8eae-1fd1cf9679d9"], ["identity_version", "qul-v4-hafs:1"]]
+word_actions: [["3cf4a560-00ba-46e5-8e68-126b1a9ef78e", "qul-v4-hafs:1:1:1"], ["68b93523-c81e-43ff-8b15-5d75424e6d33", "qul-v4-hafs:1:1:2"], ["b50af9b6-e806-4332-b768-ed3d84404f90", "qul-v4-hafs:1:1:3"], ["946b4f1a-10c8-4530-a6cf-3a5c98bd3adb", "qul-v4-hafs:1:1:4"]]
+reveal_events: [["3cf4a560-00ba-46e5-8e68-126b1a9ef78e"], ["68b93523-c81e-43ff-8b15-5d75424e6d33"], ["b50af9b6-e806-4332-b768-ed3d84404f90"], ["946b4f1a-10c8-4530-a6cf-3a5c98bd3adb"]]
+word_state: [["qul-v4-hafs:1:1:1"], ["qul-v4-hafs:1:1:2"], ["qul-v4-hafs:1:1:3"], ["qul-v4-hafs:1:1:4"]]
+Live newer-schema screen: PASS; clear Cannot open reader message; database bytes unchanged.
+Cleanup: live database/journal, device XML and local database copy deleted.
+
+
+Not run: physical Boox, release/ARM build, full 604-page performance. Force-stop/mid-drag restart proof was not repeated for these review fixes; previous evidence remains in 2026-10-21-reveal-persistence-evidence.txt.
+
+No-op action UUID handling left unchanged; phase-2 replay is outside scope.
+
+Pre-existing untracked docs/runs/2026-10-21-reveal-persistence-run-log.md left untouched.

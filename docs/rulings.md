@@ -90,6 +90,12 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     The special pages 1–2 keep their short centred layout (R5) at the same text size as other
     pages.
 
+## R20 (2026-10-21, owner)
+
+20. **Surah names and the basmallah headings are always black.** They are not words: they are never
+    grey, never revealed and never counted. The basmallah that is ayah 1:1 on page 1 is a word like
+    any other.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

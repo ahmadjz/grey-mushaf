@@ -87,6 +87,7 @@ class _ReaderState extends State<Reader> {
   final _metrics = <int, ({double width, double left, double right})>{};
   final _headings = <String, HeadingInk>{};
   double _widest = 1;
+  double _edgeInk = 0;
   double _tallest = 1;
   double _size = 1;
 
@@ -109,6 +110,7 @@ class _ReaderState extends State<Reader> {
     _headings.clear();
     _metrics.clear();
     _widest = 1;
+    _edgeInk = 0;
     _tallest = 1;
     for (final page in widget.pages) {
       _tallest = math.max(_tallest, _inkHeight(page));
@@ -128,6 +130,16 @@ class _ReaderState extends State<Reader> {
           width += metric.width;
         }
         _widest = math.max(_widest, width);
+        // RTL starts at the right. Advance boxes exclude glyph overhangs;
+        // preserve room at both outer ink edges when width limits the page.
+        final first = _metrics[words.first['id']]!;
+        final last = _metrics[words.last['id']]!;
+        if (line['centered'] != true) {
+          _edgeInk = math.max(
+            _edgeInk,
+            (first.right - first.width - last.left) / 2,
+          );
+        }
       }
     }
   }
@@ -379,7 +391,7 @@ class _ReaderState extends State<Reader> {
   }
 
   ({double size, double width}) _textSize(double width, double height) {
-    _size = math.min(width / _widest, height / _tallest);
+    _size = math.min(width / (_widest + 2 * _edgeInk), height / _tallest);
     return (size: _size, width: _size * _widest);
   }
 
@@ -539,6 +551,24 @@ class _ReaderState extends State<Reader> {
           ],
         ],
       );
+    }
+    if (words.isNotEmpty && line['centered'] != true) {
+      final first = _metrics[words.first['id']]!;
+      final last = _metrics[words.last['id']]!;
+      // Only correct ink that would cross this page's physical edge. In
+      // height-limited views the existing spare margin already contains it.
+      final viewport = MediaQuery.sizeOf(context);
+      final pageWidth =
+          viewport.width / (viewport.width > viewport.height ? 2 : 1);
+      final spare = math.max(0.0, (pageWidth - 4 - textWidth) / 2);
+      final right = (first.right - first.width) * size;
+      final left = last.left * size;
+      final shift = right > spare
+          ? spare - right
+          : left < -spare
+          ? -spare - left
+          : 0.0;
+      content = Transform.translate(offset: Offset(shift, 0), child: content);
     }
     return SizedBox(
       key: ValueKey('line-$number-${line['number']}'),

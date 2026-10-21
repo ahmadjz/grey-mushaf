@@ -137,7 +137,8 @@ void main() {
         words[6]['id'] as int; // 2:282:7, ink overhang beyond its advance.
     final rect = tester.getRect(word(id));
     final band = tester.getRect(find.byKey(const ValueKey('line-48-1')));
-    final overhang = Offset(rect.left - 0.5, rect.center.dy);
+    // uniFC47 extends rightward: xMax 2669 exceeds its 2371-unit advance.
+    final overhang = Offset(rect.right + 0.5, rect.center.dy);
     await tester.longPressAt(overhang);
     await tester.pump();
     expect(status(tester, id), contains('black; reveals 1'));
@@ -187,7 +188,12 @@ void main() {
     },
   );
 
-  for (final size in [const Size(411.43, 866), const Size(915, 370)]) {
+  for (final size in [
+    const Size(1080 / 2.625, 2274 / 2.625),
+    const Size(2400 / 2.625, 954 / 2.625),
+    const Size(800, 1224),
+    const Size(1280, 744),
+  ]) {
     testWidgets(
       'reader fills $size and opening pages use normal-page font size',
       (tester) async {
@@ -259,10 +265,145 @@ void main() {
           reason: 'uniform font size, not per-line shrink',
         );
         expect(openingSize, closeTo(sizes.single, .01));
+        // Exclude stretched gaps: the words themselves must fill the limiting
+        // dimension, not merely their full-width line containers.
+        final firstWords = (data['lines'] as List).first['words'] as List;
+        final advanceWidth = firstWords.fold<double>(
+          0,
+          (sum, w) => sum + tester.getSize(word(w['id'] as int)).width,
+        );
+        final font = data['font'] as Map<String, dynamic>;
+        final inkHeight =
+            ((font['yMax'] as num) - (font['yMin'] as num)) /
+            (font['unitsPerEm'] as num) *
+            sizes.single *
+            15;
+        final fraction = (advanceWidth / page.width) > (inkHeight / page.height)
+            ? advanceWidth / page.width
+            : inkHeight / page.height;
+        expect(fraction, greaterThanOrEqualTo(.90));
+        controller.jumpToPage(size.width > size.height ? 0 : 1);
+        await tester.pumpAndSettle();
+        final page2 = pages.singleWhere((p) => p['page'] == 2);
+        final id2 =
+            ((page2['lines'] as List).firstWhere(
+                          (l) => (l['words'] as List).isNotEmpty,
+                        )['words']
+                        as List)
+                    .first['id']
+                as int;
+        expect(
+          tester
+              .widget<Text>(
+                find.descendant(of: word(id2), matching: find.byType(Text)),
+              )
+              .style!
+              .fontSize,
+          closeTo(openingSize, .01),
+        );
         expect(tester.takeException(), isNull);
       },
     );
   }
+
+  testWidgets(
+    'height-limited spread keeps justified text at the shared font scale',
+    (tester) async {
+      await mount(tester, landscape: true);
+      final controller = tester
+          .widget<PageView>(find.byType(PageView))
+          .controller!;
+      controller.jumpToPage(1);
+      await tester.pumpAndSettle();
+      final page = pages.singleWhere((p) => p['page'] == 48);
+      final lines = page['lines'] as List;
+      final fontSize = tester
+          .widget<Text>(
+            find.descendant(of: word(6171), matching: find.byType(Text)),
+          )
+          .style!
+          .fontSize!;
+      // The widest bundled line at this same font size sets the text block.
+      var naturalWidth = 0.0;
+      for (final p in pages) {
+        for (final line in p['lines'] as List) {
+          final words = line['words'] as List;
+          if (words.isEmpty) continue;
+          var width = (words.length - 1) * fontSize * .09;
+          for (final w in words) {
+            final painter = TextPainter(
+              text: TextSpan(
+                text: w['text'] as String,
+                style: TextStyle(
+                  fontFamily: 'mushaf-${p['page']}',
+                  fontSize: fontSize,
+                  height: 1,
+                ),
+              ),
+              textDirection: TextDirection.rtl,
+            )..layout();
+            width += painter.width;
+            painter.dispose();
+          }
+          if (width > naturalWidth) naturalWidth = width;
+        }
+      }
+      final first = (lines.first['words'] as List).first['id'] as int;
+      final last = (lines.first['words'] as List).last['id'] as int;
+      final span =
+          tester.getRect(word(first)).right - tester.getRect(word(last)).left;
+      expect(span, closeTo(naturalWidth, 1));
+      expect(
+        tester.getCenter(find.byKey(const ValueKey('line-48-1'))).dx,
+        closeTo(
+          (tester.getRect(word(first)).right +
+                  tester.getRect(word(last)).left) /
+              2,
+          .1,
+        ),
+      );
+      // The touch band still covers the entire page, including outside the ink.
+      expect(
+        tester.getSize(find.byKey(const ValueKey('line-48-1'))).width,
+        596,
+      );
+    },
+  );
+
+  testWidgets(
+    'spread drag crosses a line break, locks swiping and counts each word once',
+    (tester) async {
+      await mount(tester, landscape: true);
+      final controller = tester
+          .widget<PageView>(find.byType(PageView))
+          .controller!;
+      controller.jumpToPage(1);
+      await tester.pumpAndSettle();
+      final dense = pages.singleWhere((p) => p['page'] == 48);
+      final lines = dense['lines'] as List;
+      final from = (lines[0]['words'] as List).last['id'] as int;
+      final to = (lines[1]['words'] as List).first['id'] as int;
+      final gesture = await tester.startGesture(tester.getCenter(word(from)));
+      await tester.pump(const Duration(milliseconds: 600));
+      await gesture.moveTo(tester.getCenter(word(to)));
+      await gesture.moveTo(tester.getCenter(word(from)));
+      await tester.pump();
+      for (final id in [from, to]) {
+        expect(status(tester, id), contains('black; reveals 1'));
+      }
+      expect(controller.page, 1);
+      expect(
+        tester.widget<PageView>(find.byType(PageView)).physics,
+        isA<NeverScrollableScrollPhysics>(),
+      );
+      await gesture.up();
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(PageView), const Offset(-1000, 0));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('page-1')), findsOneWidget);
+      expect(find.byKey(const ValueKey('page-2')), findsOneWidget);
+    },
+  );
 
   testWidgets(
     'pages 1, 2, 48 render the layout database line ranges without wrapping',

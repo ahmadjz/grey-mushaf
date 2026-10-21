@@ -124,3 +124,67 @@ Step 7, continued. The new writer:
 
 Then Claude reads the diff. A round-2 review runs on a new high-effort thread (gestures and layout
 changed). Then Step 8, the exit check and the report.
+
+## Step 7: R19 finished and proved on the replacement machine (2026-10-21)
+
+Started at `cb5070b`, clean tree; read `296493f..4b56a8a`. Kept the bundler confinement
+and full-line-band hit testing. Finished the WIP by constraining justified text to its shared
+font scale: height-limited spreads previously stretched word gaps across the whole half-screen,
+including page 2's non-centred line. Text now stays centred at its natural scaled block width;
+the hit bands still cover the full page width. Fixed the analyzer's missing braces.
+
+Test-first evidence: the new landscape spacing regression failed with a 596 px text span versus
+380.83 px expected, then passed after the layout change. Added viewport fill and page 2 font-size
+checks at the four emulator SafeArea sizes, and a spread drag across a line break with swipe lock,
+once-only counts and swipe restoration. Corrected the overhang test to the right edge: uniFC47's
+xMax is 2669, beyond its 2371-unit advance. Existing left/right spread and gesture tests still pass.
+
+Gates (final source):
+- `~/.local/bin/uv run --no-project --with pytest python -m pytest -q tests/`: 15 passed.
+- From `app/`, `flutter analyze`: zero issues.
+- From `app/`, `heavy flutter test`: 13 passed.
+- From `app/`, `heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter build apk --debug`: passed.
+- `git diff --check`: passed. Assets and screenshots remain gitignored.
+
+Live proof used `flutter devices`, then `Medium_Phone` first and `Tablet_API_37` second, one
+emulator at a time. Both API 37, SwiftShader, 4 GB guest RAM. The initial 2 GB phone guest killed
+the foreground app twice (Android lowmemorykiller); increasing guest RAM resolved it. Installed
+the final debug APK with adb, navigated/pressed with `adb shell input`, rotated with Android's
+`user_rotation` setting, and captured each image with `adb exec-out screencap -p`.
+
+All paths below are under `docs/runs/shots/`. Fractions use the limiting dimension of the common
+15-line page at the shared font size, divided by the SafeArea dimension **including** the footer.
+Phone portrait is width-limited (1080 px); phone landscape is height-limited (954 px). Tablet
+portrait and landscape are height-limited (2448 and 1488 px). Android bars are excluded.
+The visible-ink column is measured independently from screenshot pixels: bounding box of luminance
+<240 within the text area, excluding the footer. For spreads, values are page order (right|left).
+
+| Screenshot | Common page block | Visible ink |
+| --- | ---: | ---: |
+| `phase0-r19-phone-page48-revealed.png` | 99.03% | 98.52% |
+| `phase0-r19-phone-page1.png` | 99.03% | 78.80% |
+| `phase0-r19-phone-spread1-2.png` | 93.40% | 46.96% / 46.86% |
+| `phase0-r19-phone-spread47-48.png` | 93.40% | 92.14% / 92.03% |
+| `phase0-r19-tablet-page48-revealed.png` | 98.04% | 96.69% |
+| `phase0-r19-tablet-page1.png` | 98.04% | 49.22% |
+| `phase0-r19-tablet-spread1-2.png` | 96.77% | 48.72% / 48.59% |
+| `phase0-r19-tablet-spread47-48.png` | 96.77% | 95.43% / 95.36% |
+
+Pages 1–2 deliberately occupy less than 90% with their visible ink: R19 explicitly retains their
+short centred layout at the normal-page font size. They share the common scaling above; their
+ink is not enlarged independently to reach 90%. All normal-page ink measurements exceed 90%.
+The opening measurements include the existing system-font heading/basmallah placeholders.
+
+Overhang proof: only word id `6177` (`2:282:7`) became black, reveal count 1, on each device.
+Phone advance rectangle `[235,68][294,216]`, press `(296,177)` for 800 ms; tablet rectangle
+`[414,52][489,212]`, press `(491,176)` for 800 ms. Both pressed pixels changed from grey to
+RGB `(0,0,0)` outside the advance rectangle. Rotation retained that reveal. The eight final
+screenshots have zero unequal-RGB pixels inside the SafeArea (R17). All eight were visually checked.
+
+No test accounts, tokens or server records created. The in-memory reveal of word `6177` was removed
+by stopping the app/emulator; `/sdcard/phase0-r19.xml` was removed from both emulators. Both emulators
+are stopped. No VPS changes, no push, no rewritten commits.
+
+Not run: physical phone/Boox (none connected), a fresh comparison against the original outline
+pages (this run used the existing database line-range test), round-2 independent review (next step).
+The existing system-font heading/basmallah placeholders remain a phase-0 limitation.

@@ -180,7 +180,7 @@ class _ReaderState extends State<Reader> {
           builder: (context, constraints) {
             final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
             final slotHeight = (constraints.maxHeight - 24) / 15;
-            final fontSize = _fontSize(pageWidth - 4, slotHeight);
+            final text = _textSize(pageWidth - 4, slotHeight);
             void select(int number) {
               final index = groups.indexWhere(
                 (g) => g.any((p) => p['page'] == number),
@@ -196,8 +196,9 @@ class _ReaderState extends State<Reader> {
               onLongPressCancel: _end,
               onTapUp: (details) {
                 final id = _wordAt(details.globalPosition);
-                if (id != null && _black.contains(id))
+                if (id != null && _black.contains(id)) {
                   setState(() => _black.remove(id));
+                }
               },
               child: PageView.builder(
                 key: ValueKey(spread),
@@ -215,7 +216,13 @@ class _ReaderState extends State<Reader> {
                   children: [
                     for (final page in groups[index])
                       Expanded(
-                        child: _page(page, fontSize, slotHeight, select),
+                        child: _page(
+                          page,
+                          text.size,
+                          text.width,
+                          slotHeight,
+                          select,
+                        ),
                       ),
                   ],
                 ),
@@ -250,7 +257,7 @@ class _ReaderState extends State<Reader> {
         (font['unitsPerEm'] as num);
   }
 
-  double _fontSize(double width, double height) {
+  ({double size, double width}) _textSize(double width, double height) {
     var widest = 1.0;
     var tallest = 1.0;
     // One size across the bundle: opening pages share the normal-page size.
@@ -269,12 +276,14 @@ class _ReaderState extends State<Reader> {
         widest = math.max(widest, lineWidth + (words.length - 1) * .09);
       }
     }
-    return math.min(width / widest, height / tallest);
+    final size = math.min(width / widest, height / tallest);
+    return (size: size, width: size * widest);
   }
 
   Widget _page(
     Map<String, dynamic> page,
     double fontSize,
+    double textWidth,
     double slotHeight,
     ValueChanged<int> select,
   ) {
@@ -296,7 +305,13 @@ class _ReaderState extends State<Reader> {
                     : MainAxisAlignment.start,
                 children: [
                   for (final line in lines)
-                    _line(page, line as Map<String, dynamic>, fontSize, height),
+                    _line(
+                      page,
+                      line as Map<String, dynamic>,
+                      fontSize,
+                      textWidth,
+                      height,
+                    ),
                 ],
               ),
             ),
@@ -333,6 +348,7 @@ class _ReaderState extends State<Reader> {
     Map<String, dynamic> page,
     Map<String, dynamic> line,
     double size,
+    double textWidth,
     double height,
   ) {
     final number = page['page'] as int;
@@ -379,7 +395,14 @@ class _ReaderState extends State<Reader> {
       key: ValueKey('line-$number-${line['number']}'),
       height: height,
       width: double.infinity,
-      child: SizedBox(key: bandKey, child: content),
+      // Keep the complete hit band while scaling justified lines with the font.
+      // A height-limited spread must not stretch its inter-word gaps sideways.
+      child: SizedBox(
+        key: bandKey,
+        child: Center(
+          child: SizedBox(width: textWidth, child: content),
+        ),
+      ),
     );
   }
 

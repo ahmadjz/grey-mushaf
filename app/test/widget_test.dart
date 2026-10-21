@@ -8,7 +8,8 @@ import 'package:greymushaf/main.dart';
 
 late List<Map<String, dynamic>> pages;
 
-Finder word(int id) => find.byKey(ValueKey('word-$id'));
+Finder word(int id, {bool skipOffstage = true}) =>
+    find.byKey(ValueKey('word-$id'), skipOffstage: skipOffstage);
 String status(WidgetTester tester, int id) =>
     tester.widget<Semantics>(word(id)).properties.label!;
 
@@ -142,6 +143,9 @@ void main() {
     await tester.longPressAt(overhang);
     await tester.pump();
     expect(status(tester, id), contains('black; reveals 1'));
+    for (final other in words.where((w) => w['id'] != id)) {
+      expect(status(tester, other['id'] as int), contains('grey; reveals 0'));
+    }
     await tester.tapAt(overhang);
     await tester.pump();
     expect(status(tester, id), contains('grey; reveals 1'));
@@ -161,7 +165,7 @@ void main() {
   });
 
   testWidgets(
-    'drag through spread gutter assigns the nearest line edge without counting twice',
+    'empty gutter does nothing; dragging into each page counts once',
     (tester) async {
       await mount(tester, landscape: true);
       await tester.drag(find.byType(PageView), const Offset(1000, 0));
@@ -177,7 +181,8 @@ void main() {
       final gutter = Offset((a.left + b.right) / 2 + 1, a.center.dy);
       final gesture = await tester.startGesture(gutter);
       await tester.pump(const Duration(milliseconds: 600));
-      expect(status(tester, rightId), contains('black; reveals 1'));
+      expect(status(tester, rightId), contains('grey; reveals 0'));
+      expect(status(tester, leftId), contains('grey; reveals 0'));
       await gesture.moveTo(b.center);
       await gesture.moveTo(a.center);
       await tester.pump();
@@ -187,6 +192,154 @@ void main() {
       await tester.pumpAndSettle();
     },
   );
+
+  testWidgets('visible first-word tail belongs only to 1:1:1', (tester) async {
+    tester.view.physicalSize = const Size(1080 / 2.625, 2274 / 2.625);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
+    await tester.pumpAndSettle();
+    // Device coordinate (671,885), minus the 63 px Android status bar.
+    await tester.longPressAt(const Offset(671 / 2.625, (885 - 63) / 2.625));
+    await tester.pump();
+    expect(status(tester, 1), contains('black; reveals 1'));
+    for (final id in [2, 3, 4, 5]) {
+      expect(status(tester, id), contains('grey; reveals 0'));
+    }
+  });
+
+  testWidgets('ink reaching into page padding still belongs to its word', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1080 / 2.625, 2274 / 2.625);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
+    await tester.pumpAndSettle();
+    tester.widget<PageView>(find.byType(PageView)).controller!.jumpToPage(3);
+    await tester.pumpAndSettle();
+    // 2:282:70 has 43 font units of right overhang into the 2 dp padding.
+    final rect = tester.getRect(word(6240));
+    final point = Offset(rect.right + .2, rect.center.dy);
+    expect(point.dx, lessThan(tester.view.physicalSize.width));
+    await tester.longPressAt(point);
+    await tester.pump();
+    expect(status(tester, 6240), contains('black; reveals 1'));
+  });
+
+  testWidgets('empty glyph in a multi-character word has no ink extent', (
+    tester,
+  ) async {
+    final data = jsonDecode(jsonEncode(pages)) as List;
+    final first = data[0]['lines'][1]['words'][0];
+    first['text'] = '${first['text']} ';
+    (first['ink'] as List).add(null);
+    await tester.pumpWidget(
+      MaterialApp(home: Reader(pages: data.cast<Map<String, dynamic>>())),
+    );
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    expect(word(1), findsOneWidget);
+  });
+
+  testWidgets('empty margin press and tap never change a word', (tester) async {
+    await mount(tester);
+    final margin = Offset(5, tester.getCenter(word(5)).dy);
+    await tester.longPressAt(margin);
+    await tester.pump();
+    expect(status(tester, 5), contains('grey; reveals 0'));
+    await tester.longPress(word(5));
+    await tester.pump();
+    await tester.tapAt(margin);
+    await tester.pump();
+    expect(status(tester, 5), contains('black; reveals 1'));
+  });
+
+  testWidgets('attached off-screen bands cannot receive a press', (
+    tester,
+  ) async {
+    await mount(tester);
+    final controller = tester
+        .widget<PageView>(find.byType(PageView))
+        .controller!;
+    // Keep page 1 attached but slide its text off the right edge of the viewport.
+    controller.jumpTo(590);
+    await tester.pump();
+    final rect = tester.getRect(word(5, skipOffstage: false));
+    expect(rect.left, greaterThan(600));
+    final detector = tester.widget<GestureDetector>(
+      find
+          .ancestor(
+            of: find.byType(PageView),
+            matching: find.byType(GestureDetector),
+          )
+          .first,
+    );
+    detector.onLongPressStart!(
+      LongPressStartDetails(globalPosition: rect.center),
+    );
+    await tester.pump();
+    expect(
+      tester.widget<Semantics>(word(5, skipOffstage: false)).properties.label,
+      contains('grey; reveals 0'),
+    );
+    detector.onLongPressEnd!(const LongPressEndDetails());
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('reveal drag and rotation reuse bundle measurements', (
+    tester,
+  ) async {
+    var measurements = 0;
+    tester.view.physicalSize = const Size(600, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(pages: pages, onMeasureWord: () => measurements++),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final initial = measurements;
+    final wordCount = pages.fold<int>(
+      0,
+      (sum, page) =>
+          sum +
+          (page['lines'] as List).fold<int>(
+            0,
+            (n, line) => n + (line['words'] as List).length,
+          ),
+    );
+    expect(initial, wordCount);
+    final gesture = await tester.startGesture(tester.getCenter(word(1)));
+    await tester.pump(const Duration(milliseconds: 600));
+    await gesture.moveTo(tester.getCenter(word(4)));
+    await tester.pump();
+    expect(
+      tester
+          .widget<PopupMenuButton<int>>(
+            find.byKey(const ValueKey('page-picker-1')),
+          )
+          .enabled,
+      isFalse,
+    );
+    await gesture.up();
+    await tester.pumpAndSettle();
+    tester.view.physicalSize = const Size(1200, 700);
+    await tester.pumpAndSettle();
+    expect(measurements, initial);
+    expect(
+      tester
+          .widget<PopupMenuButton<int>>(
+            find.byKey(const ValueKey('page-picker-1')),
+          )
+          .enabled,
+      isTrue,
+    );
+  });
 
   for (final size in [
     const Size(1080 / 2.625, 2274 / 2.625),

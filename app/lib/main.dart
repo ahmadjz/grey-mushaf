@@ -48,7 +48,8 @@ Future<List<Map<String, dynamic>>> loadPages() async {
 }
 
 class Reader extends StatefulWidget {
-  const Reader({super.key, required this.pages});
+  const Reader({super.key, required this.pages, this.onMeasureWord});
+  final VoidCallback? onMeasureWord;
   final List<Map<String, dynamic>> pages;
 
   @override
@@ -62,6 +63,44 @@ class _ReaderState extends State<Reader> {
   final _visited = <int>{};
   final _bands = <String, GlobalKey>{};
   final _bandWords = <String, List<int>>{};
+  final _viewport = GlobalKey();
+  final _metrics = <int, ({double width, double left, double right})>{};
+  double _widest = 1;
+  double _tallest = 1;
+  double _size = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _measureBundle();
+  }
+
+  @override
+  void didUpdateWidget(covariant Reader oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.pages, widget.pages)) _measureBundle();
+  }
+
+  void _measureBundle() {
+    _metrics.clear();
+    _widest = 1;
+    _tallest = 1;
+    for (final page in widget.pages) {
+      _tallest = math.max(_tallest, _inkHeight(page));
+      for (final line in page['lines'] as List) {
+        final words = line['words'] as List;
+        if (words.isEmpty) continue;
+        var width = (words.length - 1) * .09;
+        for (final word in words) {
+          final metric = _measureWord(word as Map<String, dynamic>, page);
+          _metrics[word['id'] as int] = metric;
+          width += metric.width;
+        }
+        _widest = math.max(_widest, width);
+      }
+    }
+  }
+
   bool _dragging = false;
   bool? _spread;
   int _selected = 0;
@@ -75,33 +114,46 @@ class _ReaderState extends State<Reader> {
   }
 
   int? _wordAt(Offset point) {
-    String? nearestBand;
-    var distance = double.infinity;
-    for (final entry in _bands.entries) {
-      final box = entry.value.currentContext?.findRenderObject();
-      if (box is! RenderBox || !box.attached || !box.hasSize) continue;
-      final rect = Rect.fromPoints(
-        box.localToGlobal(Offset.zero),
-        box.localToGlobal(box.size.bottomRight(Offset.zero)),
-      );
-      // Adjacent slots use half-open vertical intervals: exactly one line.
-      if (point.dy < rect.top || point.dy >= rect.bottom) continue;
-      final dx = (point.dx - point.dx.clamp(rect.left, rect.right)).abs();
-      if (dx < distance) {
-        distance = dx;
-        nearestBand = entry.key;
-      }
-    }
+    final viewport = _viewport.currentContext?.findRenderObject() as RenderBox?;
+    if (viewport == null || !viewport.hasSize) return null;
+    final visible = viewport.localToGlobal(Offset.zero) & viewport.size;
+    if (!visible.contains(point)) return null;
     int? nearestWord;
-    distance = double.infinity;
-    for (final id in _bandWords[nearestBand] ?? <int>[]) {
-      final box = _targets[id]?.currentContext?.findRenderObject();
-      if (box is! RenderBox || !box.attached || !box.hasSize) continue;
-      final center = box.localToGlobal(box.size.center(Offset.zero));
-      final dx = (point.dx - center.dx).abs();
-      if (dx < distance) {
-        distance = dx;
-        nearestWord = id;
+    var bestOutside = double.infinity;
+    var bestEdge = double.infinity;
+    for (final entry in _bands.entries) {
+      final band = entry.value.currentContext?.findRenderObject();
+      if (band is! RenderBox || !band.attached || !band.hasSize) continue;
+      final rect = band.localToGlobal(Offset.zero) & band.size;
+      // Full vertical line bands, clipped to this PageView's visible viewport.
+      // No nearest-band fallback into another page or an off-screen child.
+      if (!rect.overlaps(visible) ||
+          point.dy < rect.top ||
+          point.dy >= rect.bottom) {
+        continue;
+      }
+      for (final id in _bandWords[entry.key] ?? <int>[]) {
+        final box = _targets[id]?.currentContext?.findRenderObject();
+        if (box is! RenderBox || !box.attached || !box.hasSize) continue;
+        final metric = _metrics[id]!;
+        final origin = box.localToGlobal(Offset.zero).dx;
+        final left = origin + metric.left * _size;
+        final right = origin + metric.right * _size;
+        final outside = (point.dx - point.dx.clamp(left, right)).abs();
+        // 0.08 em horizontally; vertical hit areas remain the entire line band.
+        if (outside > _size * .08) continue;
+        final edge = math.min(
+          (point.dx - left).abs(),
+          (point.dx - right).abs(),
+        );
+        // Containment beats tolerance. In overlapping extents, use the nearest
+        // ink edge rather than the advance-box centre (which can be far away).
+        if (outside < bestOutside ||
+            (outside == bestOutside && edge < bestEdge)) {
+          bestOutside = outside;
+          bestEdge = edge;
+          nearestWord = id;
+        }
       }
     }
     return nearestWord;
@@ -189,6 +241,7 @@ class _ReaderState extends State<Reader> {
             }
 
             return GestureDetector(
+              key: _viewport,
               behavior: HitTestBehavior.opaque,
               onLongPressStart: _start,
               onLongPressMoveUpdate: _move,
@@ -241,14 +294,48 @@ class _ReaderState extends State<Reader> {
     color: Colors.black,
   );
 
-  double _width(Map<String, dynamic> word, int page, double size) {
+  ({double width, double left, double right}) _measureWord(
+    Map<String, dynamic> word,
+    Map<String, dynamic> page,
+  ) {
+    widget.onMeasureWord?.call();
+    const reference = 100.0;
+    final text = word['text'] as String;
     final painter = TextPainter(
-      text: TextSpan(text: word['text'] as String, style: _style(page, size)),
+      text: TextSpan(text: text, style: _style(page['page'] as int, reference)),
       textDirection: TextDirection.rtl,
     )..layout();
-    final width = painter.width;
+    final units = (page['font']['unitsPerEm'] as num).toDouble();
+    final ink = word['ink'] as List;
+    var left = double.infinity;
+    var right = double.negativeInfinity;
+    var offset = 0;
+    var index = 0;
+    for (final rune in text.runes) {
+      final end = offset + String.fromCharCode(rune).length;
+      final boxes = painter.getBoxesForSelection(
+        TextSelection(baseOffset: offset, extentOffset: end),
+      );
+      // Some QUL words include an intentionally empty glyph (e.g. page 249).
+      for (final box in ink[index] == null ? <TextBox>[] : boxes) {
+        left = math.min(
+          left,
+          box.left / reference + (ink[index][0] as num) / units,
+        );
+        right = math.max(
+          right,
+          box.left / reference + (ink[index][1] as num) / units,
+        );
+      }
+      offset = end;
+      index++;
+    }
+    final width = painter.width / reference;
     painter.dispose();
-    return width;
+    if (!left.isFinite || !right.isFinite) {
+      throw StateError('Missing shaped ink bounds for ${word['location']}');
+    }
+    return (width: width, left: left, right: right);
   }
 
   double _inkHeight(Map<String, dynamic> page) {
@@ -258,26 +345,8 @@ class _ReaderState extends State<Reader> {
   }
 
   ({double size, double width}) _textSize(double width, double height) {
-    var widest = 1.0;
-    var tallest = 1.0;
-    // One size across the bundle: opening pages share the normal-page size.
-    // Include their bounds too so their diacritics cannot exceed the slots.
-    for (final page in widget.pages) {
-      tallest = math.max(tallest, _inkHeight(page));
-      for (final line in page['lines'] as List) {
-        final words = line['words'] as List;
-        if (words.isEmpty) continue;
-        final lineWidth =
-            words.fold<double>(
-              0,
-              (sum, w) => sum + _width(w, page['page'] as int, 100),
-            ) /
-            100;
-        widest = math.max(widest, lineWidth + (words.length - 1) * .09);
-      }
-    }
-    final size = math.min(width / widest, height / tallest);
-    return (size: size, width: size * widest);
+    _size = math.min(width / _widest, height / _tallest);
+    return (size: _size, width: _size * _widest);
   }
 
   Widget _page(
@@ -289,9 +358,7 @@ class _ReaderState extends State<Reader> {
   ) {
     final number = page['page'] as int;
     final lines = page['lines'] as List;
-    final height = number <= 2
-        ? fontSize * widget.pages.map(_inkHeight).reduce(math.max)
-        : slotHeight;
+    final height = number <= 2 ? fontSize * _tallest : slotHeight;
     return SizedBox(
       key: ValueKey('page-$number'),
       child: Padding(
@@ -425,7 +492,7 @@ class _ReaderState extends State<Reader> {
           '${word['location']}; ${black ? 'black' : 'grey'}; reveals ${_counts[id] ?? 0}',
       child: SizedBox(
         key: _targets.putIfAbsent(id, GlobalKey.new),
-        width: _width(word, page['page'] as int, size),
+        width: _metrics[id]!.width * size,
         height: height,
         child: FlatInk(
           color: black ? Colors.black : const Color(0xFFB0B0B0),

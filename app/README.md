@@ -20,6 +20,14 @@ directory is gitignored. No assets are fetched by the app. `--all` bundles all
 files named in the previous generated manifest. Fonts are copied unchanged.
 Assets and their notices must remain outside the public repository.
 
+Re-run the bundler after updating: each word now includes horizontal glyph ink
+bounds from the TrueType/COLR layers. The reader combines these with Flutter's
+shaped character positions and caches the resulting widths and ink extents once
+per bundle. Revealing words and rotating do not re-measure the bundle.
+Hit testing retains full vertical line bands, but stops horizontally at 0.08 em
+beyond the ink; empty margins and spread gutters do nothing. Overlapping ink
+extents use the nearest ink edge, not an advance-box centre.
+
 Long-press a word, then drag to reveal crossed words. Lift to restore page swiping.
 A tap on a black word turns it grey; a tap on a grey word does nothing.
 Reveals count only grey-to-black transitions, once per word per drag.
@@ -54,6 +62,9 @@ Widget tests use the real bundled fonts, exercise gestures and compare page
 library. No accounts or backend are used by this spike.
 
 ## Spike proof
+
+For the later phone/tablet R19 and round-2 regression proofs, see
+[`docs/runs/2026-10-21-phase0-spike-run-log.md`](../docs/runs/2026-10-21-phase0-spike-run-log.md).
 
 Verified on `Tablet_API_37` (Android 17 / API 37, Impeller OpenGLES), in
 portrait and landscape. The phone emulator crashed during startup; the tablet

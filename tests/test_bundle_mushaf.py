@@ -12,6 +12,39 @@ module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
 
+def ink_font(empty=None):
+    chars = sorted(set('glyph-abcd'))
+    count = len(chars)
+    head = bytearray(54)
+    struct.pack_into('>H', head, 18, 2500)
+    struct.pack_into('>hhhh', head, 36, -300, -1500, 2800, 3300)
+    struct.pack_into('>h', head, 50, 1)  # long loca
+    glyphs = [b''] + [struct.pack('>hhhhh', 1, 0, -100, 1000, 2000)] * count
+    glyphs += [b'' if c == empty else struct.pack('>hhhhh', -1, -300, -1500, 2800, 3300) for c in chars]
+    offsets = [0]
+    for glyph in glyphs:
+        offsets.append(offsets[-1] + len(glyph))
+    codes = [ord(c) for c in chars] + [65535]
+    n = len(codes)
+    cmap4 = struct.pack('>7H', 4, 16 + 8*n, 0, 2*n, 0, 0, 0)
+    cmap4 += struct.pack('>'+'H'*n, *codes) + b'\0\0'
+    cmap4 += struct.pack('>'+'H'*n, *codes)
+    cmap4 += struct.pack('>'+'H'*n, *[(i+1-c) & 65535 for i,c in enumerate(codes[:-1])], 1)
+    cmap4 += bytes(2*n)
+    cmap = struct.pack('>HHHHI', 0, 1, 3, 1, 12) + cmap4
+    colr = struct.pack('>HHIIH', 0, count, 14, 14+6*count, count)
+    colr += b''.join(struct.pack('>HHH', i+1, i, 1) for i in range(count))
+    colr += b''.join(struct.pack('>HH', count+i+1, 0) for i in range(count))
+    tables = {b'head': bytes(head), b'cmap': cmap, b'COLR': colr,
+              b'loca': struct.pack('>'+'I'*len(offsets), *offsets), b'glyf': b''.join(glyphs)}
+    result = struct.pack('>IHHHH', 0x10000, len(tables), 0, 0, 0)
+    offset = 12 + 16*len(tables)
+    for tag, data in tables.items():
+        result += struct.pack('>4sIII', tag, 0, offset, len(data))
+        offset += len(data)
+    return result + b''.join(tables.values())
+
+
 @pytest.fixture
 def source(tmp_path, monkeypatch):
     monkeypatch.setattr(module, "ROOT", tmp_path)
@@ -34,11 +67,7 @@ def source(tmp_path, monkeypatch):
             (3, '2:1:1', 2, 1, 1, 'glyph-d'),
         ])
     for page in (1, 2):
-        head = bytearray(54)
-        struct.pack_into('>H', head, 18, 2500)
-        struct.pack_into('>hhhh', head, 36, -100, -1500, 3000, 3300)
-        font = struct.pack('>IHHHH', 0x10000, 1, 0, 0, 0) + struct.pack('>4sIII', b'head', 0, 28, 54) + head
-        (src / f'fonts/p{page}.ttf').write_bytes(font)
+        (src / f'fonts/p{page}.ttf').write_bytes(ink_font())
     return src
 
 
@@ -52,8 +81,8 @@ def test_bundles_only_selected_pages_preserving_words_and_non_word_lines(source,
     assert page['font'] == {'unitsPerEm': 2500, 'yMin': -1500, 'yMax': 3300}
     assert page['lines'][0] == {'number': 1, 'type': 'surah_name', 'centered': True, 'surah': 1, 'words': []}
     assert page['lines'][1]['words'] == [
-        {'id': 1, 'location': '1:1:1', 'text': 'glyph-a'},
-        {'id': 2, 'location': '1:1:2', 'text': 'glyph-bc'},
+        {'id': 1, 'location': '1:1:1', 'text': 'glyph-a', 'ink': [[-300, 2800]] * 7},
+        {'id': 2, 'location': '1:1:2', 'text': 'glyph-bc', 'ink': [[-300, 2800]] * 8},
     ]
     assert json.loads((out / '2.json').read_text())['lines'][0]['words'] == []
     assert (out / 'p2.ttf').read_bytes() == (source / 'fonts/p2.ttf').read_bytes()
@@ -130,3 +159,22 @@ def test_refuses_overwriting_unowned_output(source, tmp_path):
     with pytest.raises(ValueError, match='unowned'):
         module.bundle(source, out, [1])
     assert (out / '1.json').read_text() == 'unrelated'
+
+
+def test_missing_glyph_is_rejected_before_any_output(source, tmp_path):
+    with sqlite3.connect(source / 'words/qpc-v4.db') as db:
+        db.execute("UPDATE words SET text='?' WHERE id=1")
+    out = tmp_path / 'app/assets/mushaf'
+    with pytest.raises(ValueError, match='glyph'):
+        module.bundle(source, out, [1])
+    assert not out.exists()
+
+
+def test_empty_colr_glyph_in_multi_character_word(source, tmp_path):
+    (source / 'fonts/p1.ttf').write_bytes(ink_font(empty='d'))
+    with sqlite3.connect(source / 'words/qpc-v4.db') as db:
+        db.execute("UPDATE words SET text='ad' WHERE id=1")
+    out = tmp_path / 'app/assets/mushaf'
+    module.bundle(source, out, [1])
+    page = json.loads((out / '1.json').read_text())
+    assert page['lines'][1]['words'][0]['ink'] == [[-300, 2800], None]

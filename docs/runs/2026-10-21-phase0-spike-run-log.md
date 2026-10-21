@@ -188,3 +188,72 @@ are stopped. No VPS changes, no push, no rewritten commits.
 Not run: physical phone/Boox (none connected), a fresh comparison against the original outline
 pages (this run used the existing database line-range test), round-2 independent review (next step).
 The existing system-font heading/basmallah placeholders remain a phase-0 limitation.
+
+## Round-2 fixes: ink ownership, empty space and measurement caching
+
+Started at `d0453df`, clean tree. Addressed the three retained MEDIUM findings.
+
+- The bundler emits each character's horizontal TrueType ink bounds, including the union of
+  COLR v0 layers and composite-glyph bounds. It leaves shaping/RTL offsets to Flutter's character
+  selection boxes. The reader combines these into word ink extents. Direct containment wins over
+  tolerance; overlapping extents use the nearest ink edge. This handles the long first-word tail
+  and page-48 overhang without using misleading advance-box centres. These are horizontal ink
+  projections, not pixel masks; full vertical line bands remain intentional.
+- Horizontal tolerance is **0.08 em**. Empty margins/gutters beyond it do nothing on press or tap.
+  The viewport rejects off-screen input and bands. Ink may extend into the thin page padding.
+  The old gutter test was corrected: start in empty space, then reveal only when dragging into ink.
+- One reference-size TextPainter per word computes both width and shaped ink bounds on bundle
+  initialization; a new bundle identity invalidates the cache. Font scaling uses cached maxima.
+  Reveals, drags and rotation do not re-measure any words. The measurement seam test checks exactly
+  **347 initial measurements and zero additional measurements** for the four-page bundle.
+  The optional picker-disabled-during-drag assertion is included.
+
+Test-first evidence:
+- Tail press selected `1:1:2` instead of `1:1:1`; new test failed before the fix.
+- Empty margin/gutter and off-screen input changed word state; new assertions failed before the fix.
+- Drag/rotation increased measurement calls from 383 to 1,956; the cache regression failed before
+  implementation, then passed with exactly one measurement per word.
+- Padding-edge ink of `2:282:70` remained grey; regression failed before removing horizontal
+  line-container clipping from ink eligibility.
+- New bundler metadata/missing-glyph tests failed first. An all-font check then found seven
+  intentionally empty glyphs in multi-character words (including page 249). New Python and Flutter
+  tests failed before empty glyphs were represented as null ink bounds and skipped for hit extents.
+
+Final checks:
+- `~/.local/bin/uv run --no-project --with pytest python -m pytest -q tests/`: **17 passed**.
+- `flutter analyze`: **zero issues**.
+- `heavy flutter test`: **19 passed**.
+- `heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter build apk --debug`: **passed**.
+- Independent comparison against fontTools: **374 glyph bounds matched** across the four sample fonts.
+- Read-only source scan: **83,668 words across 604 fonts covered**, seven empty component glyphs,
+  no missing glyphs or entirely empty words. No full-bundle outputs were written.
+- `git diff --check`: **passed**. Rebuilt sample bundle remains gitignored; fonts copied unchanged.
+
+Final live proof uses the final debug APK: `Medium_Phone` first, then `Tablet_API_37`, one emulator
+at a time (API 37, SwiftShader, 4 GB RAM). Inputs use `adb shell input`; captures use
+`adb exec-out screencap -p`. Accessibility snapshots beside each PNG record states/counts.
+
+| Check | Phone device pixels | Tablet device pixels | Result |
+| --- | --- | --- | --- |
+| First-word tail | (671,885) | (966,887) | Only `1:1:1` black, count 1 |
+| Empty margin | (15,850) | (15,852) | Initial press reveals nothing; later press + tap leaves black `1:1:5` and all counts unchanged |
+| Page-48 overhang | (296,183), advance right 294 | (491,183), advance right 489 | Only `2:282:7` black, count 1 |
+| Spread gutter | (1197,98) | (1275,100) | Press changes nothing |
+| Gutter drag endpoints | (821,98) ↔ (1573,98) | (998,100) ↔ (1553,100) | Only `2:282:1` and `2:275:9` newly black, each count 1 despite repeated crossings; prior `2:282:7` unchanged |
+
+Screenshots (gitignored) under `docs/runs/shots/`:
+- `phase0-r19-fix-phone-page1-tail.png`
+- `phase0-r19-fix-phone-page1-margin.png`
+- `phase0-r19-fix-phone-page48-overhang.png`
+- `phase0-r19-fix-phone-spread47-48-gutter.png`
+- `phase0-r19-fix-tablet-page1-tail.png`
+- `phase0-r19-fix-tablet-page1-margin.png`
+- `phase0-r19-fix-tablet-page48-overhang.png`
+- `phase0-r19-fix-tablet-spread47-48-gutter.png`
+
+No accounts, tokens or server records created. Temporary in-memory word states/counts were for
+ids `1`, `5`, `6038`, `6171`, `6177`; force-stopping the app removed them. Remote temporary file
+`/sdcard/phase0-r19-fix.xml` was removed on each emulator. Both emulators stopped afterward.
+
+Not run: physical phone/Boox (none connected), full 604-page rendering/startup timing (four-page
+spike APK used), another independent review (handoff next). No push or rewritten commits.

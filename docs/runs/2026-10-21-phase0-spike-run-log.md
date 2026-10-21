@@ -112,7 +112,7 @@ State at pause:
 4. Codex threads `01a15dfc…` (writer) and `01a15e2c…` (reviewer) do not exist on the new machine.
    Start a new writer thread at medium effort and give it this log.
 
-## Next action
+## Next action at checkpoint (done, see below)
 
 Step 7, continued. The new writer:
 - (a) reads `296493f..4b56a8a` and finishes R19: page fills the screen, minimal chrome, text block
@@ -257,3 +257,43 @@ ids `1`, `5`, `6038`, `6171`, `6177`; force-stopping the app removed them. Remot
 
 Not run: physical phone/Boox (none connected), full 604-page rendering/startup timing (four-page
 spike APK used), another independent review (handoff next). No push or rewritten commits.
+
+## Sessions on the replacement machine
+
+Writer `01a15e5b-e21d-7112-b8d0-903f6f8f85e6` (Astra medium). Round-2 reviewer
+`01a15e73-317e-7ee0-8e43-183c19aece48` (Astra high). Range `296493f..3477b33`.
+
+## Round-2 review and Claude's check (done)
+
+Gates by the reviewer: pytest 15 passed, flutter analyze no issues, flutter test 13 passed, debug
+APK built. Round-1 finding 1 (bundler) and finding 2 (2:282:7 overhang) confirmed fixed, seen live.
+
+1. MEDIUM, seen live, R3: nearest-centre choice revealed `1:1:2` for a press on `1:1:1`'s tail
+   (`app/lib/main.dart:100`). **Kept**: Claude saw it in the screenshot. **Fixed** `3477b33`.
+2. MEDIUM, seen live, R3: no horizontal cutoff, so a press or tap in an empty margin changed a word
+   (`app/lib/main.dart:89`); the gutter test asserted it. **Kept. Fixed** `3477b33` (0.08 em
+   tolerance, test corrected, off-screen bands rejected).
+3. MEDIUM, from code: every rebuild re-measured every word in the bundle (`app/lib/main.dart:265`),
+   83,668 per drag frame at 604 pages. **Kept. Fixed** `3477b33` (once per bundle, seam test).
+
+Claude read the fix diff and the tail screenshot. No third round (skill rule).
+
+## Step 8: exit check (done)
+
+- Pages 1, 2, 48 lines match the 1441 layout: Claude checked them against the .ai pages in Step 1;
+  writer 15/15 on p48; database line-range test `widget_test.dart`.
+- Long-press reveal: seen live (`phase0-r19-fix-*-page1-tail`, `*-page48-overhang`).
+- Drag reveal with swipe off: seen live on the tablet spread (`*-spread47-48-gutter`), tests.
+- Tap re-grey: widget tests. Live only through the margin-bug repro before the fix.
+- Portrait page and landscape spread (R4), page fill (R19): seen live on phone and tablet, table above.
+- Plain black/grey (R17): zero unequal-RGB pixels in every screenshot.
+- Licence status: R16 (personal use only).
+- Not observed: physical phone and Boox (none connected); full 604-page bundle timing.
+- Known limitation: surah name and basmallah lines use a system font placeholder.
+
+**Phase 0 is done** on emulators.
+
+## Next action
+
+Phase 1. Bundle all 604 pages, measure startup and memory on the phone, replace the heading
+placeholders, and get a first look on the owner's phone and Boox.

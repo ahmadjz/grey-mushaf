@@ -13,7 +13,7 @@ spec.loader.exec_module(module)
 
 
 def ink_font(empty=None):
-    chars = sorted(set('glyph-abcd'))
+    chars = sorted(set('glyph-abcd' + '\ufc41\ufc42\ufc43\ufc44' + '\ue000\ue001\ue002\ue003\ue009\ue070\ue071\ue072'))
     count = len(chars)
     head = bytearray(54)
     struct.pack_into('>H', head, 18, 2500)
@@ -49,7 +49,7 @@ def ink_font(empty=None):
 def source(tmp_path, monkeypatch):
     monkeypatch.setattr(module, "ROOT", tmp_path)
     src = tmp_path / 'source'
-    for directory in ('layout', 'words', 'fonts'):
+    for directory in ('layout', 'words', 'fonts', 'surah-names'):
         (src / directory).mkdir(parents=True)
     with sqlite3.connect(src / 'layout/qpc-v4-tajweed-15-lines.db') as db:
         db.execute('CREATE TABLE pages (page_number, line_number, line_type, is_centered, first_word_id, last_word_id, surah_number)')
@@ -68,6 +68,8 @@ def source(tmp_path, monkeypatch):
         ])
     for page in (1, 2):
         (src / f'fonts/p{page}.ttf').write_bytes(ink_font())
+    (src / 'surah-names/surah-name-v4.ttf').write_bytes(ink_font())
+    monkeypatch.setattr(module, 'trace_basmallah', lambda path: {'bounds': [0, 0, 140, 19], 'commands': [['M', 0, 0], ['L', 140, 19], ['Z']]}, raising=False)
     return src
 
 
@@ -79,14 +81,14 @@ def test_bundles_only_selected_pages_preserving_words_and_non_word_lines(source,
     page = json.loads((out / '1.json').read_text())
     assert page['page'] == 1
     assert page['font'] == {'unitsPerEm': 2500, 'yMin': -1500, 'yMax': 3300}
-    assert page['lines'][0] == {'number': 1, 'type': 'surah_name', 'centered': True, 'surah': 1, 'words': []}
+    assert page['lines'][0] == {'number': 1, 'type': 'surah_name', 'centered': True, 'surah': 1, 'words': [], 'heading': {'kind': 'surah', 'font': 'surah-name-v4', 'parts': ['surah-icon', 'surah001']}}
     assert page['lines'][1]['words'] == [
         {'id': 1, 'location': '1:1:1', 'text': 'glyph-a', 'ink': [[-300, 2800]] * 7},
         {'id': 2, 'location': '1:1:2', 'text': 'glyph-bc', 'ink': [[-300, 2800]] * 8},
     ]
     assert json.loads((out / '2.json').read_text())['lines'][0]['words'] == []
     assert (out / 'p2.ttf').read_bytes() == (source / 'fonts/p2.ttf').read_bytes()
-    assert sorted(p.name for p in out.iterdir()) == ['1.json', '2.json', 'p1.ttf', 'p2.ttf', 'pages.json']
+    assert sorted(p.name for p in out.iterdir()) == ['1.json', '2.json', 'fonts.json', 'p1.ttf', 'p2.ttf', 'pages.json', 'surah-name-v4.ttf']
 
 
 @pytest.mark.parametrize('problem', ['missing_word', 'missing_font', 'missing_page'])
@@ -178,3 +180,80 @@ def test_empty_colr_glyph_in_multi_character_word(source, tmp_path):
     module.bundle(source, out, [1])
     page = json.loads((out / '1.json').read_text())
     assert page['lines'][1]['words'][0]['ink'] == [[-300, 2800], None]
+
+
+def test_page_one_font_dependency_survives_deselection(source, tmp_path):
+    out = tmp_path / 'app/assets/mushaf'
+    module.bundle(source, out, [1, 2])
+    module.bundle(source, out, [2])
+    assert json.loads((out / 'pages.json').read_text()) == [2]
+    assert not (out / '1.json').exists()
+    assert (out / 'p1.ttf').read_bytes() == (source / 'fonts/p1.ttf').read_bytes()
+    assert json.loads((out / 'fonts.json').read_text()) == ['p1.ttf', 'p2.ttf']
+    line = json.loads((out / '2.json').read_text())['lines'][0]
+    assert line['words'] == []
+    assert line['heading'] == {'kind': 'compact', 'font': 'mushaf-1',
+                               'parts': ['\ufc41', '\ufc42', '\ufc43', '\ufc44']}
+
+
+def test_tawbah_and_multiple_heading_pairs(source, tmp_path):
+    with sqlite3.connect(source / 'layout/qpc-v4-tajweed-15-lines.db') as db:
+        db.execute("INSERT INTO pages VALUES (187,1,'surah_name',1,'','',9)")
+        for line, surah in [(1,112),(5,113),(10,114)]:
+            db.execute("INSERT INTO pages VALUES (604,?,'surah_name',1,'','',?)", (line,surah))
+            db.execute("INSERT INTO pages VALUES (604,?,'basmallah',1,'','','')", (line+1,))
+    for page in (187,604):
+        (source / f'fonts/p{page}.ttf').write_bytes(ink_font())
+    out = tmp_path / 'app/assets/mushaf'
+    module.bundle(source, out, [187,604])
+    tawbah = json.loads((out / '187.json').read_text())['lines']
+    assert len(tawbah) == 1 and tawbah[0]['heading']['parts'][1] == 'surah009'
+    lines = json.loads((out / '604.json').read_text())['lines']
+    assert all(line['words'] == [] for line in lines)
+    assert [line['heading']['kind'] for line in lines] == ['surah','wide'] * 3
+    assert all(line['heading']['asset'] == 'basmallah.json' for line in lines[1::2])
+    assert (out / 'basmallah.json').exists()
+    assert not (out / 'p1.ttf').exists()
+
+
+def test_missing_wide_artwork_fails_before_writes(source, tmp_path, monkeypatch):
+    def missing(path):
+        raise ValueError('Missing page-50 .ai source')
+    monkeypatch.setattr(module, 'trace_basmallah', missing, raising=False)
+    with sqlite3.connect(source / 'layout/qpc-v4-tajweed-15-lines.db') as db:
+        db.execute("INSERT INTO pages VALUES (50,1,'basmallah',1,'','','')")
+    (source / 'fonts/p50.ttf').write_bytes(ink_font())
+    out = tmp_path / 'app/assets/mushaf'
+    with pytest.raises(ValueError, match='page-50'):
+        module.bundle(source, out, [50])
+    assert not out.exists()
+
+
+@pytest.mark.parametrize('name', ['fonts.json', 'surah-name-v4.ttf', 'basmallah.json'])
+def test_shared_outputs_must_be_owned(source, tmp_path, name):
+    out = tmp_path / 'app/assets/mushaf'
+    out.mkdir(parents=True)
+    (out / name).write_text('unrelated')
+    with pytest.raises(ValueError):
+        module.bundle(source, out, [1,2])
+    assert (out / name).read_text() == 'unrelated'
+
+
+def test_vector_trace_preserves_curves_holes_and_excludes_adjacent_lines():
+    svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382.677 547.086">
+    <path fill="rgb(13%, 12%, 12%)" fill-rule="evenodd" d="
+    M 0 0 L 100 0 L 100 20 Z
+    M 54 31 C 70 30 180 49 194 49 L 54 49 Z
+    M 60 35 L 65 35 L 65 40 Z
+    M 0 55 L 200 55 L 200 75 Z"/></svg>'''
+    result = module.extract_basmallah(svg)
+    assert result['bounds'] == [54,30,194,49]
+    assert [c[0] for c in result['commands']] == ['M','C','L','Z','M','L','L','Z']
+    assert result['fillRule'] == 'evenodd'
+    with pytest.raises(ValueError, match='crosses'):
+        module.extract_basmallah(svg.replace('L 54 49', 'L 54 55'))
+
+
+def test_trace_requires_local_page50(tmp_path):
+    with pytest.raises(ValueError, match='page-50'):
+        module.trace_basmallah(tmp_path / 'missing.ai')

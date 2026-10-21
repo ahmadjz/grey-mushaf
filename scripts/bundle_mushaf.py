@@ -5,6 +5,10 @@ from pathlib import Path
 import shutil
 import sqlite3
 import struct
+import re
+import subprocess
+import tempfile
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -98,7 +102,75 @@ def glyph_ink(path: Path) -> dict[int, list[int] | None]:
         raise ValueError(f'Invalid glyph metrics: {path}') from exc
 
 
-def checked_output(output: Path, selected: list[int]) -> tuple[Path, set[int]]:
+def extract_basmallah(svg: str) -> dict:
+    """Extract page 50's second text line from Poppler's compound text path.
+
+    Poppler emits absolute M/L/C/Z coordinates. Retain the compound fill rule
+    and every hole; reject a changed source/converter instead of clipping ink.
+    The crop is in the text path's local PDF points, not screen pixels.
+    """
+    root = ET.fromstring(svg)
+    def dark(path):
+        values = re.findall(r'[0-9.]+', path.get('fill', ''))
+        return len(values) == 3 and all(float(v) < 25 for v in values)
+    paths = [p for p in root.iter('{http://www.w3.org/2000/svg}path') if dark(p)]
+    if not paths:
+        raise ValueError('Page-50 trace: missing black text outlines')
+    path = max(paths, key=lambda p: len(p.get('d', '')))
+    commands, bounds = [], []
+    for contour in re.split(r'(?=M )', path.get('d', '')):
+        if not contour.strip():
+            continue
+        tokens = re.findall(r'[A-Za-z]|[-+]?(?:\d*\.\d+|\d+)(?:[eE][-+]?\d+)?', contour)
+        parsed, points = [], []
+        while tokens:
+            op = tokens.pop(0)
+            if op not in ('M', 'L', 'C', 'Z'):
+                raise ValueError(f'Page-50 trace: unsupported path command {op}')
+            count = {'M': 2, 'L': 2, 'C': 6, 'Z': 0}[op]
+            values = list(map(float, tokens[:count]))
+            del tokens[:count]
+            if len(values) != count:
+                raise ValueError('Page-50 trace: truncated path')
+            parsed.append([op, *values])
+            points.extend(zip(values[::2], values[1::2]))
+        xs, ys = zip(*points)
+        box = [min(xs), min(ys), max(xs), max(ys)]
+        if box[3] <= 25 or box[1] >= 50:
+            continue
+        if box[1] <= 25 or box[3] >= 50:
+            raise ValueError('Page-50 trace: ink crosses basmallah crop')
+        commands.extend(parsed)
+        # PDF fills implicitly close every contour, including glyph holes.
+        if parsed[-1][0] != 'Z':
+            commands.append(['Z'])
+        bounds.append(box)
+    if not bounds:
+        raise ValueError('Page-50 trace: missing basmallah outlines')
+    box = [min(b[0] for b in bounds), min(b[1] for b in bounds),
+           max(b[2] for b in bounds), max(b[3] for b in bounds)]
+    if not (120 < box[2]-box[0] < 160 and 15 < box[3]-box[1] < 22):
+        raise ValueError('Page-50 trace: unexpected basmallah dimensions')
+    return {'bounds': box, 'commands': commands,
+            'fillRule': path.get('fill-rule', 'nonzero')}
+
+
+def trace_basmallah(path: Path) -> dict:
+    if not path.is_file():
+        raise ValueError(f'Missing page-50 .ai source: {path}')
+    with tempfile.TemporaryDirectory(prefix='mushaf-trace-') as temporary:
+        svg = Path(temporary) / 'page50.svg'
+        try:
+            subprocess.run(['pdftocairo', '-svg', str(path), str(svg)],
+                           check=True, capture_output=True)
+        except FileNotFoundError as exc:
+            raise ValueError('Page-50 tracing requires local Poppler pdftocairo') from exc
+        except subprocess.CalledProcessError as exc:
+            raise ValueError('Cannot read page-50 .ai source with pdftocairo') from exc
+        return extract_basmallah(svg.read_text())
+
+
+def checked_output(output: Path, selected: list[int]) -> tuple[Path, set[int], set[str]]:
     """Only the fixed, gitignored asset tree can hold generated bundles."""
     root = ROOT.resolve()
     allowed = root / 'app/assets/mushaf'
@@ -118,19 +190,37 @@ def checked_output(output: Path, selected: list[int]) -> tuple[Path, set[int]]:
     previous = json.loads(manifest.read_text()) if manifest.exists() else []
     if not isinstance(previous, list) or any(type(p) is not int or not 1 <= p <= 604 for p in previous):
         raise ValueError('Invalid output manifest')
-    for page in selected:
-        for name in (f'{page}.json', f'p{page}.ttf'):
-            target = output / name
-            if target.exists() and (page not in previous or not target.is_file()):
-                raise ValueError(f'Refusing to overwrite unowned output: {target}')
-    return output, set(previous)
+    owned = {name for p in previous for name in (f'{p}.json', f'p{p}.ttf')}
+    font_manifest = output / 'fonts.json'
+    if font_manifest.exists():
+        fonts = json.loads(font_manifest.read_text())
+        if not previous or not isinstance(fonts, list) or any(
+                not isinstance(n, str) or not re.fullmatch(r'p(?:[1-9]|[1-9][0-9]|[1-5][0-9]{2}|60[0-4])\.ttf|surah-name-v4\.ttf', n)
+                for n in fonts):
+            raise ValueError('Invalid font manifest')
+        owned.update(fonts)
+        owned.add('fonts.json')
+        for page in previous:
+            document = output / f'{page}.json'
+            if document.is_file() and any(line.get('heading', {}).get('asset') == 'basmallah.json'
+                                          for line in json.loads(document.read_text())['lines']):
+                owned.add('basmallah.json')
+    candidates = {name for p in selected for name in (f'{p}.json', f'p{p}.ttf')}
+    candidates.update(['p1.ttf', 'fonts.json', 'surah-name-v4.ttf', 'basmallah.json'])
+    for name in candidates:
+        target = output / name
+        if target.exists() and (name not in owned or not target.is_file()):
+            raise ValueError(f'Refusing to overwrite unowned output: {target}')
+    return output, set(previous), owned
 
 
 def bundle(source: Path, output: Path, pages: list[int]) -> None:
     selected = sorted(set(pages))
     if not selected or any(p < 1 or p > 604 for p in selected):
         raise ValueError('Choose pages between 1 and 604')
-    output, previous = checked_output(output, selected)
+    output, previous, owned = checked_output(output, selected)
+    fonts = {f'p{p}.ttf': source / f'fonts/p{p}.ttf' for p in selected}
+    wide = False
     documents = {}
     with sqlite3.connect(f'{(source / "layout/qpc-v4-tajweed-15-lines.db").resolve().as_uri()}?mode=ro', uri=True) as layout, sqlite3.connect(f'{(source / "words/qpc-v4.db").resolve().as_uri()}?mode=ro', uri=True) as words:
         words.row_factory = sqlite3.Row
@@ -155,24 +245,50 @@ def bundle(source: Path, output: Path, pages: list[int]) -> None:
                     raise ValueError(f'Empty ayah on page {page}, line {number}')
                 lines.append({'number': number, 'type': kind, 'centered': bool(centered),
                               'surah': int(surah) if surah else None, 'words': entries})
+                if kind == 'surah_name':
+                    fonts['surah-name-v4.ttf'] = source / 'surah-names/surah-name-v4.ttf'
+                    lines[-1]['heading'] = {'kind': 'surah', 'font': 'surah-name-v4',
+                                            'parts': ['surah-icon', f'surah{int(surah):03}']}
+                elif kind == 'basmallah':
+                    if page == 2:
+                        fonts['p1.ttf'] = source / 'fonts/p1.ttf'
+                        lines[-1]['heading'] = {'kind': 'compact', 'font': 'mushaf-1',
+                                                'parts': [chr(c) for c in range(0xfc41, 0xfc45)]}
+                    else:
+                        wide = True
+                        lines[-1]['heading'] = {'kind': 'wide', 'asset': 'basmallah.json'}
             documents[page] = {'page': page, 'font': font_metrics(source / f'fonts/p{page}.ttf'), 'lines': lines}
-    # Validate every selected page before writing any outputs.
+    # Validate all shared dependencies and trace before changing any outputs.
+    for name, path in fonts.items():
+        if not path.is_file():
+            raise ValueError(f'Missing heading/page font: {path}')
+        font_metrics(path)
+    if 'p1.ttf' in fonts and any(line.get('heading', {}).get('kind') == 'compact'
+                                for d in documents.values() for line in d['lines']):
+        ink = glyph_ink(fonts['p1.ttf'])
+        if any(not ink.get(c) for c in range(0xfc41, 0xfc45)):
+            raise ValueError('Missing compact basmallah glyph')
+    drawing = trace_basmallah(ROOT / 'ai-pages/050___Hafs39__DM.ai') if wide else None
+    outputs = {f'{page}.json': json.dumps(document, ensure_ascii=False, separators=(',', ':'))
+               for page, document in documents.items()}
+    outputs['pages.json'] = json.dumps(selected, separators=(',', ':'))
+    outputs['fonts.json'] = json.dumps(sorted(fonts), separators=(',', ':'))
+    if drawing is not None:
+        outputs['basmallah.json'] = json.dumps(drawing, separators=(',', ':'))
     output.mkdir(parents=True, exist_ok=True)
-    for page, document in documents.items():
-        (output / f'{page}.json').write_text(json.dumps(document, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
-        shutil.copyfile(source / f'fonts/p{page}.ttf', output / f'p{page}.ttf')
-    # Only entries named by our previous manifest are eligible for deletion.
-    for page in previous - set(selected):
-        for name in (f'{page}.json', f'p{page}.ttf'):
-            (output / name).unlink(missing_ok=True)
-    (output / 'pages.json').write_text(json.dumps(selected, separators=(',', ':')), encoding='utf-8')
+    for name, data in outputs.items():
+        (output / name).write_text(data, encoding='utf-8')
+    for name, path in fonts.items():
+        shutil.copyfile(path, output / name)
+    for name in owned - outputs.keys() - fonts.keys():
+        (output / name).unlink(missing_ok=True)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, default=ROOT / 'assets-src/qul-v4')
     parser.add_argument('--output', type=Path, default=ROOT / 'app/assets/mushaf')
-    parser.add_argument('--pages', type=int, nargs='+', default=[1, 2, 47, 48])
+    parser.add_argument('--pages', type=int, nargs='+', default=[1, 2, 47, 48, 50])
     parser.add_argument('--all', action='store_true', help='Bundle all 604 pages')
     args = parser.parse_args()
     bundle(args.source, args.output, list(range(1, 605)) if args.all else args.pages)

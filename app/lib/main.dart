@@ -91,9 +91,8 @@ class _ReaderState extends State<Reader> {
   bool _saveFailed = false;
 
   void _enqueue(int id, bool black) {
-    if (_saveFailed) return;
     _pending.add(WordAction(_wordKeys[id]!, black));
-    unawaited(_savePending());
+    if (!_saveFailed) unawaited(_savePending());
   }
 
   Future<void> _savePending() async {

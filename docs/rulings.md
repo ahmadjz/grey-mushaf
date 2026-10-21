@@ -100,6 +100,8 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 22. **The basmallah heading has two forms, as printed.** Page 2 shows the compact basmallah. Every
     other page shows the wide, stretched basmallah traced from the owner's page-50 .ai file. The
     traced artwork stays on the owner's machine and is packed into the APK, never into the repo.
+23. **Every line fits on screen in full.** On the upright phone a full page shrinks slightly so no
+    word is cut by the screen edge, with the printed line breaks and one text size across pages.
 
 ## Phases
 

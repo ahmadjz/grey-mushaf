@@ -128,12 +128,44 @@ Reviewer thread `01a15fce-f385-72d0-99ea-6efc4d3d9788` (Astra high) refused at s
 limit, resets 2026-10-27 09:32. No review ran. Commits `feef9a7..572b8b5` stay local and unpushed.
 Retry on a new thread `01a15fe4-3463-7512-8859-9c4577d403a7` (same day, full brief): same refusal.
 
+## Step 5: review (done)
+
+Reviewer thread `01a15fea-199c-7572-90e7-559c8e21fcb5` (Astra high), range `feef9a7..572b8b5`.
+
+- Rulings to tests: R5, R20, R21, R22 and R23 each mapped to tests; none missing or contrary.
+- pytest 26 passed (uv); flutter analyze clean; flutter test 31 passed; scratch APK via `heavy` ok.
+- Seen live, Medium_Phone then Tablet_API_37: pages 1/2/50/187/604 and spread 1|2; black
+  headings, compact basmallah on page 2 and wide elsewhere, heading presses inert.
+- Page-2-only bundle keeps `p1.ttf`; missing `.ai` fails clearly and keeps existing output.
+- No source asset in any of the 11 commit trees. All 604 pages pass R23 bounds at four sizes
+  (scratch extension). Calibration numbers reproduced.
+- Not applicable: PocketBase fields (no responses read), race fault injection (no race claimed).
+- Not run: Boox (unavailable); audit of the original calibration script (not available).
+
+## Step 6: Claude checks (done)
+
+- Diff `feef9a7..572b8b5`: 9 files, +1142/−79. Claude saw `headings-review-phone-page604.png`
+  (three heading pairs) and `headings-review-tablet-page187.png` (surah name, no basmallah).
+- Dropped: HIGH "reveal lost on restart" (`app/lib/main.dart:80`, R2). It pre-exists this
+  range; local persistence belongs to the planned local-SQLite/sync work (R10–R12), not headings.
+- Dropped as a finding, kept as a note: `app/test/line_bounds_test.dart:29` covers five pages and
+  skips heading lines; the reviewer's all-page scratch run passed.
+
+## Step 7: fix (not needed)
+
+r1 0/0/0 kept (C/H/M). No fix round, no second review.
+
+## Step 8: exit check (done)
+
+- Pages 1, 2, 50 headings sized like the .ai: calibration ratios above, compare crops seen.
+- Heading lines inert and uncounted: seen live on phone and tablet.
+- p1 font kept when page 1 not bundled: proven with a real page-2-only bundle.
+- Pages 187 and 604: seen live on both emulators.
+- Gates green: yes.
+- Boox: **not observed** (no device). The feature is pushed but not done until it is seen on
+  the Boox.
+
 ## Next action
 
-After the reset, run Step 5 on a new Astra high thread with this brief: range `feef9a7..572b8b5`,
-rulings R5 and R20–R23, the must-check list (heading lines inert and uncounted, but 1:1 on page 1
-is still a word; black under FlatInk; compact basmallah on page 2 and wide elsewhere; page 187 and
-604 cases; p1 font kept as a dependency; the bundler fails if the .ai is missing; no source asset
-committed; R23 bounds on phone, tablet and spread; calibration measurement code honest), plus the
-four standard demands. Then Steps 6–8. Exit proofs still open: Boox (not observed), and device
-proof of pages 187/604.
+Check the headings on the owner's Boox. Separately, R2 local persistence (reveals lost on app
+restart) is still unbuilt and goes with the local-SQLite/sync phase.

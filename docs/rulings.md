@@ -103,6 +103,11 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 23. **Every line fits on screen in full.** On the upright phone a full page shrinks slightly so no
     word is cut by the screen edge, with the printed line breaks and one text size across pages.
 
+## R24 (2026-10-21, owner)
+
+24. **A word shows black only once it is saved.** If saving a reveal or a re-grey fails, the word
+    keeps its last saved colour and a short "Couldn't save" message offers a retry.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

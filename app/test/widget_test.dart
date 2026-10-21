@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/main.dart';
+import 'package:greymushaf/flat_ink.dart';
+import 'package:greymushaf/heading_ink.dart';
 
 late List<Map<String, dynamic>> pages;
 
@@ -27,24 +30,306 @@ Future<void> mount(WidgetTester tester, {bool landscape = false}) async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
-    pages = [
-      for (final p in [1, 2, 47, 48])
-        jsonDecode(File('assets/mushaf/$p.json').readAsStringSync())
-            as Map<String, dynamic>,
-    ];
-    for (final p in pages) {
-      final number = p['page'];
-      final loader = FontLoader('mushaf-$number')
-        ..addFont(
-          Future.value(
-            ByteData.sublistView(
-              File('assets/mushaf/p$number.ttf').readAsBytesSync(),
+    pages = await loadPages();
+  });
+
+  testWidgets(
+    'surah painted ink fills its calibrated box without font padding',
+    (tester) async {
+      await tester.runAsync(() async {
+        final page = pages.singleWhere((p) => p['page'] == 2);
+        final painter = HeadingInk(
+          page['lines'][0]['heading'] as Map<String, dynamic>,
+          opening: true,
+        );
+        final recorder = ui.PictureRecorder();
+        painter.paint(Canvas(recorder), const Size(300, 100));
+        final picture = recorder.endRecording();
+        final image = await picture.toImage(300, 100);
+        final bytes = (await image.toByteData())!.buffer.asUint8List();
+        final ys = <int>[];
+        for (var y = 0; y < 100; y++) {
+          for (var x = 0; x < 300; x++) {
+            if (bytes[(y * 300 + x) * 4 + 3] > 128) {
+              ys.add(y);
+              break;
+            }
+          }
+        }
+        expect(ys.last - ys.first + 1, greaterThanOrEqualTo(97));
+        image.dispose();
+        picture.dispose();
+        painter.dispose();
+      });
+    },
+  );
+
+  testWidgets('headings are black inert ink; page 1 ayah remains revealable', (
+    tester,
+  ) async {
+    await mount(tester);
+    await tester.longPress(word(1));
+    await tester.pumpAndSettle();
+    final before = status(tester, 1);
+    final controller = tester
+        .widget<PageView>(find.byType(PageView))
+        .controller!;
+    for (final index in [0, 1, 4]) {
+      controller.jumpToPage(index);
+      await tester.pumpAndSettle();
+      final page = pages[index];
+      final ids = [
+        for (final line in page['lines'] as List)
+          for (final w in line['words'] as List) w['id'] as int,
+      ];
+      final states = {for (final id in ids) id: status(tester, id)};
+      for (final line in (page['lines'] as List).where(
+        (l) => l['type'] != 'ayah',
+      )) {
+        final heading = find.byKey(
+          ValueKey('heading-${page['page']}-${line['number']}'),
+        );
+        expect(heading, findsOneWidget);
+        expect(
+          find.descendant(of: heading, matching: find.byType(Semantics)),
+          findsNothing,
+        );
+        expect(
+          tester
+              .widget<FlatInk>(
+                find.descendant(of: heading, matching: find.byType(FlatInk)),
+              )
+              .color,
+          Colors.black,
+        );
+        await tester.longPress(heading);
+        await tester.pumpAndSettle();
+        await tester.tap(heading);
+        await tester.pumpAndSettle();
+        for (final id in ids) {
+          expect(status(tester, id), states[id]);
+        }
+      }
+    }
+    controller.jumpToPage(0);
+    await tester.pumpAndSettle();
+    expect(status(tester, 1), before);
+  });
+
+  testWidgets('all heading forms render black pixels under FlatInk', (
+    tester,
+  ) async {
+    for (final pair in [(2, 0), (2, 1), (50, 1)]) {
+      final page = pages.singleWhere((p) => p['page'] == pair.$1);
+      final painter = HeadingInk(
+        page['lines'][pair.$2]['heading'] as Map<String, dynamic>,
+        opening: pair.$1 <= 2,
+      );
+      final key = GlobalKey();
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: Center(
+            child: RepaintBoundary(
+              key: key,
+              child: FlatInk(
+                color: Colors.black,
+                child: CustomPaint(
+                  size: const Size(600, 120),
+                  painter: painter,
+                ),
+              ),
             ),
           ),
-        );
-      await loader.load();
+        ),
+      );
+      await tester.pump();
+      await tester.runAsync(() async {
+        final image =
+            await (key.currentContext!.findRenderObject()
+                    as RenderRepaintBoundary)
+                .toImage();
+        final bytes = (await image.toByteData(
+          format: ui.ImageByteFormat.rawRgba,
+        ))!.buffer.asUint8List();
+        var black = 0;
+        for (var i = 0; i < bytes.length; i += 4) {
+          if (bytes[i + 3] < 250) continue;
+          expect(bytes[i], bytes[i + 1]);
+          expect(bytes[i], bytes[i + 2]);
+          if (bytes[i] < 10) black++;
+        }
+        expect(black, greaterThan(100));
+        image.dispose();
+      });
+      await tester.pumpWidget(const SizedBox());
+      painter.dispose();
     }
   });
+
+  testWidgets('synthetic 187 and 604 heading bands never target words', (
+    tester,
+  ) async {
+    await mount(tester);
+    final source = pages.singleWhere((p) => p['page'] == 50);
+    for (final number in [187, 604]) {
+      final page = jsonDecode(jsonEncode(source)) as Map<String, dynamic>;
+      page['page'] = number;
+      final original = page['lines'] as List;
+      final lines = <Map<String, dynamic>>[];
+      final starts = number == 187 ? [1] : [1, 5, 10];
+      for (var n = 1; n <= 15; n++) {
+        final title = starts.contains(n);
+        final basmallah = number == 604 && starts.contains(n - 1);
+        final line = jsonDecode(
+          jsonEncode(
+            original[title
+                ? 0
+                : basmallah
+                ? 1
+                : 2],
+          ),
+        ) as Map<String, dynamic>;
+        line['number'] = n;
+        if (title) {
+          final surah = number == 187 ? 9 : 112 + starts.indexOf(n);
+          line['surah'] = surah;
+          line['heading']['parts'][1] =
+              'surah${surah.toString().padLeft(3, '0')}';
+        }
+        if (!title && !basmallah) {
+          line['words'] = [jsonDecode(jsonEncode(original[2]['words'][0]))];
+          line['words'][0]['id'] = n;
+        }
+        lines.add(line);
+      }
+      page['lines'] = lines;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Reader(key: ValueKey(number), pages: [page]),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final ids = [
+        for (final l in lines)
+          for (final w in l['words']) w['id'] as int,
+      ];
+      await tester.longPress(word(ids.first));
+      await tester.pumpAndSettle();
+      final before = {for (final id in ids) id: status(tester, id)};
+      expect(before[ids.first], contains('black; reveals 1'));
+      final headings = lines.where((l) => l['type'] != 'ayah').toList();
+      expect(headings.length, number == 187 ? 1 : 6);
+      for (final line in headings) {
+        expect(line['words'], isEmpty);
+        final band = find.byKey(ValueKey('line-$number-${line['number']}'));
+        expect(
+          find.descendant(of: band, matching: find.byType(Semantics)),
+          findsNothing,
+        );
+        final rect = tester.getRect(band);
+        for (final y in [rect.top + 1, rect.center.dy, rect.bottom - 1]) {
+          await tester.longPressAt(Offset(rect.center.dx, y));
+          await tester.tapAt(Offset(rect.center.dx, y));
+          await tester.pumpAndSettle();
+        }
+      }
+      for (final id in ids) {
+        expect(status(tester, id), before[id]);
+      }
+      expect(tester.takeException(), isNull);
+    }
+  });
+
+  testWidgets('short surah names retain their natural relative width', (
+    tester,
+  ) async {
+    await mount(tester);
+    final source = pages.singleWhere((p) => p['page'] == 50);
+    final widths = <double>[];
+    for (final name in ['surah003', 'surah050']) {
+      final page = jsonDecode(jsonEncode(source)) as Map<String, dynamic>;
+      page['lines'][0]['heading']['parts'][1] = name;
+      if (name == 'surah050') {
+        page['lines'][0]['heading']['bounds'][1] = [10, -71, 844, 630];
+      }
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Reader(key: ValueKey(name), pages: [page]),
+        ),
+      );
+      await tester.pumpAndSettle();
+      widths.add(
+        tester.getSize(find.byKey(const ValueKey('heading-50-1'))).width,
+      );
+    }
+    expect(widths[1], lessThan(widths[0] * .9));
+  });
+
+  testWidgets('opening pages use the printed 47 px row pitch', (tester) async {
+    await mount(tester);
+    final first = tester.getRect(find.byKey(const ValueKey('line-1-2')));
+    final second = tester.getRect(find.byKey(const ValueKey('line-1-3')));
+    final title = tester.getRect(find.byKey(const ValueKey('heading-1-1')));
+    expect((second.top - first.top) / title.width, closeTo(47 / 101, .001));
+  });
+
+  for (final landscape in [false, true]) {
+    testWidgets('heading ink proportions match print, landscape=$landscape', (
+      tester,
+    ) async {
+      await mount(tester, landscape: landscape);
+      final controller = tester
+          .widget<PageView>(find.byType(PageView))
+          .controller!;
+      for (final entry in [
+        (2, 1, 93.0, 31.0),
+        (2, 2, 172.0, 40.0),
+        (50, 1, 133.0, 45.0),
+        (50, 2, 307.0, 40.0),
+      ]) {
+        controller.jumpToPage(
+          entry.$1 == 2 ? (landscape ? 0 : 1) : (landscape ? 2 : 4),
+        );
+        await tester.pumpAndSettle();
+        final heading = tester.getRect(
+          find.byKey(ValueKey('heading-${entry.$1}-${entry.$2}')),
+        );
+        final band = find.byKey(ValueKey('line-${entry.$1}-${entry.$2}'));
+        final block = tester
+            .widgetList<SizedBox>(
+              find.descendant(of: band, matching: find.byType(SizedBox)),
+            )
+            .where((b) => b.width != null && b.width!.isFinite)
+            .first
+            .width!;
+        expect(heading.width / block, closeTo(entry.$3 / 543, .001));
+        expect(heading.height / block, closeTo(entry.$4 / 543, .001));
+        expect(heading.center.dx, closeTo(tester.getCenter(band).dx, .01));
+      }
+      final regularTitle = tester.getRect(
+        find.byKey(const ValueKey('heading-50-1')),
+      );
+      final wide = tester.getRect(find.byKey(const ValueKey('heading-50-2')));
+      final blockTop = tester
+          .getTopLeft(find.byKey(const ValueKey('line-50-1')))
+          .dy;
+      expect(
+        (regularTitle.top - blockTop) / regularTitle.width,
+        closeTo(7 / 133, .001),
+      );
+      expect((wide.top - blockTop) / wide.width, closeTo(73 / 307, .001));
+      expect(
+        (wide.center.dy - regularTitle.center.dy) / wide.width,
+        closeTo(63.5 / 307, .001),
+      );
+      controller.jumpToPage(landscape ? 0 : 1);
+      await tester.pumpAndSettle();
+      final a = tester.getRect(find.byKey(const ValueKey('heading-2-1')));
+      final b = tester.getRect(find.byKey(const ValueKey('heading-2-2')));
+      expect((b.center.dy - a.center.dy) / b.width, closeTo(136.5 / 172, .01));
+    });
+  }
 
   testWidgets(
     'grey tap does nothing; long press reveals; black tap re-greys; count increments only on reveal',
@@ -200,8 +485,13 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
     await tester.pumpAndSettle();
-    // Device coordinate (671,885), minus the 63 px Android status bar.
-    await tester.longPressAt(const Offset(671 / 2.625, (885 - 63) / 2.625));
+    final rect = tester.getRect(word(1));
+    final text = tester.widget<Text>(
+      find.descendant(of: word(1), matching: find.byType(Text)),
+    );
+    await tester.longPressAt(
+      Offset(rect.left - text.style!.fontSize! * .145, rect.center.dy),
+    );
     await tester.pump();
     expect(status(tester, 1), contains('black; reveals 1'));
     for (final id in [2, 3, 4, 5]) {

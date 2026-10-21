@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'flat_ink.dart';
+import 'heading_ink.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,15 +35,34 @@ Future<List<Map<String, dynamic>>> loadPages() async {
   final numbers = jsonDecode(
     await rootBundle.loadString('assets/mushaf/pages.json'),
   ) as List;
+  final fonts = jsonDecode(
+    await rootBundle.loadString('assets/mushaf/fonts.json'),
+  ) as List;
+  for (final filename in fonts.cast<String>()) {
+    final family = filename == 'surah-name-v4.ttf'
+        ? 'surah-name-v4'
+        : 'mushaf-${filename.substring(1, filename.length - 4)}';
+    await (FontLoader(
+      family,
+    )..addFont(rootBundle.load('assets/mushaf/$filename'))).load();
+  }
+  final drawings = <String, Map<String, dynamic>>{};
   final pages = <Map<String, dynamic>>[];
   for (final number in numbers) {
-    final loader = FontLoader('mushaf-$number')
-      ..addFont(rootBundle.load('assets/mushaf/p$number.ttf'));
-    await loader.load();
-    pages.add(
-      jsonDecode(await rootBundle.loadString('assets/mushaf/$number.json'))
-          as Map<String, dynamic>,
-    );
+    final page = jsonDecode(
+      await rootBundle.loadString('assets/mushaf/$number.json'),
+    ) as Map<String, dynamic>;
+    for (final line in page['lines'] as List) {
+      final heading = line['heading'] as Map<String, dynamic>?;
+      if (heading?['kind'] == 'wide') {
+        final asset = heading!['asset'] as String;
+        drawings[asset] ??= jsonDecode(
+          await rootBundle.loadString('assets/mushaf/$asset'),
+        ) as Map<String, dynamic>;
+        heading['drawing'] = drawings[asset];
+      }
+    }
+    pages.add(page);
   }
   return pages;
 }
@@ -65,6 +85,7 @@ class _ReaderState extends State<Reader> {
   final _bandWords = <String, List<int>>{};
   final _viewport = GlobalKey();
   final _metrics = <int, ({double width, double left, double right})>{};
+  final _headings = <String, HeadingInk>{};
   double _widest = 1;
   double _tallest = 1;
   double _size = 1;
@@ -82,6 +103,10 @@ class _ReaderState extends State<Reader> {
   }
 
   void _measureBundle() {
+    for (final ink in _headings.values) {
+      ink.dispose();
+    }
+    _headings.clear();
     _metrics.clear();
     _widest = 1;
     _tallest = 1;
@@ -89,6 +114,12 @@ class _ReaderState extends State<Reader> {
       _tallest = math.max(_tallest, _inkHeight(page));
       for (final line in page['lines'] as List) {
         final words = line['words'] as List;
+        if (line['heading'] != null) {
+          _headings['${page['page']}-${line['number']}'] = HeadingInk(
+            line['heading'] as Map<String, dynamic>,
+            opening: (page['page'] as int) <= 2,
+          );
+        }
         if (words.isEmpty) continue;
         var width = (words.length - 1) * .09;
         for (final word in words) {
@@ -109,6 +140,9 @@ class _ReaderState extends State<Reader> {
 
   @override
   void dispose() {
+    for (final ink in _headings.values) {
+      ink.dispose();
+    }
     _controller.dispose();
     super.dispose();
   }
@@ -358,7 +392,7 @@ class _ReaderState extends State<Reader> {
   ) {
     final number = page['page'] as int;
     final lines = page['lines'] as List;
-    final height = number <= 2 ? fontSize * _tallest : slotHeight;
+    final height = number <= 2 ? textWidth * 47 / 543 : slotHeight;
     return SizedBox(
       key: ValueKey('page-$number'),
       child: Padding(
@@ -366,21 +400,51 @@ class _ReaderState extends State<Reader> {
         child: Column(
           children: [
             Expanded(
-              child: Column(
-                mainAxisAlignment: number <= 2
-                    ? MainAxisAlignment.center
-                    : MainAxisAlignment.start,
-                children: [
-                  for (final line in lines)
-                    _line(
-                      page,
-                      line as Map<String, dynamic>,
-                      fontSize,
-                      textWidth,
-                      height,
+              child: number <= 2
+                  ? Center(
+                      child: SizedBox(
+                        height: textWidth * 892 / 543,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            for (final line in lines)
+                              Positioned(
+                                left: 0,
+                                right: 0,
+                                // Source coordinates relative to the normal
+                                // 543 x 892 ink block beginning at y=157.
+                                top:
+                                    textWidth *
+                                    (line['type'] == 'surah_name'
+                                        ? 142
+                                        : 278.5 +
+                                              ((line['number'] as int) - 2) *
+                                                  47) /
+                                    543,
+                                child: _line(
+                                  page,
+                                  line as Map<String, dynamic>,
+                                  fontSize,
+                                  textWidth,
+                                  height,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        for (final line in lines)
+                          _line(
+                            page,
+                            line as Map<String, dynamic>,
+                            fontSize,
+                            textWidth,
+                            height,
+                          ),
+                      ],
                     ),
-                ],
-              ),
             ),
             SizedBox(
               height: 20,
@@ -425,25 +489,43 @@ class _ReaderState extends State<Reader> {
     _bandWords[band] = [for (final word in words) word['id'] as int];
     Widget content;
     if (line['type'] != 'ayah') {
-      // Deliberate spike placeholders; the V4 heading font is not supplied.
-      final title = line['type'] == 'basmallah'
-          ? 'بسم الله الرحمن الرحيم'
-          : switch (line['surah']) {
-              1 => 'سورة الفاتحة',
-              2 => 'سورة البقرة',
-              _ => 'سورة ${line['surah']}',
-            };
+      // Reference ink boxes at the same scale as the 543 px normal text
+      // block: pages 1/2/50, rendered from the owner's 1441 .ai originals.
+      final kind = (line['heading'] as Map<String, dynamic>)['kind'];
+      final dimensions = kind == 'compact'
+          ? const Size(172, 40)
+          : kind == 'wide'
+          ? const Size(307, 40)
+          : number == 1
+          ? const Size(101, 29)
+          : number == 2
+          ? const Size(93, 31)
+          : Size(133 * _headings[band]!.bounds.width / 295.9669529186764, 45);
       content = Center(
-        child: Text(
-          title,
-          textDirection: TextDirection.rtl,
-          textScaler: TextScaler.noScaling,
-          style: TextStyle(
-            fontSize: math.min(size, height / 1.5),
+        child: SizedBox(
+          key: ValueKey('heading-$band'),
+          width: textWidth * dimensions.width / 543,
+          height: textWidth * dimensions.height / 543,
+          child: FlatInk(
             color: Colors.black,
+            child: CustomPaint(painter: _headings[band]),
           ),
         ),
       );
+      if (number > 2) {
+        content = Transform.translate(
+          offset: Offset(0, textWidth * 29.5 / 543 - height / 2),
+          child: content,
+        );
+      }
+      if (kind == 'wide') {
+        // Preserve the printed heading-to-basmallah distance even when the
+        // full-screen line bands are taller than the natural text scale.
+        content = Transform.translate(
+          offset: Offset(0, textWidth * 63.5 / 543 - height),
+          child: content,
+        );
+      }
     } else {
       content = Row(
         textDirection: TextDirection.rtl,

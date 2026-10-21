@@ -28,8 +28,8 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
    word once.
 7. **Export:** the grey mushaf with the weak words in black, plus a plain grey option. It is built
    server-side on the VPS, in phase 2 after sync.
-8. **Devices:** an Android phone and a Boox, installed from a sideloaded APK with no store. The phone
-   uses natural colours. A black-and-white e-ink mode turns on automatically on a Boox
+8. **Devices:** an Android phone and a Boox. Distribution is replaced by R13. The phone uses natural
+   colours. A black-and-white e-ink mode turns on automatically on a Boox
    (`Build.MANUFACTURER == ONYX`) and can be toggled.
 9. **No audio or tafsir** for now.
 
@@ -53,6 +53,22 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     and a device id, so retries are idempotent and there are no clock-skew ties. Reveal counts are
     stored as append-only events and summed, never overwritten.
 
+## R13–R15 (2026-10-21, owner)
+
+13. **Google Play release.** This replaces R8's "sideloaded APK, no store". The package id is
+    `tech.ahmadjz.greymushaf` and can never change. Play requires:
+    - in-app and web account deletion;
+    - a privacy policy and the Data safety form;
+    - an AAB signed with an upload key that is never in git;
+    - the current target API level;
+    - a closed test with 12+ testers for 14 days before production, because this is a new personal
+      developer account.
+14. **Free, donations only.** The owner's ShamCash QR goes on the app's website and the README. It is
+    not shown in the app unless Google Play's payments policy is confirmed to allow it.
+15. **Licences gate phase 0.** Whichever mushaf source phase 0 picks (KFGQPC .ai outlines, or the QUL
+    V4 data and fonts) must have terms that allow free redistribution in a public app. Assets never
+    go in the public repo: they are fetched at build time or on first launch.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be
@@ -60,5 +76,6 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
    pages, including 1, 2 and one dense page. Check the asset licences.
 1. **Offline reader:** grey pages, reveal and re-grey, navigation by page, surah and juz, bookmarks,
    last page, B/W mode.
-2. **Sync and export.**
-3. **Handwriting, stats, search by text.**
+2. **Sync and export,** plus accounts and the web page for privacy, account deletion and donations.
+3. **Play release:** the closed test, then production.
+4. **Handwriting, stats, search by text.**

@@ -34,3 +34,7 @@ build/
 .gradle/
 __pycache__/
 .venv/
+
+# Generated private mushaf bundle
+/app/assets/mushaf/
+.pytest_cache/

@@ -4,6 +4,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'flat_ink.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
@@ -369,11 +371,8 @@ class _ReaderState extends State<Reader> {
         width: width,
         height: 38,
         child: Center(
-          child: ColorFiltered(
-            colorFilter: ColorFilter.mode(
-              black ? Colors.black : const Color(0xFFB0B0B0),
-              BlendMode.srcIn,
-            ),
+          child: FlatInk(
+            color: black ? Colors.black : const Color(0xFFB0B0B0),
             child: Text(
               word['text'] as String,
               textDirection: TextDirection.rtl,

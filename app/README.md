@@ -29,7 +29,11 @@ Reveal state and counts are **in memory only** and reset on process restart.
 Surah headings and the separate basmallah use centred system-font placeholders;
 the V4 heading font is not included. Ordinary pages retain their database line
 slots; opening pages retain their shorter centred layout. Decoration is minimal.
-Word colours are applied after rendering with an alpha-preserving `srcIn` filter.
+Word colours are applied after rendering with two alpha-preserving colour matrices.
+The first separates the default V4 palette’s pale marker backgrounds from ink;
+the second maps ink to black/grey and backgrounds to white. A plain `srcIn`
+filter obscures the ayah numerals because those backgrounds are opaque. The
+raster test covers every default palette entry in the four spike fonts.
 
 Checks (local source data and generated bundle required):
 
@@ -46,3 +50,23 @@ flutter test
 Widget tests use the real bundled fonts, exercise gestures and compare page
 1/2/48 line ranges with the source SQLite database through Python's standard
 library. No accounts or backend are used by this spike.
+
+## Spike proof
+
+Verified on `Tablet_API_37` (Android 17 / API 37, Impeller OpenGLES), in
+portrait and landscape. The phone emulator crashed during startup; the tablet
+booted with host graphics and cameras disabled. Screenshots are gitignored:
+
+- `docs/runs/shots/phase0-page1-grey.png`
+- `docs/runs/shots/phase0-page48-revealed.png`
+- `docs/runs/shots/phase0-spread1-2.png`
+- `docs/runs/shots/phase0-spread47-48.png`
+
+Page 48's long-press and cross-line drag revealed locations `2:282:1` through
+`2:282:12`, each with count one, confirmed through Android accessibility output.
+All four screenshot bodies had zero pixels with unequal RGB channels (excluding
+system chrome). Ayah numerals remain legible. All 15 page-48 line starts and ends
+visually match the owner's outline render; typography spacing and decoration
+are not pixel-identical. The special opening layouts retain their line breaks.
+Physical phone and Boox behaviour have not been tested. The all-pages bundler
+was exercised for 604 pages; full-mushaf rendering has not been reviewed.

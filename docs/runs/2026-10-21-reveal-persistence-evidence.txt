@@ -1,0 +1,79 @@
+Reveal persistence evidence — base 8c896e9
+
+Implementation: app/lib/reveal_store.dart:21 (four-table SQLite store); app/lib/main.dart:99 (commit before colour, serial queue and retry).
+
+Red first: original startup integration failed: expected black; reveals 1, actual grey; reveals 0. A later snackbar-dismissal regression also failed before its fix.
+
+Retry timing fix: settle snackbar entrance and assert Retry.hitTestable(); colour/count assertions unchanged.
+
+Medium_Phone, emulator-5554, Android API 37, configured with -memory 4096; guest MemTotal 4008492 kB.
+
+Dependencies resolved with flutter pub get --offline. No online fallback.
+
+All full test suites and Android builds prefixed with ~/.local/bin/heavy.
+
+Final commands (app/ unless otherwise stated):
+
+  flutter test integration_test/sqlite_test.dart -d emulator-5554: PASS, 1 test.
+
+  flutter analyze: PASS, no issues.
+
+  flutter test: PASS, 32 tests.
+
+  flutter test integration_test -d emulator-5554: PASS, 2 tests.
+
+  app/android/: heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false ./gradlew --offline --no-daemon -Ptarget=lib/main.dart -Ptarget-platform=android-x64 assembleDebug: PASS, BUILD SUCCESSFUL in 8s (android-x64 debug APK).
+
+Live proof from the preceding implementation run: Android semantics assertions, actual adb am force-stop, same application data on relaunch. No UP sent before mid-drag force-stop.
+
+reveal: PASS {"1:1:1": "1:1:1; black; reveals 1"}
+drag-revisit: PASS {"1:1:1": "1:1:1; black; reveals 1", "1:1:2": "1:1:2; black; reveals 1", "1:1:3": "1:1:3; black; reveals 1", "1:1:4": "1:1:4; black; reveals 1"}
+regrey-before-stop: PASS {"1:1:1": "1:1:1; black; reveals 1", "1:1:2": "1:1:2; grey; reveals 1", "1:1:3": "1:1:3; black; reveals 1", "1:1:4": "1:1:4; black; reveals 1"}
+after-restart: PASS {"1:1:1": "1:1:1; black; reveals 1", "1:1:2": "1:1:2; grey; reveals 1", "1:1:3": "1:1:3; black; reveals 1", "1:1:4": "1:1:4; black; reveals 1"}
+mid-drag-before-stop: PASS {"1:1:1": "1:1:1; black; reveals 1", "1:1:2": "1:1:2; grey; reveals 1", "1:1:3": "1:1:3; black; reveals 1", "1:1:4": "1:1:4; black; reveals 1", "1:2:1": "1:2:1; black; reveals 1", "1:2:2": "1:2:2; black; reveals 1", "1:2:3": "1:2:3; black; reveals 1", "1:2:4": "1:2:4; black; reveals 1"}
+mid-drag-after-restart: PASS {"1:1:1": "1:1:1; black; reveals 1", "1:1:2": "1:1:2; grey; reveals 1", "1:1:3": "1:1:3; black; reveals 1", "1:1:4": "1:1:4; black; reveals 1", "1:2:1": "1:2:1; black; reveals 1", "1:2:2": "1:2:2; black; reveals 1", "1:2:3": "1:2:3; black; reveals 1", "1:2:4": "1:2:4; black; reveals 1"}
+
+
+Screenshots (gitignored): docs/runs/shots/persistence-{reveal,drag-revisit,regrey-before-stop,after-restart,mid-drag-before-stop,mid-drag-after-restart}.png
+
+Test data: no accounts or tokens. Integration database files reveals.db and persistence-test.db were explicitly deleted by successful tests. Failed-test installations were removed by the Flutter runner. Live reveals.db and its journal were removed with run-as after force-stop; /sdcard/quran-proof.xml was removed.
+
+Metadata record keys: device_id, identity_version. word_state identifiers are word_key; word_actions and reveal_events identifiers are action_uuid. Reveal events use the reveal action UUID; re-grey actions have no increment event.
+
+Captured integration identifiers (including earlier runs):
+
+quran-integration-first.log
+
+SQLite proof identifiers: [{key: device_id, value: a10f76e3-af31-43f4-b330-cdb517586091}, {key: identity_version, value: qul-v4-hafs:1}]; [{action_uuid: 4edc1d11-d6bd-4b37-8597-1d07888fe0cd, word_key: qul-v4-hafs:1:1:1}, {action_uuid: d2f42436-c2cc-4f88-8a4a-86ab0742c133, word_key: qul-v4-hafs:1:1:1}, {action_uuid: 89b8aa12-1764-4fb9-ae22-b6e16dc92971, word_key: qul-v4-hafs:1:1:1}, {action_uuid: 6a7b3378-df45-4596-a33c-2556d635ef5e, word_key: qul-v4-hafs:1:1:1}]
+
+quran-integration-retry-animation.log
+
+Startup proof identifiers: [{key: device_id, value: 6762526e-8994-4f29-9ea3-998d772e8f58}, {key: identity_version, value: qul-v4-hafs:1}]; [{action_uuid: 0bdfa51b-84c2-48d4-9c32-da9812d31c29, word_key: qul-v4-hafs:1:1:1}]
+
+quran-resume-retry.log
+
+SQLite proof identifiers: [{key: device_id, value: 3b2eef70-b02c-4c16-9f69-77a3af1cf9b7}, {key: identity_version, value: qul-v4-hafs:1}]; [{action_uuid: d0d9acc9-c084-4113-80aa-c2a2bb6542ce, word_key: qul-v4-hafs:1:1:1}, {action_uuid: 525bbd46-bf4b-4e84-ba94-e19a16b95ace, word_key: qul-v4-hafs:1:1:1}, {action_uuid: c0290869-51ff-4735-b6bc-d564aba80f81, word_key: qul-v4-hafs:1:1:1}, {action_uuid: ca3f0668-9da4-4585-9ac5-6ad856c15202, word_key: qul-v4-hafs:1:1:1}, {action_uuid: c9ba4ccf-ac5a-438d-b16d-6eef5ee013e1, word_key: qul-v4-hafs:1:1:2}]
+
+quran-resume-integration.log
+
+Startup proof identifiers: [{key: device_id, value: 8d15345f-b115-497b-b84d-867d05e2364b}, {key: identity_version, value: qul-v4-hafs:1}]; [{action_uuid: 33cb45b6-3a67-4ef1-8a18-78065bf8d715, word_key: qul-v4-hafs:1:1:1}]
+
+SQLite proof identifiers: [{key: device_id, value: 3dbd6173-a06f-42b6-ad1b-c55c77137c1a}, {key: identity_version, value: qul-v4-hafs:1}]; [{action_uuid: 428c79b2-439a-4f01-b35f-63ef065ae06c, word_key: qul-v4-hafs:1:1:1}, {action_uuid: a3f9b80a-b8df-4422-bb63-afaba5cc2a61, word_key: qul-v4-hafs:1:1:1}, {action_uuid: 9f319047-1273-4204-8943-a6260057c401, word_key: qul-v4-hafs:1:1:1}, {action_uuid: 48da1a03-4b33-4282-b011-d3fabe4a3045, word_key: qul-v4-hafs:1:1:1}, {action_uuid: 3eb3186f-4a80-4972-a350-87921820b452, word_key: qul-v4-hafs:1:1:2}]
+
+Live proof identifiers:
+
+local_metadata: [["device_id", "326ed67c-6f4c-4c8d-ad96-5d85cc85f1d0"], ["identity_version", "qul-v4-hafs:1"]]
+
+word_actions: [["2bf6b8d0-1766-4213-ab9e-234a20ccabd4", "qul-v4-hafs:1:1:1"], ["a05cf973-5e99-44d8-8650-9160480370da", "qul-v4-hafs:1:1:2"], ["ebfbc26c-0ffc-40b1-ac67-0c711450d2bb", "qul-v4-hafs:1:1:3"], ["15537ab4-2591-41f0-a0e1-95f125b291ec", "qul-v4-hafs:1:1:4"], ["0848d351-b624-40a3-bd0a-8a62fbaf6e9e", "qul-v4-hafs:1:1:2"], ["90b79b1e-f1e5-4db0-9140-00d47d650ddc", "qul-v4-hafs:1:2:1"], ["af93d9b0-d71c-4d77-8bf5-ba4238745ac3", "qul-v4-hafs:1:2:2"], ["6669d143-84f7-43d4-ab8a-f26db5f4718d", "qul-v4-hafs:1:2:3"], ["f79ae064-b4fe-491a-b1d2-20d1dfea7cb5", "qul-v4-hafs:1:2:4"]]
+
+reveal_events: [["2bf6b8d0-1766-4213-ab9e-234a20ccabd4"], ["a05cf973-5e99-44d8-8650-9160480370da"], ["ebfbc26c-0ffc-40b1-ac67-0c711450d2bb"], ["15537ab4-2591-41f0-a0e1-95f125b291ec"], ["90b79b1e-f1e5-4db0-9140-00d47d650ddc"], ["af93d9b0-d71c-4d77-8bf5-ba4238745ac3"], ["6669d143-84f7-43d4-ab8a-f26db5f4718d"], ["f79ae064-b4fe-491a-b1d2-20d1dfea7cb5"]]
+
+word_state: [["qul-v4-hafs:1:1:1"], ["qul-v4-hafs:1:1:2"], ["qul-v4-hafs:1:1:3"], ["qul-v4-hafs:1:1:4"], ["qul-v4-hafs:1:2:1"], ["qul-v4-hafs:1:2:2"], ["qul-v4-hafs:1:2:3"], ["qul-v4-hafs:1:2:4"]]
+
+Local copied proof databases removed. Test logs retained in /tmp for inspection.
+
+Identifier limitation from the preceding run: the first successful startup test and failed extended tests were deleted before UUID capture. Their fixture database names and word keys are known, but their generated UUIDs were not retained.
+
+Not run: physical Boox, 604-page performance, release/ARM build, phase-2 sync. No schema upgrades exist yet; v1 creation/reopen is tested.
+
+Existing untracked docs/runs/2026-10-21-reveal-persistence-run-log.md left untouched.

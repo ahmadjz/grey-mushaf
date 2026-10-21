@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math' as math;
 
@@ -6,26 +8,26 @@ import 'package:flutter/services.dart';
 
 import 'flat_ink.dart';
 import 'heading_ink.dart';
+import 'reveal_store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     final pages = await loadPages();
+    final store = await SqliteRevealStore.open();
     runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
         ),
-        home: Reader(pages: pages),
+        home: Reader(pages: pages, store: store),
       ),
     );
   } catch (error) {
     runApp(
       MaterialApp(
-        home: Scaffold(
-          body: Center(child: Text('Cannot load bundled mushaf: $error')),
-        ),
+        home: Scaffold(body: Center(child: Text('Cannot open reader: $error'))),
       ),
     );
   }
@@ -68,7 +70,13 @@ Future<List<Map<String, dynamic>>> loadPages() async {
 }
 
 class Reader extends StatefulWidget {
-  const Reader({super.key, required this.pages, this.onMeasureWord});
+  const Reader({
+    super.key,
+    required this.pages,
+    required this.store,
+    this.onMeasureWord,
+  });
+  final RevealStore store;
   final VoidCallback? onMeasureWord;
   final List<Map<String, dynamic>> pages;
 
@@ -77,8 +85,48 @@ class Reader extends StatefulWidget {
 }
 
 class _ReaderState extends State<Reader> {
-  final _black = <int>{};
-  final _counts = <int, int>{};
+  final _wordKeys = <int, String>{};
+  final _pending = Queue<WordAction>();
+  bool _saving = false;
+  bool _saveFailed = false;
+
+  void _enqueue(int id, bool black) {
+    if (_saveFailed) return;
+    _pending.add(WordAction(_wordKeys[id]!, black));
+    unawaited(_savePending());
+  }
+
+  Future<void> _savePending() async {
+    if (_saving) return;
+    _saving = true;
+    _saveFailed = false;
+    try {
+      while (_pending.isNotEmpty) {
+        await widget.store.save(_pending.first);
+        _pending.removeFirst();
+        if (mounted) setState(() {});
+      }
+    } catch (_) {
+      _saveFailed = true;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Couldn't save"),
+            dismissDirection: DismissDirection.none,
+            action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () {
+                unawaited(_savePending());
+              },
+            ),
+          ),
+        );
+      }
+    } finally {
+      _saving = false;
+    }
+  }
+
   final _targets = <int, GlobalKey>{};
   final _visited = <int>{};
   final _bands = <String, GlobalKey>{};
@@ -127,6 +175,7 @@ class _ReaderState extends State<Reader> {
         for (final word in words) {
           final metric = _measureWord(word as Map<String, dynamic>, page);
           _metrics[word['id'] as int] = metric;
+          _wordKeys[word['id'] as int] = wordKey(word['location'] as String);
           width += metric.width;
         }
         _widest = math.max(_widest, width);
@@ -207,9 +256,7 @@ class _ReaderState extends State<Reader> {
 
   void _revealAt(Offset point) {
     final id = _wordAt(point);
-    if (id != null && _visited.add(id) && _black.add(id)) {
-      _counts[id] = (_counts[id] ?? 0) + 1;
-    }
+    if (id != null && _visited.add(id)) _enqueue(id, true);
   }
 
   void _start(LongPressStartDetails details) {
@@ -295,8 +342,8 @@ class _ReaderState extends State<Reader> {
               onLongPressCancel: _end,
               onTapUp: (details) {
                 final id = _wordAt(details.globalPosition);
-                if (id != null && _black.contains(id)) {
-                  setState(() => _black.remove(id));
+                if (id != null && widget.store.state(_wordKeys[id]!).black) {
+                  _enqueue(id, false);
                 }
               },
               child: PageView.builder(
@@ -592,7 +639,8 @@ class _ReaderState extends State<Reader> {
     double height,
   ) {
     final id = word['id'] as int;
-    final black = _black.contains(id);
+    final saved = widget.store.state(_wordKeys[id]!);
+    final black = saved.black;
     final font = page['font'] as Map<String, dynamic>;
     final baseline =
         (height - _inkHeight(page) * size) / 2 +
@@ -601,7 +649,7 @@ class _ReaderState extends State<Reader> {
       key: ValueKey('word-$id'),
       container: true,
       label:
-          '${word['location']}; ${black ? 'black' : 'grey'}; reveals ${_counts[id] ?? 0}',
+          '${word['location']}; ${black ? 'black' : 'grey'}; reveals ${saved.count}',
       child: SizedBox(
         key: _targets.putIfAbsent(id, GlobalKey.new),
         width: _metrics[id]!.width * size,

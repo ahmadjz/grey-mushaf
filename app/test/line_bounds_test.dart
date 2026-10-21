@@ -1,3 +1,5 @@
+import 'memory_reveal_store.dart';
+
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -20,7 +22,11 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Reader(store: MemoryRevealStore(), pages: pages),
+        ),
+      );
       await tester.pumpAndSettle();
       final controller = tester
           .widget<PageView>(find.byType(PageView))

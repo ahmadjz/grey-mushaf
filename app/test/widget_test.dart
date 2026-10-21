@@ -1,3 +1,5 @@
+import 'memory_reveal_store.dart';
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -23,7 +25,11 @@ Future<void> mount(WidgetTester tester, {bool landscape = false}) async {
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
-  await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
+  await tester.pumpWidget(
+    MaterialApp(
+      home: Reader(store: MemoryRevealStore(), pages: pages),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 
@@ -206,7 +212,11 @@ void main() {
       page['lines'] = lines;
       await tester.pumpWidget(
         MaterialApp(
-          home: Reader(key: ValueKey(number), pages: [page]),
+          home: Reader(
+            store: MemoryRevealStore(),
+            key: ValueKey(number),
+            pages: [page],
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -255,7 +265,11 @@ void main() {
       }
       await tester.pumpWidget(
         MaterialApp(
-          home: Reader(key: ValueKey(name), pages: [page]),
+          home: Reader(
+            store: MemoryRevealStore(),
+            key: ValueKey(name),
+            pages: [page],
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -413,7 +427,11 @@ void main() {
     final page = pages.singleWhere((p) => p['page'] == 48);
     await tester.pumpWidget(
       MaterialApp(
-        home: Reader(key: const ValueKey('dense'), pages: [page]),
+        home: Reader(
+          store: MemoryRevealStore(),
+          key: const ValueKey('dense'),
+          pages: [page],
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -483,7 +501,11 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(store: MemoryRevealStore(), pages: pages),
+      ),
+    );
     await tester.pumpAndSettle();
     final rect = tester.getRect(word(1));
     final text = tester.widget<Text>(
@@ -506,7 +528,11 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(store: MemoryRevealStore(), pages: pages),
+      ),
+    );
     await tester.pumpAndSettle();
     tester.widget<PageView>(find.byType(PageView)).controller!.jumpToPage(3);
     await tester.pumpAndSettle();
@@ -527,7 +553,12 @@ void main() {
     first['text'] = '${first['text']} ';
     (first['ink'] as List).add(null);
     await tester.pumpWidget(
-      MaterialApp(home: Reader(pages: data.cast<Map<String, dynamic>>())),
+      MaterialApp(
+        home: Reader(
+          store: MemoryRevealStore(),
+          pages: data.cast<Map<String, dynamic>>(),
+        ),
+      ),
     );
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
@@ -589,7 +620,11 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(
       MaterialApp(
-        home: Reader(pages: pages, onMeasureWord: () => measurements++),
+        home: Reader(
+          store: MemoryRevealStore(),
+          pages: pages,
+          onMeasureWord: () => measurements++,
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -644,7 +679,11 @@ void main() {
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.resetPhysicalSize);
         addTearDown(tester.view.resetDevicePixelRatio);
-        await tester.pumpWidget(MaterialApp(home: Reader(pages: pages)));
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Reader(store: MemoryRevealStore(), pages: pages),
+          ),
+        );
         await tester.pumpAndSettle();
         expect(find.byType(AppBar), findsNothing);
         expect(find.byKey(const ValueKey('counts')), findsNothing);
@@ -876,7 +915,11 @@ void main() {
         }
         await tester.pumpWidget(
           MaterialApp(
-            home: Reader(key: ValueKey(number), pages: [page]),
+            home: Reader(
+              store: MemoryRevealStore(),
+              key: ValueKey(number),
+              pages: [page],
+            ),
           ),
         );
         await tester.pumpAndSettle();

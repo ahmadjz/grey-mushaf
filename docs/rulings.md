@@ -146,6 +146,17 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 35. **Dark mode turns on only by a switch in Settings.** The app starts in light mode and does not
     follow the phone's dark mode.
 
+## R36–R38 (2026-10-22, owner)
+
+36. **Every launch opens in light mode,** even if dark mode was on when the app was closed. Going to
+    the background and back keeps the current mode. The dark dimness level (R34) is remembered.
+37. **The dark slider runs from very dim to medium grey:** from `#202020` to `#808080`, starting at
+    `#505050`. Unrevealed words stay visible and never match the white of revealed words.
+38. **Dark mode darkens the whole screen.** The top bar and Settings panel are dark, the page number
+    is a soft light grey, and "Couldn't save" is a dark grey box with white text. Ayah-number circles
+    are black inside, and their outline and number follow the word (dim, then white once revealed).
+    Settings shows one slider, for the mode that is on; each mode keeps its own level.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

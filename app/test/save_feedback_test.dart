@@ -41,7 +41,7 @@ void main() {
         for (var id = 1; id <= 4; id++) {
           expect(
             label(id),
-            contains(id <= last ? 'black; reveals 1' : 'grey; reveals 0'),
+            contains(id <= last ? '; revealed; reveals 1' : '; unrevealed; reveals 0'),
           );
         }
       }
@@ -97,10 +97,10 @@ void main() {
       String label() => tester.widget<Semantics>(word).properties.label!;
       await tester.longPress(word);
       await tester.pump();
-      expect(label(), contains('grey; reveals 0'));
+      expect(label(), contains('; unrevealed; reveals 0'));
       store.pending!.completeError(StateError('disk full'));
       await tester.pumpAndSettle();
-      expect(label(), contains('grey; reveals 0'));
+      expect(label(), contains('; unrevealed; reveals 0'));
       expect(find.text("Couldn't save"), findsOneWidget);
       await tester.drag(find.byType(SnackBar), const Offset(0, 300));
       await tester.pumpAndSettle();
@@ -111,19 +111,19 @@ void main() {
       expect(store.calls[1].uuid, store.calls[0].uuid);
       store.pending!.complete();
       await tester.pumpAndSettle();
-      expect(label(), contains('black; reveals 1'));
+      expect(label(), contains('; revealed; reveals 1'));
       await tester.tap(word);
       await tester.pump();
-      expect(label(), contains('black; reveals 1'));
+      expect(label(), contains('; revealed; reveals 1'));
       store.pending!.completeError(StateError('disk full'));
       await tester.pumpAndSettle();
-      expect(label(), contains('black; reveals 1'));
+      expect(label(), contains('; revealed; reveals 1'));
       await tester.tap(find.text('Retry'));
       await tester.pump();
       expect(store.calls[3].uuid, store.calls[2].uuid);
       store.pending!.complete();
       await tester.pumpAndSettle();
-      expect(label(), contains('grey; reveals 1'));
+      expect(label(), contains('; unrevealed; reveals 1'));
     },
   );
 }

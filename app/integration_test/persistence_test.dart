@@ -18,7 +18,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(
       tester.widget<Semantics>(word).properties.label,
-      contains('black; reveals 1'),
+      contains('; revealed; reveals 1'),
     );
     final store =
         tester.widget<app.Reader>(find.byType(app.Reader)).store
@@ -29,7 +29,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(
       tester.widget<Semantics>(word).properties.label,
-      contains('black; reveals 1'),
+      contains('; revealed; reveals 1'),
     );
     final reopened =
         tester.widget<app.Reader>(find.byType(app.Reader)).store

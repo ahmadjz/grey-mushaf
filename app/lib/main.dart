@@ -93,8 +93,29 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   EdgeInsets _cutout = EdgeInsets.zero;
   double _statusTop = 0;
   late int _greyLevel;
+  late int _darkLevel;
+  bool _darkMode = false;
+  Color get _background => _darkMode ? Colors.black : Colors.white;
+  Color get _foreground => _darkMode ? Colors.white : Colors.black;
+  int get _activeLevel => _darkMode ? _darkLevel : _greyLevel;
+  Color get _dim =>
+      Color.fromARGB(255, _activeLevel, _activeLevel, _activeLevel);
+  ThemeData get _theme => ThemeData(
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.grey,
+      brightness: _darkMode ? Brightness.dark : Brightness.light,
+    ),
+    snackBarTheme: _darkMode
+        ? const SnackBarThemeData(
+            backgroundColor: Color(0xFF303030),
+            contentTextStyle: TextStyle(color: Colors.white),
+            actionTextColor: Colors.white,
+          )
+        : null,
+  );
+
   Future<void> _settingWrites = Future<void>.value();
-  final _greySaveFailed = ValueNotifier(false);
+  final _settingFailures = ValueNotifier<Set<bool>>({});
   bool _settingsOpen = false;
   double _contentWidth = 0;
 
@@ -125,6 +146,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   Future<void> _setBars() async {
     try {
+      await _platform.invokeMethod<void>('setDarkMode', _darkMode);
       await _platform.invokeMethod<void>('setBarsVisible', _barsVisible);
       await _readInsets();
     } on MissingPluginException {
@@ -147,21 +169,33 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     unawaited(_setBars());
   }
 
-  void _saveGrey(int level) {
+  void _saveLevel(int level, {required bool dark}) {
     _settingWrites = _settingWrites.then((_) async {
       try {
-        await widget.settings?.saveGreyLevel(level);
-        if (mounted) _greySaveFailed.value = false;
+        if (dark) {
+          await widget.settings?.saveDarkLevel(level);
+        } else {
+          await widget.settings?.saveGreyLevel(level);
+        }
+        if (mounted) {
+          _settingFailures.value = {..._settingFailures.value}..remove(dark);
+        }
       } catch (_) {
         if (!mounted) return;
-        _greySaveFailed.value = true;
+        _settingFailures.value = {..._settingFailures.value, dark};
         if (_settingsOpen) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text("Couldn't save grey level"),
+            backgroundColor: _darkMode ? const Color(0xFF303030) : null,
+            content: Text(
+              "Couldn't save ${dark ? 'dark' : 'grey'} level",
+              style: _darkMode ? const TextStyle(color: Colors.white) : null,
+            ),
             action: SnackBarAction(
+              textColor: _darkMode ? Colors.white : null,
               label: 'Retry',
-              onPressed: () => _saveGrey(_greyLevel),
+              onPressed: () =>
+                  _saveLevel(dark ? _darkLevel : _greyLevel, dark: dark),
             ),
           ),
         );
@@ -181,82 +215,124 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
             (line) => (line['words'] as List).isNotEmpty,
           );
           final word = (line['words'] as List).first;
-          return SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
+          return Theme(
+            data: _theme,
+            child: Material(
+              color: _darkMode
+                  ? const Color(0xFF181818)
+                  : _theme.colorScheme.surface,
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Expanded(
-                        child: Text('Settings', style: TextStyle(fontSize: 18)),
-                      ),
-                      IconButton(
-                        tooltip: 'Close Settings',
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.close),
-                      ),
-                    ],
-                  ),
-                  const Text('Grey text lightness'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      for (final color in [
-                        Color.fromARGB(255, _greyLevel, _greyLevel, _greyLevel),
-                        Colors.black,
-                      ])
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: FlatInk(
-                            color: color,
+                      Row(
+                        children: [
+                          const Expanded(
                             child: Text(
-                              word['text'] as String,
-                              style: _style(sample['page'] as int, 36),
-                              textScaler: TextScaler.noScaling,
+                              'Settings',
+                              style: TextStyle(fontSize: 18),
                             ),
                           ),
+                          IconButton(
+                            tooltip: 'Close Settings',
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(Icons.close),
+                          ),
+                        ],
+                      ),
+                      SwitchListTile(
+                        title: const Text('Dark mode'),
+                        value: _darkMode,
+                        onChanged: (value) {
+                          setState(() => _darkMode = value);
+                          updateSheet(() {});
+                          unawaited(_setBars());
+                        },
+                      ),
+                      Text(
+                        _darkMode
+                            ? 'Dark text brightness'
+                            : 'Grey text lightness',
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (final color in [_dim, _foreground])
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
+                              child: FlatInk(
+                                color: color,
+                                background: _background,
+                                child: Text(
+                                  word['text'] as String,
+                                  style: _style(sample['page'] as int, 36),
+                                  textScaler: TextScaler.noScaling,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      Slider(
+                        min: _darkMode ? 32 : 128,
+                        max: _darkMode ? 128 : 224,
+                        divisions: 96,
+                        value: _activeLevel.toDouble(),
+                        semanticFormatterCallback: (value) =>
+                            '${_darkMode ? 'Dark brightness' : 'Grey lightness'} ${((value - (_darkMode ? 32 : 128)) / 96 * 100).round()} percent',
+                        onChanged: (value) {
+                          setState(() {
+                            if (_darkMode) {
+                              _darkLevel = value.round();
+                            } else {
+                              _greyLevel = value.round();
+                            }
+                          });
+                          updateSheet(() {});
+                        },
+                        onChangeEnd: (value) =>
+                            _saveLevel(value.round(), dark: _darkMode),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(_darkMode ? 'Dimmer' : 'Darker'),
+                          Text(_darkMode ? 'Brighter' : 'Lighter'),
+                        ],
+                      ),
+                      ValueListenableBuilder<Set<bool>>(
+                        valueListenable: _settingFailures,
+                        builder: (context, failures, child) => Column(
+                          children: [
+                            for (final dark in failures)
+                              Semantics(
+                                liveRegion: true,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Couldn't save ${dark ? 'dark' : 'grey'} level",
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => _saveLevel(
+                                        dark ? _darkLevel : _greyLevel,
+                                        dark: dark,
+                                      ),
+                                      child: const Text('Retry'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
                         ),
+                      ),
                     ],
                   ),
-                  Slider(
-                    min: 128,
-                    max: 224,
-                    divisions: 96,
-                    value: _greyLevel.toDouble(),
-                    semanticFormatterCallback: (value) =>
-                        'Grey lightness ${((value - 128) / 96 * 100).round()} percent',
-                    onChanged: (value) {
-                      setState(() => _greyLevel = value.round());
-                      updateSheet(() {});
-                    },
-                    onChangeEnd: (value) => _saveGrey(value.round()),
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Text('Darker'), Text('Lighter')],
-                  ),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: _greySaveFailed,
-                    builder: (context, failed, child) => failed
-                        ? Semantics(
-                            liveRegion: true,
-                            child: Row(
-                              children: [
-                                const Expanded(
-                                  child: Text("Couldn't save grey level"),
-                                ),
-                                TextButton(
-                                  onPressed: () => _saveGrey(_greyLevel),
-                                  child: const Text('Retry'),
-                                ),
-                              ],
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                ],
+                ),
               ),
             ),
           );
@@ -291,9 +367,14 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text("Couldn't save"),
+            backgroundColor: _darkMode ? const Color(0xFF303030) : null,
+            content: Text(
+              "Couldn't save",
+              style: _darkMode ? const TextStyle(color: Colors.white) : null,
+            ),
             dismissDirection: DismissDirection.none,
             action: SnackBarAction(
+              textColor: _darkMode ? Colors.white : null,
               label: 'Retry',
               onPressed: () {
                 unawaited(_savePending());
@@ -324,6 +405,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     _greyLevel = widget.settings?.greyLevel ?? 176;
+    _darkLevel = widget.settings?.darkLevel ?? 80;
     WidgetsBinding.instance.addObserver(this);
     unawaited(_setBars());
     _measureBundle();
@@ -386,7 +468,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _greySaveFailed.dispose();
+    _settingFailures.dispose();
     for (final ink in _headings.values) {
       ink.dispose();
     }
@@ -511,92 +593,100 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
       _spread = spread;
     }
-    return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Padding(
-            padding: _cutout,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
-                final pageHeight = constraints.maxHeight - 4;
-                final side = spread
-                    ? 2.0
-                    : MediaQuery.sizeOf(context).width * .02;
-                _contentWidth = pageWidth - side * 2;
-                // Reserve number clearance only when the last line's spare ink
-                // space cannot contain it. This bound keeps one font size throughout.
-                final text = _textSize(_contentWidth, (pageHeight - 14) / 15);
-                return GestureDetector(
-                  key: _viewport,
-                  behavior: HitTestBehavior.opaque,
-                  onLongPressStart: _start,
-                  onLongPressMoveUpdate: _move,
-                  onLongPressEnd: (_) => _end(),
-                  onLongPressCancel: _end,
-                  onTapUp: (details) {
-                    final id = _wordAt(details.globalPosition, shortTap: true);
-                    if (id == null) {
-                      _toggleBars();
-                    } else if (widget.store.state(_wordKeys[id]!).black) {
-                      _enqueue(id, false);
-                    }
-                  },
-                  child: PageView.builder(
-                    key: ValueKey(spread),
-                    controller: _controller,
-                    reverse: true,
-                    physics: _dragging
-                        ? const NeverScrollableScrollPhysics()
-                        : const PageScrollPhysics(),
-                    itemCount: groups.length,
-                    onPageChanged: (index) => setState(
-                      () =>
-                          _selected = widget.pages.indexOf(groups[index].first),
-                    ),
-                    itemBuilder: (context, index) => Row(
-                      textDirection: TextDirection.rtl,
-                      children: [
-                        for (final page in groups[index])
-                          Expanded(
-                            child: _page(
-                              page,
-                              text.size,
-                              text.width,
-                              pageHeight,
+    return Theme(
+      data: _theme,
+      child: Scaffold(
+        backgroundColor: _background,
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Padding(
+              padding: _cutout,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
+                  final pageHeight = constraints.maxHeight - 4;
+                  final side = spread
+                      ? 2.0
+                      : MediaQuery.sizeOf(context).width * .02;
+                  _contentWidth = pageWidth - side * 2;
+                  // Reserve number clearance only when the last line's spare ink
+                  // space cannot contain it. This bound keeps one font size throughout.
+                  final text = _textSize(_contentWidth, (pageHeight - 14) / 15);
+                  return GestureDetector(
+                    key: _viewport,
+                    behavior: HitTestBehavior.opaque,
+                    onLongPressStart: _start,
+                    onLongPressMoveUpdate: _move,
+                    onLongPressEnd: (_) => _end(),
+                    onLongPressCancel: _end,
+                    onTapUp: (details) {
+                      final id = _wordAt(
+                        details.globalPosition,
+                        shortTap: true,
+                      );
+                      if (id == null) {
+                        _toggleBars();
+                      } else if (widget.store.state(_wordKeys[id]!).black) {
+                        _enqueue(id, false);
+                      }
+                    },
+                    child: PageView.builder(
+                      key: ValueKey(spread),
+                      controller: _controller,
+                      reverse: true,
+                      physics: _dragging
+                          ? const NeverScrollableScrollPhysics()
+                          : const PageScrollPhysics(),
+                      itemCount: groups.length,
+                      onPageChanged: (index) => setState(
+                        () => _selected = widget.pages.indexOf(
+                          groups[index].first,
+                        ),
+                      ),
+                      itemBuilder: (context, index) => Row(
+                        textDirection: TextDirection.rtl,
+                        children: [
+                          for (final page in groups[index])
+                            Expanded(
+                              child: _page(
+                                page,
+                                text.size,
+                                text.width,
+                                pageHeight,
+                              ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-          if (_barsVisible)
-            Positioned(
-              top: math.max(_statusTop, _cutout.top),
-              left: _cutout.left,
-              right: _cutout.right,
-              child: Material(
-                color: Colors.white.withValues(alpha: .96),
-                elevation: 1,
-                child: SizedBox(
-                  height: 40,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: _openSettings,
-                      child: const Text('Settings'),
+            if (_barsVisible)
+              Positioned(
+                top: math.max(_statusTop, _cutout.top),
+                left: _cutout.left,
+                right: _cutout.right,
+                child: Material(
+                  color: (_darkMode ? const Color(0xFF181818) : Colors.white)
+                      .withValues(alpha: .96),
+                  elevation: 1,
+                  child: SizedBox(
+                    height: 40,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: _openSettings,
+                        child: const Text('Settings'),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -742,10 +832,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         .join(),
                     key: ValueKey('page-number-$number'),
                     textScaler: TextScaler.noScaling,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 10,
                       height: 1.2,
-                      color: Colors.black,
+                      color: _darkMode ? const Color(0xFFB0B0B0) : Colors.black,
                     ),
                   ),
                 ),
@@ -790,7 +880,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
           width: textWidth * dimensions.width / 543,
           height: textWidth * dimensions.height / 543,
           child: FlatInk(
-            color: Colors.black,
+            color: _foreground,
+            background: _background,
             child: CustomPaint(painter: _headings[band]),
           ),
         ),
@@ -870,15 +961,14 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       key: ValueKey('word-$id'),
       container: true,
       label:
-          '${word['location']}; ${black ? 'black' : 'grey'}; reveals ${saved.count}',
+          '${word['location']}; ${black ? 'revealed' : 'unrevealed'}; reveals ${saved.count}',
       child: SizedBox(
         key: _targets.putIfAbsent(id, GlobalKey.new),
         width: _metrics[id]!.width * size,
         height: height,
         child: FlatInk(
-          color: black
-              ? Colors.black
-              : Color.fromARGB(255, _greyLevel, _greyLevel, _greyLevel),
+          color: black ? _foreground : _dim,
+          background: _background,
           child: Baseline(
             baseline: baseline,
             baselineType: TextBaseline.alphabetic,

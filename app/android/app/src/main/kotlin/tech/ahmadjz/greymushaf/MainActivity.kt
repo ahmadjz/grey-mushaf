@@ -10,12 +10,18 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private var barsVisible = false
+    private var darkMode = false
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "tech.ahmadjz.greymushaf/reader")
             .setMethodCallHandler { call, result ->
                 when (call.method) {
+                    "setDarkMode" -> {
+                        darkMode = call.arguments as Boolean
+                        applyBars()
+                        result.success(null)
+                    }
                     "setBarsVisible" -> {
                         barsVisible = call.arguments as Boolean
                         applyBars()
@@ -41,6 +47,10 @@ class MainActivity : FlutterActivity() {
     private fun applyBars() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val controller = WindowCompat.getInsetsController(window, window.decorView)
+        controller.isAppearanceLightStatusBars = !darkMode
+        controller.isAppearanceLightNavigationBars = !darkMode
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        window.navigationBarColor = android.graphics.Color.TRANSPARENT
         controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         if (barsVisible) controller.show(WindowInsetsCompat.Type.systemBars())
         else controller.hide(WindowInsetsCompat.Type.systemBars())

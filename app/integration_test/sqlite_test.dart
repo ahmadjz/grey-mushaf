@@ -60,7 +60,7 @@ void main() {
     for (var i = 0; i < 50 && find.text('Retry').evaluate().isEmpty; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
-    expect(label(), contains('grey; reveals 0'));
+    expect(label(), contains('; unrevealed; reveals 0'));
     expect(find.text("Couldn't save"), findsOneWidget);
     expect((await db.query('reveal_events')).length, 2);
     expect((await db.query('word_actions')).length, 4);
@@ -68,10 +68,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Retry').hitTestable(), findsOneWidget);
     await tester.tap(find.text('Retry'));
-    for (var i = 0; i < 50 && !label().contains('black'); i++) {
+    for (var i = 0; i < 50 && !label().contains('; revealed;'); i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
-    expect(label(), contains('black; reveals 1'));
+    expect(label(), contains('; revealed; reveals 1'));
     expect((await db.query('reveal_events')).length, 3);
     await tester.pumpWidget(const SizedBox());
     debugPrint(

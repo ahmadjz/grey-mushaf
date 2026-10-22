@@ -12,6 +12,13 @@ import 'memory_reveal_store.dart';
 class TestSettings implements ReaderSettings {
   @override
   int greyLevel = 176;
+  @override
+  int darkLevel = 80;
+  @override
+  Future<void> saveDarkLevel(int level) async {
+    darkLevel = level;
+  }
+
   final writes = <int>[];
   Completer<void>? pending;
   @override
@@ -79,13 +86,13 @@ void main() {
       await tester.pumpAndSettle();
       expect(
         tester.widget<Semantics>(word).properties.label,
-        contains('black; reveals 1'),
+        contains('; revealed; reveals 1'),
       );
       await tester.tap(word);
       await tester.pumpAndSettle();
       expect(
         tester.widget<Semantics>(word).properties.label,
-        contains('grey; reveals 1'),
+        contains('; unrevealed; reveals 1'),
       );
       await tester.tapAt(const Offset(3, 450));
       await tester.pumpAndSettle();

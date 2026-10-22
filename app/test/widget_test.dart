@@ -227,7 +227,7 @@ void main() {
       await tester.longPress(word(ids.first));
       await tester.pumpAndSettle();
       final before = {for (final id in ids) id: status(tester, id)};
-      expect(before[ids.first], contains('black; reveals 1'));
+      expect(before[ids.first], contains('; revealed; reveals 1'));
       final headings = lines.where((l) => l['type'] != 'ayah').toList();
       expect(headings.length, number == 187 ? 1 : 6);
       for (final line in headings) {
@@ -350,22 +350,22 @@ void main() {
     (tester) async {
       await mount(tester);
       expect(word(1), findsOneWidget);
-      expect(status(tester, 1), contains('grey; reveals 0'));
+      expect(status(tester, 1), contains('; unrevealed; reveals 0'));
       await tester.tap(word(1));
       await tester.pump();
-      expect(status(tester, 1), contains('grey; reveals 0'));
+      expect(status(tester, 1), contains('; unrevealed; reveals 0'));
       await tester.longPress(word(1));
       await tester.pumpAndSettle();
-      expect(status(tester, 1), contains('black; reveals 1'));
+      expect(status(tester, 1), contains('; revealed; reveals 1'));
       await tester.longPress(word(1));
       await tester.pumpAndSettle();
-      expect(status(tester, 1), contains('black; reveals 1'));
+      expect(status(tester, 1), contains('; revealed; reveals 1'));
       await tester.tap(word(1));
       await tester.pump();
-      expect(status(tester, 1), contains('grey; reveals 1'));
+      expect(status(tester, 1), contains('; unrevealed; reveals 1'));
       await tester.longPress(word(1));
       await tester.pump();
-      expect(status(tester, 1), contains('black; reveals 2'));
+      expect(status(tester, 1), contains('; revealed; reveals 2'));
     },
   );
 
@@ -379,13 +379,13 @@ void main() {
       await gesture.moveTo(tester.getCenter(word(4)));
       await tester.pump();
       for (final id in [1, 2, 3, 4]) {
-        expect(status(tester, id), contains('black; reveals 1'));
+        expect(status(tester, id), contains('; revealed; reveals 1'));
       }
       await gesture.moveTo(tester.getCenter(word(6)));
       await gesture.moveTo(tester.getCenter(word(1)));
       await tester.pump();
-      expect(status(tester, 6), contains('black; reveals 1'));
-      expect(status(tester, 1), contains('black; reveals 1'));
+      expect(status(tester, 6), contains('; revealed; reveals 1'));
+      expect(status(tester, 1), contains('; revealed; reveals 1'));
       expect(
         tester.widget<PageView>(find.byType(PageView)).physics,
         isA<NeverScrollableScrollPhysics>(),
@@ -445,13 +445,13 @@ void main() {
     final overhang = Offset(rect.right + 0.5, rect.center.dy);
     await tester.longPressAt(overhang);
     await tester.pump();
-    expect(status(tester, id), contains('black; reveals 1'));
+    expect(status(tester, id), contains('; revealed; reveals 1'));
     for (final other in words.where((w) => w['id'] != id)) {
-      expect(status(tester, other['id'] as int), contains('grey; reveals 0'));
+      expect(status(tester, other['id'] as int), contains('; unrevealed; reveals 0'));
     }
     await tester.tapAt(overhang);
     await tester.pump();
-    expect(status(tester, id), contains('grey; reveals 1'));
+    expect(status(tester, id), contains('; unrevealed; reveals 1'));
     // Entire line slot, including its top edge, belongs to words.
     final gesture = await tester.startGesture(
       Offset(rect.center.dx, band.top + 0.1),
@@ -461,8 +461,8 @@ void main() {
     await gesture.moveTo(tester.getCenter(word(next)));
     await gesture.moveTo(overhang);
     await tester.pump();
-    expect(status(tester, id), contains('black; reveals 2'));
-    expect(status(tester, next), contains('black; reveals 1'));
+    expect(status(tester, id), contains('; revealed; reveals 2'));
+    expect(status(tester, next), contains('; revealed; reveals 1'));
     await gesture.up();
     await tester.pumpAndSettle();
   });
@@ -484,13 +484,13 @@ void main() {
       final gutter = Offset((a.left + b.right) / 2 + 1, a.center.dy);
       final gesture = await tester.startGesture(gutter);
       await tester.pump(const Duration(milliseconds: 600));
-      expect(status(tester, rightId), contains('grey; reveals 0'));
-      expect(status(tester, leftId), contains('grey; reveals 0'));
+      expect(status(tester, rightId), contains('; unrevealed; reveals 0'));
+      expect(status(tester, leftId), contains('; unrevealed; reveals 0'));
       await gesture.moveTo(b.center);
       await gesture.moveTo(a.center);
       await tester.pump();
-      expect(status(tester, leftId), contains('black; reveals 1'));
-      expect(status(tester, rightId), contains('black; reveals 1'));
+      expect(status(tester, leftId), contains('; revealed; reveals 1'));
+      expect(status(tester, rightId), contains('; revealed; reveals 1'));
       await gesture.up();
       await tester.pumpAndSettle();
     },
@@ -515,9 +515,9 @@ void main() {
       Offset(rect.left - text.style!.fontSize! * .145, rect.center.dy),
     );
     await tester.pump();
-    expect(status(tester, 1), contains('black; reveals 1'));
+    expect(status(tester, 1), contains('; revealed; reveals 1'));
     for (final id in [2, 3, 4, 5]) {
-      expect(status(tester, id), contains('grey; reveals 0'));
+      expect(status(tester, id), contains('; unrevealed; reveals 0'));
     }
   });
 
@@ -542,7 +542,7 @@ void main() {
     expect(point.dx, lessThan(tester.view.physicalSize.width));
     await tester.longPressAt(point);
     await tester.pump();
-    expect(status(tester, 6240), contains('black; reveals 1'));
+    expect(status(tester, 6240), contains('; revealed; reveals 1'));
   });
 
   testWidgets('empty glyph in a multi-character word has no ink extent', (
@@ -570,12 +570,12 @@ void main() {
     final margin = Offset(5, tester.getCenter(word(5)).dy);
     await tester.longPressAt(margin);
     await tester.pump();
-    expect(status(tester, 5), contains('grey; reveals 0'));
+    expect(status(tester, 5), contains('; unrevealed; reveals 0'));
     await tester.longPress(word(5));
     await tester.pump();
     await tester.tapAt(margin);
     await tester.pump();
-    expect(status(tester, 5), contains('black; reveals 1'));
+    expect(status(tester, 5), contains('; revealed; reveals 1'));
   });
 
   testWidgets('attached off-screen bands cannot receive a press', (
@@ -604,7 +604,7 @@ void main() {
     await tester.pump();
     expect(
       tester.widget<Semantics>(word(5, skipOffstage: false)).properties.label,
-      contains('grey; reveals 0'),
+      contains('; unrevealed; reveals 0'),
     );
     detector.onLongPressEnd!(const LongPressEndDetails());
     await tester.pumpAndSettle();
@@ -870,7 +870,7 @@ void main() {
       await gesture.moveTo(tester.getCenter(word(from)));
       await tester.pump();
       for (final id in [from, to]) {
-        expect(status(tester, id), contains('black; reveals 1'));
+        expect(status(tester, id), contains('; revealed; reveals 1'));
       }
       expect(controller.page, 1);
       expect(

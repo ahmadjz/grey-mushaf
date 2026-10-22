@@ -22,8 +22,28 @@ abstract class RevealStore {
 
 /// SQLite owns state; this map is only its committed rendering projection.
 class SqliteRevealStore implements RevealStore, ReaderSettings {
-  SqliteRevealStore._(this._db, this.deviceId, this._states, this._greyLevel);
+  SqliteRevealStore._(
+    this._db,
+    this.deviceId,
+    this._states,
+    this._greyLevel,
+    this._darkLevel,
+  );
   int _greyLevel;
+  int _darkLevel;
+  @override
+  int get darkLevel => _darkLevel;
+
+  @override
+  Future<void> saveDarkLevel(int level) async {
+    if (level < 32 || level > 128) throw RangeError.range(level, 32, 128);
+    await _db.insert('local_metadata', {
+      'key': 'reader_dark_level',
+      'value': '$level',
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    _darkLevel = level;
+  }
+
   @override
   int get greyLevel => _greyLevel;
 
@@ -109,7 +129,18 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
       final grey = parsed != null && parsed >= 128 && parsed <= 224
           ? parsed
           : 176;
-      return SqliteRevealStore._(db, device, states, grey);
+      final darkSetting = await db.query(
+        'local_metadata',
+        where: 'key = ?',
+        whereArgs: ['reader_dark_level'],
+      );
+      final darkParsed = darkSetting.isEmpty
+          ? null
+          : int.tryParse(darkSetting.single['value'] as String);
+      final dark = darkParsed != null && darkParsed >= 32 && darkParsed <= 128
+          ? darkParsed
+          : 80;
+      return SqliteRevealStore._(db, device, states, grey, dark);
     } catch (_) {
       await db.close();
       rethrow;

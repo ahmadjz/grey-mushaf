@@ -44,9 +44,13 @@ void main() {
         );
         await tester.pumpAndSettle();
         final page = pages.singleWhere((p) => p['page'] == number);
-        final area = tester
-            .getRect(find.byKey(ValueKey('page-$number')))
-            .deflate(2);
+        final pageRect = tester.getRect(find.byKey(ValueKey('page-$number')));
+        final area = Rect.fromLTRB(
+          pageRect.left + (size.width > size.height ? 2 : size.width * .02),
+          pageRect.top + 2,
+          pageRect.right - (size.width > size.height ? 2 : size.width * .02),
+          pageRect.bottom - 2,
+        );
         for (final line in page['lines'] as List) {
           final words = line['words'] as List;
           if (words.isEmpty) continue;

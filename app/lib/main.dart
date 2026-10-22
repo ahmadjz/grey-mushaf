@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'flat_ink.dart';
 import 'heading_ink.dart';
 import 'reveal_store.dart';
+import 'reader_settings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ Future<void> main() async {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
         ),
-        home: Reader(pages: pages, store: store),
+        home: Reader(pages: pages, store: store, settings: store),
       ),
     );
   } catch (error) {
@@ -75,8 +76,10 @@ class Reader extends StatefulWidget {
     required this.pages,
     required this.store,
     this.onMeasureWord,
+    this.settings,
   });
   final RevealStore store;
+  final ReaderSettings? settings;
   final VoidCallback? onMeasureWord;
   final List<Map<String, dynamic>> pages;
 
@@ -84,7 +87,159 @@ class Reader extends StatefulWidget {
   State<Reader> createState() => _ReaderState();
 }
 
-class _ReaderState extends State<Reader> {
+class _ReaderState extends State<Reader> with WidgetsBindingObserver {
+  static const _platform = MethodChannel('tech.ahmadjz.greymushaf/reader');
+  bool _barsVisible = false;
+  EdgeInsets _cutout = EdgeInsets.zero;
+  double _statusTop = 0;
+  late int _greyLevel;
+  Future<void> _settingWrites = Future<void>.value();
+  double _contentWidth = 0;
+
+  Future<void> _readInsets() async {
+    try {
+      final data = await _platform.invokeMapMethod<String, dynamic>(
+        'getInsets',
+      );
+      if (!mounted || data == null) return;
+      double value(String key) => (data[key] as num?)?.toDouble() ?? 0;
+      final cutout = EdgeInsets.fromLTRB(
+        value('left'),
+        value('top'),
+        value('right'),
+        value('bottom'),
+      );
+      final status = value('statusTop');
+      if (cutout != _cutout || status != _statusTop) {
+        setState(() {
+          _cutout = cutout;
+          _statusTop = status;
+        });
+      }
+    } on MissingPluginException {
+      // Widget tests and non-Android hosts have no system bars to control.
+    }
+  }
+
+  Future<void> _setBars() async {
+    try {
+      await _platform.invokeMethod<void>('setBarsVisible', _barsVisible);
+      await _readInsets();
+    } on MissingPluginException {
+      // Native Android owns the system bars.
+    }
+  }
+
+  @override
+  void didChangeMetrics() {
+    unawaited(_readInsets());
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) unawaited(_setBars());
+  }
+
+  void _toggleBars() {
+    setState(() => _barsVisible = !_barsVisible);
+    unawaited(_setBars());
+  }
+
+  void _saveGrey(int level) {
+    _settingWrites = _settingWrites.then((_) async {
+      try {
+        await widget.settings?.saveGreyLevel(level);
+      } catch (_) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Couldn't save grey level"),
+            action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () => _saveGrey(_greyLevel),
+            ),
+          ),
+        );
+      }
+    });
+  }
+
+  Future<void> _openSettings() async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => StatefulBuilder(
+        builder: (context, updateSheet) {
+          final sample = widget.pages.first;
+          final line = (sample['lines'] as List).firstWhere(
+            (line) => (line['words'] as List).isNotEmpty,
+          );
+          final word = (line['words'] as List).first;
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: Text('Settings', style: TextStyle(fontSize: 18)),
+                      ),
+                      IconButton(
+                        tooltip: 'Close Settings',
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.close),
+                      ),
+                    ],
+                  ),
+                  const Text('Grey text lightness'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      for (final color in [
+                        Color.fromARGB(255, _greyLevel, _greyLevel, _greyLevel),
+                        Colors.black,
+                      ])
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: FlatInk(
+                            color: color,
+                            child: Text(
+                              word['text'] as String,
+                              style: _style(sample['page'] as int, 36),
+                              textScaler: TextScaler.noScaling,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  Slider(
+                    min: 128,
+                    max: 224,
+                    divisions: 96,
+                    value: _greyLevel.toDouble(),
+                    semanticFormatterCallback: (value) =>
+                        'Grey lightness ${((value - 128) / 96 * 100).round()} percent',
+                    onChanged: (value) {
+                      setState(() => _greyLevel = value.round());
+                      updateSheet(() {});
+                    },
+                    onChangeEnd: (value) => _saveGrey(value.round()),
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Text('Darker'), Text('Lighter')],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   final _wordKeys = <int, String>{};
   final _pending = Queue<WordAction>();
   bool _saving = false;
@@ -141,6 +296,9 @@ class _ReaderState extends State<Reader> {
   @override
   void initState() {
     super.initState();
+    _greyLevel = widget.settings?.greyLevel ?? 176;
+    WidgetsBinding.instance.addObserver(this);
+    unawaited(_setBars());
     _measureBundle();
   }
 
@@ -200,6 +358,7 @@ class _ReaderState extends State<Reader> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     for (final ink in _headings.values) {
       ink.dispose();
     }
@@ -319,62 +478,90 @@ class _ReaderState extends State<Reader> {
     }
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
-            final slotHeight = (constraints.maxHeight - 24) / 15;
-            final text = _textSize(pageWidth - 4, slotHeight);
-            void select(int number) {
-              final index = groups.indexWhere(
-                (g) => g.any((p) => p['page'] == number),
-              );
-              if (index >= 0) _controller.jumpToPage(index);
-            }
-
-            return GestureDetector(
-              key: _viewport,
-              behavior: HitTestBehavior.opaque,
-              onLongPressStart: _start,
-              onLongPressMoveUpdate: _move,
-              onLongPressEnd: (_) => _end(),
-              onLongPressCancel: _end,
-              onTapUp: (details) {
-                final id = _wordAt(details.globalPosition);
-                if (id != null && widget.store.state(_wordKeys[id]!).black) {
-                  _enqueue(id, false);
-                }
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Padding(
+            padding: _cutout,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
+                final pageHeight = constraints.maxHeight - 4;
+                final side = spread
+                    ? 2.0
+                    : MediaQuery.sizeOf(context).width * .02;
+                _contentWidth = pageWidth - side * 2;
+                // Reserve number clearance only when the last line's spare ink
+                // space cannot contain it. This bound keeps one font size throughout.
+                final text = _textSize(_contentWidth, (pageHeight - 14) / 15);
+                return GestureDetector(
+                  key: _viewport,
+                  behavior: HitTestBehavior.opaque,
+                  onLongPressStart: _start,
+                  onLongPressMoveUpdate: _move,
+                  onLongPressEnd: (_) => _end(),
+                  onLongPressCancel: _end,
+                  onTapUp: (details) {
+                    final id = _wordAt(details.globalPosition);
+                    if (id == null) {
+                      _toggleBars();
+                    } else if (widget.store.state(_wordKeys[id]!).black) {
+                      _enqueue(id, false);
+                    }
+                  },
+                  child: PageView.builder(
+                    key: ValueKey(spread),
+                    controller: _controller,
+                    reverse: true,
+                    physics: _dragging
+                        ? const NeverScrollableScrollPhysics()
+                        : const PageScrollPhysics(),
+                    itemCount: groups.length,
+                    onPageChanged: (index) => setState(
+                      () =>
+                          _selected = widget.pages.indexOf(groups[index].first),
+                    ),
+                    itemBuilder: (context, index) => Row(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        for (final page in groups[index])
+                          Expanded(
+                            child: _page(
+                              page,
+                              text.size,
+                              text.width,
+                              pageHeight,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                );
               },
-              child: PageView.builder(
-                key: ValueKey(spread),
-                controller: _controller,
-                reverse: true,
-                physics: _dragging
-                    ? const NeverScrollableScrollPhysics()
-                    : const PageScrollPhysics(),
-                itemCount: groups.length,
-                onPageChanged: (index) => setState(
-                  () => _selected = widget.pages.indexOf(groups[index].first),
-                ),
-                itemBuilder: (context, index) => Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    for (final page in groups[index])
-                      Expanded(
-                        child: _page(
-                          page,
-                          text.size,
-                          text.width,
-                          slotHeight,
-                          select,
-                        ),
-                      ),
-                  ],
+            ),
+          ),
+          if (_barsVisible)
+            Positioned(
+              top: math.max(_statusTop, _cutout.top),
+              left: _cutout.left,
+              right: _cutout.right,
+              child: Material(
+                color: Colors.white.withValues(alpha: .96),
+                elevation: 1,
+                child: SizedBox(
+                  height: 40,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: _openSettings,
+                      child: const Text('Settings'),
+                    ),
+                  ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+        ],
       ),
     );
   }
@@ -445,19 +632,22 @@ class _ReaderState extends State<Reader> {
     Map<String, dynamic> page,
     double fontSize,
     double textWidth,
-    double slotHeight,
-    ValueChanged<int> select,
+    double pageHeight,
   ) {
     final number = page['page'] as int;
     final lines = page['lines'] as List;
+    final spare = (pageHeight / 15 - _inkHeight(page) * fontSize) / 2;
+    final strip = number <= 2 ? 0.0 : math.max(0.0, (14 - spare) * 30 / 29);
+    final slotHeight = (pageHeight - strip) / 15;
     final height = number <= 2 ? textWidth * 47 / 543 : slotHeight;
     return SizedBox(
       key: ValueKey('page-$number'),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-        child: Column(
+        child: Stack(
           children: [
-            Expanded(
+            Positioned.fill(
+              bottom: strip,
               child: number <= 2
                   ? Center(
                       child: SizedBox(
@@ -504,25 +694,24 @@ class _ReaderState extends State<Reader> {
                       ],
                     ),
             ),
-            SizedBox(
-              height: 20,
-              child: PopupMenuButton<int>(
-                key: ValueKey('page-picker-$number'),
-                enabled: !_dragging,
-                tooltip: 'Choose page',
-                onSelected: select,
-                itemBuilder: (_) => [
-                  for (final p in widget.pages)
-                    PopupMenuItem(
-                      value: p['page'] as int,
-                      child: Text('Page ${p['page']}'),
-                    ),
-                ],
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: IgnorePointer(
+                child: Center(
                   child: Text(
-                    '$number',
-                    style: const TextStyle(fontSize: 12, color: Colors.black),
+                    '$number'
+                        .split('')
+                        .map((digit) => '٠١٢٣٤٥٦٧٨٩'[int.parse(digit)])
+                        .join(),
+                    key: ValueKey('page-number-$number'),
+                    textScaler: TextScaler.noScaling,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      height: 1.2,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -603,10 +792,7 @@ class _ReaderState extends State<Reader> {
       final last = _metrics[words.last['id']]!;
       // Only correct ink that would cross this page's physical edge. In
       // height-limited views the existing spare margin already contains it.
-      final viewport = MediaQuery.sizeOf(context);
-      final pageWidth =
-          viewport.width / (viewport.width > viewport.height ? 2 : 1);
-      final spare = math.max(0.0, (pageWidth - 4 - textWidth) / 2);
+      final spare = math.max(0.0, (_contentWidth - textWidth) / 2);
       final right = (first.right - first.width) * size;
       final left = last.left * size;
       final shift = right > spare
@@ -654,7 +840,9 @@ class _ReaderState extends State<Reader> {
         width: _metrics[id]!.width * size,
         height: height,
         child: FlatInk(
-          color: black ? Colors.black : const Color(0xFFB0B0B0),
+          color: black
+              ? Colors.black
+              : Color.fromARGB(255, _greyLevel, _greyLevel, _greyLevel),
           child: Baseline(
             baseline: baseline,
             baselineType: TextBaseline.alphabetic,

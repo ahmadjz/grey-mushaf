@@ -1,3 +1,5 @@
+import 'reader_settings.dart';
+
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
@@ -19,8 +21,22 @@ abstract class RevealStore {
 }
 
 /// SQLite owns state; this map is only its committed rendering projection.
-class SqliteRevealStore implements RevealStore {
-  SqliteRevealStore._(this._db, this.deviceId, this._states);
+class SqliteRevealStore implements RevealStore, ReaderSettings {
+  SqliteRevealStore._(this._db, this.deviceId, this._states, this._greyLevel);
+  int _greyLevel;
+  @override
+  int get greyLevel => _greyLevel;
+
+  @override
+  Future<void> saveGreyLevel(int level) async {
+    if (level < 128 || level > 224) throw RangeError.range(level, 128, 224);
+    await _db.insert('local_metadata', {
+      'key': 'reader_grey_level',
+      'value': '$level',
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    _greyLevel = level;
+  }
+
   final Database _db;
   final String deviceId;
   final Map<String, WordState> _states;
@@ -82,7 +98,18 @@ class SqliteRevealStore implements RevealStore {
       for (final row in await db.query('word_state')) {
         states[row['word_key'] as String] = _decode(row);
       }
-      return SqliteRevealStore._(db, device, states);
+      final setting = await db.query(
+        'local_metadata',
+        where: 'key = ?',
+        whereArgs: ['reader_grey_level'],
+      );
+      final parsed = setting.isEmpty
+          ? null
+          : int.tryParse(setting.single['value'] as String);
+      final grey = parsed != null && parsed >= 128 && parsed <= 224
+          ? parsed
+          : 176;
+      return SqliteRevealStore._(db, device, states, grey);
     } catch (_) {
       await db.close();
       rethrow;

@@ -644,26 +644,20 @@ void main() {
     await gesture.moveTo(tester.getCenter(word(4)));
     await tester.pump();
     expect(
-      tester
-          .widget<PopupMenuButton<int>>(
-            find.byKey(const ValueKey('page-picker-1')),
-          )
-          .enabled,
-      isFalse,
+      tester.widget<PageView>(find.byType(PageView)).physics,
+      isA<NeverScrollableScrollPhysics>(),
     );
+    expect(find.byType(PopupMenuButton<int>), findsNothing);
     await gesture.up();
     await tester.pumpAndSettle();
     tester.view.physicalSize = const Size(1200, 700);
     await tester.pumpAndSettle();
     expect(measurements, initial);
     expect(
-      tester
-          .widget<PopupMenuButton<int>>(
-            find.byKey(const ValueKey('page-picker-1')),
-          )
-          .enabled,
-      isTrue,
+      tester.widget<PageView>(find.byType(PageView)).physics,
+      isA<PageScrollPhysics>(),
     );
+    expect(find.byType(PopupMenuButton<int>), findsNothing);
   });
 
   for (final size in [
@@ -760,8 +754,13 @@ void main() {
             (font['unitsPerEm'] as num) *
             sizes.single *
             15;
-        final fraction = (advanceWidth / page.width) > (inkHeight / page.height)
-            ? advanceWidth / page.width
+        // R31 reserves 2% per side; R19 fills the remaining text area.
+        final availableWidth = size.width > size.height
+            ? page.width
+            : page.width * .96;
+        final fraction =
+            (advanceWidth / availableWidth) > (inkHeight / page.height)
+            ? advanceWidth / availableWidth
             : inkHeight / page.height;
         expect(fraction, greaterThanOrEqualTo(.90));
         controller.jumpToPage(size.width > size.height ? 0 : 1);

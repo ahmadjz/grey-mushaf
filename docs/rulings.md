@@ -120,6 +120,22 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 28. **Settings has a slider for how light the grey text is.** The owner prefers it lighter, but
     others may not, so it is adjustable.
 
+## R29 (2026-10-22, owner)
+
+29. **Tapping empty space shows the bars,** like the owner's reference Quran app. The reader opens
+    full screen (R25). A tap on a spot with no word brings back the phone's bars and a thin top bar
+    in the app, which holds Settings (and later the surah list). Another tap on empty space hides
+    them. Taps and long-presses on words work as before.
+
+## R30–R32 (2026-10-22, Claude's defaults, the owner may overrule)
+
+30. **Page number style:** small, at the bottom centre of each page, in Arabic-Indic digits (١٠٩), as
+    in the reference app. It sits in the page's own blank space; a thin strip is reserved only where
+    a page has no room under its last line.
+31. **Portrait side margin:** 2% of the screen width on each side.
+32. **Grey slider range:** from mid grey (`#808080`) to very light (`#E0E0E0`), starting at today's
+    grey (`#B0B0B0`). The setting belongs to each device and is not synced.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

@@ -29,7 +29,15 @@ void main() {
         0xFF9FA5A5,
       ];
       final boundaryKey = GlobalKey();
-      for (final target in [const Color(0xFFB0B0B0), const Color(0xFF000000)]) {
+      for (final pair in [
+        (const Color(0xFFB0B0B0), const Color(0xFFFFFFFF)),
+        (const Color(0xFF000000), const Color(0xFFFFFFFF)),
+        (const Color(0xFFFFFFFF), const Color(0xFF000000)),
+        (const Color(0xFF202020), const Color(0xFF000000)),
+        (const Color(0xFF808080), const Color(0xFF000000)),
+      ]) {
+        final target = pair.$1;
+        final background = pair.$2;
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
@@ -38,6 +46,7 @@ void main() {
                 key: boundaryKey,
                 child: FlatInk(
                   color: target,
+                  background: background,
                   child: SizedBox(
                     width: 340,
                     height: 20,
@@ -69,7 +78,9 @@ void main() {
           ))!;
           for (var i = 0; i < palette.length; i++) {
             final offset = (10 * 340 + i * 20 + 10) * 4;
-            final expected = i == 12 ? 255 : (target.toARGB32() & 255);
+            final expected = i == 12
+                ? (background.toARGB32() & 255)
+                : (target.toARGB32() & 255);
             expect(
               bytes.getUint8(offset),
               expected,

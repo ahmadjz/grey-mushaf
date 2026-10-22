@@ -6,14 +6,20 @@ import 'package:flutter/widgets.dart';
 /// numeral. Separate that field from ink before mapping ink to black/grey.
 /// All supplied ink colours have mean RGB below .75; the field is above .80.
 class FlatInk extends StatelessWidget {
-  const FlatInk({super.key, required this.color, required this.child});
+  const FlatInk({
+    super.key,
+    required this.color,
+    required this.child,
+    this.background = const Color(0xFFFFFFFF),
+  });
   final Color color;
+  final Color background;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     final grey = (color.toARGB32() & 255).toDouble();
-    final scale = 1 - grey / 255;
+    final scale = ((background.toARGB32() & 255) - grey) / 255;
     return ColorFiltered(
       colorFilter: ColorFilter.matrix([
         scale,

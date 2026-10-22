@@ -136,6 +136,16 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 32. **Grey slider range:** from mid grey (`#808080`) to very light (`#E0E0E0`), starting at today's
     grey (`#B0B0B0`). The setting belongs to each device and is not synced.
 
+## R33–R35 (2026-10-22, owner)
+
+33. **Dark mode,** like the owner's reference Quran app: a black page, unrevealed words dim, revealed
+    words bright white. Surah names and the basmallah headings are white in dark mode (R20's "always
+    black" means full contrast in the current mode).
+34. **Dark mode has its own dimness slider.** It remembers its own level separately from the light
+    mode's grey (R28), per device.
+35. **Dark mode turns on only by a switch in Settings.** The app starts in light mode and does not
+    follow the phone's dark mode.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

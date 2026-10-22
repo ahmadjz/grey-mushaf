@@ -94,6 +94,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   double _statusTop = 0;
   late int _greyLevel;
   Future<void> _settingWrites = Future<void>.value();
+  final _greySaveFailed = ValueNotifier(false);
+  bool _settingsOpen = false;
   double _contentWidth = 0;
 
   Future<void> _readInsets() async {
@@ -149,8 +151,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _settingWrites = _settingWrites.then((_) async {
       try {
         await widget.settings?.saveGreyLevel(level);
+        if (mounted) _greySaveFailed.value = false;
       } catch (_) {
         if (!mounted) return;
+        _greySaveFailed.value = true;
+        if (_settingsOpen) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text("Couldn't save grey level"),
@@ -165,6 +170,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   }
 
   Future<void> _openSettings() async {
+    _settingsOpen = true;
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -231,6 +237,25 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [Text('Darker'), Text('Lighter')],
                   ),
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _greySaveFailed,
+                    builder: (context, failed, child) => failed
+                        ? Semantics(
+                            liveRegion: true,
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: Text("Couldn't save grey level"),
+                                ),
+                                TextButton(
+                                  onPressed: () => _saveGrey(_greyLevel),
+                                  child: const Text('Retry'),
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                 ],
               ),
             ),
@@ -238,6 +263,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         },
       ),
     );
+    _settingsOpen = false;
   }
 
   final _wordKeys = <int, String>{};
@@ -360,6 +386,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _greySaveFailed.dispose();
     for (final ink in _headings.values) {
       ink.dispose();
     }

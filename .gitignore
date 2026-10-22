@@ -1,5 +1,6 @@
 # source and generated assets: large, and not ours to redistribute
 *.zip
+*.apk
 *.pdf
 *.ai
 /*.png

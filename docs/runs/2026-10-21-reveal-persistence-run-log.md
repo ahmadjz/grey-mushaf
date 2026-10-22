@@ -86,3 +86,8 @@ Android backup restore duplicating the device id.
 - Not observed: physical Boox, phone (owner devices), 604-page performance (only 5 pages bundled).
 
 **Next action:** none. Owner tries on phone and Boox.
+
+## Owner device check (2026-10-22)
+
+- Owner's phone, arm64 release APK: a revealed word stayed black after closing and reopening the
+  app. Boox not yet observed.

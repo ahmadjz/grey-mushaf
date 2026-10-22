@@ -108,6 +108,18 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 24. **A word shows black only once it is saved.** If saving a reveal or a re-grey fails, the word
     keeps its last saved colour and a short "Couldn't save" message offers a retry.
 
+## R25–R28 (2026-10-22, owner)
+
+25. **The reader is full screen.** The phone's status bar and navigation bar are hidden so the page
+    gets all the space.
+26. **A single page keeps a small side margin.** In portrait the text no longer touches the screen
+    edges, so it reads clearly. This narrows R19's "as thin as possible" for the portrait page.
+27. **The page number is shown small, for information only.** It is not a button and takes as little
+    room as possible. The page list behind it goes away. Navigation comes later as a surah list with
+    the juz marked inside it, like the owner's reference app.
+28. **Settings has a slider for how light the grey text is.** The owner prefers it lighter, but
+    others may not, so it is adjustable.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

@@ -285,6 +285,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   final _visited = <int>{};
   final _bands = <String, GlobalKey>{};
   final _bandWords = <String, List<int>>{};
+  final _bandInkHeights = <String, double>{};
   final _viewport = GlobalKey();
   final _metrics = <int, ({double width, double left, double right})>{};
   final _headings = <String, HeadingInk>{};
@@ -366,7 +367,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  int? _wordAt(Offset point) {
+  int? _wordAt(Offset point, {bool shortTap = false}) {
     final viewport = _viewport.currentContext?.findRenderObject() as RenderBox?;
     if (viewport == null || !viewport.hasSize) return null;
     final visible = viewport.localToGlobal(Offset.zero) & viewport.size;
@@ -383,6 +384,13 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       if (!rect.overlaps(visible) ||
           point.dy < rect.top ||
           point.dy >= rect.bottom) {
+        continue;
+      }
+      // Short taps must land on ink-height boxes. Keep the full line bands
+      // for long-press/drag, including the whitespace between printed lines.
+      if (shortTap &&
+          (point.dy - rect.center.dy).abs() >
+              _bandInkHeights[entry.key]! / 2 + _size * .02) {
         continue;
       }
       for (final id in _bandWords[entry.key] ?? <int>[]) {
@@ -503,7 +511,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                   onLongPressEnd: (_) => _end(),
                   onLongPressCancel: _end,
                   onTapUp: (details) {
-                    final id = _wordAt(details.globalPosition);
+                    final id = _wordAt(details.globalPosition, shortTap: true);
                     if (id == null) {
                       _toggleBars();
                     } else if (widget.store.state(_wordKeys[id]!).black) {
@@ -734,6 +742,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final band = '$number-${line['number']}';
     final bandKey = _bands.putIfAbsent(band, GlobalKey.new);
     _bandWords[band] = [for (final word in words) word['id'] as int];
+    _bandInkHeights[band] = _inkHeight(page) * size;
     Widget content;
     if (line['type'] != 'ayah') {
       // Reference ink boxes at the same scale as the 543 px normal text

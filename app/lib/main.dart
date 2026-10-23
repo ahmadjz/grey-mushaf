@@ -432,9 +432,20 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     if (!identical(oldWidget.pages, widget.pages)) _measureBundle();
   }
 
+  MushafBundle? _measuredBundle;
+
   void _measureBundle() {
-    for (final ink in _headings.values) {
-      ink.dispose();
+    final reuse =
+        widget.bundle != null && identical(_measuredBundle, widget.bundle);
+    _measuredBundle = widget.bundle;
+    final previousMetrics = Map.of(_metrics);
+    final previousHeadings = Map.of(_headings);
+    if (!reuse) {
+      previousMetrics.clear();
+      for (final ink in previousHeadings.values) {
+        ink.dispose();
+      }
+      previousHeadings.clear();
     }
     _headings.clear();
     _metrics.clear();
@@ -442,22 +453,39 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _edgeInk = widget.bundle?.metrics.edgeInk ?? 0;
     _tallest = widget.bundle?.metrics.tallest ?? 1;
     _wordKeys.clear();
+    final retainedBands = <String>{};
     for (final page in widget.pages) {
       if (page['lines'] == null) continue;
       _tallest = math.max(_tallest, inkHeight(page));
       for (final line in page['lines'] as List) {
+        retainedBands.add('${page['page']}-${line['number']}');
         final words = line['words'] as List;
         if (line['heading'] != null) {
-          _headings['${page['page']}-${line['number']}'] = HeadingInk(
-            line['heading'] as Map<String, dynamic>,
-            opening: (page['page'] as int) <= 2,
-          );
+          final band = '${page['page']}-${line['number']}';
+          _headings[band] =
+              previousHeadings.remove(band) ??
+              HeadingInk(
+                line['heading'] as Map<String, dynamic>,
+                opening: (page['page'] as int) <= 2,
+              );
         }
         if (words.isEmpty) continue;
         var width = (words.length - 1) * .09;
         for (final word in words) {
-          widget.onMeasureWord?.call();
-          final metric = measureWord(word as Map<String, dynamic>, page);
+          final cached = previousMetrics[word['id']];
+          final prepared = widget.bundle == null
+              ? null
+              : word['metrics'] as List;
+          if (cached == null && prepared == null) widget.onMeasureWord?.call();
+          final metric =
+              cached ??
+              (prepared == null
+                  ? measureWord(word as Map<String, dynamic>, page)
+                  : (
+                      width: (prepared[0] as num).toDouble(),
+                      left: (prepared[1] as num).toDouble(),
+                      right: (prepared[2] as num).toDouble(),
+                    ));
           _metrics[word['id'] as int] = metric;
           _wordKeys[word['id'] as int] = wordKey(word['location'] as String);
           width += metric.width;
@@ -475,6 +503,38 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         }
       }
     }
+    for (final ink in previousHeadings.values) {
+      ink.dispose();
+    }
+    _targets.removeWhere((id, _) => !_metrics.containsKey(id));
+    _bands.removeWhere((band, _) => !retainedBands.contains(band));
+    _bandWords.removeWhere((band, _) => !retainedBands.contains(band));
+    _bandInkHeights.removeWhere((band, _) => !retainedBands.contains(band));
+  }
+
+  void _showLoadError(VoidCallback retry) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: _darkMode ? const Color(0xFF303030) : null,
+        content: Text(
+          "Couldn't load page",
+          style: _darkMode ? const TextStyle(color: Colors.white) : null,
+        ),
+        action: SnackBarAction(label: 'Retry', onPressed: retry),
+      ),
+    );
+  }
+
+  Future<void> _prefetch(int number) async {
+    try {
+      final loaded = await widget.bundle!.loadNear(number);
+      if (mounted && loaded) setState(_measureBundle);
+    } catch (_) {
+      _showLoadError(
+        () => unawaited(_prefetch(widget.pages[_selected]['page'] as int)),
+      );
+    }
   }
 
   bool _dragging = false;
@@ -485,6 +545,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    widget.bundle?.cancelPendingLoads();
     WidgetsBinding.instance.removeObserver(this);
     _settingFailures.dispose();
     for (final ink in _headings.values) {
@@ -600,6 +661,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       }
     }
     if (_spread != spread) {
+      widget.bundle?.cancelPendingLoads();
       final selectedPage = widget.pages.isEmpty
           ? 1
           : widget.pages[_selected]['page'];
@@ -611,11 +673,19 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
           ? PageController(initialPage: math.max(0, index))
           : LoadedPageController(
               initialPage: math.max(0, index),
+              onLoadError: (index, error) {
+                final number = spread ? index * 2 + 1 : index + 1;
+                _showLoadError(
+                  () => _controller.jumpToPage(
+                    _spread == true ? (number - 1) ~/ 2 : number - 1,
+                  ),
+                );
+              },
               prepare: (index) async {
-                await widget.bundle!.loadNear(
+                final loaded = await widget.bundle!.loadNear(
                   spread ? index * 2 + 1 : index + 1,
                 );
-                if (mounted) setState(_measureBundle);
+                if (mounted && loaded) setState(_measureBundle);
               },
             );
       WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
@@ -678,6 +748,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                             ),
                       itemCount: groups.length,
                       onPageChanged: (index) {
+                        debugPrint(
+                          'READER_PAGE ${groups[index].first['page']}',
+                        );
                         final controller = _controller;
                         if (controller is LoadedPageController) {
                           controller.cancelPendingNavigation();
@@ -686,11 +759,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         final bundle = widget.bundle;
                         if (bundle != null) {
                           unawaited(
-                            bundle
-                                .loadNear(groups[index].first['page'] as int)
-                                .then((_) {
-                                  if (mounted) setState(_measureBundle);
-                                }),
+                            _prefetch(groups[index].first['page'] as int),
                           );
                         }
                       },

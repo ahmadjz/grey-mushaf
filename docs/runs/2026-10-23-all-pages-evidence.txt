@@ -79,3 +79,64 @@ in-memory store; timing proof only swipes and makes no reveal actions.
 Not run: pytest (no Python source changed); physical phone/Boox/arm64 device execution;
 PSS after browsing the entire mushaf. Flutter retains registered fonts as pages are visited.
 Existing owner edits in the two .claude files and the original all-pages run log were untouched.
+
+Review fixes — 2026-10-23 (base c08c6bb; new commits, no amendments)
+Uncached page JSON; bounded hit-test/heading/word caches; prepared per-word metrics
+from real Flutter shaping avoid runtime measurement paragraphs. Fonts remain registered.
+Inspected PlatformAssetBundle.load: no ByteData cache; temporary FontLoader is not retained.
+Completer fault injection: pending font ownership, rotation during far jump, failed JSON
+retry, error feedback, rotation before retry, and stale prefetch retry; observed red then green.
+flutter analyze: clean (/tmp/quran-review-analyze-final5.log).
+heavy flutter test --concurrency=2: 57 passed (/tmp/quran-review-tests-final5.log).
+Android profile integration: passed exact every-word/global metric parity, retry,
+far jump and rapid paging (/tmp/quran-review-device-final5.log).
+Prepared metrics engine/framework guard: mismatched engine accepted before fix (red),
+rejected afterward with Stale Flutter engine/framework metrics; valid release builds passed.
+Guard logs: /tmp/quran-engine-red.log; /tmp/quran-engine-green.log.
+Medium_Phone emulator-5554, 4096 MB guest RAM; timing/memory: Android x64 RELEASE.
+Cold method: force-stop, device epoch timestamp + am start -W, READER_FIRST_FRAME
+post-frame timestamp; this is a framework frame callback, not a raster-completion trace.
+cold 1: reader=363 ms; am TotalTime=433 ms; PSS=68804 KB
+cold 2: reader=314 ms; am TotalTime=382 ms; PSS=65947 KB
+cold 3: reader=322 ms; am TotalTime=389 ms; PSS=68095 KB
+cold 4: reader=333 ms; am TotalTime=399 ms; PSS=66422 KB
+cold 5: reader=322 ms; am TotalTime=387 ms; PSS=66252 KB
+Cold reader median/range: 322 / 314–363 ms.
+Full read: process-cold page 1 → 604, input swipes, READER_PAGE coverage; dumpsys
+meminfo every 80 swipes plus every 5 seconds; settled after 30 seconds idle.
+{"event": "start", "time": 1792754554.203, "pss_kb": 68775}
+{"event": "checkpoint", "swipes": 80, "last_page": 81, "unique_pages": 81}
+{"event": "swipes-80", "time": 1792754591.742, "pss_kb": 139495}
+{"event": "checkpoint", "swipes": 160, "last_page": 161, "unique_pages": 161}
+{"event": "swipes-160", "time": 1792754629.277, "pss_kb": 162885}
+{"event": "checkpoint", "swipes": 240, "last_page": 241, "unique_pages": 241}
+{"event": "swipes-240", "time": 1792754666.767, "pss_kb": 187655}
+{"event": "checkpoint", "swipes": 320, "last_page": 321, "unique_pages": 321}
+{"event": "swipes-320", "time": 1792754704.245, "pss_kb": 215987}
+{"event": "checkpoint", "swipes": 400, "last_page": 401, "unique_pages": 401}
+{"event": "swipes-400", "time": 1792754741.891, "pss_kb": 240185}
+{"event": "checkpoint", "swipes": 480, "last_page": 481, "unique_pages": 481}
+{"event": "swipes-480", "time": 1792754779.399, "pss_kb": 266988}
+{"event": "checkpoint", "swipes": 560, "last_page": 561, "unique_pages": 561}
+{"event": "swipes-560", "time": 1792754816.896, "pss_kb": 287981}
+{"event": "checkpoint", "swipes": 640, "last_page": 604, "unique_pages": 604}
+{"event": "swipes-640", "time": 1792754854.322, "pss_kb": 285791}
+{"event": "coverage", "swipes": 640, "missing": []}
+{"event": "end", "time": 1792754854.407, "pss_kb": 285734}
+{"event": "settled-30s", "time": 1792754884.502, "pss_kb": 285836}
+{"event": "summary", "peak_pss_kb": 297255, "settled_pss_kb": 285836, "swipes": 640, "unique_pages": 604}
+Peak: 304389120 bytes = 304.389 MB = 290.288 MiB; settled: 292696064 bytes.
+R39 strict 300,000,000-byte gate: FAIL; remains open.
+Earlier full reads: peak/settled 295684/280577 KB, 298217/281466 KB,
+297098/283280 KB; no claim that fonts alone establish an unavoidable lower bound.
+Logs: /tmp/quran-review-cold-final5.log; /tmp/quran-review-full-read-final5.log.
+arm64 release: heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter build apk
+--release --target-platform android-arm64; copied to repo-root grey-mushaf.apk.
+APK bytes: 88076897; SHA256: 1091b8099891e44a9680d44b8f80d86b4393086623b9c37ae20e10784b674913.
+Screenshots: docs/runs/shots/2026-10-23-all-pages-{187-portrait,300-portrait,
+604-portrait,landscape,fast-paging,load-retry}.png. Device integration checks no
+loading indicator after rapid paging; retry screenshot keeps the previous page visible.
+Asset audit: git ls-files filtered for ttf/otf/db/ai/pdf/zip or assets/mushaf: empty.
+Not run: pytest (no Python source changed); physical/arm64 device execution.
+No accounts, tokens, or persistent reveal records created. Owner .claude edits and
+untracked original run log left untouched.

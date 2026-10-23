@@ -26,6 +26,18 @@ void main() {
     'prepared global size equals eager shaping, including pages 1, 2, 187, 604',
     (tester) async {
       final pages = (await tester.runAsync(loadPages))!;
+      for (final page in pages) {
+        for (final line in page['lines'] as List) {
+          for (final word in line['words'] as List) {
+            final actual = measureWord(word as Map<String, dynamic>, page);
+            expect(word['metrics'], [
+              actual.width,
+              actual.left,
+              actual.right,
+            ], reason: '${word['location']}');
+          }
+        }
+      }
       final eager = BundleMetrics.measure(pages);
       final bundle = (await tester.runAsync(MushafBundle.open))!;
       expect(bundle.metrics.toJson(), eager.toJson());

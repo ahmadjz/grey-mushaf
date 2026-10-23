@@ -16,6 +16,21 @@ void main() {
       orderedEquals(List.generate(604, (i) => i + 1)),
     );
     final metrics = BundleMetrics.measure(pages);
+    // Persist each word's real shaped metrics to avoid a second runtime shaping
+    // size (100 px) and its transient paragraphs while visiting new fonts.
+    for (final page in pages) {
+      final file = File('assets/mushaf/${page['page']}.json');
+      final document =
+          jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+      for (final line in document['lines'] as List) {
+        for (final word in line['words'] as List) {
+          final metric = measureWord(word as Map<String, dynamic>, document);
+          word['metrics'] = [metric.width, metric.left, metric.right];
+        }
+      }
+      file.writeAsStringSync(jsonEncode(document));
+    }
+
     final files =
         Directory('assets/mushaf')
             .listSync()
@@ -55,6 +70,7 @@ void main() {
         ...metrics.toJson(),
         'sha256': hashes,
         'flutter': identity,
+        'wordMetricsSchema': 1,
         'shapingSource': (sourceHash.stdout as String).split(' ').first,
       }),
     );

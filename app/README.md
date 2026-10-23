@@ -24,13 +24,17 @@ Assets and their notices must remain outside the public repository.
 Re-run the bundler after updating: each word now includes horizontal glyph ink
 bounds from the TrueType/COLR layers. The reader combines these with Flutter's
 shaped character positions. The preparation command measures all 604 pages with
-real Flutter shaping and saves global size constraints. Android builds verify
-asset and shaping-source hashes, refusing partial or stale bundles. Regenerate
+real Flutter shaping and saves global size constraints and each word’s shaped
+width and ink bounds. Android builds verify
+asset and shaping-source hashes plus Flutter framework/engine revisions, refusing
+partial or stale bundles. Regenerate
 metrics after changing assets, the shaping code, or the Flutter SDK. At runtime
-only the current spread and its neighbours load; their words are shaped at the
-same global size. Far jumps keep the current page visible until their destination
+only the current spread and its neighbours load; prepared metrics keep every
+page at the same global size. Far jumps keep the current page visible until their destination
 is ready; fast swipes stop at the loaded boundary while neighbours load. Flutter
-retains registered fonts as pages are visited.
+retains registered fonts as pages are visited. Page JSON strings are uncached,
+and hit-test metadata is discarded when its page leaves the loaded window.
+A failed page load keeps the current page visible and offers Retry.
 Revealing words and rotating do not re-measure the bundle.
 Hit testing retains full vertical line bands, but stops horizontally at 0.08 em
 beyond the ink; empty margins and spread gutters do nothing. Overlapping ink

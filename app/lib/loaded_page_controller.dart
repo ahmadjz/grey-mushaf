@@ -4,7 +4,12 @@ import 'package:flutter/widgets.dart';
 
 /// Keep the current page visible until a programmatic destination is ready.
 class LoadedPageController extends PageController {
-  LoadedPageController({required this.prepare, super.initialPage});
+  LoadedPageController({
+    required this.prepare,
+    this.onLoadError,
+    super.initialPage,
+  });
+  final void Function(int page, Object error)? onLoadError;
   final Future<void> Function(int index) prepare;
   Future<void> pending = Future<void>.value();
   int _request = 0;
@@ -18,8 +23,21 @@ class LoadedPageController extends PageController {
   }
 
   Future<void> _jump(int page, int request) async {
-    await prepare(page);
+    if (!await _prepare(page, request)) return;
     if (request == _request && hasClients) super.jumpToPage(page);
+  }
+
+  Future<bool> _prepare(int page, int request) async {
+    try {
+      await prepare(page);
+      return request == _request && hasClients;
+    } catch (error) {
+      if (request == _request && hasClients) {
+        if (onLoadError == null) rethrow;
+        onLoadError!(page, error);
+      }
+      return false;
+    }
   }
 
   @override
@@ -30,7 +48,7 @@ class LoadedPageController extends PageController {
   }) {
     final request = ++_request;
     return pending = () async {
-      await prepare(page);
+      if (!await _prepare(page, request)) return;
       if (request == _request && hasClients) {
         // A far destination has no loaded intermediate pages to animate over.
         if (((this.page ?? initialPage.toDouble()) - page).abs() > 1) {

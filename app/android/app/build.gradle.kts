@@ -61,6 +61,9 @@ val verifyMushafBundle by tasks.registering {
         val numbers = json.parse(File(assets, "pages.json")) as List<*>
         check(numbers == (1..604).toList()) { "Partial mushaf: run bundle_mushaf.py --all" }
         val data = json.parse(metrics) as Map<*, *>
+        check(data["wordMetricsSchema"] == 1) {
+            "Missing prepared word metrics: run flutter test tool/prepare_metrics.dart"
+        }
         val hashes = data["sha256"] as Map<*, *>
         val properties = Properties().apply {
             file("../local.properties").inputStream().use { load(it) }

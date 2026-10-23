@@ -32,7 +32,11 @@ class TestSettings implements ReaderSettings {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late List<Map<String, dynamic>> pages;
-  setUpAll(() async => pages = await loadPages());
+  setUpAll(
+    () async => pages = (await loadPages())
+        .where((page) => [1, 2, 47, 48, 50].contains(page['page']))
+        .toList(),
+  );
   testWidgets(
     'blank taps toggle overlay bars without moving text; words retain gestures',
     (tester) async {

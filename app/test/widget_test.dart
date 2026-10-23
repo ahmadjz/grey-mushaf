@@ -36,7 +36,9 @@ Future<void> mount(WidgetTester tester, {bool landscape = false}) async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
-    pages = await loadPages();
+    pages = (await loadPages())
+        .where((page) => [1, 2, 47, 48, 50].contains(page['page']))
+        .toList();
   });
 
   testWidgets(
@@ -447,7 +449,10 @@ void main() {
     await tester.pump();
     expect(status(tester, id), contains('; revealed; reveals 1'));
     for (final other in words.where((w) => w['id'] != id)) {
-      expect(status(tester, other['id'] as int), contains('; unrevealed; reveals 0'));
+      expect(
+        status(tester, other['id'] as int),
+        contains('; unrevealed; reveals 0'),
+      );
     }
     await tester.tapAt(overhang);
     await tester.pump();

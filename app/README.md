@@ -1,11 +1,11 @@
-# Grey Mushaf phase 0
+# Grey Mushaf offline reader
 
-Personal Android spike, application ID `tech.ahmadjz.greymushaf`.
+Personal Android reader, application ID `tech.ahmadjz.greymushaf`.
 
 From the repository root, generate the offline bundle from the owner's QUL downloads:
 
 ```sh
-python3 scripts/bundle_mushaf.py --pages 1 2 47 48
+python3 scripts/bundle_mushaf.py --all
 cd app
 flutter pub get
 flutter run
@@ -31,13 +31,14 @@ extents use the nearest ink edge, not an advance-box centre.
 Long-press a word, then drag to reveal crossed words. Lift to restore page swiping.
 A tap on a black word turns it grey; a tap on a grey word does nothing.
 Reveals count only grey-to-black transitions, once per word per drag.
-Swipe right to advance, or use the page selector. Landscape pairs consecutive
+Swipe right to advance. Landscape pairs consecutive
 odd/even pages with the odd page on the right. Rotation preserves the current
 page's spread and reveal state.
 
-Reveal state and counts are **in memory only** and reset on process restart.
-Surah headings and the separate basmallah use centred system-font placeholders;
-the V4 heading font is not included. Ordinary pages retain their database line
+Reveal state and counts are saved locally in SQLite.
+Surah headings use the bundled V4 calligraphy font. Page 2 uses the compact
+basmallah; other basmallah headings use artwork traced from the owner’s page 50.
+Headings have full contrast and are never revealable words. Ordinary pages retain their database line
 slots; opening pages retain their shorter centred layout. Decoration is minimal.
 Word colours are applied after rendering with two alpha-preserving colour matrices.
 The first separates the default V4 palette’s pale marker backgrounds from ink;

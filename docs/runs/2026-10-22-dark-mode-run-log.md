@@ -36,8 +36,15 @@ base 16a559d · tree clean at start · remote ahmadjz/grey-mushaf
     settings and cold-system-dark shots: match R33/R36/R38
   - not run: physical phone/Boox, ARM release, 604-page performance, live landscape, live dark
     save failure (widget-tested only)
-- 5 review: BLOCKED. Reviewer thread 01a16388-82f1-78c2-9ce5-39c8e602160f hit the Codex usage limit
-  (resets 2026-10-28 22:22). Nothing reviewed. Brief is in this session's history; resend as-is.
+- 5 review: done (2026-10-23). First reviewer 01a16388-82f1-78c2-9ce5-39c8e602160f hit the usage
+  limit; reviewed on medium thread 01a16814-ef4b-7192-9740-8f983839d1fa. r1 0/0/0 (C/H/M), 2 LOW.
+  Reviewer ran analyze ok, flutter test 45 passed, diff --check ok.
+- 6 Claude checks: done. Read FlatInk, store, native, Settings hunks. Dark range 32–128, default 80,
+  mode not persisted (R36), values-night now light so no dark startup flash.
+  - LOW kept, not fixed: no whole-flow test of reveal in dark → restart → black in light; line-break
+    drag and spreads tested only in light.
+  - LOW kept, not fixed: evidence file overstates "inert dark heading"; dark heading gestures untested.
+- 7 fix: not needed (no C/H/M). r2 not needed.
+- 8 exit: proofs R33/R34/R35 tests and emulator shots met. Not observed: owner's phone, Boox.
 
-**Next action:** after the Codex limit resets, start a new Astra high review thread on
-6d1df44..26eca12 (Step 5), then Steps 6–8. Do not push before review.
+**Next action:** owner tries the new release APK on phone and Boox.

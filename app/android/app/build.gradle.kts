@@ -1,3 +1,5 @@
+import java.security.MessageDigest
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -46,4 +48,34 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+// Never ship a partial bundle or metrics prepared for different assets.
+val verifyMushafBundle by tasks.registering {
+    doLast {
+        val assets = file("../../assets/mushaf")
+        val metrics = file("../../assets/mushaf/metrics.json")
+        check(metrics.isFile) { "Missing mushaf metrics: run flutter test tool/prepare_metrics.dart" }
+        val json = groovy.json.JsonSlurper()
+        val numbers = json.parse(File(assets, "pages.json")) as List<*>
+        check(numbers == (1..604).toList()) { "Partial mushaf: run bundle_mushaf.py --all" }
+        val data = json.parse(metrics) as Map<*, *>
+        val hashes = data["sha256"] as Map<*, *>
+        val required = (1..604).flatMap { listOf("$it.json", "p$it.ttf") } +
+            listOf("pages.json", "fonts.json", "basmallah.json", "surah-name-v4.ttf")
+        fun sha256(file: File): String = MessageDigest.getInstance("SHA-256")
+            .digest(file.readBytes()).joinToString("") { "%02x".format(it) }
+        for (name in required) {
+            val asset = File(assets, name)
+            check(asset.isFile && hashes[name] == sha256(asset)) {
+                "Stale/missing mushaf asset $name: regenerate bundle and Flutter metrics"
+            }
+        }
+        check(data["shapingSource"] == sha256(file("../../lib/bundle_metrics.dart"))) {
+            "Stale shaping metrics: run flutter test tool/prepare_metrics.dart"
+        }
+    }
+}
+tasks.matching { it.name.startsWith("compileFlutterBuild") }.configureEach {
+    dependsOn(verifyMushafBundle)
 }

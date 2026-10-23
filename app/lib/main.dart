@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'flat_ink.dart';
+import 'bundle_metrics.dart';
+import 'mushaf_bundle.dart';
+import 'loaded_page_controller.dart';
 import 'heading_ink.dart';
 import 'reveal_store.dart';
 import 'reader_settings.dart';
@@ -14,15 +17,23 @@ import 'reader_settings.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    final pages = await loadPages();
+    final bundle = await MushafBundle.open();
     final store = await SqliteRevealStore.open();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      debugPrint('READER_FIRST_FRAME ${DateTime.now().millisecondsSinceEpoch}');
+    });
     runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
         ),
-        home: Reader(pages: pages, store: store, settings: store),
+        home: Reader(
+          pages: bundle.pages,
+          bundle: bundle,
+          store: store,
+          settings: store,
+        ),
       ),
     );
   } catch (error) {
@@ -77,7 +88,9 @@ class Reader extends StatefulWidget {
     required this.store,
     this.onMeasureWord,
     this.settings,
+    this.bundle,
   });
+  final MushafBundle? bundle;
   final RevealStore store;
   final ReaderSettings? settings;
   final VoidCallback? onMeasureWord;
@@ -210,7 +223,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       isScrollControlled: true,
       builder: (context) => StatefulBuilder(
         builder: (context, updateSheet) {
-          final sample = widget.pages.first;
+          final sample = widget.pages.firstWhere(
+            (page) => page['lines'] != null,
+          );
           final line = (sample['lines'] as List).firstWhere(
             (line) => (line['words'] as List).isNotEmpty,
           );
@@ -269,7 +284,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                                 background: _background,
                                 child: Text(
                                   word['text'] as String,
-                                  style: _style(sample['page'] as int, 36),
+                                  style: wordStyle(sample['page'] as int, 36),
                                   textScaler: TextScaler.noScaling,
                                 ),
                               ),
@@ -423,11 +438,13 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     }
     _headings.clear();
     _metrics.clear();
-    _widest = 1;
-    _edgeInk = 0;
-    _tallest = 1;
+    _widest = widget.bundle?.metrics.widest ?? 1;
+    _edgeInk = widget.bundle?.metrics.edgeInk ?? 0;
+    _tallest = widget.bundle?.metrics.tallest ?? 1;
+    _wordKeys.clear();
     for (final page in widget.pages) {
-      _tallest = math.max(_tallest, _inkHeight(page));
+      if (page['lines'] == null) continue;
+      _tallest = math.max(_tallest, inkHeight(page));
       for (final line in page['lines'] as List) {
         final words = line['words'] as List;
         if (line['heading'] != null) {
@@ -439,7 +456,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         if (words.isEmpty) continue;
         var width = (words.length - 1) * .09;
         for (final word in words) {
-          final metric = _measureWord(word as Map<String, dynamic>, page);
+          widget.onMeasureWord?.call();
+          final metric = measureWord(word as Map<String, dynamic>, page);
           _metrics[word['id'] as int] = metric;
           _wordKeys[word['id'] as int] = wordKey(word['location'] as String);
           width += metric.width;
@@ -589,7 +607,17 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         (g) => g.any((p) => p['page'] == selectedPage),
       );
       final old = _controller;
-      _controller = PageController(initialPage: math.max(0, index));
+      _controller = widget.bundle == null
+          ? PageController(initialPage: math.max(0, index))
+          : LoadedPageController(
+              initialPage: math.max(0, index),
+              prepare: (index) async {
+                await widget.bundle!.loadNear(
+                  spread ? index * 2 + 1 : index + 1,
+                );
+                if (mounted) setState(_measureBundle);
+              },
+            );
       WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
       _spread = spread;
     }
@@ -638,13 +666,34 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                       reverse: true,
                       physics: _dragging
                           ? const NeverScrollableScrollPhysics()
-                          : const PageScrollPhysics(),
+                          : widget.bundle == null
+                          ? const PageScrollPhysics()
+                          : LoadedPagePhysics(
+                              first: () =>
+                                  (widget.bundle!.loadedNumbers.first - 1) ~/
+                                  (spread ? 2 : 1),
+                              last: () =>
+                                  (widget.bundle!.loadedNumbers.last - 1) ~/
+                                  (spread ? 2 : 1),
+                            ),
                       itemCount: groups.length,
-                      onPageChanged: (index) => setState(
-                        () => _selected = widget.pages.indexOf(
-                          groups[index].first,
-                        ),
-                      ),
+                      onPageChanged: (index) {
+                        final controller = _controller;
+                        if (controller is LoadedPageController) {
+                          controller.cancelPendingNavigation();
+                        }
+                        setState(() => _selected = spread ? index * 2 : index);
+                        final bundle = widget.bundle;
+                        if (bundle != null) {
+                          unawaited(
+                            bundle
+                                .loadNear(groups[index].first['page'] as int)
+                                .then((_) {
+                                  if (mounted) setState(_measureBundle);
+                                }),
+                          );
+                        }
+                      },
                       itemBuilder: (context, index) => Row(
                         textDirection: TextDirection.rtl,
                         children: [
@@ -691,63 +740,6 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     );
   }
 
-  TextStyle _style(int page, double size) => TextStyle(
-    fontFamily: 'mushaf-$page',
-    fontSize: size,
-    height: 1,
-    color: Colors.black,
-  );
-
-  ({double width, double left, double right}) _measureWord(
-    Map<String, dynamic> word,
-    Map<String, dynamic> page,
-  ) {
-    widget.onMeasureWord?.call();
-    const reference = 100.0;
-    final text = word['text'] as String;
-    final painter = TextPainter(
-      text: TextSpan(text: text, style: _style(page['page'] as int, reference)),
-      textDirection: TextDirection.rtl,
-    )..layout();
-    final units = (page['font']['unitsPerEm'] as num).toDouble();
-    final ink = word['ink'] as List;
-    var left = double.infinity;
-    var right = double.negativeInfinity;
-    var offset = 0;
-    var index = 0;
-    for (final rune in text.runes) {
-      final end = offset + String.fromCharCode(rune).length;
-      final boxes = painter.getBoxesForSelection(
-        TextSelection(baseOffset: offset, extentOffset: end),
-      );
-      // Some QUL words include an intentionally empty glyph (e.g. page 249).
-      for (final box in ink[index] == null ? <TextBox>[] : boxes) {
-        left = math.min(
-          left,
-          box.left / reference + (ink[index][0] as num) / units,
-        );
-        right = math.max(
-          right,
-          box.left / reference + (ink[index][1] as num) / units,
-        );
-      }
-      offset = end;
-      index++;
-    }
-    final width = painter.width / reference;
-    painter.dispose();
-    if (!left.isFinite || !right.isFinite) {
-      throw StateError('Missing shaped ink bounds for ${word['location']}');
-    }
-    return (width: width, left: left, right: right);
-  }
-
-  double _inkHeight(Map<String, dynamic> page) {
-    final font = page['font'] as Map<String, dynamic>;
-    return ((font['yMax'] as num) - (font['yMin'] as num)) /
-        (font['unitsPerEm'] as num);
-  }
-
   ({double size, double width}) _textSize(double width, double height) {
     _size = math.min(width / (_widest + 2 * _edgeInk), height / _tallest);
     return (size: _size, width: _size * _widest);
@@ -760,8 +752,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     double pageHeight,
   ) {
     final number = page['page'] as int;
+    if (page['lines'] == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
     final lines = page['lines'] as List;
-    final spare = (pageHeight / 15 - _inkHeight(page) * fontSize) / 2;
+    final spare = (pageHeight / 15 - inkHeight(page) * fontSize) / 2;
     final strip = number <= 2 ? 0.0 : math.max(0.0, (14 - spare) * 30 / 29);
     final slotHeight = (pageHeight - strip) / 15;
     final height = number <= 2 ? textWidth * 47 / 543 : slotHeight;
@@ -859,7 +854,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final band = '$number-${line['number']}';
     final bandKey = _bands.putIfAbsent(band, GlobalKey.new);
     _bandWords[band] = [for (final word in words) word['id'] as int];
-    _bandInkHeights[band] = _inkHeight(page) * size;
+    _bandInkHeights[band] = inkHeight(page) * size;
     Widget content;
     if (line['type'] != 'ayah') {
       // Reference ink boxes at the same scale as the 543 px normal text
@@ -955,7 +950,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final black = saved.black;
     final font = page['font'] as Map<String, dynamic>;
     final baseline =
-        (height - _inkHeight(page) * size) / 2 +
+        (height - inkHeight(page) * size) / 2 +
         size * (font['yMax'] as num) / (font['unitsPerEm'] as num);
     return Semantics(
       key: ValueKey('word-$id'),
@@ -976,7 +971,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
               word['text'] as String,
               textDirection: TextDirection.rtl,
               textScaler: TextScaler.noScaling,
-              style: _style(page['page'] as int, size),
+              style: wordStyle(page['page'] as int, size),
             ),
           ),
         ),

@@ -8,6 +8,7 @@ From the repository root, generate the offline bundle from the owner's QUL downl
 python3 scripts/bundle_mushaf.py --all
 cd app
 flutter pub get
+flutter test tool/prepare_metrics.dart
 flutter run
 ```
 
@@ -22,8 +23,15 @@ Assets and their notices must remain outside the public repository.
 
 Re-run the bundler after updating: each word now includes horizontal glyph ink
 bounds from the TrueType/COLR layers. The reader combines these with Flutter's
-shaped character positions and caches the resulting widths and ink extents once
-per bundle. Revealing words and rotating do not re-measure the bundle.
+shaped character positions. The preparation command measures all 604 pages with
+real Flutter shaping and saves global size constraints. Android builds verify
+asset and shaping-source hashes, refusing partial or stale bundles. Regenerate
+metrics after changing assets, the shaping code, or the Flutter SDK. At runtime
+only the current spread and its neighbours load; their words are shaped at the
+same global size. Far jumps keep the current page visible until their destination
+is ready; fast swipes stop at the loaded boundary while neighbours load. Flutter
+retains registered fonts as pages are visited.
+Revealing words and rotating do not re-measure the bundle.
 Hit testing retains full vertical line bands, but stops horizontally at 0.08 em
 beyond the ink; empty margins and spread gutters do nothing. Overlapping ink
 extents use the nearest ink edge, not an advance-box centre.

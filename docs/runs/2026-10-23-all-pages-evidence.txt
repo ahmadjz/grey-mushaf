@@ -1,0 +1,81 @@
+All-pages reader evidence — 2026-10-23
+
+Base: 0efeb0d86285e76b8b46bc15af928c660b4d1b70
+Standalone test/documentation commit: 463f43d
+
+Target: Medium_Phone, Android 17/API 37, x86_64, 4096 MB guest RAM.
+Timing: release x64 builds, five process-cold launches, not filesystem-cache-cold.
+Each run: adb shell am force-stop tech.ahmadjz.greymushaf; adb logcat -c;
+adb shell "date +%s%3N; am start -W -n tech.ahmadjz.greymushaf/.MainActivity".
+READER_FIRST_FRAME logs device epoch milliseconds in the first reader post-frame callback.
+Reader timing below measures framework frame submission; Android TotalTime measures the
+first displayed frame. The first application frame contains the loaded reader, not a splash.
+Both are reported so raster/display latency is not hidden.
+PSS: adb shell dumpsys meminfo tech.ahmadjz.greymushaf immediately after launch.
+Then 20 rightward swipes (150,1200 -> 950,1200, 120 ms; 200 ms between swipes),
+followed by dumpsys meminfo. Final lazy accessibility dump confirmed page 21.
+Temporary device file /sdcard/mushaf-after20.xml was removed after each dump.
+
+Eager baseline
+Run | reader frame ms | Android TotalTime ms | launch PSS KB
+1 | 4537 | 4614 | 373395
+2 | 4426 | 4505 | 369191
+3 | 4427 | 4511 | 368773
+4 | 4469 | 4548 | 367792
+5 | 4482 | 4552 | 370562
+Reader median/range: 4469 / 4426–4537 ms.
+Android display median/range: 4548 / 4505–4614 ms.
+PSS after 20 swipes: 395440 KB.
+
+Final lazy release
+Run | reader frame ms | Android TotalTime ms | launch PSS KB
+1 | 332 | 392 | 69264
+2 | 298 | 361 | 68361
+3 | 336 | 395 | 68180
+4 | 354 | 414 | 67106
+5 | 325 | 386 | 67465
+Reader median/range: 332 / 298–354 ms.
+Android display median/range: 392 / 361–414 ms.
+PSS after 20 swipes: 120574 KB.
+
+R39: eager misses both limits; lazy meets both measured startup and PSS limits.
+
+Bundling: python3 scripts/bundle_mushaf.py --all; generated assets remain ignored.
+Preparation: heavy flutter test tool/prepare_metrics.dart; real Flutter shaping, passed.
+Parity: exact global metric equality and rendered font-size equality on pages 1, 2, 187,
+604 in portrait and landscape. Android profile integration also verified exact global
+metric equality against eager shaping of all 604 pages.
+Build guard: deliberate partial pages.json and altered 604.json each rejected with
+specific diagnostics; both restored. Release x64 and arm64 builds then passed the guard.
+
+Standalone eager worktree: flutter analyze clean; heavy flutter test --concurrency=2:
+46 passed, including unclipped raster bounds for every word and heading on all 604 pages
+at 411.4x866.3, 800x1224, 914.3x363.4, and 1280x744 logical pixels.
+Final analyzer: clean. Focused navigation/parity tests: 5 passed.
+Final full suite: heavy flutter test --concurrency=2; 51 passed in 6m10s.
+
+Device proof: heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter drive --profile
+--driver=test_driver/all_pages_driver.dart --target=integration_test/all_pages_test.dart
+-d emulator-5554: passed. Screenshots visually checked:
+docs/runs/shots/2026-10-23-all-pages-187-portrait.png
+docs/runs/shots/2026-10-23-all-pages-300-portrait.png
+docs/runs/shots/2026-10-23-all-pages-604-portrait.png
+docs/runs/shots/2026-10-23-all-pages-fast-paging.png
+docs/runs/shots/2026-10-23-all-pages-landscape.png
+Cold jump to page 450, then four rapid flings reached page 456. Checked frames retained
+visible words at the same font size with no loading spinner. Landscape shows 455–456.
+Deterministic tests additionally delay a destination load to prove the old page stays
+visible, fast swipes stop at loaded boundaries, and a manual turn cancels a pending jump.
+
+APK: heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter build apk --release
+--target-platform android-arm64; copied to repo-root grey-mushaf.apk.
+APK bytes: 86813197; SHA-256: 46e8a0199468baf50ae504acd1d10e7a5b6cb70cdcbf5df11da95eab5e20c771
+Archive audit: 604 numbered page JSON assets; 605 fonts; only arm64-v8a native libraries.
+Tracked-asset audit (git ls-files | grep -Ei extension/assets pattern): empty.
+APK, generated metrics/assets, and screenshots are gitignored.
+
+Test accounts/tokens/persistent reveal records created: none. Device proof uses an
+in-memory store; timing proof only swipes and makes no reveal actions.
+Not run: pytest (no Python source changed); physical phone/Boox/arm64 device execution;
+PSS after browsing the entire mushaf. Flutter retains registered fonts as pages are visited.
+Existing owner edits in the two .claude files and the original all-pages run log were untouched.

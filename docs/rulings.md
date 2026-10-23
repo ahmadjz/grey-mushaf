@@ -157,6 +157,13 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     are black inside, and their outline and number follow the word (dim, then white once revealed).
     Settings shows one slider, for the mode that is on; each mode keeps its own level.
 
+## R39 (2026-10-23, Claude's default, the owner may overrule)
+
+39. **The app opens fast with all 604 pages inside.** On the Medium_Phone emulator a cold start
+    shows the first page within 2 seconds and stays under 300 MB of memory. If loading every page
+    up front misses that, pages and their fonts load as the reader nears them, with no visible
+    change to text size or layout.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

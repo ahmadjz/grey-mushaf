@@ -1,4 +1,5 @@
 import java.security.MessageDigest
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -61,6 +62,15 @@ val verifyMushafBundle by tasks.registering {
         check(numbers == (1..604).toList()) { "Partial mushaf: run bundle_mushaf.py --all" }
         val data = json.parse(metrics) as Map<*, *>
         val hashes = data["sha256"] as Map<*, *>
+        val properties = Properties().apply {
+            file("../local.properties").inputStream().use { load(it) }
+        }
+        val sdk = properties.getProperty("flutter.sdk")
+        val version = json.parse(File("$sdk/bin/cache/flutter.version.json")) as Map<*, *>
+        val identity = listOf("frameworkRevision", "engineRevision").associateWith { version[it] }
+        check(identity.values.all { it is String && it.isNotEmpty() } && data["flutter"] == identity) {
+            "Stale Flutter engine/framework metrics: run flutter test tool/prepare_metrics.dart"
+        }
         val required = (1..604).flatMap { listOf("$it.json", "p$it.ttf") } +
             listOf("pages.json", "fonts.json", "basmallah.json", "surah-name-v4.ttf")
         fun sha256(file: File): String = MessageDigest.getInstance("SHA-256")

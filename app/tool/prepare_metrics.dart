@@ -35,10 +35,26 @@ void main() {
       'lib/bundle_metrics.dart',
     ]);
     expect(sourceHash.exitCode, 0);
+    // This is the same identity emitted by flutter --version --machine.
+    final config = File('.dart_tool/package_config.json').absolute;
+    final packages = jsonDecode(config.readAsStringSync())['packages'] as List;
+    final flutter = packages.singleWhere((p) => p['name'] == 'flutter');
+    final sdk = Directory.fromUri(
+      config.uri.resolve(flutter['rootUri'] as String),
+    ).parent.parent;
+    final version = jsonDecode(
+      File('${sdk.path}/bin/cache/flutter.version.json').readAsStringSync(),
+    );
+    final identity = {
+      for (final key in ['frameworkRevision', 'engineRevision'])
+        key: version[key] as String,
+    };
+    expect(identity.values, everyElement(isNotEmpty));
     File('assets/mushaf/metrics.json').writeAsStringSync(
       jsonEncode({
         ...metrics.toJson(),
         'sha256': hashes,
+        'flutter': identity,
         'shapingSource': (sourceHash.stdout as String).split(' ').first,
       }),
     );

@@ -160,7 +160,8 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 ## R39 (2026-10-23, Claude's default, the owner may overrule)
 
 39. **The app opens fast with all 604 pages inside.** On the Medium_Phone emulator a cold start
-    shows the first page within 2 seconds and stays under 300 MB of memory. If loading every page
+    shows the first page within 2 seconds and stays under 300 MiB of memory (PSS as Android reports
+    it), even after reading all 604 pages in one session. If loading every page
     up front misses that, pages and their fonts load as the reader nears them, with no visible
     change to text size or layout.
 

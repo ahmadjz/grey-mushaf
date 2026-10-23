@@ -140,3 +140,29 @@ Asset audit: git ls-files filtered for ttf/otf/db/ai/pdf/zip or assets/mushaf: e
 Not run: pytest (no Python source changed); physical/arm64 device execution.
 No accounts, tokens, or persistent reveal records created. Owner .claude edits and
 untracked original run log left untouched.
+
+Rotation-prefetch follow-up — 2026-10-23 (base 6e0c98d)
+app/lib/main.dart: after rotation invalidates pending loads and replaces the controller,
+the post-frame callback re-requests the visible page window. Ordinary page changes
+already re-request that window; loadNear handles a window that is already complete.
+app/test/bundle_fault_test.dart: committed reviewer probe with a Completer pausing
+5.json, swipe to 3, rotate, release, swipe forward; requires pages 3–6 loaded,
+page 5 visible, and no progress indicator. No sleep-based race injection.
+Red: actual loaded window [1,2,3,4], missing 5/6 (/tmp/quran-r2-red.log).
+Green: all 7 fault tests passed (/tmp/quran-r2-green.log).
+heavy flutter analyze: no issues (/tmp/quran-r2-analyze.log).
+heavy flutter test --concurrency=2: 58 passed in 6:11 (/tmp/quran-r2-tests.log).
+flutter devices: emulator-5554 Android x64 available (/tmp/quran-r2-devices.log).
+Android profile integration: passed exact shaping parity, load retry, fast paging
+and portrait/spread screenshots (/tmp/quran-r2-device.log).
+Screenshots refreshed under docs/runs/shots/2026-10-23-all-pages-*.png.
+heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter build apk --release
+--target-platform android-arm64: passed (/tmp/quran-r2-arm64.log).
+Copied to grey-mushaf.apk: 88,076,897 bytes.
+SHA256: 9aabaca749f6727487f22eebf3d2feaef1101f88cdc874056b639d67986b5d9a.
+git diff --check: clean; tracked source/bundled asset audit: empty.
+Not run: pytest (no Python changes); physical/arm64 device execution; fresh cold-start
+or full-read PSS measurements (not requested for this follow-up). Prior strict 300 MB
+memory gate remains open; this change does not claim to resolve it.
+No accounts, tokens, or persistent reveal records created. Existing owner .claude
+edits and untracked run log left untouched.

@@ -119,6 +119,48 @@ void main() {
     },
   );
 
+  testWidgets(
+    'rotation during swipe prefetch must still permit forward navigation',
+    (tester) async {
+      final assets = FaultAssets();
+      final bundle = (await tester.runAsync(
+        () => MushafBundle.open(assets: assets),
+      ))!;
+      tester.view.physicalSize = const Size(411, 866);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Reader(
+            pages: bundle.pages,
+            bundle: bundle,
+            store: MemoryRevealStore(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final gate = assets.pauses['5.json'] = Completer<void>();
+      await tester.drag(find.byType(PageView), const Offset(411, 0));
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(PageView), const Offset(411, 0));
+      await tester.runAsync(() => assets.reached('5.json'));
+      await tester.pumpAndSettle();
+      tester.view.physicalSize = const Size(866, 411);
+      await tester.pumpAndSettle();
+      await tester.runAsync(() async {
+        gate.complete();
+        await assets.finished('5.json');
+      });
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(PageView), const Offset(866, 0));
+      await tester.pumpAndSettle();
+      expect(bundle.loadedNumbers, containsAll([3, 4, 5, 6]));
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byKey(const ValueKey('page-5')), findsOneWidget);
+    },
+  );
+
   testWidgets('failed far jump keeps page visible and offers a working retry', (
     tester,
   ) async {

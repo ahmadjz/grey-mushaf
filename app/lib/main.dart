@@ -688,7 +688,14 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 if (mounted && loaded) setState(_measureBundle);
               },
             );
-      WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        old.dispose();
+        if (mounted && widget.bundle != null) {
+          // Rotation invalidates navigation and prefetch alike. Restore the
+          // visible window even when no page-change callback follows.
+          unawaited(_prefetch(widget.pages[_selected]['page'] as int));
+        }
+      });
       _spread = spread;
     }
     return Theme(

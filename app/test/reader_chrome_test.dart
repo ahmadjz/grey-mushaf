@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:greymushaf/flat_ink.dart';
+import 'package:greymushaf/grouped_ink.dart';
 import 'package:greymushaf/reader_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -136,8 +137,8 @@ void main() {
       slider.onChanged!(value);
       await tester.pump();
       expect(tester.getRect(word), before);
-      final ink = tester.widget<FlatInk>(
-        find.descendant(of: word, matching: find.byType(FlatInk)),
+      final ink = tester.widget<GroupedInkWord>(
+        find.descendant(of: word, matching: find.byType(GroupedInkWord)),
       );
       expect(
         ink.color,

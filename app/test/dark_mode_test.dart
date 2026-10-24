@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/flat_ink.dart';
+import 'package:greymushaf/grouped_ink.dart';
 import 'package:greymushaf/heading_ink.dart';
 import 'package:greymushaf/main.dart';
 
@@ -90,8 +91,11 @@ void main() {
           final word = find.byKey(const ValueKey('word-1'));
           expect(
             tester
-                .widget<FlatInk>(
-                  find.descendant(of: word, matching: find.byType(FlatInk)),
+                .widget<GroupedInkWord>(
+                  find.descendant(
+                    of: word,
+                    matching: find.byType(GroupedInkWord),
+                  ),
                 )
                 .color,
             Color.fromARGB(255, value.toInt(), value.toInt(), value.toInt()),
@@ -146,8 +150,8 @@ void main() {
       await tester.pumpAndSettle();
       final word = find.byKey(const ValueKey('word-1'));
       Color ink() => tester
-          .widget<FlatInk>(
-            find.descendant(of: word, matching: find.byType(FlatInk)),
+          .widget<GroupedInkWord>(
+            find.descendant(of: word, matching: find.byType(GroupedInkWord)),
           )
           .color;
       expect(ink(), const Color(0xFF505050));

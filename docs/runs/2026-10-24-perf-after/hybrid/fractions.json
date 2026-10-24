@@ -1,0 +1,6096 @@
+{
+  "device": "Medium_Phone 1080x2400, DPR 2.625, fullscreen; two physical pixel margin",
+  "portrait": {
+    "fontSize": 21.40072227475094,
+    "words": 83668,
+    "perWord": 83629,
+    "fraction": 0.9995338719701679,
+    "pages": {
+      "1": {
+        "words": 36,
+        "perWord": 36,
+        "fraction": 1.0
+      },
+      "2": {
+        "words": 41,
+        "perWord": 41,
+        "fraction": 1.0
+      },
+      "3": {
+        "words": 138,
+        "perWord": 137,
+        "fraction": 0.9927536231884058
+      },
+      "4": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "5": {
+        "words": 130,
+        "perWord": 129,
+        "fraction": 0.9923076923076923
+      },
+      "6": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "7": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "8": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "9": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "10": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "11": {
+        "words": 148,
+        "perWord": 147,
+        "fraction": 0.9932432432432432
+      },
+      "12": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "13": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "14": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "15": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "16": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "17": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "18": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "19": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "20": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "21": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "22": {
+        "words": 136,
+        "perWord": 135,
+        "fraction": 0.9926470588235294
+      },
+      "23": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "24": {
+        "words": 140,
+        "perWord": 139,
+        "fraction": 0.9928571428571429
+      },
+      "25": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "26": {
+        "words": 140,
+        "perWord": 139,
+        "fraction": 0.9928571428571429
+      },
+      "27": {
+        "words": 131,
+        "perWord": 130,
+        "fraction": 0.9923664122137404
+      },
+      "28": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "29": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "30": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "31": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "32": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "33": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "34": {
+        "words": 128,
+        "perWord": 127,
+        "fraction": 0.9921875
+      },
+      "35": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "36": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "37": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "38": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "39": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "40": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "41": {
+        "words": 115,
+        "perWord": 115,
+        "fraction": 1.0
+      },
+      "42": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "43": {
+        "words": 137,
+        "perWord": 136,
+        "fraction": 0.9927007299270073
+      },
+      "44": {
+        "words": 141,
+        "perWord": 140,
+        "fraction": 0.9929078014184397
+      },
+      "45": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "46": {
+        "words": 115,
+        "perWord": 115,
+        "fraction": 1.0
+      },
+      "47": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "48": {
+        "words": 129,
+        "perWord": 128,
+        "fraction": 0.9922480620155039
+      },
+      "49": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "50": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "51": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "52": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "53": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "54": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "55": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "56": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "57": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "58": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "59": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "60": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "61": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "62": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "63": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "64": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "65": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "66": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "67": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "68": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "69": {
+        "words": 107,
+        "perWord": 107,
+        "fraction": 1.0
+      },
+      "70": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "71": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "72": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "73": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "74": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "75": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "76": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "77": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "78": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "79": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "80": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "81": {
+        "words": 103,
+        "perWord": 103,
+        "fraction": 1.0
+      },
+      "82": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "83": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "84": {
+        "words": 113,
+        "perWord": 113,
+        "fraction": 1.0
+      },
+      "85": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "86": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "87": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "88": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "89": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "90": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "91": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "92": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "93": {
+        "words": 118,
+        "perWord": 118,
+        "fraction": 1.0
+      },
+      "94": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "95": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "96": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "97": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "98": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "99": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "100": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "101": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "102": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "103": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "104": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "105": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "106": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "107": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "108": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "109": {
+        "words": 111,
+        "perWord": 110,
+        "fraction": 0.990990990990991
+      },
+      "110": {
+        "words": 112,
+        "perWord": 112,
+        "fraction": 1.0
+      },
+      "111": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "112": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "113": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "114": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "115": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "116": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "117": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "118": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "119": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "120": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "121": {
+        "words": 114,
+        "perWord": 114,
+        "fraction": 1.0
+      },
+      "122": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "123": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "124": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "125": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "126": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "127": {
+        "words": 165,
+        "perWord": 165,
+        "fraction": 1.0
+      },
+      "128": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "129": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "130": {
+        "words": 166,
+        "perWord": 166,
+        "fraction": 1.0
+      },
+      "131": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "132": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "133": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "134": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "135": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "136": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "137": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "138": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "139": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "140": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "141": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "142": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "143": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "144": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "145": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "146": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "147": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "148": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "149": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "150": {
+        "words": 163,
+        "perWord": 163,
+        "fraction": 1.0
+      },
+      "151": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "152": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "153": {
+        "words": 142,
+        "perWord": 141,
+        "fraction": 0.9929577464788732
+      },
+      "154": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "155": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "156": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "157": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "158": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "159": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "160": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "161": {
+        "words": 114,
+        "perWord": 114,
+        "fraction": 1.0
+      },
+      "162": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "163": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "164": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "165": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "166": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "167": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "168": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "169": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "170": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "171": {
+        "words": 111,
+        "perWord": 111,
+        "fraction": 1.0
+      },
+      "172": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "173": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "174": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "175": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "176": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "177": {
+        "words": 113,
+        "perWord": 113,
+        "fraction": 1.0
+      },
+      "178": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "179": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "180": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "181": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "182": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "183": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "184": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "185": {
+        "words": 141,
+        "perWord": 140,
+        "fraction": 0.9929078014184397
+      },
+      "186": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "187": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "188": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "189": {
+        "words": 134,
+        "perWord": 133,
+        "fraction": 0.9925373134328358
+      },
+      "190": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "191": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "192": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "193": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "194": {
+        "words": 118,
+        "perWord": 118,
+        "fraction": 1.0
+      },
+      "195": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "196": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "197": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "198": {
+        "words": 110,
+        "perWord": 110,
+        "fraction": 1.0
+      },
+      "199": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "200": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "201": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "202": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "203": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "204": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "205": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "206": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "207": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "208": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "209": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "210": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "211": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "212": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "213": {
+        "words": 167,
+        "perWord": 166,
+        "fraction": 0.9940119760479041
+      },
+      "214": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "215": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "216": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "217": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "218": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "219": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "220": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "221": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "222": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "223": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "224": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "225": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "226": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "227": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "228": {
+        "words": 162,
+        "perWord": 162,
+        "fraction": 1.0
+      },
+      "229": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "230": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "231": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "232": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "233": {
+        "words": 147,
+        "perWord": 145,
+        "fraction": 0.9863945578231292
+      },
+      "234": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "235": {
+        "words": 122,
+        "perWord": 121,
+        "fraction": 0.9918032786885246
+      },
+      "236": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "237": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "238": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "239": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "240": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "241": {
+        "words": 153,
+        "perWord": 152,
+        "fraction": 0.9934640522875817
+      },
+      "242": {
+        "words": 144,
+        "perWord": 143,
+        "fraction": 0.9930555555555556
+      },
+      "243": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "244": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "245": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "246": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "247": {
+        "words": 146,
+        "perWord": 145,
+        "fraction": 0.9931506849315068
+      },
+      "248": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "249": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "250": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "251": {
+        "words": 157,
+        "perWord": 157,
+        "fraction": 1.0
+      },
+      "252": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "253": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "254": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "255": {
+        "words": 107,
+        "perWord": 107,
+        "fraction": 1.0
+      },
+      "256": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "257": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "258": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "259": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "260": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "261": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "262": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "263": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "264": {
+        "words": 147,
+        "perWord": 146,
+        "fraction": 0.9931972789115646
+      },
+      "265": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "266": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "267": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "268": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "269": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "270": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "271": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "272": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "273": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "274": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "275": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "276": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "277": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "278": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "279": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "280": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "281": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "282": {
+        "words": 113,
+        "perWord": 113,
+        "fraction": 1.0
+      },
+      "283": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "284": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "285": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "286": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "287": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "288": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "289": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "290": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "291": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "292": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "293": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "294": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "295": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "296": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "297": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "298": {
+        "words": 163,
+        "perWord": 162,
+        "fraction": 0.9938650306748467
+      },
+      "299": {
+        "words": 137,
+        "perWord": 136,
+        "fraction": 0.9927007299270073
+      },
+      "300": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "301": {
+        "words": 162,
+        "perWord": 162,
+        "fraction": 1.0
+      },
+      "302": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "303": {
+        "words": 174,
+        "perWord": 174,
+        "fraction": 1.0
+      },
+      "304": {
+        "words": 166,
+        "perWord": 166,
+        "fraction": 1.0
+      },
+      "305": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "306": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "307": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "308": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "309": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "310": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "311": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "312": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "313": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "314": {
+        "words": 165,
+        "perWord": 165,
+        "fraction": 1.0
+      },
+      "315": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "316": {
+        "words": 164,
+        "perWord": 164,
+        "fraction": 1.0
+      },
+      "317": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "318": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "319": {
+        "words": 154,
+        "perWord": 153,
+        "fraction": 0.9935064935064936
+      },
+      "320": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "321": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "322": {
+        "words": 114,
+        "perWord": 114,
+        "fraction": 1.0
+      },
+      "323": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "324": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "325": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "326": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "327": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "328": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "329": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "330": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "331": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "332": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "333": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "334": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "335": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "336": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "337": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "338": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "339": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "340": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "341": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "342": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "343": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "344": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "345": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "346": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "347": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "348": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "349": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "350": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "351": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "352": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "353": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "354": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "355": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "356": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "357": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "358": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "359": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "360": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "361": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "362": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "363": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "364": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "365": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "366": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "367": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "368": {
+        "words": 153,
+        "perWord": 152,
+        "fraction": 0.9934640522875817
+      },
+      "369": {
+        "words": 155,
+        "perWord": 154,
+        "fraction": 0.9935483870967742
+      },
+      "370": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "371": {
+        "words": 169,
+        "perWord": 169,
+        "fraction": 1.0
+      },
+      "372": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "373": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "374": {
+        "words": 161,
+        "perWord": 160,
+        "fraction": 0.9937888198757764
+      },
+      "375": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "376": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "377": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "378": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "379": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "380": {
+        "words": 168,
+        "perWord": 168,
+        "fraction": 1.0
+      },
+      "381": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "382": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "383": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "384": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "385": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "386": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "387": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "388": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "389": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "390": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "391": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "392": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "393": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "394": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "395": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "396": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "397": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "398": {
+        "words": 138,
+        "perWord": 137,
+        "fraction": 0.9927536231884058
+      },
+      "399": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "400": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "401": {
+        "words": 118,
+        "perWord": 118,
+        "fraction": 1.0
+      },
+      "402": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "403": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "404": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "405": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "406": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "407": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "408": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "409": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "410": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "411": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "412": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "413": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "414": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "415": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "416": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "417": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "418": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "419": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "420": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "421": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "422": {
+        "words": 107,
+        "perWord": 107,
+        "fraction": 1.0
+      },
+      "423": {
+        "words": 155,
+        "perWord": 153,
+        "fraction": 0.9870967741935484
+      },
+      "424": {
+        "words": 131,
+        "perWord": 130,
+        "fraction": 0.9923664122137404
+      },
+      "425": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "426": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "427": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "428": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "429": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "430": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "431": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "432": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "433": {
+        "words": 157,
+        "perWord": 157,
+        "fraction": 1.0
+      },
+      "434": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "435": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "436": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "437": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "438": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "439": {
+        "words": 157,
+        "perWord": 157,
+        "fraction": 1.0
+      },
+      "440": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "441": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "442": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "443": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "444": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "445": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "446": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "447": {
+        "words": 162,
+        "perWord": 162,
+        "fraction": 1.0
+      },
+      "448": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "449": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "450": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "451": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "452": {
+        "words": 150,
+        "perWord": 149,
+        "fraction": 0.9933333333333333
+      },
+      "453": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "454": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "455": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "456": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "457": {
+        "words": 171,
+        "perWord": 171,
+        "fraction": 1.0
+      },
+      "458": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "459": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "460": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "461": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "462": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "463": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "464": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "465": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "466": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "467": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "468": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "469": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "470": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "471": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "472": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "473": {
+        "words": 118,
+        "perWord": 118,
+        "fraction": 1.0
+      },
+      "474": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "475": {
+        "words": 141,
+        "perWord": 140,
+        "fraction": 0.9929078014184397
+      },
+      "476": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "477": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "478": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "479": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "480": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "481": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "482": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "483": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "484": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "485": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "486": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "487": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "488": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "489": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "490": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "491": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "492": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "493": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "494": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "495": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "496": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "497": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "498": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "499": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "500": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "501": {
+        "words": 171,
+        "perWord": 171,
+        "fraction": 1.0
+      },
+      "502": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "503": {
+        "words": 162,
+        "perWord": 162,
+        "fraction": 1.0
+      },
+      "504": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "505": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "506": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "507": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "508": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "509": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "510": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "511": {
+        "words": 113,
+        "perWord": 113,
+        "fraction": 1.0
+      },
+      "512": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "513": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "514": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "515": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "516": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "517": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "518": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "519": {
+        "words": 173,
+        "perWord": 173,
+        "fraction": 1.0
+      },
+      "520": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "521": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "522": {
+        "words": 164,
+        "perWord": 164,
+        "fraction": 1.0
+      },
+      "523": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "524": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "525": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "526": {
+        "words": 164,
+        "perWord": 164,
+        "fraction": 1.0
+      },
+      "527": {
+        "words": 169,
+        "perWord": 169,
+        "fraction": 1.0
+      },
+      "528": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "529": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "530": {
+        "words": 157,
+        "perWord": 157,
+        "fraction": 1.0
+      },
+      "531": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "532": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "533": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "534": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "535": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "536": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "537": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "538": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "539": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "540": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "541": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "542": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "543": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "544": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "545": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "546": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "547": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "548": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "549": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "550": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "551": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "552": {
+        "words": 168,
+        "perWord": 168,
+        "fraction": 1.0
+      },
+      "553": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "554": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "555": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "556": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "557": {
+        "words": 115,
+        "perWord": 115,
+        "fraction": 1.0
+      },
+      "558": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "559": {
+        "words": 160,
+        "perWord": 159,
+        "fraction": 0.99375
+      },
+      "560": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "561": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "562": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "563": {
+        "words": 165,
+        "perWord": 165,
+        "fraction": 1.0
+      },
+      "564": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "565": {
+        "words": 174,
+        "perWord": 174,
+        "fraction": 1.0
+      },
+      "566": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "567": {
+        "words": 170,
+        "perWord": 170,
+        "fraction": 1.0
+      },
+      "568": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "569": {
+        "words": 171,
+        "perWord": 171,
+        "fraction": 1.0
+      },
+      "570": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "571": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "572": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "573": {
+        "words": 164,
+        "perWord": 164,
+        "fraction": 1.0
+      },
+      "574": {
+        "words": 140,
+        "perWord": 137,
+        "fraction": 0.9785714285714285
+      },
+      "575": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "576": {
+        "words": 184,
+        "perWord": 184,
+        "fraction": 1.0
+      },
+      "577": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "578": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "579": {
+        "words": 167,
+        "perWord": 167,
+        "fraction": 1.0
+      },
+      "580": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "581": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "582": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "583": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "584": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "585": {
+        "words": 167,
+        "perWord": 167,
+        "fraction": 1.0
+      },
+      "586": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "587": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "588": {
+        "words": 165,
+        "perWord": 165,
+        "fraction": 1.0
+      },
+      "589": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "590": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "591": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "592": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "593": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "594": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "595": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "596": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "597": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "598": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "599": {
+        "words": 110,
+        "perWord": 110,
+        "fraction": 1.0
+      },
+      "600": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "601": {
+        "words": 87,
+        "perWord": 87,
+        "fraction": 1.0
+      },
+      "602": {
+        "words": 66,
+        "perWord": 66,
+        "fraction": 1.0
+      },
+      "603": {
+        "words": 82,
+        "perWord": 82,
+        "fraction": 1.0
+      },
+      "604": {
+        "words": 73,
+        "perWord": 73,
+        "fraction": 1.0
+      }
+    }
+  },
+  "landscape": {
+    "fontSize": 10.36374720585247,
+    "words": 83668,
+    "perWord": 83656,
+    "fraction": 0.9998565759908209,
+    "pages": {
+      "1": {
+        "words": 36,
+        "perWord": 36,
+        "fraction": 1.0
+      },
+      "2": {
+        "words": 41,
+        "perWord": 41,
+        "fraction": 1.0
+      },
+      "3": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "4": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "5": {
+        "words": 130,
+        "perWord": 129,
+        "fraction": 0.9923076923076923
+      },
+      "6": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "7": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "8": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "9": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "10": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "11": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "12": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "13": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "14": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "15": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "16": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "17": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "18": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "19": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "20": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "21": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "22": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "23": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "24": {
+        "words": 140,
+        "perWord": 139,
+        "fraction": 0.9928571428571429
+      },
+      "25": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "26": {
+        "words": 140,
+        "perWord": 139,
+        "fraction": 0.9928571428571429
+      },
+      "27": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "28": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "29": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "30": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "31": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "32": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "33": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "34": {
+        "words": 128,
+        "perWord": 127,
+        "fraction": 0.9921875
+      },
+      "35": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "36": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "37": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "38": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "39": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "40": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "41": {
+        "words": 115,
+        "perWord": 115,
+        "fraction": 1.0
+      },
+      "42": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "43": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "44": {
+        "words": 141,
+        "perWord": 140,
+        "fraction": 0.9929078014184397
+      },
+      "45": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "46": {
+        "words": 115,
+        "perWord": 115,
+        "fraction": 1.0
+      },
+      "47": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "48": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "49": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "50": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "51": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "52": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "53": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "54": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "55": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "56": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "57": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "58": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "59": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "60": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "61": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "62": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "63": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "64": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "65": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "66": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "67": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "68": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "69": {
+        "words": 107,
+        "perWord": 107,
+        "fraction": 1.0
+      },
+      "70": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "71": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "72": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "73": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "74": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "75": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "76": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "77": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "78": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "79": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "80": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "81": {
+        "words": 103,
+        "perWord": 103,
+        "fraction": 1.0
+      },
+      "82": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "83": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "84": {
+        "words": 113,
+        "perWord": 113,
+        "fraction": 1.0
+      },
+      "85": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "86": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "87": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "88": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "89": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "90": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "91": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "92": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "93": {
+        "words": 118,
+        "perWord": 118,
+        "fraction": 1.0
+      },
+      "94": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "95": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "96": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "97": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "98": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "99": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "100": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "101": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "102": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "103": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "104": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "105": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "106": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "107": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "108": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "109": {
+        "words": 111,
+        "perWord": 111,
+        "fraction": 1.0
+      },
+      "110": {
+        "words": 112,
+        "perWord": 112,
+        "fraction": 1.0
+      },
+      "111": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "112": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "113": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "114": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "115": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "116": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "117": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "118": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "119": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "120": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "121": {
+        "words": 114,
+        "perWord": 114,
+        "fraction": 1.0
+      },
+      "122": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "123": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "124": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "125": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "126": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "127": {
+        "words": 165,
+        "perWord": 165,
+        "fraction": 1.0
+      },
+      "128": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "129": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "130": {
+        "words": 166,
+        "perWord": 166,
+        "fraction": 1.0
+      },
+      "131": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "132": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "133": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "134": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "135": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "136": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "137": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "138": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "139": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "140": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "141": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "142": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "143": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "144": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "145": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "146": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "147": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "148": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "149": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "150": {
+        "words": 163,
+        "perWord": 163,
+        "fraction": 1.0
+      },
+      "151": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "152": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "153": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "154": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "155": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "156": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "157": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "158": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "159": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "160": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "161": {
+        "words": 114,
+        "perWord": 114,
+        "fraction": 1.0
+      },
+      "162": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "163": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "164": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "165": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "166": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "167": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "168": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "169": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "170": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "171": {
+        "words": 111,
+        "perWord": 111,
+        "fraction": 1.0
+      },
+      "172": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "173": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "174": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "175": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "176": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "177": {
+        "words": 113,
+        "perWord": 113,
+        "fraction": 1.0
+      },
+      "178": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "179": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "180": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "181": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "182": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "183": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "184": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "185": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "186": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "187": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "188": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "189": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "190": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "191": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "192": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "193": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "194": {
+        "words": 118,
+        "perWord": 118,
+        "fraction": 1.0
+      },
+      "195": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "196": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "197": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "198": {
+        "words": 110,
+        "perWord": 110,
+        "fraction": 1.0
+      },
+      "199": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "200": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "201": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "202": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "203": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "204": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "205": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "206": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "207": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "208": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "209": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "210": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "211": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "212": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "213": {
+        "words": 167,
+        "perWord": 167,
+        "fraction": 1.0
+      },
+      "214": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "215": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "216": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "217": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "218": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "219": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "220": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "221": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "222": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "223": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "224": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "225": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "226": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "227": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "228": {
+        "words": 162,
+        "perWord": 162,
+        "fraction": 1.0
+      },
+      "229": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "230": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "231": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "232": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "233": {
+        "words": 147,
+        "perWord": 146,
+        "fraction": 0.9931972789115646
+      },
+      "234": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "235": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "236": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "237": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "238": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "239": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "240": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "241": {
+        "words": 153,
+        "perWord": 152,
+        "fraction": 0.9934640522875817
+      },
+      "242": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "243": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "244": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "245": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "246": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "247": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "248": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "249": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "250": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "251": {
+        "words": 157,
+        "perWord": 157,
+        "fraction": 1.0
+      },
+      "252": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "253": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "254": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "255": {
+        "words": 107,
+        "perWord": 107,
+        "fraction": 1.0
+      },
+      "256": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "257": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "258": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "259": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "260": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "261": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "262": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "263": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "264": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "265": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "266": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "267": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "268": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "269": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "270": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "271": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "272": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "273": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "274": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "275": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "276": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "277": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "278": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "279": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "280": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "281": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "282": {
+        "words": 113,
+        "perWord": 113,
+        "fraction": 1.0
+      },
+      "283": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "284": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "285": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "286": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "287": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "288": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "289": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "290": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "291": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "292": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "293": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "294": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "295": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "296": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "297": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "298": {
+        "words": 163,
+        "perWord": 163,
+        "fraction": 1.0
+      },
+      "299": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "300": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "301": {
+        "words": 162,
+        "perWord": 162,
+        "fraction": 1.0
+      },
+      "302": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "303": {
+        "words": 174,
+        "perWord": 174,
+        "fraction": 1.0
+      },
+      "304": {
+        "words": 166,
+        "perWord": 166,
+        "fraction": 1.0
+      },
+      "305": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "306": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "307": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "308": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "309": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "310": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "311": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "312": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "313": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "314": {
+        "words": 165,
+        "perWord": 165,
+        "fraction": 1.0
+      },
+      "315": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "316": {
+        "words": 164,
+        "perWord": 164,
+        "fraction": 1.0
+      },
+      "317": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "318": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "319": {
+        "words": 154,
+        "perWord": 153,
+        "fraction": 0.9935064935064936
+      },
+      "320": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "321": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "322": {
+        "words": 114,
+        "perWord": 114,
+        "fraction": 1.0
+      },
+      "323": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "324": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "325": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "326": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "327": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "328": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "329": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "330": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "331": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "332": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "333": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "334": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "335": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "336": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "337": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "338": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "339": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "340": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "341": {
+        "words": 119,
+        "perWord": 119,
+        "fraction": 1.0
+      },
+      "342": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "343": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "344": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "345": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "346": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "347": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "348": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "349": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "350": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "351": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "352": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "353": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "354": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "355": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "356": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "357": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "358": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "359": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "360": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "361": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "362": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "363": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "364": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "365": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "366": {
+        "words": 123,
+        "perWord": 123,
+        "fraction": 1.0
+      },
+      "367": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "368": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "369": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "370": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "371": {
+        "words": 169,
+        "perWord": 169,
+        "fraction": 1.0
+      },
+      "372": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "373": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "374": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "375": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "376": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "377": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "378": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "379": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "380": {
+        "words": 168,
+        "perWord": 168,
+        "fraction": 1.0
+      },
+      "381": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "382": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "383": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "384": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "385": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "386": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "387": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "388": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "389": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "390": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "391": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "392": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "393": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "394": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "395": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "396": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "397": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "398": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "399": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "400": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "401": {
+        "words": 118,
+        "perWord": 118,
+        "fraction": 1.0
+      },
+      "402": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "403": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "404": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "405": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "406": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "407": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "408": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "409": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "410": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "411": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "412": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "413": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "414": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "415": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "416": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "417": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "418": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "419": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "420": {
+        "words": 153,
+        "perWord": 153,
+        "fraction": 1.0
+      },
+      "421": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "422": {
+        "words": 107,
+        "perWord": 107,
+        "fraction": 1.0
+      },
+      "423": {
+        "words": 155,
+        "perWord": 154,
+        "fraction": 0.9935483870967742
+      },
+      "424": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "425": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "426": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "427": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "428": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "429": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "430": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "431": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "432": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "433": {
+        "words": 157,
+        "perWord": 157,
+        "fraction": 1.0
+      },
+      "434": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "435": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "436": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "437": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "438": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "439": {
+        "words": 157,
+        "perWord": 157,
+        "fraction": 1.0
+      },
+      "440": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "441": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "442": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "443": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "444": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "445": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "446": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "447": {
+        "words": 162,
+        "perWord": 162,
+        "fraction": 1.0
+      },
+      "448": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "449": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "450": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "451": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "452": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "453": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "454": {
+        "words": 155,
+        "perWord": 155,
+        "fraction": 1.0
+      },
+      "455": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "456": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "457": {
+        "words": 171,
+        "perWord": 171,
+        "fraction": 1.0
+      },
+      "458": {
+        "words": 128,
+        "perWord": 128,
+        "fraction": 1.0
+      },
+      "459": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "460": {
+        "words": 161,
+        "perWord": 161,
+        "fraction": 1.0
+      },
+      "461": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "462": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "463": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "464": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "465": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "466": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "467": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "468": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "469": {
+        "words": 133,
+        "perWord": 133,
+        "fraction": 1.0
+      },
+      "470": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "471": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "472": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "473": {
+        "words": 118,
+        "perWord": 118,
+        "fraction": 1.0
+      },
+      "474": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "475": {
+        "words": 141,
+        "perWord": 140,
+        "fraction": 0.9929078014184397
+      },
+      "476": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "477": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "478": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "479": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "480": {
+        "words": 131,
+        "perWord": 131,
+        "fraction": 1.0
+      },
+      "481": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "482": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "483": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "484": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "485": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "486": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "487": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "488": {
+        "words": 146,
+        "perWord": 146,
+        "fraction": 1.0
+      },
+      "489": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "490": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "491": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "492": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "493": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "494": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "495": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "496": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "497": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "498": {
+        "words": 124,
+        "perWord": 124,
+        "fraction": 1.0
+      },
+      "499": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "500": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "501": {
+        "words": 171,
+        "perWord": 171,
+        "fraction": 1.0
+      },
+      "502": {
+        "words": 136,
+        "perWord": 136,
+        "fraction": 1.0
+      },
+      "503": {
+        "words": 162,
+        "perWord": 162,
+        "fraction": 1.0
+      },
+      "504": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "505": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "506": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "507": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "508": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "509": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "510": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "511": {
+        "words": 113,
+        "perWord": 113,
+        "fraction": 1.0
+      },
+      "512": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "513": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "514": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "515": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "516": {
+        "words": 150,
+        "perWord": 150,
+        "fraction": 1.0
+      },
+      "517": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "518": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "519": {
+        "words": 173,
+        "perWord": 173,
+        "fraction": 1.0
+      },
+      "520": {
+        "words": 130,
+        "perWord": 130,
+        "fraction": 1.0
+      },
+      "521": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "522": {
+        "words": 164,
+        "perWord": 164,
+        "fraction": 1.0
+      },
+      "523": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "524": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "525": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "526": {
+        "words": 164,
+        "perWord": 164,
+        "fraction": 1.0
+      },
+      "527": {
+        "words": 169,
+        "perWord": 169,
+        "fraction": 1.0
+      },
+      "528": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "529": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "530": {
+        "words": 157,
+        "perWord": 157,
+        "fraction": 1.0
+      },
+      "531": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "532": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "533": {
+        "words": 147,
+        "perWord": 147,
+        "fraction": 1.0
+      },
+      "534": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "535": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "536": {
+        "words": 148,
+        "perWord": 148,
+        "fraction": 1.0
+      },
+      "537": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "538": {
+        "words": 160,
+        "perWord": 160,
+        "fraction": 1.0
+      },
+      "539": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "540": {
+        "words": 138,
+        "perWord": 138,
+        "fraction": 1.0
+      },
+      "541": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "542": {
+        "words": 127,
+        "perWord": 127,
+        "fraction": 1.0
+      },
+      "543": {
+        "words": 156,
+        "perWord": 156,
+        "fraction": 1.0
+      },
+      "544": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "545": {
+        "words": 120,
+        "perWord": 120,
+        "fraction": 1.0
+      },
+      "546": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "547": {
+        "words": 137,
+        "perWord": 137,
+        "fraction": 1.0
+      },
+      "548": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "549": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "550": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "551": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "552": {
+        "words": 168,
+        "perWord": 168,
+        "fraction": 1.0
+      },
+      "553": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "554": {
+        "words": 126,
+        "perWord": 126,
+        "fraction": 1.0
+      },
+      "555": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "556": {
+        "words": 144,
+        "perWord": 144,
+        "fraction": 1.0
+      },
+      "557": {
+        "words": 115,
+        "perWord": 115,
+        "fraction": 1.0
+      },
+      "558": {
+        "words": 139,
+        "perWord": 139,
+        "fraction": 1.0
+      },
+      "559": {
+        "words": 160,
+        "perWord": 159,
+        "fraction": 0.99375
+      },
+      "560": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "561": {
+        "words": 129,
+        "perWord": 129,
+        "fraction": 1.0
+      },
+      "562": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "563": {
+        "words": 165,
+        "perWord": 165,
+        "fraction": 1.0
+      },
+      "564": {
+        "words": 142,
+        "perWord": 142,
+        "fraction": 1.0
+      },
+      "565": {
+        "words": 174,
+        "perWord": 174,
+        "fraction": 1.0
+      },
+      "566": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "567": {
+        "words": 170,
+        "perWord": 170,
+        "fraction": 1.0
+      },
+      "568": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "569": {
+        "words": 171,
+        "perWord": 171,
+        "fraction": 1.0
+      },
+      "570": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "571": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "572": {
+        "words": 149,
+        "perWord": 149,
+        "fraction": 1.0
+      },
+      "573": {
+        "words": 164,
+        "perWord": 164,
+        "fraction": 1.0
+      },
+      "574": {
+        "words": 140,
+        "perWord": 139,
+        "fraction": 0.9928571428571429
+      },
+      "575": {
+        "words": 151,
+        "perWord": 151,
+        "fraction": 1.0
+      },
+      "576": {
+        "words": 184,
+        "perWord": 184,
+        "fraction": 1.0
+      },
+      "577": {
+        "words": 154,
+        "perWord": 154,
+        "fraction": 1.0
+      },
+      "578": {
+        "words": 152,
+        "perWord": 152,
+        "fraction": 1.0
+      },
+      "579": {
+        "words": 167,
+        "perWord": 167,
+        "fraction": 1.0
+      },
+      "580": {
+        "words": 132,
+        "perWord": 132,
+        "fraction": 1.0
+      },
+      "581": {
+        "words": 159,
+        "perWord": 159,
+        "fraction": 1.0
+      },
+      "582": {
+        "words": 135,
+        "perWord": 135,
+        "fraction": 1.0
+      },
+      "583": {
+        "words": 145,
+        "perWord": 145,
+        "fraction": 1.0
+      },
+      "584": {
+        "words": 158,
+        "perWord": 158,
+        "fraction": 1.0
+      },
+      "585": {
+        "words": 167,
+        "perWord": 167,
+        "fraction": 1.0
+      },
+      "586": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "587": {
+        "words": 121,
+        "perWord": 121,
+        "fraction": 1.0
+      },
+      "588": {
+        "words": 165,
+        "perWord": 165,
+        "fraction": 1.0
+      },
+      "589": {
+        "words": 140,
+        "perWord": 140,
+        "fraction": 1.0
+      },
+      "590": {
+        "words": 141,
+        "perWord": 141,
+        "fraction": 1.0
+      },
+      "591": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "592": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "593": {
+        "words": 143,
+        "perWord": 143,
+        "fraction": 1.0
+      },
+      "594": {
+        "words": 134,
+        "perWord": 134,
+        "fraction": 1.0
+      },
+      "595": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "596": {
+        "words": 116,
+        "perWord": 116,
+        "fraction": 1.0
+      },
+      "597": {
+        "words": 125,
+        "perWord": 125,
+        "fraction": 1.0
+      },
+      "598": {
+        "words": 122,
+        "perWord": 122,
+        "fraction": 1.0
+      },
+      "599": {
+        "words": 110,
+        "perWord": 110,
+        "fraction": 1.0
+      },
+      "600": {
+        "words": 117,
+        "perWord": 117,
+        "fraction": 1.0
+      },
+      "601": {
+        "words": 87,
+        "perWord": 87,
+        "fraction": 1.0
+      },
+      "602": {
+        "words": 66,
+        "perWord": 66,
+        "fraction": 1.0
+      },
+      "603": {
+        "words": 82,
+        "perWord": 82,
+        "fraction": 1.0
+      },
+      "604": {
+        "words": 73,
+        "perWord": 73,
+        "fraction": 1.0
+      }
+    }
+  },
+  "capturedParity": {
+    "1": {
+      "words": 36,
+      "perWord": 36,
+      "fraction": 1.0
+    },
+    "2": {
+      "words": 41,
+      "perWord": 41,
+      "fraction": 1.0
+    },
+    "50": {
+      "words": 144,
+      "perWord": 144,
+      "fraction": 1.0
+    },
+    "187": {
+      "words": 127,
+      "perWord": 127,
+      "fraction": 1.0
+    },
+    "604": {
+      "words": 73,
+      "perWord": 73,
+      "fraction": 1.0
+    },
+    "63": {
+      "words": 137,
+      "perWord": 137,
+      "fraction": 1.0
+    },
+    "49": {
+      "words": 284,
+      "perWord": 284,
+      "fraction": 1.0
+    }
+  }
+}

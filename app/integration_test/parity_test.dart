@@ -157,6 +157,9 @@ void main() {
                       'id': word['id'],
                       'location': word['location'],
                       'rect': [rect.left, rect.top, rect.right, rect.bottom],
+                      'advanceRect': [box.left, box.top, box.right, box.bottom],
+                      'fontSize': size,
+                      'physicalDpr': tester.view.devicePixelRatio,
                     });
                   }
                 }

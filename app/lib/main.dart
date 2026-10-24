@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'flat_ink.dart';
+import 'grouped_ink.dart';
 import 'bundle_metrics.dart';
 import 'mushaf_bundle.dart';
 import 'loaded_page_controller.dart';
@@ -836,83 +837,87 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final strip = number <= 2 ? 0.0 : math.max(0.0, (14 - spare) * 30 / 29);
     final slotHeight = (pageHeight - strip) / 15;
     final height = number <= 2 ? textWidth * 47 / 543 : slotHeight;
-    return SizedBox(
-      key: ValueKey('page-$number'),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-        child: Stack(
-          children: [
-            Positioned.fill(
-              bottom: strip,
-              child: number <= 2
-                  ? Center(
-                      child: SizedBox(
-                        height: textWidth * 892 / 543,
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            for (final line in lines)
-                              Positioned(
-                                left: 0,
-                                right: 0,
-                                // Source coordinates relative to the normal
-                                // 543 x 892 ink block beginning at y=157.
-                                top:
-                                    textWidth *
-                                    (line['type'] == 'surah_name'
-                                        ? 142
-                                        : 278.5 +
-                                              ((line['number'] as int) - 2) *
-                                                  47) /
-                                    543,
-                                child: _line(
-                                  page,
-                                  line as Map<String, dynamic>,
-                                  fontSize,
-                                  textWidth,
-                                  height,
+    return GroupedInkPage(
+      child: SizedBox(
+        key: ValueKey('page-$number'),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                bottom: strip,
+                child: number <= 2
+                    ? Center(
+                        child: SizedBox(
+                          height: textWidth * 892 / 543,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              for (final line in lines)
+                                Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  // Source coordinates relative to the normal
+                                  // 543 x 892 ink block beginning at y=157.
+                                  top:
+                                      textWidth *
+                                      (line['type'] == 'surah_name'
+                                          ? 142
+                                          : 278.5 +
+                                                ((line['number'] as int) - 2) *
+                                                    47) /
+                                      543,
+                                  child: _line(
+                                    page,
+                                    line as Map<String, dynamic>,
+                                    fontSize,
+                                    textWidth,
+                                    height,
+                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : Column(
-                      children: [
-                        for (final line in lines)
-                          _line(
-                            page,
-                            line as Map<String, dynamic>,
-                            fontSize,
-                            textWidth,
-                            height,
+                            ],
                           ),
-                      ],
-                    ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: IgnorePointer(
-                child: Center(
-                  child: Text(
-                    '$number'
-                        .split('')
-                        .map((digit) => '٠١٢٣٤٥٦٧٨٩'[int.parse(digit)])
-                        .join(),
-                    key: ValueKey('page-number-$number'),
-                    textScaler: TextScaler.noScaling,
-                    style: TextStyle(
-                      fontSize: 10,
-                      height: 1.2,
-                      color: _darkMode ? const Color(0xFFB0B0B0) : Colors.black,
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          for (final line in lines)
+                            _line(
+                              page,
+                              line as Map<String, dynamic>,
+                              fontSize,
+                              textWidth,
+                              height,
+                            ),
+                        ],
+                      ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: IgnorePointer(
+                  child: Center(
+                    child: Text(
+                      '$number'
+                          .split('')
+                          .map((digit) => '٠١٢٣٤٥٦٧٨٩'[int.parse(digit)])
+                          .join(),
+                      key: ValueKey('page-number-$number'),
+                      textScaler: TextScaler.noScaling,
+                      style: TextStyle(
+                        fontSize: 10,
+                        height: 1.2,
+                        color: _darkMode
+                            ? const Color(0xFFB0B0B0)
+                            : Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -1037,7 +1042,15 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         key: _targets.putIfAbsent(id, GlobalKey.new),
         width: _metrics[id]!.width * size,
         height: height,
-        child: FlatInk(
+        child: GroupedInkWord(
+          ink: Rect.fromLTRB(
+            _metrics[id]!.left * size,
+            baseline -
+                (font['yMax'] as num) * size / (font['unitsPerEm'] as num),
+            _metrics[id]!.right * size,
+            baseline -
+                (font['yMin'] as num) * size / (font['unitsPerEm'] as num),
+          ),
           color: black ? _foreground : _dim,
           background: _background,
           child: Baseline(

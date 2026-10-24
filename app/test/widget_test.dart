@@ -1,3 +1,4 @@
+import 'word_target.dart';
 import 'memory_reveal_store.dart';
 
 import 'dart:convert';
@@ -13,10 +14,10 @@ import 'package:greymushaf/heading_ink.dart';
 
 late List<Map<String, dynamic>> pages;
 
-Finder word(int id, {bool skipOffstage = true}) =>
-    find.byKey(ValueKey('word-$id'), skipOffstage: skipOffstage);
+WordTarget word(int id, {bool skipOffstage = true}) =>
+    WordTarget.key(ValueKey('word-$id'), skipOffstage: skipOffstage);
 String status(WidgetTester tester, int id) =>
-    tester.widget<Semantics>(word(id)).properties.label!;
+    testSemantics(tester, word(id)).label!;
 
 Future<void> mount(WidgetTester tester, {bool landscape = false}) async {
   tester.view.physicalSize = landscape
@@ -76,7 +77,7 @@ void main() {
     tester,
   ) async {
     await mount(tester);
-    await tester.longPress(word(1));
+    await longPressTarget(tester, word(1));
     await tester.pumpAndSettle();
     final before = status(tester, 1);
     final controller = tester
@@ -99,20 +100,20 @@ void main() {
         );
         expect(heading, findsOneWidget);
         expect(
-          find.descendant(of: heading, matching: find.byType(Semantics)),
+          testDescendant(of: heading, matching: find.byType(Semantics)),
           findsNothing,
         );
         expect(
           tester
               .widget<FlatInk>(
-                find.descendant(of: heading, matching: find.byType(FlatInk)),
+                testDescendant(of: heading, matching: find.byType(FlatInk)),
               )
               .color,
           Colors.black,
         );
-        await tester.longPress(heading);
+        await longPressTarget(tester, heading);
         await tester.pumpAndSettle();
-        await tester.tap(heading);
+        await tapTarget(tester, heading);
         await tester.pumpAndSettle();
         for (final id in ids) {
           expect(status(tester, id), states[id]);
@@ -226,7 +227,7 @@ void main() {
         for (final l in lines)
           for (final w in l['words']) w['id'] as int,
       ];
-      await tester.longPress(word(ids.first));
+      await longPressTarget(tester, word(ids.first));
       await tester.pumpAndSettle();
       final before = {for (final id in ids) id: status(tester, id)};
       expect(before[ids.first], contains('; revealed; reveals 1'));
@@ -236,10 +237,10 @@ void main() {
         expect(line['words'], isEmpty);
         final band = find.byKey(ValueKey('line-$number-${line['number']}'));
         expect(
-          find.descendant(of: band, matching: find.byType(Semantics)),
+          testDescendant(of: band, matching: find.byType(Semantics)),
           findsNothing,
         );
-        final rect = tester.getRect(band);
+        final rect = testRect(tester, band);
         for (final y in [rect.top + 1, rect.center.dy, rect.bottom - 1]) {
           await tester.longPressAt(Offset(rect.center.dx, y));
           await tester.tapAt(Offset(rect.center.dx, y));
@@ -276,7 +277,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       widths.add(
-        tester.getSize(find.byKey(const ValueKey('heading-50-1'))).width,
+        testSize(tester, find.byKey(const ValueKey('heading-50-1'))).width,
       );
     }
     expect(widths[1], lessThan(widths[0] * .9));
@@ -284,9 +285,9 @@ void main() {
 
   testWidgets('opening pages use the printed 47 px row pitch', (tester) async {
     await mount(tester);
-    final first = tester.getRect(find.byKey(const ValueKey('line-1-2')));
-    final second = tester.getRect(find.byKey(const ValueKey('line-1-3')));
-    final title = tester.getRect(find.byKey(const ValueKey('heading-1-1')));
+    final first = testRect(tester, find.byKey(const ValueKey('line-1-2')));
+    final second = testRect(tester, find.byKey(const ValueKey('line-1-3')));
+    final title = testRect(tester, find.byKey(const ValueKey('heading-1-1')));
     expect((second.top - first.top) / title.width, closeTo(47 / 101, .001));
   });
 
@@ -308,25 +309,27 @@ void main() {
           entry.$1 == 2 ? (landscape ? 0 : 1) : (landscape ? 2 : 4),
         );
         await tester.pumpAndSettle();
-        final heading = tester.getRect(
+        final heading = testRect(
+          tester,
           find.byKey(ValueKey('heading-${entry.$1}-${entry.$2}')),
         );
         final band = find.byKey(ValueKey('line-${entry.$1}-${entry.$2}'));
         final block = tester
             .widgetList<SizedBox>(
-              find.descendant(of: band, matching: find.byType(SizedBox)),
+              testDescendant(of: band, matching: find.byType(SizedBox)),
             )
             .where((b) => b.width != null && b.width!.isFinite)
             .first
             .width!;
         expect(heading.width / block, closeTo(entry.$3 / 543, .001));
         expect(heading.height / block, closeTo(entry.$4 / 543, .001));
-        expect(heading.center.dx, closeTo(tester.getCenter(band).dx, .01));
+        expect(heading.center.dx, closeTo(testCenter(tester, band).dx, .01));
       }
-      final regularTitle = tester.getRect(
+      final regularTitle = testRect(
+        tester,
         find.byKey(const ValueKey('heading-50-1')),
       );
-      final wide = tester.getRect(find.byKey(const ValueKey('heading-50-2')));
+      final wide = testRect(tester, find.byKey(const ValueKey('heading-50-2')));
       final blockTop = tester
           .getTopLeft(find.byKey(const ValueKey('line-50-1')))
           .dy;
@@ -341,8 +344,8 @@ void main() {
       );
       controller.jumpToPage(landscape ? 0 : 1);
       await tester.pumpAndSettle();
-      final a = tester.getRect(find.byKey(const ValueKey('heading-2-1')));
-      final b = tester.getRect(find.byKey(const ValueKey('heading-2-2')));
+      final a = testRect(tester, find.byKey(const ValueKey('heading-2-1')));
+      final b = testRect(tester, find.byKey(const ValueKey('heading-2-2')));
       expect((b.center.dy - a.center.dy) / b.width, closeTo(136.5 / 172, .01));
     });
   }
@@ -351,21 +354,21 @@ void main() {
     'grey tap does nothing; long press reveals; black tap re-greys; count increments only on reveal',
     (tester) async {
       await mount(tester);
-      expect(word(1), findsOneWidget);
+      expect(word(1).exists(tester), isTrue);
       expect(status(tester, 1), contains('; unrevealed; reveals 0'));
-      await tester.tap(word(1));
+      await tapTarget(tester, word(1));
       await tester.pump();
       expect(status(tester, 1), contains('; unrevealed; reveals 0'));
-      await tester.longPress(word(1));
+      await longPressTarget(tester, word(1));
       await tester.pumpAndSettle();
       expect(status(tester, 1), contains('; revealed; reveals 1'));
-      await tester.longPress(word(1));
+      await longPressTarget(tester, word(1));
       await tester.pumpAndSettle();
       expect(status(tester, 1), contains('; revealed; reveals 1'));
-      await tester.tap(word(1));
+      await tapTarget(tester, word(1));
       await tester.pump();
       expect(status(tester, 1), contains('; unrevealed; reveals 1'));
-      await tester.longPress(word(1));
+      await longPressTarget(tester, word(1));
       await tester.pump();
       expect(status(tester, 1), contains('; revealed; reveals 2'));
     },
@@ -375,16 +378,16 @@ void main() {
     'drag crosses words and line break once, locks swipe until lift, ordinary swipe then changes page',
     (tester) async {
       await mount(tester);
-      expect(word(1), findsOneWidget);
-      final gesture = await tester.startGesture(tester.getCenter(word(1)));
+      expect(word(1).exists(tester), isTrue);
+      final gesture = await tester.startGesture(testCenter(tester, word(1)));
       await tester.pump(const Duration(milliseconds: 600));
-      await gesture.moveTo(tester.getCenter(word(4)));
+      await gesture.moveTo(testCenter(tester, word(4)));
       await tester.pump();
       for (final id in [1, 2, 3, 4]) {
         expect(status(tester, id), contains('; revealed; reveals 1'));
       }
-      await gesture.moveTo(tester.getCenter(word(6)));
-      await gesture.moveTo(tester.getCenter(word(1)));
+      await gesture.moveTo(testCenter(tester, word(6)));
+      await gesture.moveTo(testCenter(tester, word(1)));
       await tester.pump();
       expect(status(tester, 6), contains('; revealed; reveals 1'));
       expect(status(tester, 1), contains('; revealed; reveals 1'));
@@ -411,14 +414,14 @@ void main() {
     await mount(tester, landscape: true);
     expect(find.byKey(const ValueKey('page-1')), findsOneWidget);
     expect(
-      tester.getCenter(find.byKey(const ValueKey('page-1'))).dx,
-      greaterThan(tester.getCenter(find.byKey(const ValueKey('page-2'))).dx),
+      testCenter(tester, find.byKey(const ValueKey('page-1'))).dx,
+      greaterThan(testCenter(tester, find.byKey(const ValueKey('page-2'))).dx),
     );
     await tester.drag(find.byType(PageView), const Offset(1000, 0));
     await tester.pumpAndSettle();
     expect(
-      tester.getCenter(find.byKey(const ValueKey('page-47'))).dx,
-      greaterThan(tester.getCenter(find.byKey(const ValueKey('page-48'))).dx),
+      testCenter(tester, find.byKey(const ValueKey('page-47'))).dx,
+      greaterThan(testCenter(tester, find.byKey(const ValueKey('page-48'))).dx),
     );
   });
 
@@ -441,8 +444,8 @@ void main() {
     final words = lines.first['words'] as List;
     final id =
         words[6]['id'] as int; // 2:282:7, ink overhang beyond its advance.
-    final rect = tester.getRect(word(id));
-    final band = tester.getRect(find.byKey(const ValueKey('line-48-1')));
+    final rect = testRect(tester, word(id));
+    final band = testRect(tester, find.byKey(const ValueKey('line-48-1')));
     // uniFC47 extends rightward: xMax 2669 exceeds its 2371-unit advance.
     final overhang = Offset(rect.right + 0.5, rect.center.dy);
     await tester.longPressAt(overhang);
@@ -463,7 +466,7 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 600));
     final next = (lines[1]['words'] as List).first['id'] as int;
-    await gesture.moveTo(tester.getCenter(word(next)));
+    await gesture.moveTo(testCenter(tester, word(next)));
     await gesture.moveTo(overhang);
     await tester.pump();
     expect(status(tester, id), contains('; revealed; reveals 2'));
@@ -484,8 +487,8 @@ void main() {
           ((right['lines'] as List).first['words'] as List).last['id'] as int;
       final leftId =
           ((left['lines'] as List).first['words'] as List).first['id'] as int;
-      final a = tester.getRect(word(rightId));
-      final b = tester.getRect(word(leftId));
+      final a = testRect(tester, word(rightId));
+      final b = testRect(tester, word(leftId));
       final gutter = Offset((a.left + b.right) / 2 + 1, a.center.dy);
       final gesture = await tester.startGesture(gutter);
       await tester.pump(const Duration(milliseconds: 600));
@@ -512,9 +515,10 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    final rect = tester.getRect(word(1));
-    final text = tester.widget<Text>(
-      find.descendant(of: word(1), matching: find.byType(Text)),
+    final rect = testRect(tester, word(1));
+    final text = testText(
+      tester,
+      testDescendant(of: word(1), matching: find.byType(Text)),
     );
     await tester.longPressAt(
       Offset(rect.left - text.style!.fontSize! * .145, rect.center.dy),
@@ -542,7 +546,7 @@ void main() {
     tester.widget<PageView>(find.byType(PageView)).controller!.jumpToPage(3);
     await tester.pumpAndSettle();
     // 2:282:70 has 43 font units of right overhang into the 2 dp padding.
-    final rect = tester.getRect(word(6240));
+    final rect = testRect(tester, word(6240));
     final point = Offset(rect.right + .2, rect.center.dy);
     expect(point.dx, lessThan(tester.view.physicalSize.width));
     await tester.longPressAt(point);
@@ -567,16 +571,16 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    expect(word(1), findsOneWidget);
+    expect(word(1).exists(tester), isTrue);
   });
 
   testWidgets('empty margin press and tap never change a word', (tester) async {
     await mount(tester);
-    final margin = Offset(5, tester.getCenter(word(5)).dy);
+    final margin = Offset(5, testCenter(tester, word(5)).dy);
     await tester.longPressAt(margin);
     await tester.pump();
     expect(status(tester, 5), contains('; unrevealed; reveals 0'));
-    await tester.longPress(word(5));
+    await longPressTarget(tester, word(5));
     await tester.pump();
     await tester.tapAt(margin);
     await tester.pump();
@@ -593,7 +597,7 @@ void main() {
     // Keep page 1 attached but slide its text off the right edge of the viewport.
     controller.jumpTo(590);
     await tester.pump();
-    final rect = tester.getRect(word(5, skipOffstage: false));
+    final rect = testRect(tester, word(5, skipOffstage: false));
     expect(rect.left, greaterThan(600));
     final detector = tester.widget<GestureDetector>(
       find
@@ -608,7 +612,7 @@ void main() {
     );
     await tester.pump();
     expect(
-      tester.widget<Semantics>(word(5, skipOffstage: false)).properties.label,
+      testSemantics(tester, word(5, skipOffstage: false)).label,
       contains('; unrevealed; reveals 0'),
     );
     detector.onLongPressEnd!(const LongPressEndDetails());
@@ -644,9 +648,9 @@ void main() {
           ),
     );
     expect(initial, wordCount);
-    final gesture = await tester.startGesture(tester.getCenter(word(1)));
+    final gesture = await tester.startGesture(testCenter(tester, word(1)));
     await tester.pump(const Duration(milliseconds: 600));
-    await gesture.moveTo(tester.getCenter(word(4)));
+    await gesture.moveTo(testCenter(tester, word(4)));
     await tester.pump();
     expect(
       tester.widget<PageView>(find.byType(PageView)).physics,
@@ -686,21 +690,25 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.byType(AppBar), findsNothing);
         expect(find.byKey(const ValueKey('counts')), findsNothing);
-        final firstWord = tester.widget<Text>(
-          find.descendant(of: word(1), matching: find.byType(Text)),
+        final firstWord = testText(
+          tester,
+          testDescendant(of: word(1), matching: find.byType(Text)),
         );
         final openingSize = firstWord.style!.fontSize!;
-        final openingFirst = tester.getRect(
+        final openingFirst = testRect(
+          tester,
           find.byKey(const ValueKey('line-1-2')),
         );
-        final openingLast = tester.getRect(
+        final openingLast = testRect(
+          tester,
           find.byKey(const ValueKey('line-1-8')),
         );
         expect(
           openingLast.bottom - openingFirst.top,
           lessThan(size.height * .8),
         );
-        final openingPage = tester.getRect(
+        final openingPage = testRect(
+          tester,
           find.byKey(const ValueKey('page-1')),
         );
         expect(
@@ -712,9 +720,9 @@ void main() {
             .controller!;
         controller.jumpToPage(size.width > size.height ? 1 : 3);
         await tester.pumpAndSettle();
-        final page = tester.getRect(find.byKey(const ValueKey('page-48')));
-        final first = tester.getRect(find.byKey(const ValueKey('line-48-1')));
-        final last = tester.getRect(find.byKey(const ValueKey('line-48-15')));
+        final page = testRect(tester, find.byKey(const ValueKey('page-48')));
+        final first = testRect(tester, find.byKey(const ValueKey('line-48-1')));
+        final last = testRect(tester, find.byKey(const ValueKey('line-48-15')));
         expect(
           page.width,
           closeTo(size.width / (size.width > size.height ? 2 : 1), 1),
@@ -723,16 +731,17 @@ void main() {
         expect(first.top - page.top, lessThanOrEqualTo(4));
         expect(page.bottom - last.bottom, lessThanOrEqualTo(26));
         for (var i = 1; i < 15; i++) {
-          final a = tester.getRect(find.byKey(ValueKey('line-48-$i')));
-          final b = tester.getRect(find.byKey(ValueKey('line-48-${i + 1}')));
+          final a = testRect(tester, find.byKey(ValueKey('line-48-$i')));
+          final b = testRect(tester, find.byKey(ValueKey('line-48-${i + 1}')));
           expect(a.bottom, closeTo(b.top, .01));
         }
         final data = pages.singleWhere((p) => p['page'] == 48);
         final sizes = <double>{};
         for (final line in data['lines'] as List) {
           for (final w in line['words'] as List) {
-            final text = tester.widget<Text>(
-              find.descendant(
+            final text = testText(
+              tester,
+              testDescendant(
                 of: word(w['id'] as int),
                 matching: find.byType(Text),
               ),
@@ -751,7 +760,7 @@ void main() {
         final firstWords = (data['lines'] as List).first['words'] as List;
         final advanceWidth = firstWords.fold<double>(
           0,
-          (sum, w) => sum + tester.getSize(word(w['id'] as int)).width,
+          (sum, w) => sum + testSize(tester, word(w['id'] as int)).width,
         );
         final font = data['font'] as Map<String, dynamic>;
         final inkHeight =
@@ -779,12 +788,10 @@ void main() {
                     .first['id']
                 as int;
         expect(
-          tester
-              .widget<Text>(
-                find.descendant(of: word(id2), matching: find.byType(Text)),
-              )
-              .style!
-              .fontSize,
+          testText(
+            tester,
+            testDescendant(of: word(id2), matching: find.byType(Text)),
+          ).style!.fontSize,
           closeTo(openingSize, .01),
         );
         expect(tester.takeException(), isNull);
@@ -803,12 +810,10 @@ void main() {
       await tester.pumpAndSettle();
       final page = pages.singleWhere((p) => p['page'] == 48);
       final lines = page['lines'] as List;
-      final fontSize = tester
-          .widget<Text>(
-            find.descendant(of: word(6171), matching: find.byType(Text)),
-          )
-          .style!
-          .fontSize!;
+      final fontSize = testText(
+        tester,
+        testDescendant(of: word(6171), matching: find.byType(Text)),
+      ).style!.fontSize!;
       // The widest bundled line at this same font size sets the text block.
       var naturalWidth = 0.0;
       for (final p in pages) {
@@ -837,20 +842,21 @@ void main() {
       final first = (lines.first['words'] as List).first['id'] as int;
       final last = (lines.first['words'] as List).last['id'] as int;
       final span =
-          tester.getRect(word(first)).right - tester.getRect(word(last)).left;
+          testRect(tester, word(first)).right -
+          testRect(tester, word(last)).left;
       expect(span, closeTo(naturalWidth, 1));
       expect(
-        tester.getCenter(find.byKey(const ValueKey('line-48-1'))).dx,
+        testCenter(tester, find.byKey(const ValueKey('line-48-1'))).dx,
         closeTo(
-          (tester.getRect(word(first)).right +
-                  tester.getRect(word(last)).left) /
+          (testRect(tester, word(first)).right +
+                  testRect(tester, word(last)).left) /
               2,
           .1,
         ),
       );
       // The touch band still covers the entire page, including outside the ink.
       expect(
-        tester.getSize(find.byKey(const ValueKey('line-48-1'))).width,
+        testSize(tester, find.byKey(const ValueKey('line-48-1'))).width,
         596,
       );
     },
@@ -869,10 +875,10 @@ void main() {
       final lines = dense['lines'] as List;
       final from = (lines[0]['words'] as List).last['id'] as int;
       final to = (lines[1]['words'] as List).first['id'] as int;
-      final gesture = await tester.startGesture(tester.getCenter(word(from)));
+      final gesture = await tester.startGesture(testCenter(tester, word(from)));
       await tester.pump(const Duration(milliseconds: 600));
-      await gesture.moveTo(tester.getCenter(word(to)));
-      await gesture.moveTo(tester.getCenter(word(from)));
+      await gesture.moveTo(testCenter(tester, word(to)));
+      await gesture.moveTo(testCenter(tester, word(from)));
       await tester.pump();
       for (final id in [from, to]) {
         expect(status(tester, id), contains('; revealed; reveals 1'));
@@ -930,8 +936,8 @@ void main() {
         expect(find.byKey(ValueKey('page-$number')), findsOneWidget);
         for (final line in lines.where((l) => l['type'] == 'ayah')) {
           final words = line['words'] as List;
-          final first = tester.getCenter(word(words.first['id'] as int));
-          final last = tester.getCenter(word(words.last['id'] as int));
+          final first = testCenter(tester, word(words.first['id'] as int));
+          final last = testCenter(tester, word(words.last['id'] as int));
           expect(first.dy, closeTo(last.dy, 0.1));
           expect(first.dx, greaterThanOrEqualTo(last.dx));
         }

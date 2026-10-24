@@ -1,3 +1,5 @@
+import 'word_target.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/main.dart';
@@ -38,7 +40,7 @@ void main() {
     final word = (page['lines'] as List)
         .expand((line) => line['words'] as List)
         .singleWhere((w) => w['location'] == '2:282:48');
-    await tester.tap(find.byKey(ValueKey('word-${word['id']}')));
+    await tapTarget(tester, WordTarget.key(ValueKey('word-${word['id']}')));
     await tester.pumpAndSettle();
     expect(store.state(key), (black: false, count: 3));
     expect(find.text('Settings'), findsOneWidget);

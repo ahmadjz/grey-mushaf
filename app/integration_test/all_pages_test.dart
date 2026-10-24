@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:greymushaf/main.dart';
+import 'package:greymushaf/page_ink.dart';
 import 'package:greymushaf/mushaf_bundle.dart';
 import 'package:greymushaf/bundle_metrics.dart';
 import 'package:greymushaf/loaded_page_controller.dart';
@@ -28,11 +29,10 @@ void main() {
     await tester.pumpAndSettle();
     await binding.convertFlutterSurfaceToImage();
 
-    Iterable<Text> words() => tester
-        .widgetList<Text>(find.byType(Text))
-        .where(
-          (text) => text.style?.fontFamily?.startsWith('mushaf-') ?? false,
-        );
+    Iterable<TextSpan> words() => tester
+        .widgetList<PaintedInkPage>(find.byType(PaintedInkPage))
+        .expand((page) => page.controller.words)
+        .map((word) => word.paragraph.text! as TextSpan);
     final size = words().first.style!.fontSize!;
     void checkVisibleInk() {
       expect(words(), isNotEmpty);

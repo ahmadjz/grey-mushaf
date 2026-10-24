@@ -1,3 +1,5 @@
+import '../test/word_target.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -13,11 +15,11 @@ void main() {
     await deleteDatabase(filename);
     await app.main();
     await tester.pumpAndSettle();
-    final word = find.byKey(const ValueKey('word-1'));
-    await tester.longPress(word);
+    final word = WordTarget.key(const ValueKey('word-1'));
+    await longPressTarget(tester, word);
     await tester.pumpAndSettle();
     expect(
-      tester.widget<Semantics>(word).properties.label,
+      testSemantics(tester, word).label,
       contains('; revealed; reveals 1'),
     );
     final store =
@@ -28,7 +30,7 @@ void main() {
     await app.main();
     await tester.pumpAndSettle();
     expect(
-      tester.widget<Semantics>(word).properties.label,
+      testSemantics(tester, word).label,
       contains('; revealed; reveals 1'),
     );
     final reopened =

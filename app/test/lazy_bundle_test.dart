@@ -1,3 +1,5 @@
+import 'word_target.dart';
+
 import 'package:flutter/material.dart';
 import 'package:greymushaf/main.dart';
 import 'package:greymushaf/bundle_metrics.dart';
@@ -71,15 +73,13 @@ void main() {
             final word = (pages[number - 1]['lines'] as List)
                 .expand((l) => l['words'] as List)
                 .first;
-            return tester
-                .widget<Text>(
-                  find.descendant(
-                    of: find.byKey(ValueKey('word-${word['id']}')),
-                    matching: find.byType(Text),
-                  ),
-                )
-                .style!
-                .fontSize!;
+            return testText(
+              tester,
+              testDescendant(
+                of: WordTarget.key(ValueKey('word-${word['id']}')),
+                matching: find.byType(Text),
+              ),
+            ).style!.fontSize!;
           }
 
           final eagerSize = await fontSize(lazy: false);

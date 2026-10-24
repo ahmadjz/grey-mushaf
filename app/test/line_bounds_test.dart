@@ -1,3 +1,4 @@
+import 'word_target.dart';
 import 'memory_reveal_store.dart';
 
 import 'dart:ui' as ui;
@@ -46,7 +47,7 @@ void main() {
           size.width > size.height ? (number - 1) ~/ 2 : number - 1,
         );
         await tester.pumpAndSettle();
-        final pageRect = tester.getRect(find.byKey(ValueKey('page-$number')));
+        final pageRect = testRect(tester, find.byKey(ValueKey('page-$number')));
         final area = Rect.fromLTRB(
           pageRect.left + (size.width > size.height ? 2 : size.width * .02),
           pageRect.top + 2,
@@ -65,9 +66,9 @@ void main() {
             final target = find.byKey(
               ValueKey('heading-$number-${line['number']}'),
             );
-            final rect = tester.getRect(target);
+            final rect = testRect(tester, target);
             final paint = tester.widget<CustomPaint>(
-              find.descendant(of: target, matching: find.byType(CustomPaint)),
+              testDescendant(of: target, matching: find.byType(CustomPaint)),
             );
             canvas.save();
             canvas.translate(
@@ -78,12 +79,14 @@ void main() {
             canvas.restore();
           }
           for (final word in words) {
-            final target = find.byKey(ValueKey('word-${word['id']}'));
-            final text = tester.widget<Text>(
-              find.descendant(of: target, matching: find.byType(Text)),
+            final target = WordTarget.key(ValueKey('word-${word['id']}'));
+            final text = testText(
+              tester,
+              testDescendant(of: target, matching: find.byType(Text)),
             );
-            final rect = tester.getRect(
-              find.descendant(of: target, matching: find.byType(Text)),
+            final rect = testRect(
+              tester,
+              testDescendant(of: target, matching: find.byType(Text)),
             );
             final painter = TextPainter(
               text: TextSpan(text: text.data, style: text.style),

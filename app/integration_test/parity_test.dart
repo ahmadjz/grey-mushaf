@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:greymushaf/main.dart';
+import 'package:greymushaf/page_ink.dart';
 import 'package:greymushaf/mushaf_bundle.dart';
 import 'package:greymushaf/loaded_page_controller.dart';
 import 'package:greymushaf/reveal_store.dart';
@@ -140,12 +141,17 @@ void main() {
               for (final page in pages) {
                 for (final line in page['lines'] as List) {
                   for (final word in line['words'] as List) {
-                    final finder = find.byKey(ValueKey('word-${word['id']}'));
-                    final box = tester.getRect(finder);
-                    final text = tester.widget<Text>(
-                      find.descendant(of: finder, matching: find.byType(Text)),
+                    final model = tester
+                        .widgetList<PaintedInkPage>(find.byType(PaintedInkPage))
+                        .map((page) => page.controller)
+                        .firstWhere(
+                          (model) => model.words.any((w) => w.id == word['id']),
+                        );
+                    final target = model.words.singleWhere(
+                      (w) => w.id == word['id'],
                     );
-                    final size = text.style!.fontSize!;
+                    final box = model.globalRect(target.box);
+                    final size = target.fontSize;
                     final metric = word['metrics'] as List;
                     final rect = Rect.fromLTRB(
                       box.left + (metric[1] as num) * size,

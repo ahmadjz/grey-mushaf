@@ -1,7 +1,8 @@
+import 'word_target.dart';
+
 import 'dart:async';
 
 import 'package:greymushaf/flat_ink.dart';
-import 'package:greymushaf/grouped_ink.dart';
 import 'package:greymushaf/reader_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -72,8 +73,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      final word = find.byKey(const ValueKey('word-1'));
-      final before = tester.getRect(word);
+      final word = WordTarget.key(const ValueKey('word-1'));
+      final before = testRect(tester, word);
       expect(find.byType(PopupMenuButton<int>), findsNothing);
       expect(find.text('١'), findsOneWidget);
       expect(calls, [false]);
@@ -83,27 +84,27 @@ void main() {
       expect(calls.last, true);
       tester.view.padding = const FakeViewPadding(top: 24, bottom: 24);
       await tester.pumpAndSettle();
-      expect(tester.getRect(word), before);
-      await tester.tap(word);
+      expect(testRect(tester, word), before);
+      await tapTarget(tester, word);
       await tester.pumpAndSettle();
       expect(calls.last, true);
-      await tester.longPress(word);
+      await longPressTarget(tester, word);
       await tester.pumpAndSettle();
       expect(
-        tester.widget<Semantics>(word).properties.label,
+        testSemantics(tester, word).label,
         contains('; revealed; reveals 1'),
       );
-      await tester.tap(word);
+      await tapTarget(tester, word);
       await tester.pumpAndSettle();
       expect(
-        tester.widget<Semantics>(word).properties.label,
+        testSemantics(tester, word).label,
         contains('; unrevealed; reveals 1'),
       );
       await tester.tapAt(const Offset(3, 450));
       await tester.pumpAndSettle();
       expect(find.text('Settings'), findsNothing);
       expect(calls.last, false);
-      expect(tester.getRect(word), before);
+      expect(testRect(tester, word), before);
     },
   );
   testWidgets('settings previews both grey endpoints', (tester) async {
@@ -125,10 +126,10 @@ void main() {
     await tester.tapAt(const Offset(3, 450));
     await tester.pumpAndSettle();
     expect(find.text('Settings'), findsOneWidget);
-    await tester.tap(find.text('Settings'));
+    await tapTarget(tester, find.text('Settings'));
     await tester.pumpAndSettle();
-    final word = find.byKey(const ValueKey('word-1'));
-    final before = tester.getRect(word);
+    final word = WordTarget.key(const ValueKey('word-1'));
+    final before = testRect(tester, word);
     final slider = tester.widget<Slider>(find.byType(Slider));
     expect(slider.min, 128);
     expect(slider.max, 224);
@@ -136,12 +137,10 @@ void main() {
     for (final value in [128.0, 224.0]) {
       slider.onChanged!(value);
       await tester.pump();
-      expect(tester.getRect(word), before);
-      final ink = tester.widget<GroupedInkWord>(
-        find.descendant(of: word, matching: find.byType(GroupedInkWord)),
-      );
+      expect(testRect(tester, word), before);
+      final ink = wordColor(tester, word);
       expect(
-        ink.color,
+        ink,
         Color.fromARGB(255, value.toInt(), value.toInt(), value.toInt()),
       );
       for (final heading
@@ -188,8 +187,9 @@ void main() {
               : pages.indexWhere((p) => p['page'] == number),
         );
         await tester.pumpAndSettle();
-        final area = tester.getRect(find.byKey(ValueKey('page-$number')));
-        final label = tester.getRect(
+        final area = testRect(tester, find.byKey(ValueKey('page-$number')));
+        final label = testRect(
+          tester,
           find.byKey(ValueKey('page-number-$number')),
         );
         expect(label.center.dx, closeTo(area.center.dx, .01));
@@ -198,10 +198,11 @@ void main() {
         final font = page['font'] as Map<String, dynamic>;
         for (final line in page['lines'] as List) {
           for (final w in line['words'] as List) {
-            final target = find.byKey(ValueKey('word-${w['id']}'));
-            final rect = tester.getRect(target);
-            final text = tester.widget<Text>(
-              find.descendant(of: target, matching: find.byType(Text)),
+            final target = WordTarget.key(ValueKey('word-${w['id']}'));
+            final rect = testRect(tester, target);
+            final text = testText(
+              tester,
+              testDescendant(of: target, matching: find.byType(Text)),
             );
             final inkHeight =
                 ((font['yMax'] as num) - (font['yMin'] as num)) /

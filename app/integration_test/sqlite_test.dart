@@ -1,3 +1,5 @@
+import '../test/word_target.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/main.dart';
@@ -54,9 +56,9 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    final second = find.byKey(const ValueKey('word-2'));
-    String label() => tester.widget<Semantics>(second).properties.label!;
-    await tester.longPress(second);
+    final second = WordTarget.key(const ValueKey('word-2'));
+    String label() => testSemantics(tester, second).label!;
+    await longPressTarget(tester, second);
     for (var i = 0; i < 50 && find.text('Retry').evaluate().isEmpty; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
@@ -67,7 +69,7 @@ void main() {
     await db.execute('DROP TRIGGER fail_reveal');
     await tester.pumpAndSettle();
     expect(find.text('Retry').hitTestable(), findsOneWidget);
-    await tester.tap(find.text('Retry'));
+    await tapTarget(tester, find.text('Retry'));
     for (var i = 0; i < 50 && !label().contains('; revealed;'); i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }

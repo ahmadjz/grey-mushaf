@@ -1,3 +1,5 @@
+import 'word_target.dart';
+
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -5,7 +7,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/flat_ink.dart';
-import 'package:greymushaf/grouped_ink.dart';
 import 'package:greymushaf/heading_ink.dart';
 import 'package:greymushaf/main.dart';
 
@@ -15,12 +16,12 @@ import 'save_feedback_test.dart' show ControlledStore;
 Future<void> openSettings(WidgetTester tester) async {
   await tester.tapAt(const Offset(3, 450));
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Settings'));
+  await tapTarget(tester, find.text('Settings'));
   await tester.pumpAndSettle();
 }
 
 Future<void> toggleDark(WidgetTester tester) async {
-  await tester.tap(find.byType(SwitchListTile));
+  await tapTarget(tester, find.byType(SwitchListTile));
   await tester.pumpAndSettle();
 }
 
@@ -88,16 +89,9 @@ void main() {
           final slider = tester.widget<Slider>(find.byType(Slider));
           slider.onChanged!(value);
           await tester.pump();
-          final word = find.byKey(const ValueKey('word-1'));
+          final word = WordTarget.key(const ValueKey('word-1'));
           expect(
-            tester
-                .widget<GroupedInkWord>(
-                  find.descendant(
-                    of: word,
-                    matching: find.byType(GroupedInkWord),
-                  ),
-                )
-                .color,
+            wordColor(tester, word),
             Color.fromARGB(255, value.toInt(), value.toInt(), value.toInt()),
           );
         }
@@ -105,7 +99,7 @@ void main() {
         expect(tester.widget<Slider>(find.byType(Slider)).value, 176);
         await toggleDark(tester);
         expect(tester.widget<Slider>(find.byType(Slider)).value, 128);
-        await tester.tap(find.byTooltip('Close Settings'));
+        await tapTarget(tester, find.byTooltip('Close Settings'));
         await tester.pumpAndSettle();
         tester.binding.platformDispatcher.platformBrightnessTestValue =
             brightness == Brightness.dark ? Brightness.light : Brightness.dark;
@@ -146,20 +140,16 @@ void main() {
       await tester.pumpAndSettle();
       await openSettings(tester);
       await toggleDark(tester);
-      await tester.tap(find.byTooltip('Close Settings'));
+      await tapTarget(tester, find.byTooltip('Close Settings'));
       await tester.pumpAndSettle();
-      final word = find.byKey(const ValueKey('word-1'));
-      Color ink() => tester
-          .widget<GroupedInkWord>(
-            find.descendant(of: word, matching: find.byType(GroupedInkWord)),
-          )
-          .color;
+      final word = WordTarget.key(const ValueKey('word-1'));
+      Color ink() => wordColor(tester, word);
       expect(ink(), const Color(0xFF505050));
       for (final reveal in [true, false]) {
         if (reveal) {
-          await tester.longPress(word);
+          await longPressTarget(tester, word);
         } else {
-          await tester.tap(word);
+          await tapTarget(tester, word);
         }
         await tester.pump();
         final old = reveal ? const Color(0xFF505050) : Colors.white;
@@ -173,16 +163,16 @@ void main() {
           const Color(0xFF303030),
         );
         expect(
-          tester.widget<Text>(find.text("Couldn't save")).style!.color,
+          testText(tester, find.text("Couldn't save")).style!.color,
           Colors.white,
         );
-        await tester.tap(find.text('Retry'));
+        await tapTarget(tester, find.text('Retry'));
         await tester.pump();
         store.pending!.complete();
         await tester.pumpAndSettle();
         expect(ink(), reveal ? Colors.white : const Color(0xFF505050));
         expect(
-          tester.widget<Semantics>(word).properties.label,
+          testSemantics(tester, word).label,
           contains('; ${reveal ? 'revealed' : 'unrevealed'}; reveals 1'),
         );
       }

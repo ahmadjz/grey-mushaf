@@ -1,3 +1,5 @@
+import 'word_target.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -34,29 +36,30 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      Finder word(int id) => find.byKey(ValueKey('word-$id'));
-      String label(int id) =>
-          tester.widget<Semantics>(word(id)).properties.label!;
+      WordTarget word(int id) => WordTarget.key(ValueKey('word-$id'));
+      String label(int id) => testSemantics(tester, word(id)).label!;
       void expectCommittedThrough(int last) {
         for (var id = 1; id <= 4; id++) {
           expect(
             label(id),
-            contains(id <= last ? '; revealed; reveals 1' : '; unrevealed; reveals 0'),
+            contains(
+              id <= last ? '; revealed; reveals 1' : '; unrevealed; reveals 0',
+            ),
           );
         }
       }
 
-      final drag = await tester.startGesture(tester.getCenter(word(1)));
+      final drag = await tester.startGesture(testCenter(tester, word(1)));
       await tester.pump(const Duration(milliseconds: 600));
-      await drag.moveTo(tester.getCenter(word(2)));
+      await drag.moveTo(testCenter(tester, word(2)));
       await tester.pump();
       expect(store.calls.length, 1);
       expectCommittedThrough(0);
       store.pending!.completeError(StateError('disk full'));
       await tester.pumpAndSettle();
-      await drag.moveTo(tester.getCenter(word(3)));
-      await drag.moveTo(tester.getCenter(word(4)));
-      await drag.moveTo(tester.getCenter(word(1)));
+      await drag.moveTo(testCenter(tester, word(3)));
+      await drag.moveTo(testCenter(tester, word(4)));
+      await drag.moveTo(testCenter(tester, word(1)));
       await drag.up();
       await tester.pumpAndSettle();
       expect(
@@ -65,7 +68,7 @@ void main() {
         reason: 'later words wait for explicit Retry',
       );
       expectCommittedThrough(0);
-      await tester.tap(find.text('Retry'));
+      await tapTarget(tester, find.text('Retry'));
       await tester.pumpAndSettle();
       expect(store.calls[1].uuid, store.calls[0].uuid);
       for (var id = 1; id <= 4; id++) {
@@ -93,9 +96,9 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      final word = find.byKey(const ValueKey('word-1'));
-      String label() => tester.widget<Semantics>(word).properties.label!;
-      await tester.longPress(word);
+      final word = WordTarget.key(const ValueKey('word-1'));
+      String label() => testSemantics(tester, word).label!;
+      await longPressTarget(tester, word);
       await tester.pump();
       expect(label(), contains('; unrevealed; reveals 0'));
       store.pending!.completeError(StateError('disk full'));
@@ -106,19 +109,19 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pump(const Duration(seconds: 5));
       expect(find.text('Retry'), findsOneWidget);
-      await tester.tap(find.text('Retry'));
+      await tapTarget(tester, find.text('Retry'));
       await tester.pump();
       expect(store.calls[1].uuid, store.calls[0].uuid);
       store.pending!.complete();
       await tester.pumpAndSettle();
       expect(label(), contains('; revealed; reveals 1'));
-      await tester.tap(word);
+      await tapTarget(tester, word);
       await tester.pump();
       expect(label(), contains('; revealed; reveals 1'));
       store.pending!.completeError(StateError('disk full'));
       await tester.pumpAndSettle();
       expect(label(), contains('; revealed; reveals 1'));
-      await tester.tap(find.text('Retry'));
+      await tapTarget(tester, find.text('Retry'));
       await tester.pump();
       expect(store.calls[3].uuid, store.calls[2].uuid);
       store.pending!.complete();

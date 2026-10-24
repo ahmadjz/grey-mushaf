@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'flat_ink.dart';
-import 'grouped_ink.dart';
+import 'page_ink.dart';
 import 'bundle_metrics.dart';
 import 'mushaf_bundle.dart';
 import 'loaded_page_controller.dart';
@@ -375,8 +375,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     try {
       while (_pending.isNotEmpty) {
         await widget.store.save(_pending.first);
-        _pending.removeFirst();
-        if (mounted) setState(() {});
+        final saved = _pending.removeFirst();
+        if (mounted) _pageInk[_wordPages[saved.key]]?.changed();
       }
     } catch (_) {
       _saveFailed = true;
@@ -404,11 +404,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     }
   }
 
-  final _targets = <int, GlobalKey>{};
+  final _pageInk = <int, PageInkController>{};
+  final _wordPages = <String, int>{};
+  final _bundleRevision = ValueNotifier<int>(0);
   final _visited = <int>{};
-  final _bands = <String, GlobalKey>{};
-  final _bandWords = <String, List<int>>{};
-  final _bandInkHeights = <String, double>{};
   final _viewport = GlobalKey();
   final _metrics = <int, ({double width, double left, double right})>{};
   final _headings = <String, HeadingInk>{};
@@ -454,12 +453,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _edgeInk = widget.bundle?.metrics.edgeInk ?? 0;
     _tallest = widget.bundle?.metrics.tallest ?? 1;
     _wordKeys.clear();
-    final retainedBands = <String>{};
+    _wordPages.clear();
     for (final page in widget.pages) {
       if (page['lines'] == null) continue;
       _tallest = math.max(_tallest, inkHeight(page));
       for (final line in page['lines'] as List) {
-        retainedBands.add('${page['page']}-${line['number']}');
         final words = line['words'] as List;
         if (line['heading'] != null) {
           final band = '${page['page']}-${line['number']}';
@@ -489,6 +487,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                     ));
           _metrics[word['id'] as int] = metric;
           _wordKeys[word['id'] as int] = wordKey(word['location'] as String);
+          _wordPages[wordKey(word['location'] as String)] = page['page'] as int;
           width += metric.width;
         }
         _widest = math.max(_widest, width);
@@ -507,10 +506,15 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     for (final ink in previousHeadings.values) {
       ink.dispose();
     }
-    _targets.removeWhere((id, _) => !_metrics.containsKey(id));
-    _bands.removeWhere((band, _) => !retainedBands.contains(band));
-    _bandWords.removeWhere((band, _) => !retainedBands.contains(band));
-    _bandInkHeights.removeWhere((band, _) => !retainedBands.contains(band));
+    final retained = {
+      for (final p in widget.pages)
+        if (p['lines'] != null) p['page'],
+    };
+    _pageInk.removeWhere((number, ink) {
+      if (retained.contains(number) || ink.owner != null) return false;
+      ink.dispose();
+      return true;
+    });
   }
 
   void _showLoadError(VoidCallback retry) {
@@ -530,7 +534,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   Future<void> _prefetch(int number) async {
     try {
       final loaded = await widget.bundle!.loadNear(number);
-      if (mounted && loaded) setState(_measureBundle);
+      if (mounted && loaded) {
+        _measureBundle();
+        _bundleRevision.value++;
+      }
     } catch (_) {
       _showLoadError(
         () => unawaited(_prefetch(widget.pages[_selected]['page'] as int)),
@@ -549,6 +556,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     widget.bundle?.cancelPendingLoads();
     WidgetsBinding.instance.removeObserver(this);
     _settingFailures.dispose();
+    _bundleRevision.dispose();
+    for (final ink in _pageInk.values) {
+      ink.dispose();
+    }
     for (final ink in _headings.values) {
       ink.dispose();
     }
@@ -564,46 +575,20 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     int? nearestWord;
     var bestOutside = double.infinity;
     var bestEdge = double.infinity;
-    for (final entry in _bands.entries) {
-      final band = entry.value.currentContext?.findRenderObject();
-      if (band is! RenderBox || !band.attached || !band.hasSize) continue;
-      final rect = band.localToGlobal(Offset.zero) & band.size;
-      // Full vertical line bands, clipped to this PageView's visible viewport.
-      // No nearest-band fallback into another page or an off-screen child.
-      if (!rect.overlaps(visible) ||
-          point.dy < rect.top ||
-          point.dy >= rect.bottom) {
+    for (final ink in _pageInk.values) {
+      if (ink.owner == null || !ink.owner!.attached || !ink.owner!.hasSize) {
         continue;
       }
-      // Short taps must land on ink-height boxes. Keep the full line bands
-      // for long-press/drag, including the whitespace between printed lines.
-      if (shortTap &&
-          (point.dy - rect.center.dy).abs() >
-              _bandInkHeights[entry.key]! / 2 + _size * .02) {
+      if (!ink.globalRect(Offset.zero & ink.owner!.size).overlaps(visible)) {
         continue;
       }
-      for (final id in _bandWords[entry.key] ?? <int>[]) {
-        final box = _targets[id]?.currentContext?.findRenderObject();
-        if (box is! RenderBox || !box.attached || !box.hasSize) continue;
-        final metric = _metrics[id]!;
-        final origin = box.localToGlobal(Offset.zero).dx;
-        final left = origin + metric.left * _size;
-        final right = origin + metric.right * _size;
-        final outside = (point.dx - point.dx.clamp(left, right)).abs();
-        // 0.08 em horizontally; vertical hit areas remain the entire line band.
-        if (outside > _size * .08) continue;
-        final edge = math.min(
-          (point.dx - left).abs(),
-          (point.dx - right).abs(),
-        );
-        // Containment beats tolerance. In overlapping extents, use the nearest
-        // ink edge rather than the advance-box centre (which can be far away).
-        if (outside < bestOutside ||
-            (outside == bestOutside && edge < bestEdge)) {
-          bestOutside = outside;
-          bestEdge = edge;
-          nearestWord = id;
-        }
+      final hit = ink.hitAt(point, shortTap: shortTap);
+      if (hit != null &&
+          (hit.outside < bestOutside ||
+              (hit.outside == bestOutside && hit.edge < bestEdge))) {
+        bestOutside = hit.outside;
+        bestEdge = hit.edge;
+        nearestWord = hit.id;
       }
     }
     return nearestWord;
@@ -624,16 +609,13 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   }
 
   void _move(LongPressMoveUpdateDetails details) {
-    setState(() {
-      final start = _previous ?? details.globalPosition;
-      final end = details.globalPosition;
-      // Hit every crossed target even when pointer events skip over short words.
-      final steps = math.max(1, ((end - start).distance / 2).ceil());
-      for (var i = 1; i <= steps; i++) {
-        _revealAt(Offset.lerp(start, end, i / steps)!);
-      }
-      _previous = end;
-    });
+    final start = _previous ?? details.globalPosition;
+    final end = details.globalPosition;
+    final steps = math.max(1, ((end - start).distance / 2).ceil());
+    for (var i = 1; i <= steps; i++) {
+      _revealAt(Offset.lerp(start, end, i / steps)!);
+    }
+    _previous = end;
   }
 
   void _end() {
@@ -686,7 +668,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 final loaded = await widget.bundle!.loadNear(
                   spread ? index * 2 + 1 : index + 1,
                 );
-                if (mounted && loaded) setState(_measureBundle);
+                if (mounted && loaded) {
+                  _measureBundle();
+                  _bundleRevision.value++;
+                }
               },
             );
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -763,7 +748,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         if (controller is LoadedPageController) {
                           controller.cancelPendingNavigation();
                         }
-                        setState(() => _selected = spread ? index * 2 : index);
+                        _selected = spread ? index * 2 : index;
                         final bundle = widget.bundle;
                         if (bundle != null) {
                           unawaited(
@@ -776,11 +761,17 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         children: [
                           for (final page in groups[index])
                             Expanded(
-                              child: _page(
-                                page,
-                                text.size,
-                                text.width,
-                                pageHeight,
+                              child: _LoadedReaderPage(
+                                revision: _bundleRevision,
+                                page: () => widget.pages.firstWhere(
+                                  (p) => p['page'] == page['page'],
+                                ),
+                                buildPage: (page) => _page(
+                                  page,
+                                  text.size,
+                                  text.width,
+                                  pageHeight,
+                                ),
                               ),
                             ),
                         ],
@@ -837,7 +828,16 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final strip = number <= 2 ? 0.0 : math.max(0.0, (14 - spare) * 30 / 29);
     final slotHeight = (pageHeight - strip) / 15;
     final height = number <= 2 ? textWidth * 47 / 543 : slotHeight;
-    return GroupedInkPage(
+    final ink = _pageInk.putIfAbsent(
+      number,
+      () => PageInkController(widget.store),
+    );
+    ink.store = widget.store;
+    ink.dim = _dim;
+    ink.foreground = _foreground;
+    ink.background = _background;
+    return PaintedInkPage(
+      controller: ink,
       child: SizedBox(
         key: ValueKey('page-$number'),
         child: Padding(
@@ -933,9 +933,6 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final number = page['page'] as int;
     final words = line['words'] as List;
     final band = '$number-${line['number']}';
-    final bandKey = _bands.putIfAbsent(band, GlobalKey.new);
-    _bandWords[band] = [for (final word in words) word['id'] as int];
-    _bandInkHeights[band] = inkHeight(page) * size;
     Widget content;
     if (line['type'] != 'ayah') {
       // Reference ink boxes at the same scale as the 543 px normal text
@@ -977,17 +974,19 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         );
       }
     } else {
-      content = Row(
-        textDirection: TextDirection.rtl,
-        mainAxisAlignment: line['centered'] == true
-            ? MainAxisAlignment.center
-            : MainAxisAlignment.spaceBetween,
-        children: [
-          for (var i = 0; i < words.length; i++) ...[
-            if (i > 0 && line['centered'] == true) SizedBox(width: size * .09),
-            _word(words[i] as Map<String, dynamic>, page, size, height),
-          ],
-        ],
+      final font = page['font'] as Map<String, dynamic>;
+      content = PaintedWordLine(
+        controller: _pageInk[number]!,
+        words: words,
+        metrics: _metrics,
+        fontSize: size,
+        height: height,
+        inkHeight: inkHeight(page) * size,
+        baseline:
+            (height - inkHeight(page) * size) / 2 +
+            size * (font['yMax'] as num) / (font['unitsPerEm'] as num),
+        centered: line['centered'] == true,
+        style: wordStyle(number, size),
       );
     }
     if (words.isNotEmpty && line['centered'] != true) {
@@ -1012,59 +1011,66 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       // Keep the complete hit band while scaling justified lines with the font.
       // A height-limited spread must not stretch its inter-word gaps sideways.
       child: SizedBox(
-        key: bandKey,
         child: Center(
           child: SizedBox(width: textWidth, child: content),
         ),
       ),
     );
   }
+}
 
-  Widget _word(
-    Map<String, dynamic> word,
-    Map<String, dynamic> page,
-    double size,
-    double height,
-  ) {
-    final id = word['id'] as int;
-    final saved = widget.store.state(_wordKeys[id]!);
-    final black = saved.black;
-    final font = page['font'] as Map<String, dynamic>;
-    final baseline =
-        (height - inkHeight(page) * size) / 2 +
-        size * (font['yMax'] as num) / (font['unitsPerEm'] as num);
-    return Semantics(
-      key: ValueKey('word-$id'),
-      container: true,
-      label:
-          '${word['location']}; ${black ? 'revealed' : 'unrevealed'}; reveals ${saved.count}',
-      child: SizedBox(
-        key: _targets.putIfAbsent(id, GlobalKey.new),
-        width: _metrics[id]!.width * size,
-        height: height,
-        child: GroupedInkWord(
-          ink: Rect.fromLTRB(
-            _metrics[id]!.left * size,
-            baseline -
-                (font['yMax'] as num) * size / (font['unitsPerEm'] as num),
-            _metrics[id]!.right * size,
-            baseline -
-                (font['yMin'] as num) * size / (font['unitsPerEm'] as num),
-          ),
-          color: black ? _foreground : _dim,
-          background: _background,
-          child: Baseline(
-            baseline: baseline,
-            baselineType: TextBaseline.alphabetic,
-            child: Text(
-              word['text'] as String,
-              textDirection: TextDirection.rtl,
-              textScaler: TextScaler.noScaling,
-              style: wordStyle(page['page'] as int, size),
-            ),
-          ),
-        ),
-      ),
-    );
+// Bundle arrivals rebuild only slots whose parsed page object changed.
+class _LoadedReaderPage extends StatefulWidget {
+  const _LoadedReaderPage({
+    required this.revision,
+    required this.page,
+    required this.buildPage,
+  });
+  final ValueNotifier<int> revision;
+  final Map<String, dynamic> Function() page;
+  final Widget Function(Map<String, dynamic>) buildPage;
+  @override
+  State<_LoadedReaderPage> createState() => _LoadedReaderPageState();
+}
+
+class _LoadedReaderPageState extends State<_LoadedReaderPage> {
+  late Map<String, dynamic> page;
+  late Widget content;
+  void refresh() {
+    final next = widget.page();
+    if (!identical(next, page)) {
+      setState(() {
+        page = next;
+        content = widget.buildPage(page);
+      });
+    }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    page = widget.page();
+    content = widget.buildPage(page);
+    widget.revision.addListener(refresh);
+  }
+
+  @override
+  void didUpdateWidget(covariant _LoadedReaderPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.revision != widget.revision) {
+      oldWidget.revision.removeListener(refresh);
+      widget.revision.addListener(refresh);
+    }
+    page = widget.page();
+    content = widget.buildPage(page);
+  }
+
+  @override
+  void dispose() {
+    widget.revision.removeListener(refresh);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => content;
 }

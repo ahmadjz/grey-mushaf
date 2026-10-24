@@ -9,7 +9,7 @@ ADB="$HOME/Android/Sdk/platform-tools/adb"
 export PATH="$HOME/development/flutter/bin:$PATH"
 mkdir -p "$OUT"
 cd app
-PERF_OUT="$OUT" heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter drive --profile --no-dds --driver=test_driver/perf_baseline_driver.dart --target=integration_test/perf_baseline_test.dart -d emulator-5554 > "$OUT/frames.log" 2>&1
+PERF_OUT="$OUT" heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter drive --profile --no-dds --keep-app-running --driver=test_driver/perf_baseline_driver.dart --target=integration_test/perf_baseline_test.dart -d emulator-5554 > "$OUT/frames.log" 2>&1
 for MODE in profile release; do
   mkdir -p "$OUT/$MODE"
   heavy env GRADLE_OPTS=-Dorg.gradle.daemon=false flutter build apk --"$MODE" --target=lib/main.dart --target-platform android-x64 > "$OUT/$MODE/build.log" 2>&1

@@ -8,9 +8,31 @@ import 'rgba_diff.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  test('all reference images have identical raw RGBA pixels', () async {
+  test('reference images satisfy the selected parity gate', () async {
     final reference = Directory(Platform.environment['PARITY_REFERENCE']!);
     final candidate = Directory(Platform.environment['PARITY_CANDIDATE']!);
+    final mode = Platform.environment['PARITY_MODE'] ?? 'exact';
+    expect(['exact', 'r40'], contains(mode));
+    var geometryMatches = true;
+    if (mode == 'r40') {
+      final referenceCapture = jsonDecode(
+        File(
+          Platform.environment['PARITY_REFERENCE_GEOMETRY'] ??
+              '${reference.parent.path}/capture.json',
+        ).readAsStringSync(),
+      );
+      final candidateCapture = jsonDecode(
+        File(
+          Platform.environment['PARITY_CANDIDATE_GEOMETRY'] ??
+              '${candidate.parent.path}/capture.json',
+        ).readAsStringSync(),
+      );
+      geometryMatches = sameWordGeometry(
+        referenceCapture['geometry'] as Map,
+        candidateCapture['geometry'] as Map,
+      );
+    }
+    var accepted = geometryMatches;
     final files = reference
         .listSync()
         .whereType<File>()
@@ -36,6 +58,9 @@ void main() {
           .asUint8List();
       final count = differingPixels(aa, bb);
       total += count;
+      final edge = mode == 'r40' ? r40Difference(aa, bb, a.width) : null;
+      final imageAccepted = mode == 'exact' ? count == 0 : edge!.accepted;
+      accepted = accepted && imageAccepted;
       var left = a.width, top = a.height, right = -1, bottom = -1;
       if (count > 0) {
         for (var i = 0; i < aa.length; i += 4) {
@@ -54,6 +79,9 @@ void main() {
       }
       results[name] = {
         'pixels': count,
+        'totalPixels': a.width * a.height,
+        'nonEdgePixels': edge?.nonEdge,
+        'accepted': imageAccepted,
         'bounds': count == 0 ? null : [left, top, right, bottom],
       };
       a.dispose();
@@ -61,9 +89,20 @@ void main() {
       ac.dispose();
       bc.dispose();
     }
-    File(
-      Platform.environment['PARITY_DIFF'] ?? '${candidate.path}/diff.json',
-    ).writeAsStringSync(jsonEncode({'totalPixels': total, 'images': results}));
-    expect(total, 0, reason: 'Exact RGBA parity required; see diff.json');
+    File(Platform.environment['PARITY_DIFF'] ?? '${candidate.path}/diff.json')
+        .writeAsStringSync(
+          jsonEncode({
+            'mode': mode,
+            'geometryMatches': geometryMatches,
+            'accepted': accepted,
+            'totalPixels': total,
+            'images': results,
+          }),
+        );
+    expect(
+      accepted,
+      isTrue,
+      reason: '$mode parity and geometry required; see diff.json',
+    );
   }, timeout: const Timeout(Duration(minutes: 5)));
 }

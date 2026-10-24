@@ -31,49 +31,26 @@ class GroupedInkPage extends SingleChildRenderObjectWidget {
   RenderObject createRenderObject(BuildContext context) => _PageInk();
 }
 
-/// The original FlatInk subtree stays intact for every fallback word.
-class GroupedInkWord extends StatelessWidget {
+/// Preserve word layout; composite ink once per page and colour.
+class GroupedInkWord extends SingleChildRenderObjectWidget {
   const GroupedInkWord({
     super.key,
     required this.color,
     required this.background,
-    required this.child,
     this.ink,
-  });
-  final Color color;
-  final Color background;
-  final Widget child;
-  final Rect? ink;
-  @override
-  Widget build(BuildContext context) => _WordSlot(
-    color: color,
-    background: background,
-    ink: ink,
-    dpr: View.of(context).devicePixelRatio,
-    child: FlatInk(color: color, background: background, child: child),
-  );
-}
-
-class _WordSlot extends SingleChildRenderObjectWidget {
-  const _WordSlot({
-    required this.color,
-    required this.background,
-    required this.ink,
-    required this.dpr,
     required super.child,
   });
   final Color color, background;
   final Rect? ink;
-  final double dpr;
   @override
   RenderObject createRenderObject(BuildContext context) =>
-      _WordInk(color, background, ink, dpr);
+      _WordInk(color, background);
   @override
   void updateRenderObject(
     BuildContext context,
-    covariant _WordInk renderObject,
+    covariant RenderObject renderObject,
   ) {
-    renderObject.update(color, background, ink, dpr);
+    (renderObject as _WordInk).update(color, background);
   }
 }
 
@@ -86,37 +63,15 @@ class _PageInk extends RenderProxyBox {
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final words = <_WordInk>[];
-    void collect(RenderObject object) {
-      if (object is _WordInk) {
-        words.add(object);
-      } else {
-        object.visitChildren(collect);
-      }
-    }
-
-    visitChildren(collect);
-    final transforms = [for (final word in words) word.getTransformTo(this)];
-    final safe = groupableInk(
-      [
-        for (var i = 0; i < words.length; i++)
-          MatrixUtils.transformRect(transforms[i], Offset.zero & words[i].size),
-      ],
-      [
-        for (var i = 0; i < words.length; i++)
-          MatrixUtils.transformRect(
-            transforms[i],
-            words[i].ink ?? (Offset.zero & words[i].size),
-          ),
-      ],
-      words.isEmpty ? 0 : 2 / words.first.dpr,
-    );
-    for (var i = 0; i < words.length; i++) {
-      words[i].grouped = safe[i];
-    }
     entries.clear();
     super.paint(context, offset);
-    for (final group in entries.entries) {
+    int foreground(Color color) =>
+        color == const Color(0xFF000000) || color == const Color(0xFFFFFFFF)
+        ? 1
+        : 0;
+    final groups = entries.entries.toList()
+      ..sort((a, b) => foreground(a.key.$1).compareTo(foreground(b.key.$1)));
+    for (final group in groups) {
       context.pushColorFilter(
         offset,
         FlatInk.mapFilter(group.key.$1, group.key.$2),
@@ -142,36 +97,19 @@ class _PageInk extends RenderProxyBox {
 }
 
 class _WordInk extends RenderProxyBox {
-  _WordInk(this.color, this.background, this.ink, this.dpr);
+  _WordInk(this.color, this.background);
   Color color, background;
-  Rect? ink;
-  double dpr;
-  bool grouped = false;
-  void update(
-    Color nextColor,
-    Color nextBackground,
-    Rect? nextInk,
-    double nextDpr,
-  ) {
-    if (color == nextColor &&
-        background == nextBackground &&
-        ink == nextInk &&
-        dpr == nextDpr) {
+  void update(Color nextColor, Color nextBackground) {
+    if (color == nextColor && background == nextBackground) {
       return;
     }
     color = nextColor;
     background = nextBackground;
-    ink = nextInk;
-    dpr = nextDpr;
     markNeedsPaint();
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    if (!grouped) {
-      super.paint(context, offset);
-      return;
-    }
     RenderObject? owner = parent;
     while (owner != null && owner is! _PageInk) {
       owner = owner.parent;
@@ -179,11 +117,11 @@ class _WordInk extends RenderProxyBox {
     if (owner is! _PageInk) {
       throw StateError('Word ink requires its page group');
     }
-    // FlatInk is precisely two proxy colour filters, with no layout offset.
-    final threshold = (child! as RenderProxyBox).child! as RenderProxyBox;
-    owner.entries.putIfAbsent((color, background), () => []).add((
-      child: threshold.child!,
-      transform: getTransformTo(owner),
-    ));
+    if (child != null) {
+      owner.entries.putIfAbsent((color, background), () => []).add((
+        child: child!,
+        transform: getTransformTo(owner),
+      ));
+    }
   }
 }

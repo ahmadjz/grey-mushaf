@@ -57,7 +57,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final second = WordTarget.key(const ValueKey('word-2'));
-    String label() => testSemantics(tester, second).label!;
+    String label() => testSemantics(tester, second).label;
     await longPressTarget(tester, second);
     for (var i = 0; i < 50 && find.text('Retry').evaluate().isEmpty; i++) {
       await tester.pump(const Duration(milliseconds: 100));

@@ -1,7 +1,10 @@
-// Test hooks read the actual painter geometry, paragraphs and semantics builder.
+// Geometry hooks locate words; assertions read rendered semantics and layers.
 // No surrogate word widgets are inserted into the application.
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/page_ink.dart';
 
@@ -77,15 +80,14 @@ Future<void> longPressTarget(WidgetTester tester, Object target) =>
     target is WordTarget
     ? tester.longPressAt(testCenter(tester, target))
     : tester.longPress(target as Finder);
-SemanticsProperties testSemantics(WidgetTester tester, Object target) {
+SemanticsNode testSemantics(WidgetTester tester, Object target) {
   if (target is WordTarget) {
-    final found = target.resolve(tester);
-    return found.model.painter
-        .semanticsBuilder(found.model.owner!.size)
-        .singleWhere((s) => s.key == ValueKey('word-${target.id}'))
-        .properties;
+    return find.semantics
+        .byPredicate((node) => node.identifier == 'word-${target.id}')
+        .evaluate()
+        .single;
   }
-  return tester.widget<Semantics>(target as Finder).properties;
+  return tester.getSemantics(target as Finder);
 }
 
 ({String? data, TextStyle? style}) testText(
@@ -100,7 +102,52 @@ SemanticsProperties testSemantics(WidgetTester tester, Object target) {
   return (data: text.data, style: text.style);
 }
 
-Color wordColor(WidgetTester tester, WordTarget target) {
+/// Captures the already-painted production page layer, never the painter/model colour.
+Future<({Uint8List rgba, int width, int height, Rect ink, double scale})>
+wordPixels(WidgetTester tester, WordTarget target) async {
   final found = target.resolve(tester);
-  return found.model.color(found.word);
+  final owner = found.model.owner!;
+  const scale = 3.0;
+  return (await tester.runAsync(() async {
+    final image = await (owner.debugLayer! as OffsetLayer).toImage(
+      Offset.zero & owner.size,
+      pixelRatio: scale,
+    );
+    final bytes = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
+    final result = (
+      rgba: Uint8List.fromList(bytes.buffer.asUint8List()),
+      width: image.width,
+      height: image.height,
+      ink: found.word.ink,
+      scale: scale,
+    );
+    image.dispose();
+    return result;
+  }))!;
+}
+
+Future<Color> wordColor(WidgetTester tester, WordTarget target) async {
+  final pixels = await wordPixels(tester, target);
+  final counts = <int, int>{};
+  final r = pixels.ink, s = pixels.scale;
+  final rect = Rect.fromLTRB(r.left * s, r.top * s, r.right * s, r.bottom * s);
+  for (
+    var y = rect.top.ceil().clamp(0, pixels.height);
+    y < rect.bottom.floor().clamp(0, pixels.height);
+    y++
+  ) {
+    for (
+      var x = rect.left.ceil().clamp(0, pixels.width);
+      x < rect.right.floor().clamp(0, pixels.width);
+      x++
+    ) {
+      final i = (y * pixels.width + x) * 4, rgba = pixels.rgba;
+      if (rgba[i + 3] < 255) continue;
+      final rgb = (rgba[i] << 16) | (rgba[i + 1] << 8) | rgba[i + 2];
+      counts.update(rgb, (n) => n + 1, ifAbsent: () => 1);
+    }
+  }
+  expect(counts, isNotEmpty, reason: 'word must have opaque rendered ink');
+  final dominant = counts.entries.reduce((a, b) => a.value >= b.value ? a : b);
+  return Color(0xff000000 | dominant.key);
 }

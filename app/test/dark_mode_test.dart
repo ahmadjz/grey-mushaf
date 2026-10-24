@@ -91,7 +91,7 @@ void main() {
           await tester.pump();
           final word = WordTarget.key(const ValueKey('word-1'));
           expect(
-            wordColor(tester, word),
+            await wordColor(tester, word),
             Color.fromARGB(255, value.toInt(), value.toInt(), value.toInt()),
           );
         }
@@ -143,8 +143,8 @@ void main() {
       await tapTarget(tester, find.byTooltip('Close Settings'));
       await tester.pumpAndSettle();
       final word = WordTarget.key(const ValueKey('word-1'));
-      Color ink() => wordColor(tester, word);
-      expect(ink(), const Color(0xFF505050));
+      Future<Color> ink() => wordColor(tester, word);
+      expect(await ink(), const Color(0xFF505050));
       for (final reveal in [true, false]) {
         if (reveal) {
           await longPressTarget(tester, word);
@@ -153,10 +153,10 @@ void main() {
         }
         await tester.pump();
         final old = reveal ? const Color(0xFF505050) : Colors.white;
-        expect(ink(), old);
+        expect(await ink(), old);
         store.pending!.completeError(StateError('injected failure'));
         await tester.pumpAndSettle();
-        expect(ink(), old);
+        expect(await ink(), old);
         expect(find.text("Couldn't save"), findsOneWidget);
         expect(
           tester.widget<SnackBar>(find.byType(SnackBar)).backgroundColor,
@@ -170,7 +170,7 @@ void main() {
         await tester.pump();
         store.pending!.complete();
         await tester.pumpAndSettle();
-        expect(ink(), reveal ? Colors.white : const Color(0xFF505050));
+        expect(await ink(), reveal ? Colors.white : const Color(0xFF505050));
         expect(
           testSemantics(tester, word).label,
           contains('; ${reveal ? 'revealed' : 'unrevealed'}; reveals 1'),
@@ -179,87 +179,71 @@ void main() {
     },
   );
 
-  testWidgets('actual ayah numeral preserves interior ink and black field', (
+  testWidgets('production page marker preserves numeral and black field', (
     tester,
   ) async {
-    // Page 1's first ayah marker is U+FC45.
-    final marker = pages.first['lines'][1]['words'][4]['text'] as String;
-    final key = GlobalKey();
-    List<int>? light;
-    for (final foreground in [
-      Colors.black,
-      Colors.white,
-      const Color(0xFF505050),
-    ]) {
-      final background = foreground == Colors.black
-          ? Colors.white
-          : Colors.black;
-      await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: Center(
-            child: RepaintBoundary(
-              key: key,
-              child: ColoredBox(
-                color: background,
-                child: SizedBox(
-                  width: 240,
-                  height: 240,
-                  child: Center(
-                    child: FlatInk(
-                      color: foreground,
-                      background: background,
-                      child: Text(
-                        marker,
-                        style: const TextStyle(
-                          fontFamily: 'mushaf-1',
-                          fontSize: 180,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-      await tester.pump();
-      await tester.runAsync(() async {
-        final image =
-            await (key.currentContext!.findRenderObject()
-                    as RenderRepaintBoundary)
-                .toImage();
-        final bytes = (await image.toByteData(
-          format: ui.ImageByteFormat.rawRgba,
-        ))!.buffer.asUint8List();
-        if (foreground == Colors.black) {
-          light = List<int>.from(bytes);
-        } else {
-          var numeralInk = 0;
-          var field = 0;
-          // Compare the whole glyph to the light rendering, including its interior.
-          final level = foreground.toARGB32() & 255;
-          for (var y = 0; y < 240; y++) {
-            for (var x = 0; x < 240; x++) {
-              final offset = (y * 240 + x) * 4;
-              expect(
-                bytes[offset],
-                closeTo((255 - light![offset]) * level / 255, 2),
-              );
-              expect(bytes[offset + 3], 255);
-              if (x > 95 && x < 145 && y > 80 && y < 170) {
-                if (bytes[offset] > level * .9) numeralInk++;
-                if (bytes[offset] < 3) field++;
-              }
-            }
+    tester.view.physicalSize = const Size(411, 914);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(pages: pages, store: MemoryRevealStore()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    const marker = WordTarget(5);
+    await longPressTarget(tester, marker);
+    await tester.pumpAndSettle();
+    expect(
+      testSemantics(tester, marker).label,
+      contains('; revealed; reveals 1'),
+    );
+    final light = await wordPixels(tester, marker);
+    await openSettings(tester);
+    await toggleDark(tester);
+    await tester.tap(find.byTooltip('Close Settings'));
+    await tester.pumpAndSettle();
+    for (final level in [255, 80]) {
+      if (level == 80) {
+        await tapTarget(tester, marker);
+        await tester.pumpAndSettle();
+      }
+      final dark = await wordPixels(tester, marker);
+      expect(dark.ink, light.ink);
+      expect(dark.width, light.width);
+      final r = light.ink, scale = light.scale;
+      var numeral = 0, field = 0;
+      // Compare actual page pixels over the whole marker, including its interior.
+      // Alpha composites onto the page's known light/dark background.
+      for (
+        var y = (r.top * scale).ceil();
+        y < (r.bottom * scale).floor();
+        y++
+      ) {
+        for (
+          var x = (r.left * scale).ceil();
+          x < (r.right * scale).floor();
+          x++
+        ) {
+          final i = (y * light.width + x) * 4;
+          final a = light.rgba[i + 3] / 255, b = dark.rgba[i + 3] / 255;
+          // rawRgba is premultiplied: add only the uncovered background.
+          final lightValue = light.rgba[i] + 255 * (1 - a);
+          final darkValue = dark.rgba[i].toDouble();
+          expect(darkValue, closeTo((255 - lightValue) * level / 255, 2));
+          expect(dark.rgba[i], dark.rgba[i + 1]);
+          expect(dark.rgba[i], dark.rgba[i + 2]);
+          if ((x / scale - r.center.dx).abs() < r.width * .2 &&
+              (y / scale - r.center.dy).abs() < r.height * .3 &&
+              b == 1) {
+            if (darkValue > level * .9) numeral++;
+            if (darkValue < 3) field++;
           }
-          expect(numeralInk, greaterThan(20));
-          expect(field, greaterThan(20));
         }
-        image.dispose();
-      });
+      }
+      expect(numeral, greaterThan(10), reason: 'numeral remains inside circle');
+      expect(field, greaterThan(10), reason: 'opaque marker field is black');
     }
   });
 

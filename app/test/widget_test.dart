@@ -17,7 +17,7 @@ late List<Map<String, dynamic>> pages;
 WordTarget word(int id, {bool skipOffstage = true}) =>
     WordTarget.key(ValueKey('word-$id'), skipOffstage: skipOffstage);
 String status(WidgetTester tester, int id) =>
-    testSemantics(tester, word(id)).label!;
+    testSemantics(tester, word(id)).label;
 
 Future<void> mount(WidgetTester tester, {bool landscape = false}) async {
   tester.view.physicalSize = landscape

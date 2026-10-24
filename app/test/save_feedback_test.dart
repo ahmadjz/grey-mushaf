@@ -26,6 +26,39 @@ void main() {
   setUpAll(() async {
     pages = await loadPages();
   });
+  for (final observePixels in [true, false]) {
+    testWidgets(
+      'durable save invalidates rendered ${observePixels ? 'pixels' : 'semantics'}',
+      (tester) async {
+        final store = ControlledStore();
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Reader(pages: pages, store: store),
+          ),
+        );
+        await tester.pumpAndSettle();
+        const word = WordTarget(1);
+        await longPressTarget(tester, word);
+        await tester.pumpAndSettle();
+        expect(await wordColor(tester, word), const Color(0xffb0b0b0));
+        expect(
+          testSemantics(tester, word).label,
+          contains('; unrevealed; reveals 0'),
+        );
+        store.pending!.complete();
+        await tester.pumpAndSettle();
+        expect(store.state(wordKey('1:1:1')), (black: true, count: 1));
+        if (observePixels) {
+          expect(await wordColor(tester, word), Colors.black);
+        } else {
+          expect(
+            testSemantics(tester, word).label,
+            contains('; revealed; reveals 1'),
+          );
+        }
+      },
+    );
+  }
   testWidgets(
     'failed mid-drag save retains later words until Retry commits each',
     (tester) async {
@@ -37,7 +70,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       WordTarget word(int id) => WordTarget.key(ValueKey('word-$id'));
-      String label(int id) => testSemantics(tester, word(id)).label!;
+      String label(int id) => testSemantics(tester, word(id)).label;
       void expectCommittedThrough(int last) {
         for (var id = 1; id <= 4; id++) {
           expect(
@@ -97,13 +130,16 @@ void main() {
       );
       await tester.pumpAndSettle();
       final word = WordTarget.key(const ValueKey('word-1'));
-      String label() => testSemantics(tester, word).label!;
+      String label() => testSemantics(tester, word).label;
+      expect(await wordColor(tester, word), const Color(0xffb0b0b0));
       await longPressTarget(tester, word);
       await tester.pump();
       expect(label(), contains('; unrevealed; reveals 0'));
+      expect(await wordColor(tester, word), const Color(0xffb0b0b0));
       store.pending!.completeError(StateError('disk full'));
       await tester.pumpAndSettle();
       expect(label(), contains('; unrevealed; reveals 0'));
+      expect(await wordColor(tester, word), const Color(0xffb0b0b0));
       expect(find.text("Couldn't save"), findsOneWidget);
       await tester.drag(find.byType(SnackBar), const Offset(0, 300));
       await tester.pumpAndSettle();
@@ -115,18 +151,22 @@ void main() {
       store.pending!.complete();
       await tester.pumpAndSettle();
       expect(label(), contains('; revealed; reveals 1'));
+      expect(await wordColor(tester, word), Colors.black);
       await tapTarget(tester, word);
       await tester.pump();
       expect(label(), contains('; revealed; reveals 1'));
+      expect(await wordColor(tester, word), Colors.black);
       store.pending!.completeError(StateError('disk full'));
       await tester.pumpAndSettle();
       expect(label(), contains('; revealed; reveals 1'));
+      expect(await wordColor(tester, word), Colors.black);
       await tapTarget(tester, find.text('Retry'));
       await tester.pump();
       expect(store.calls[3].uuid, store.calls[2].uuid);
       store.pending!.complete();
       await tester.pumpAndSettle();
       expect(label(), contains('; unrevealed; reveals 1'));
+      expect(await wordColor(tester, word), const Color(0xffb0b0b0));
     },
   );
 }

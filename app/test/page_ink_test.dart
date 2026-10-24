@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/page_ink.dart';
 
 import 'memory_reveal_store.dart';
+import 'word_target.dart';
 
 void main() {
   testWidgets(
@@ -43,11 +44,9 @@ void main() {
       expect(find.byType(Text), findsNothing);
       expect(model.words.single.id, 1);
       expect(model.words.single.box, const Rect.fromLTWH(85, 0, 30, 40));
-      final semantic = model.painter
-          .semanticsBuilder(const Size(200, 40))
-          .single;
-      expect(semantic.key, const ValueKey('word-1'));
-      expect(semantic.properties.label, '1:1:1; unrevealed; reveals 0');
+      final semantic = testSemantics(tester, const WordTarget(1));
+      expect(semantic.identifier, 'word-1');
+      expect(semantic.label, '1:1:1; unrevealed; reveals 0');
       expect(
         model
             .hitAt(

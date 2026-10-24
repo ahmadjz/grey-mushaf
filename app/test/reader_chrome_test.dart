@@ -138,7 +138,7 @@ void main() {
       slider.onChanged!(value);
       await tester.pump();
       expect(testRect(tester, word), before);
-      final ink = wordColor(tester, word);
+      final ink = await wordColor(tester, word);
       expect(
         ink,
         Color.fromARGB(255, value.toInt(), value.toInt(), value.toInt()),

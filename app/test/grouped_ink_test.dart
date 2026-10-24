@@ -7,24 +7,6 @@ import 'package:greymushaf/flat_ink.dart';
 import 'package:greymushaf/grouped_ink.dart';
 
 void main() {
-  test('hybrid excludes overhangs, near edges and both overlap partners', () {
-    final boxes = [
-      const Rect.fromLTWH(0, 0, 20, 20),
-      const Rect.fromLTWH(30, 0, 20, 20),
-      const Rect.fromLTWH(60, 0, 20, 20),
-      const Rect.fromLTWH(90, 0, 20, 20),
-      const Rect.fromLTWH(100, 0, 20, 20),
-    ];
-    final ink = [
-      const Rect.fromLTWH(3, 3, 14, 14),
-      const Rect.fromLTWH(29, 3, 14, 14),
-      const Rect.fromLTWH(61, 3, 14, 14),
-      const Rect.fromLTWH(93, 3, 14, 14),
-      const Rect.fromLTWH(103, 3, 14, 14),
-    ];
-    expect(groupableInk(boxes, ink, 2), [true, false, false, false, false]);
-  });
-
   testWidgets(
     'grouping preserves nonoverlapping paint and translated positions',
     (tester) async {

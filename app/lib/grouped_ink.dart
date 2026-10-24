@@ -3,28 +3,6 @@ import 'package:flutter/widgets.dart';
 
 import 'flat_ink.dart';
 
-/// Bounds use prepared horizontal ink and the whole font's vertical extrema.
-/// Expand by two physical pixels before both containment and overlap checks.
-List<bool> groupableInk(List<Rect> boxes, List<Rect> ink, double margin) {
-  final padded = [for (final rect in ink) rect.inflate(margin)];
-  final result = [
-    for (var i = 0; i < ink.length; i++)
-      boxes[i].left <= padded[i].left &&
-          boxes[i].top <= padded[i].top &&
-          boxes[i].right >= padded[i].right &&
-          boxes[i].bottom >= padded[i].bottom,
-  ];
-  for (var i = 0; i < ink.length; i++) {
-    for (var j = i + 1; j < ink.length; j++) {
-      if (padded[i].overlaps(padded[j])) {
-        result[i] = false;
-        result[j] = false;
-      }
-    }
-  }
-  return result;
-}
-
 class GroupedInkPage extends SingleChildRenderObjectWidget {
   const GroupedInkPage({super.key, required super.child});
   @override

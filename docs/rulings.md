@@ -165,6 +165,13 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     up front misses that, pages and their fonts load as the reader nears them, with no visible
     change to text size or layout.
 
+## R40 (2026-10-24, owner)
+
+40. **Speed over invisible pixel parity.** A rendering speed-up may change a handful of edge pixels
+    (a few per screen, at letter tips) as long as nothing a reader can see changes: same words, line
+    breaks, positions, sizes and colours. Screenshot diffs stay the check, and any change beyond
+    stray edge pixels goes back to the owner.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

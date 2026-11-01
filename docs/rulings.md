@@ -172,6 +172,12 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     breaks, positions, sizes and colours. Screenshot diffs stay the check, and any change beyond
     stray edge pixels goes back to the owner.
 
+## R41 (2026-11-01, Claude's default, the owner may overrule)
+
+41. **Page turns settle like a native Android app.** After a swipe the page snaps into place about as
+    fast as Android's own page swiping, instead of the slower springy finish. Where the finger lets
+    go, which page it lands on and the swipe lock during a drag (R3) don't change.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

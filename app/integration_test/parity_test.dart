@@ -102,6 +102,20 @@ void main() {
             controller.jumpToPage(spread ? (target - 1) ~/ 2 : target - 1);
             await controller.pending;
             await tester.pumpAndSettle();
+            // Exercise cached incoming-page pixels after a real fractional drag,
+            // against the same settled-page reference used for jump navigation.
+            if (target == 50) {
+              controller.jumpToPage(target - 2);
+              await controller.pending;
+              await tester.pumpAndSettle();
+              await tester.timedDrag(
+                find.byType(PageView),
+                Offset(tester.getSize(find.byType(PageView)).width * .75, 0),
+                const Duration(milliseconds: 250),
+              );
+              await tester.pumpAndSettle();
+              expect(controller.page, closeTo(target - 1, .001));
+            }
             if (mode.$1) {
               await tester.tapAt(
                 Offset(
@@ -196,10 +210,64 @@ void main() {
                 'note': 'Prepared horizontal ink extents; conservative page-font vertical ink bounds, logical pixels.',
               };
             }
-            await Future<void>.delayed(const Duration(milliseconds: 150));
-            await tester.pumpAndSettle();
+            // Native system-bar transitions and asynchronous page captures can
+            // outlast pumpAndSettle. Require stable metrics/geometry and ready
+            // visible images before comparing settled pixels.
+            String captureState() {
+              final viewport =
+                  Offset.zero &
+                  (tester.view.physicalSize / tester.view.devicePixelRatio);
+              return [
+                tester.view.physicalSize,
+                tester.view.viewPadding,
+                for (final page in tester.widgetList<PaintedInkPage>(
+                  find.byType(PaintedInkPage),
+                ))
+                  if (page.controller.owner case final owner?
+                      when owner.hasSize &&
+                          (owner.localToGlobal(Offset.zero) & owner.size)
+                              .overlaps(viewport))
+                    [
+                      page.controller.hasCachedImage,
+                      owner.localToGlobal(Offset.zero),
+                      owner.size,
+                      if (page.controller.words.isNotEmpty) ...[
+                        page.controller.globalRect(
+                          page.controller.words.first.box,
+                        ),
+                        page.controller.globalRect(
+                          page.controller.words.last.box,
+                        ),
+                      ],
+                    ],
+              ].toString();
+            }
+
+            var stable = 0;
+            String? previous;
+            for (var probe = 0; probe < 50 && stable < 3; probe++) {
+              await tester.pumpAndSettle();
+              final current = captureState();
+              stable = current == previous && !current.contains('false')
+                  ? stable + 1
+                  : 0;
+              previous = current;
+              if (stable < 3) {
+                await Future<void>.delayed(const Duration(milliseconds: 100));
+              }
+            }
+            expect(
+              stable,
+              3,
+              reason: 'settled viewport and page images: $name',
+            );
             await binding.takeScreenshot('images/$name');
             await tester.pump();
+            expect(
+              captureState(),
+              previous,
+              reason: 'geometry stable across capture: $name',
+            );
             await binding.takeScreenshot('repeat/$name');
             await tester.pumpWidget(const SizedBox());
             await store.close();

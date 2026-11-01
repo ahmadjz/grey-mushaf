@@ -1,6 +1,10 @@
 import 'dart:math' as math;
 import 'dart:collection';
 
+import 'package:flutter/scheduler.dart';
+
+import 'page_image_cache.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -41,6 +45,16 @@ class PageInkController extends ChangeNotifier {
   final _globalRects =
       HashMap<Rect, ({RenderBox source, Offset offset, Rect local})>.identity();
   RenderBox? owner;
+  @visibleForTesting
+  bool get hasCachedImage =>
+      owner != null && _PageRender._images[owner!] != null;
+  @visibleForTesting
+  Offset? get cachedImagePhysicalOrigin {
+    final render = owner;
+    if (render is! _PageRender || !hasCachedImage) return null;
+    return render.localToGlobal(render._captureBounds!.topLeft) * render.dpr;
+  }
+
   late final painter = PageInkPainter(this);
   void changed() => notifyListeners();
   Color color(InkWord word) =>
@@ -146,29 +160,141 @@ class PaintedInkPage extends SingleChildRenderObjectWidget {
   });
   final PageInkController controller;
   @override
-  RenderObject createRenderObject(BuildContext context) =>
-      _PageRender(controller);
+  RenderObject createRenderObject(BuildContext context) => _PageRender(
+    controller,
+    MediaQuery.devicePixelRatioOf(context),
+    MediaQuery.orientationOf(context) == Orientation.landscape,
+    Scrollable.maybeOf(context)?.position,
+  );
   @override
   void updateRenderObject(
     BuildContext context,
     covariant RenderObject renderObject,
   ) {
-    (renderObject as _PageRender).update(controller);
+    (renderObject as _PageRender).update(
+      controller,
+      MediaQuery.devicePixelRatioOf(context),
+      MediaQuery.orientationOf(context) == Orientation.landscape,
+      Scrollable.maybeOf(context)?.position,
+    );
   }
 }
 
+class _PageImages extends PageImageCache with WidgetsBindingObserver {
+  _PageImages()
+    : super(
+        onEvict: (key) {
+          if (key is _PageRender && key.attached) key.markNeedsPaint();
+        },
+      ) {
+    WidgetsBinding.instance.addObserver(this);
+  }
+  @override
+  void didHaveMemoryPressure() => clear();
+}
+
 class _PageRender extends RenderCustomPaint {
-  _PageRender(this.controller) : super(painter: controller.painter);
+  _PageRender(this.controller, this.dpr, this.landscape, this.scrollPosition)
+    : super(painter: controller.painter);
+  static final _images = _PageImages();
+  bool landscape;
+  ScrollPosition? scrollPosition;
+  double dpr;
+  int _generation = 0;
+  bool _scheduled = false;
+  Rect? _captureBounds;
+
+  void _invalidate() {
+    _generation++;
+    _images.remove(this);
+    markNeedsPaint();
+    markNeedsSemanticsUpdate();
+  }
+
+  void _scheduleCapture() {
+    if (_scheduled) return;
+    _scheduled = true;
+    final generation = _generation;
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      // Wait without allocating or dropping this page's capture request. A
+      // second waiter may take the slot first, so recheck after every wakeup.
+      while (_images.isCapturing) {
+        await _images.idle;
+      }
+      _scheduled = false;
+      if (!attached || layer == null) return;
+      if (generation != _generation) {
+        markNeedsPaint();
+        return;
+      }
+      var origin = localToGlobal(Offset.zero) * dpr;
+      final scroll = scrollPosition;
+      if (scroll != null) {
+        // Remove the viewport's fractional translation. Every settled page is
+        // separated by an integral physical viewport width (or height).
+        final delta = scroll.pixels * dpr;
+        origin += switch (scroll.axisDirection) {
+          AxisDirection.right => Offset(delta, 0),
+          AxisDirection.left => Offset(-delta, 0),
+          AxisDirection.down => Offset(0, delta),
+          AxisDirection.up => Offset(0, -delta),
+        };
+      }
+      final phase = Offset(
+        origin.dx - origin.dx.floor(),
+        origin.dy - origin.dy.floor(),
+      );
+      final bounds = Rect.fromLTWH(
+        -phase.dx / dpr,
+        -phase.dy / dpr,
+        (size.width * dpr + phase.dx).ceil() / dpr,
+        (size.height * dpr + phase.dy).ceil() / dpr,
+      );
+      final bytes =
+          (bounds.width * dpr).ceil() * (bounds.height * dpr).ceil() * 4;
+      _images.maxEntries = landscape ? 4 : 2;
+      try {
+        final ready = await _images.capture(
+          this,
+          bytes,
+          () => (layer! as OffsetLayer).toImage(bounds, pixelRatio: dpr),
+        );
+        if (ready && attached && generation == _generation) {
+          _captureBounds = bounds;
+          markNeedsPaint();
+        }
+      } catch (error, stack) {
+        FlutterError.reportError(
+          FlutterErrorDetails(
+            exception: error,
+            stack: stack,
+            context: ErrorDescription('capturing page ink'),
+          ),
+        );
+      }
+    });
+  }
+
   PageInkController controller;
   @override
   bool get isRepaintBoundary => true;
-  void update(PageInkController next) {
+  void update(
+    PageInkController next,
+    double nextDpr,
+    bool nextLandscape,
+    ScrollPosition? nextScroll,
+  ) {
+    scrollPosition = nextScroll;
+    if (landscape != nextLandscape || dpr != nextDpr) _images.clear();
+    landscape = nextLandscape;
+    _invalidate();
+    dpr = nextDpr;
     if (!identical(controller, next)) {
-      if (attached) controller.removeListener(markNeedsSemanticsUpdate);
+      if (attached) controller.removeListener(_invalidate);
       controller.owner = null;
       controller = next;
       painter = controller.painter;
-      if (attached) controller.addListener(markNeedsSemanticsUpdate);
+      if (attached) controller.addListener(_invalidate);
     }
     controller.owner = this;
     markNeedsLayout();
@@ -180,18 +306,20 @@ class _PageRender extends RenderCustomPaint {
   void attach(PipelineOwner owner) {
     super.attach(owner);
     controller.owner = this;
-    controller.addListener(markNeedsSemanticsUpdate);
+    controller.addListener(_invalidate);
   }
 
   @override
   void detach() {
-    controller.removeListener(markNeedsSemanticsUpdate);
+    _invalidate();
+    controller.removeListener(_invalidate);
     controller.owner = null;
     super.detach();
   }
 
   @override
   void performLayout() {
+    _invalidate();
     super.performLayout();
     _collectWords();
   }
@@ -239,6 +367,24 @@ class _PageRender extends RenderCustomPaint {
 
   @override
   void paint(PaintingContext context, Offset offset) {
+    final image = _images[this];
+    if (image != null) {
+      final canvas = context.canvas;
+      canvas.save();
+      canvas.translate(
+        offset.dx + _captureBounds!.left,
+        offset.dy + _captureBounds!.top,
+      );
+      canvas.scale(1 / dpr);
+      canvas.drawImage(
+        image,
+        Offset.zero,
+        Paint()..filterQuality = FilterQuality.none,
+      );
+      canvas.restore();
+      return;
+    }
+    _scheduleCapture();
     _collectWords();
     if (child != null) context.paintChild(child!, offset);
     for (final color in [controller.dim, controller.foreground]) {

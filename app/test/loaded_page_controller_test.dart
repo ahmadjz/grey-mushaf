@@ -5,6 +5,48 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/loaded_page_controller.dart';
 
 void main() {
+  testWidgets(
+    'native settle keeps page selection and completes within 350 ms',
+    (tester) async {
+      final controller = PageController(initialPage: 2);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: PageView.builder(
+            controller: controller,
+            physics: LoadedPagePhysics(first: () => 1, last: () => 3),
+            itemCount: 604,
+            itemBuilder: (_, index) => Text('page ${index + 1}'),
+          ),
+        ),
+      );
+      final position = controller.position;
+      final physics = position.physics;
+      for (final fraction in [1.25, 1.75, 2.25, 2.75]) {
+        controller.jumpTo(fraction * position.viewportDimension);
+        for (final velocity in [-1800.0, 0.0, 1800.0]) {
+          final original = const PageScrollPhysics().createBallisticSimulation(
+            position,
+            velocity,
+          )!;
+          final quicker = physics.createBallisticSimulation(
+            position,
+            velocity,
+          )!;
+          expect(quicker.x(0), position.pixels);
+          expect(quicker.x(1), original.x(10));
+          expect(
+            quicker.isDone(.35),
+            isTrue,
+            reason: 'release fraction $fraction, velocity $velocity',
+          );
+          expect(quicker.x(.35), original.x(10));
+        }
+      }
+      await tester.pumpWidget(const SizedBox());
+      controller.dispose();
+    },
+  );
+
   testWidgets('far jump holds the rendered page until destination is ready', (
     tester,
   ) async {

@@ -151,3 +151,14 @@ Future<Color> wordColor(WidgetTester tester, WordTarget target) async {
   final dominant = counts.entries.reduce((a, b) => a.value >= b.value ? a : b);
   return Color(0xff000000 | dominant.key);
 }
+
+Future<void> waitForCachedInk(WidgetTester tester, WordTarget target) async {
+  final model = target.resolve(tester).model;
+  for (var attempt = 0; attempt < 10 && !model.hasCachedImage; attempt++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await tester.pumpAndSettle();
+  }
+  expect(model.hasCachedImage, isTrue);
+}

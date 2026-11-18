@@ -84,8 +84,6 @@ class LoadedPagePhysics extends PageScrollPhysics {
     parent: buildParent(ancestor),
   );
 
-  // PageView wraps this in PageScrollPhysics. Its inherited spring is the
-  // extension point that preserves native destination selection and cancel.
   @override
   SpringDescription get spring =>
       SpringDescription.withDampingRatio(mass: .5, stiffness: 1500, ratio: 1);

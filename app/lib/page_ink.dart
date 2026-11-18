@@ -216,8 +216,6 @@ class _PageRender extends RenderCustomPaint {
     _scheduled = true;
     final generation = _generation;
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      // Wait without allocating or dropping this page's capture request. A
-      // second waiter may take the slot first, so recheck after every wakeup.
       while (_images.isCapturing) {
         await _images.idle;
       }
@@ -230,8 +228,6 @@ class _PageRender extends RenderCustomPaint {
       var origin = localToGlobal(Offset.zero) * dpr;
       final scroll = scrollPosition;
       if (scroll != null) {
-        // Remove the viewport's fractional translation. Every settled page is
-        // separated by an integral physical viewport width (or height).
         final delta = scroll.pixels * dpr;
         origin += switch (scroll.axisDirection) {
           AxisDirection.right => Offset(delta, 0),

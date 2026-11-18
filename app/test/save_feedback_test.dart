@@ -132,6 +132,7 @@ void main() {
       final word = WordTarget.key(const ValueKey('word-1'));
       String label() => testSemantics(tester, word).label;
       expect(await wordColor(tester, word), const Color(0xffb0b0b0));
+      await waitForCachedInk(tester, word);
       await longPressTarget(tester, word);
       await tester.pump();
       expect(label(), contains('; unrevealed; reveals 0'));
@@ -152,6 +153,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(label(), contains('; revealed; reveals 1'));
       expect(await wordColor(tester, word), Colors.black);
+      await waitForCachedInk(tester, word);
       await tapTarget(tester, word);
       await tester.pump();
       expect(label(), contains('; revealed; reveals 1'));

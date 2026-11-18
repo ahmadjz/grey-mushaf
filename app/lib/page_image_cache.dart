@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
-/// Pixel accounting includes the single in-flight allocation, even after eviction.
 class PageImageCache {
   PageImageCache({
     this.maxBytes = 24 * 1024 * 1024,
@@ -12,6 +11,7 @@ class PageImageCache {
   final int maxBytes;
   int maxEntries;
   final _images = <Object, ui.Image>{};
+  final _crowdedOut = <Object>{};
   Object? _pending;
   Completer<void>? _pendingDone;
   bool get isCapturing => _pending != null;
@@ -33,11 +33,18 @@ class PageImageCache {
     int bytes,
     Future<ui.Image> Function() create,
   ) async {
-    if (_pending != null || bytes > maxBytes || maxEntries < 1) return false;
+    if (_pending != null ||
+        bytes > maxBytes ||
+        maxEntries < 1 ||
+        _crowdedOut.contains(key)) {
+      return false;
+    }
     remove(key);
     while (_images.isNotEmpty &&
         (this.bytes + bytes > maxBytes || _images.length >= maxEntries)) {
-      remove(_images.keys.first);
+      final oldest = _images.keys.first;
+      remove(oldest);
+      _crowdedOut.add(oldest);
     }
     _pending = key;
     _pendingDone = Completer<void>();
@@ -60,6 +67,7 @@ class PageImageCache {
   }
 
   void remove(Object key) {
+    _crowdedOut.remove(key);
     final image = _images.remove(key);
     if (image != null) {
       image.dispose();
@@ -69,6 +77,7 @@ class PageImageCache {
   }
 
   void clear() {
+    _crowdedOut.clear();
     for (final key in _images.keys.toList()) {
       remove(key);
     }

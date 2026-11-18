@@ -138,14 +138,16 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      final word = WordTarget.key(const ValueKey('word-1'));
+      await waitForCachedInk(tester, word);
       await openSettings(tester);
       await toggleDark(tester);
       await tapTarget(tester, find.byTooltip('Close Settings'));
       await tester.pumpAndSettle();
-      final word = WordTarget.key(const ValueKey('word-1'));
       Future<Color> ink() => wordColor(tester, word);
       expect(await ink(), const Color(0xFF505050));
       for (final reveal in [true, false]) {
+        await waitForCachedInk(tester, word);
         if (reveal) {
           await longPressTarget(tester, word);
         } else {

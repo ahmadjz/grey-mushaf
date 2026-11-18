@@ -60,7 +60,7 @@ void main() {
     );
   }
   testWidgets(
-    'failed long-press save keeps the word grey until Retry; moving reveals nothing more',
+    'failed save holds later long-presses until Retry commits each; moving reveals nothing',
     (tester) async {
       final store = ControlledStore();
       await tester.pumpWidget(
@@ -91,19 +91,26 @@ void main() {
       store.pending!.completeError(StateError('disk full'));
       await tester.pumpAndSettle();
       await drag.moveTo(testCenter(tester, word(3)));
-      await drag.moveTo(testCenter(tester, word(4)));
       await drag.up();
       await tester.pumpAndSettle();
-      expect(store.calls.length, 1);
+      for (final id in [2, 3]) {
+        await longPressTarget(tester, word(id));
+        await tester.pumpAndSettle();
+      }
+      expect(store.calls.length, 1, reason: 'later words wait for Retry');
       expectCommittedThrough(0);
       await tapTarget(tester, find.text('Retry'));
       await tester.pump();
       expect(store.calls[1].uuid, store.calls[0].uuid);
-      expect(store.calls.last.key, wordKey('1:1:1'));
-      store.pending!.complete();
-      await tester.pumpAndSettle();
-      expectCommittedThrough(1);
-      expect(store.calls.length, 2);
+      for (var id = 1; id <= 3; id++) {
+        expect(store.calls.length, id + 1, reason: 'word $id must be queued');
+        expect(store.calls.last.key, wordKey('1:1:$id'));
+        expectCommittedThrough(id - 1);
+        store.pending!.complete();
+        await tester.pumpAndSettle();
+        expectCommittedThrough(id);
+      }
+      expect(store.calls.length, 4);
     },
   );
   testWidgets(

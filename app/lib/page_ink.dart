@@ -61,6 +61,16 @@ class ParagraphPool {
     }
   }
 
+  void clearIdle() {
+    for (final painters in _idle.values) {
+      for (final painter in painters) {
+        painter.dispose();
+      }
+    }
+    _idle.clear();
+    _idleCount = 0;
+  }
+
   void _park(_ParagraphKey key, TextPainter painter) {
     _idle[key] = (_idle.remove(key) ?? [])..add(painter);
     _idleCount++;
@@ -117,8 +127,9 @@ class PageInkController extends ChangeNotifier {
       HashMap<Rect, ({RenderBox source, Offset offset, Rect local})>.identity();
   RenderBox? owner;
   @visibleForTesting
-  bool get hasCachedImage =>
-      owner != null && _PageRender._images[owner!] != null;
+  bool get hasCachedImage => cachedImage != null;
+  @visibleForTesting
+  Object? get cachedImage => owner == null ? null : _PageRender._images[owner!];
   @visibleForTesting
   Offset? get cachedImagePhysicalOrigin {
     final render = owner;
@@ -261,7 +272,10 @@ class _PageImages extends PageImageCache with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
   @override
-  void didHaveMemoryPressure() => clear();
+  void didHaveMemoryPressure() {
+    clear();
+    paragraphPool.clearIdle();
+  }
 }
 
 class _PageRender extends RenderCustomPaint {

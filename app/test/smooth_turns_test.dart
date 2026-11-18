@@ -43,10 +43,11 @@ void main() {
     await tester.pumpAndSettle();
     final word = WordTarget(firstWord(pages[0]));
     await waitForCachedInk(tester, word);
+    final image = word.resolve(tester).model.cachedImage;
     await tester.tapAt(const Offset(4, 4));
     await tester.pumpAndSettle();
     expect(find.text('Settings'), findsOneWidget);
-    expect(word.resolve(tester).model.hasCachedImage, isTrue);
+    expect(identical(word.resolve(tester).model.cachedImage, image), isTrue);
   });
 
   testWidgets('a swipe onto a prepared neighbour shapes no new words', (
@@ -73,6 +74,111 @@ void main() {
             (word['text'], word['metrics'][0]),
     };
     expect(paragraphPool.created, before + nextNeighbour.length);
+  });
+
+  testWidgets('a resize that changes the text size prepares neighbours again', (
+    tester,
+  ) async {
+    portrait(tester);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(pages: pages, store: MemoryRevealStore()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    tester.widget<PageView>(find.byType(PageView)).controller!.jumpToPage(48);
+    await tester.pumpAndSettle();
+    await runIdleTasks(tester);
+    tester.view.physicalSize = const Size(380, 914);
+    await tester.pumpAndSettle();
+    await runIdleTasks(tester);
+    final before = paragraphPool.created;
+    await tester.drag(find.byType(PageView), const Offset(300, 0));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('page-50')), findsOneWidget);
+    final nextNeighbour = {
+      for (final line in pages[50]['lines'] as List)
+        if (line['type'] == 'ayah')
+          for (final word in line['words'] as List)
+            (word['text'], word['metrics'][0]),
+    };
+    expect(paragraphPool.created, before + nextNeighbour.length);
+  });
+
+  testWidgets('a system cancel after a long-press unlocks swiping', (
+    tester,
+  ) async {
+    portrait(tester);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(pages: pages, store: MemoryRevealStore()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final gesture = await tester.startGesture(
+      testCenter(tester, WordTarget(firstWord(pages[0]))),
+    );
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(
+      tester.widget<PageView>(find.byType(PageView)).physics,
+      isA<NeverScrollableScrollPhysics>(),
+    );
+    await gesture.cancel();
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<PageView>(find.byType(PageView)).physics,
+      isNot(isA<NeverScrollableScrollPhysics>()),
+    );
+  });
+
+  testWidgets('a finger landing mid-settle does not start loading', (
+    tester,
+  ) async {
+    portrait(tester);
+    final bundle = (await tester.runAsync(MushafBundle.open))!;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(
+          pages: bundle.pages,
+          bundle: bundle,
+          store: MemoryRevealStore(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final controller =
+        tester.widget<PageView>(find.byType(PageView)).controller!
+            as LoadedPageController;
+    controller.jumpToPage(5);
+    await tester.runAsync(() => controller.pending);
+    await tester.pumpAndSettle();
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 200)),
+    );
+    await tester.pumpAndSettle();
+    final loaded = bundle.loadedNumbers;
+    final swipe = await tester.startGesture(const Offset(100, 400));
+    await swipe.moveBy(const Offset(40, 0));
+    await tester.pump();
+    await swipe.moveBy(const Offset(300, 0));
+    await tester.pump();
+    await swipe.up();
+    await tester.pump(const Duration(milliseconds: 16));
+    expect(controller.page!, inExclusiveRange(5.5, 6));
+    final hold = await tester.startGesture(const Offset(200, 400));
+    await tester.pump();
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 200)),
+    );
+    await tester.pump();
+    expect(bundle.loadedNumbers, loaded);
+    await hold.up();
+    await tester.pumpAndSettle();
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 200)),
+    );
+    await tester.pumpAndSettle();
+    expect(bundle.loadedNumbers.last, greaterThan(loaded.last));
   });
 
   testWidgets('pages load after the swipe settles, not during it', (

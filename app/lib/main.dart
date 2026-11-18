@@ -614,7 +614,13 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   bool get _scrolling =>
       _controller.hasClients && _controller.position.isScrollingNotifier.value;
 
+  bool get _onPage {
+    final page = _controller.hasClients ? _controller.page : null;
+    return page == null || (page - page.round()).abs() < 1e-3;
+  }
+
   void _afterScroll() {
+    if (!_onPage) return;
     final pending = _pendingPrefetch;
     _pendingPrefetch = null;
     if (pending != null && widget.bundle != null) {
@@ -646,7 +652,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     ];
     var next = 0;
     void step() {
-      if (generation != _warmGeneration || !mounted || _scrolling) return;
+      if (generation != _warmGeneration || !mounted || _scrolling || !_onPage) {
+        return;
+      }
       if (next == work.length) return;
       final scheduler = SchedulerBinding.instance;
       if (scheduler.transientCallbackCount > 0) {
@@ -748,10 +756,12 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                   // Reserve number clearance only when the last line's spare ink
                   // space cannot contain it. This bound keeps one font size throughout.
                   final text = _textSize(_contentWidth, (pageHeight - 14) / 15);
-                  final firstLayout = _wordSize == null;
-                  _baseTextStyle = DefaultTextStyle.of(context).style;
+                  final base = DefaultTextStyle.of(context).style;
+                  final restyled =
+                      base != _baseTextStyle || text.size != _wordSize;
+                  _baseTextStyle = base;
                   _wordSize = text.size;
-                  if (firstLayout) {
+                  if (restyled) {
                     WidgetsBinding.instance.addPostFrameCallback(
                       (_) => _prewarm(),
                     );

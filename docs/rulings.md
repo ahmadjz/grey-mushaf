@@ -14,9 +14,9 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
    the Boox for now.
 2. **A revealed word stays black** until the owner turns it grey again. The state is saved locally
    and synced between devices.
-3. **Gestures.** A long-press reveals one word. Long-press then drag reveals every word the finger
-   passes over, and the page swipe is off until the finger lifts. A short tap on a black word turns
-   it grey.
+3. **Gestures.** A long-press reveals one word. ~~Long-press then drag reveals every word the finger
+   passes over~~ (dropped by R43), and the page swipe is off until the finger lifts. A short tap on a
+   black word turns it grey.
 4. **Orientation.** Portrait shows one page. Landscape shows a two-page spread like an open mushaf:
    the odd page on the right and the even page on the left (page 1 right, page 2 left). This is the
    same on phone and Boox.
@@ -184,6 +184,19 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     pages in one session may add at most 230 MiB of PSS above the app's own launch figure on the
     same device (R39's 300 MiB total stays the emulator check). The page fonts cannot be unloaded
     once shown, so a long session grows by about their size; restarting the app frees it.
+
+## R43 (2026-11-18, owner)
+
+43. **Long-press reveals one word only.** No drag-to-reveal and no multi-select: after the long-press
+    turns the word black, moving the finger reveals nothing else and does not turn the page until it
+    lifts (Claude's default). Supersedes the drag part of R3 and R6.
+
+## R44 (2026-11-18, owner)
+
+44. **The next screen is ready before you swipe.** While the owner reads, the app prepares the
+    previous and next screen: one page each side in portrait, a whole two-page spread each side in
+    landscape. Further pages load after a swipe finishes, not during it. Showing the bars, a reveal
+    or a slider move only redraws what changed. Nothing on the page looks different (R40).
 
 ## Phases
 

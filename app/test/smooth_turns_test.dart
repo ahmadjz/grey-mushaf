@@ -181,6 +181,37 @@ void main() {
     expect(bundle.loadedNumbers.last, greaterThan(loaded.last));
   });
 
+  testWidgets('loading pages after a turn keeps the visible page image', (
+    tester,
+  ) async {
+    portrait(tester);
+    final bundle = (await tester.runAsync(MushafBundle.open))!;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(
+          pages: bundle.pages,
+          bundle: bundle,
+          store: MemoryRevealStore(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final controller =
+        tester.widget<PageView>(find.byType(PageView)).controller!
+            as LoadedPageController;
+    controller.jumpToPage(5);
+    await tester.runAsync(() => controller.pending);
+    await tester.pumpAndSettle();
+    final word = WordTarget(firstWord(bundle.pages[5]));
+    await waitForCachedInk(tester, word);
+    final image = word.resolve(tester).model.cachedImage;
+    final loaded = bundle.loadedNumbers;
+    await tester.runAsync(() => bundle.loadNear(11));
+    await tester.pumpAndSettle();
+    expect(bundle.loadedNumbers, isNot(loaded));
+    expect(identical(word.resolve(tester).model.cachedImage, image), isTrue);
+  });
+
   testWidgets('pages load after the swipe settles, not during it', (
     tester,
   ) async {

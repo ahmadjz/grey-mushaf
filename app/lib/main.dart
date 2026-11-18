@@ -964,20 +964,25 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 left: 0,
                 right: 0,
                 child: IgnorePointer(
-                  child: Center(
-                    child: Text(
-                      '$number'
-                          .split('')
-                          .map((digit) => '٠١٢٣٤٥٦٧٨٩'[int.parse(digit)])
-                          .join(),
-                      key: ValueKey('page-number-$number'),
-                      textScaler: TextScaler.noScaling,
-                      style: TextStyle(
-                        fontSize: 10,
-                        height: 1.2,
-                        color: _darkMode
-                            ? const Color(0xFFB0B0B0)
-                            : Colors.black,
+                  child: RepaintBoundary(
+                    child: SizedBox(
+                      height: 12,
+                      child: Center(
+                        child: Text(
+                          '$number'
+                              .split('')
+                              .map((digit) => '٠١٢٣٤٥٦٧٨٩'[int.parse(digit)])
+                              .join(),
+                          key: ValueKey('page-number-$number'),
+                          textScaler: TextScaler.noScaling,
+                          style: TextStyle(
+                            fontSize: 10,
+                            height: 1.2,
+                            color: _darkMode
+                                ? const Color(0xFFB0B0B0)
+                                : Colors.black,
+                          ),
+                        ),
                       ),
                     ),
                   ),

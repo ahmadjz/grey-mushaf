@@ -178,6 +178,13 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     fast as Android's own page swiping, instead of the slower springy finish. Where the finger lets
     go, which page it lands on and the swipe lock during a drag (R3) don't change.
 
+## R42 (2026-11-18, Claude's default, the owner may overrule)
+
+42. **Memory on a real phone is judged by growth, not by the emulator's total.** Reading all 604
+    pages in one session may add at most 230 MiB of PSS above the app's own launch figure on the
+    same device (R39's 300 MiB total stays the emulator check). The page fonts cannot be unloaded
+    once shown, so a long session grows by about their size; restarting the app frees it.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

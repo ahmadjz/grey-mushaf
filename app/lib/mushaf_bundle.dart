@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 
 import 'bundle_metrics.dart';
 
-/// Page data stays within the current spread and its two neighbouring spreads.
 /// Flutter retains registered fonts; each font is registered only once.
 class MushafBundle {
   MushafBundle._(this.metrics, this._assets);
@@ -90,7 +89,7 @@ class MushafBundle {
     final generation = ++_generation;
     final odd = number.isOdd ? number : number - 1;
     final wanted = [
-      for (var n = math.max(1, odd - 2); n <= math.min(604, odd + 3); n++) n,
+      for (var n = math.max(1, odd - 4); n <= math.min(604, odd + 5); n++) n,
     ];
     if (loadedNumbers.length == wanted.length &&
         wanted.every((n) => pages[n - 1]['lines'] != null)) {

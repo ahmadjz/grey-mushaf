@@ -13,6 +13,77 @@ import 'reveal_store.dart';
 
 typedef InkMetric = ({double width, double left, double right});
 
+typedef _ParagraphKey = ({String text, TextStyle style, double width});
+
+class ParagraphPool {
+  ParagraphPool({this.maxIdle = 1200});
+  final int maxIdle;
+  final _idle = <_ParagraphKey, List<TextPainter>>{};
+  final _inUse = HashMap<_ParagraphKey, int>();
+  int _idleCount = 0;
+  @visibleForTesting
+  int created = 0;
+
+  TextPainter acquire(String text, TextStyle style, double width) {
+    final key = (text: text, style: style, width: width);
+    _inUse[key] = (_inUse[key] ?? 0) + 1;
+    final idle = _idle[key];
+    if (idle == null) return _create(key);
+    _idleCount--;
+    if (idle.length == 1) _idle.remove(key);
+    return idle.removeLast();
+  }
+
+  void release(
+    String text,
+    TextStyle style,
+    double width,
+    TextPainter painter,
+  ) {
+    final key = (text: text, style: style, width: width);
+    final users = _inUse[key]! - 1;
+    if (users == 0) {
+      _inUse.remove(key);
+    } else {
+      _inUse[key] = users;
+    }
+    _park(key, painter);
+  }
+
+  void prewarm(String text, TextStyle style, double width) {
+    final key = (text: text, style: style, width: width);
+    if (_inUse.containsKey(key)) return;
+    final idle = _idle.remove(key);
+    if (idle != null) {
+      _idle[key] = idle;
+    } else {
+      _park(key, _create(key));
+    }
+  }
+
+  void _park(_ParagraphKey key, TextPainter painter) {
+    _idle[key] = (_idle.remove(key) ?? [])..add(painter);
+    _idleCount++;
+    while (_idleCount > maxIdle) {
+      final oldest = _idle.keys.first;
+      final painters = _idle[oldest]!;
+      painters.removeAt(0).dispose();
+      _idleCount--;
+      if (painters.isEmpty) _idle.remove(oldest);
+    }
+  }
+
+  TextPainter _create(_ParagraphKey key) {
+    created++;
+    return TextPainter(
+      text: TextSpan(text: key.text, style: key.style),
+      textDirection: TextDirection.rtl,
+    )..layout(maxWidth: key.width);
+  }
+}
+
+final paragraphPool = ParagraphPool();
+
 class InkWord {
   InkWord({
     required this.id,
@@ -202,11 +273,27 @@ class _PageRender extends RenderCustomPaint {
   double dpr;
   int _generation = 0;
   bool _scheduled = false;
+  bool _showingCapture = false;
   Rect? _captureBounds;
+  Object? _imageInputs, _paintedInputs;
+
+  Object get _inputs => (
+    controller.store,
+    controller.dim,
+    controller.foreground,
+    controller.background,
+  );
+
+  @override
+  void markNeedsPaint() {
+    if (!_showingCapture) {
+      _generation++;
+      _images.remove(this);
+    }
+    super.markNeedsPaint();
+  }
 
   void _invalidate() {
-    _generation++;
-    _images.remove(this);
     markNeedsPaint();
     markNeedsSemanticsUpdate();
   }
@@ -215,6 +302,7 @@ class _PageRender extends RenderCustomPaint {
     if (_scheduled) return;
     _scheduled = true;
     final generation = _generation;
+    final inputs = _inputs;
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       while (_images.isCapturing) {
         await _images.idle;
@@ -257,7 +345,10 @@ class _PageRender extends RenderCustomPaint {
         );
         if (ready && attached && generation == _generation) {
           _captureBounds = bounds;
+          _imageInputs = inputs;
+          _showingCapture = true;
           markNeedsPaint();
+          _showingCapture = false;
         }
       } catch (error, stack) {
         FlutterError.reportError(
@@ -281,21 +372,22 @@ class _PageRender extends RenderCustomPaint {
     ScrollPosition? nextScroll,
   ) {
     scrollPosition = nextScroll;
-    if (landscape != nextLandscape || dpr != nextDpr) _images.clear();
-    landscape = nextLandscape;
-    _invalidate();
-    dpr = nextDpr;
+    if (landscape != nextLandscape || dpr != nextDpr) {
+      _images.clear();
+      landscape = nextLandscape;
+      dpr = nextDpr;
+      markNeedsLayout();
+    }
     if (!identical(controller, next)) {
       if (attached) controller.removeListener(_invalidate);
       controller.owner = null;
       controller = next;
       painter = controller.painter;
       if (attached) controller.addListener(_invalidate);
+      markNeedsLayout();
     }
     controller.owner = this;
-    markNeedsLayout();
-    markNeedsPaint();
-    markNeedsSemanticsUpdate();
+    if (_paintedInputs != _inputs) _invalidate();
   }
 
   @override
@@ -363,8 +455,9 @@ class _PageRender extends RenderCustomPaint {
 
   @override
   void paint(PaintingContext context, Offset offset) {
+    _paintedInputs = _inputs;
     final image = _images[this];
-    if (image != null) {
+    if (image != null && _imageInputs == _paintedInputs) {
       final canvas = context.canvas;
       canvas.save();
       canvas.translate(
@@ -453,10 +546,23 @@ class _LineRender extends RenderBox {
         ({TextPainter painter, double width, TextStyle style, String text})
       >{};
   void update(PaintedWordLine next, TextStyle nextStyle) {
+    final same =
+        identical(next.words, config.words) &&
+        identical(next.metrics, config.metrics) &&
+        next.fontSize == config.fontSize &&
+        next.height == config.height &&
+        next.inkHeight == config.inkHeight &&
+        next.baseline == config.baseline &&
+        next.centered == config.centered &&
+        nextStyle == style;
     style = nextStyle;
     config = next;
-    markNeedsLayout();
+    if (!same) markNeedsLayout();
   }
+
+  void _release(
+    ({TextPainter painter, double width, TextStyle style, String text}) p,
+  ) => paragraphPool.release(p.text, p.style, p.width, p.painter);
 
   @override
   void performLayout() {
@@ -501,11 +607,8 @@ class _LineRender extends RenderBox {
           cached.width != widths[i] ||
           cached.style != style ||
           cached.text != text) {
-        cached?.painter.dispose();
-        final painter = TextPainter(
-          text: TextSpan(text: text, style: style),
-          textDirection: TextDirection.rtl,
-        )..layout(maxWidth: widths[i]);
+        if (cached != null) _release(cached);
+        final painter = paragraphPool.acquire(text, style, widths[i]);
         cached = (painter: painter, width: widths[i], style: style, text: text);
         _paragraphs[id] = cached;
       }
@@ -549,7 +652,7 @@ class _LineRender extends RenderBox {
     }
     _paragraphs.removeWhere((id, p) {
       if (retained.contains(id)) return false;
-      p.painter.dispose();
+      _release(p);
       return true;
     });
   }
@@ -558,9 +661,8 @@ class _LineRender extends RenderBox {
   void paint(PaintingContext context, Offset offset) {}
   @override
   void dispose() {
-    for (final p in _paragraphs.values) {
-      p.painter.dispose();
-    }
+    _paragraphs.values.forEach(_release);
+    _paragraphs.clear();
     super.dispose();
   }
 }

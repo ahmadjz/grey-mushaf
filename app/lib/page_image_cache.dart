@@ -39,7 +39,7 @@ class PageImageCache {
         _crowdedOut.contains(key)) {
       return false;
     }
-    remove(key);
+    _images.remove(key)?.dispose();
     while (_images.isNotEmpty &&
         (this.bytes + bytes > maxBytes || _images.length >= maxEntries)) {
       final oldest = _images.keys.first;

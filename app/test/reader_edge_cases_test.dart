@@ -25,7 +25,7 @@ void main() {
 
   for (final first in [1, 49]) {
     testWidgets(
-      'drag across spread $first|${first + 1} gutter counts each word once',
+      'moving across spread $first|${first + 1} gutter after a long-press reveals nothing',
       (tester) async {
         view(tester, spread: true);
         final store = MemoryRevealStore();
@@ -95,16 +95,16 @@ void main() {
           tester.widget<PageView>(find.byType(PageView)).physics,
           isNot(isA<NeverScrollableScrollPhysics>()),
         );
-        expect(store.states.length, greaterThanOrEqualTo(2));
-        for (final state in store.states.values) {
-          expect(state, (black: true, count: 1));
-        }
+        expect(store.states, isEmpty);
         for (final word in [r, l]) {
           expect(
             testSemantics(tester, WordTarget(word.id)).label,
-            contains('; revealed; reveals 1'),
+            contains('; unrevealed; reveals 0'),
           );
-          expect(await wordColor(tester, WordTarget(word.id)), Colors.black);
+          expect(
+            await wordColor(tester, WordTarget(word.id)),
+            const Color(0xffb0b0b0),
+          );
         }
         expect(find.byKey(ValueKey('page-$first')), findsOneWidget);
         expect(find.byKey(ValueKey('page-${first + 1}')), findsOneWidget);

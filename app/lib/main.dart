@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import 'flat_ink.dart';
@@ -407,7 +408,6 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   final _pageInk = <int, PageInkController>{};
   final _wordPages = <String, int>{};
   final _bundleRevision = ValueNotifier<int>(0);
-  final _visited = <int>{};
   final _viewport = GlobalKey();
   final _metrics = <int, ({double width, double left, double right})>{};
   final _headings = <String, HeadingInk>{};
@@ -537,6 +537,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       if (mounted && loaded) {
         _measureBundle();
         _bundleRevision.value++;
+        if (!_scrolling) _prewarm();
       }
     } catch (_) {
       _showLoadError(
@@ -548,11 +549,16 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   bool _dragging = false;
   bool? _spread;
   int _selected = 0;
-  Offset? _previous;
+  int? _pendingPrefetch;
+  int _warmGeneration = 0;
+  Timer? _warmTimer;
+  TextStyle? _baseTextStyle;
+  double? _wordSize;
   PageController _controller = PageController();
 
   @override
   void dispose() {
+    _warmTimer?.cancel();
     widget.bundle?.cancelPendingLoads();
     WidgetsBinding.instance.removeObserver(this);
     _settingFailures.dispose();
@@ -594,37 +600,74 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     return nearestWord;
   }
 
-  void _revealAt(Offset point) {
-    final id = _wordAt(point);
-    if (id != null && _visited.add(id)) _enqueue(id, true);
-  }
-
   void _start(LongPressStartDetails details) {
-    setState(() {
-      _dragging = true;
-      _visited.clear();
-      _previous = details.globalPosition;
-      _revealAt(details.globalPosition);
-    });
-  }
-
-  void _move(LongPressMoveUpdateDetails details) {
-    final start = _previous ?? details.globalPosition;
-    final end = details.globalPosition;
-    final steps = math.max(1, ((end - start).distance / 2).ceil());
-    for (var i = 1; i <= steps; i++) {
-      _revealAt(Offset.lerp(start, end, i / steps)!);
-    }
-    _previous = end;
+    setState(() => _dragging = true);
+    final id = _wordAt(details.globalPosition);
+    if (id != null) _enqueue(id, true);
   }
 
   void _end() {
     if (!_dragging) return;
-    setState(() {
-      _dragging = false;
-      _previous = null;
-      _visited.clear();
-    });
+    setState(() => _dragging = false);
+  }
+
+  bool get _scrolling =>
+      _controller.hasClients && _controller.position.isScrollingNotifier.value;
+
+  void _afterScroll() {
+    final pending = _pendingPrefetch;
+    _pendingPrefetch = null;
+    if (pending != null && widget.bundle != null) {
+      unawaited(_prefetch(pending));
+    }
+    _prewarm();
+  }
+
+  void _prewarm() {
+    final base = _baseTextStyle, size = _wordSize;
+    if (!mounted || base == null || size == null || widget.pages.isEmpty) {
+      return;
+    }
+    final generation = ++_warmGeneration;
+    final current = widget.pages[_selected]['page'] as int;
+    final odd = current.isOdd ? current : current - 1;
+    final wanted = _spread == true
+        ? [odd - 2, odd - 1, odd + 2, odd + 3]
+        : [current - 1, current + 1];
+    final work = <({List words, TextStyle style})>[
+      for (final page in widget.pages)
+        if (wanted.contains(page['page']) && page['lines'] != null)
+          for (final line in page['lines'] as List)
+            if (line['type'] == 'ayah')
+              (
+                words: line['words'] as List,
+                style: base.merge(wordStyle(page['page'] as int, size)),
+              ),
+    ];
+    var next = 0;
+    void step() {
+      if (generation != _warmGeneration || !mounted || _scrolling) return;
+      if (next == work.length) return;
+      final scheduler = SchedulerBinding.instance;
+      if (scheduler.transientCallbackCount > 0) {
+        scheduler.addPostFrameCallback((_) => step());
+        return;
+      }
+      final line = work[next++];
+      for (final word in line.words) {
+        final metric = _metrics[word['id']];
+        if (metric == null) continue;
+        paragraphPool.prewarm(
+          word['text'] as String,
+          line.style,
+          metric.width * size,
+        );
+      }
+      _warmTimer = Timer(Duration.zero, step);
+    }
+
+    _warmTimer?.cancel();
+    _warmTimer = Timer(Duration.zero, step);
   }
 
   @override
@@ -705,11 +748,18 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                   // Reserve number clearance only when the last line's spare ink
                   // space cannot contain it. This bound keeps one font size throughout.
                   final text = _textSize(_contentWidth, (pageHeight - 14) / 15);
+                  final firstLayout = _wordSize == null;
+                  _baseTextStyle = DefaultTextStyle.of(context).style;
+                  _wordSize = text.size;
+                  if (firstLayout) {
+                    WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => _prewarm(),
+                    );
+                  }
                   return GestureDetector(
                     key: _viewport,
                     behavior: HitTestBehavior.opaque,
                     onLongPressStart: _start,
-                    onLongPressMoveUpdate: _move,
                     onLongPressEnd: (_) => _end(),
                     onLongPressCancel: _end,
                     onTapUp: (details) {
@@ -723,58 +773,65 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         _enqueue(id, false);
                       }
                     },
-                    child: PageView.builder(
-                      key: ValueKey(spread),
-                      controller: _controller,
-                      reverse: true,
-                      physics: _dragging
-                          ? const NeverScrollableScrollPhysics()
-                          : widget.bundle == null
-                          ? const PageScrollPhysics()
-                          : LoadedPagePhysics(
-                              first: () =>
-                                  (widget.bundle!.loadedNumbers.first - 1) ~/
-                                  (spread ? 2 : 1),
-                              last: () =>
-                                  (widget.bundle!.loadedNumbers.last - 1) ~/
-                                  (spread ? 2 : 1),
-                            ),
-                      itemCount: groups.length,
-                      onPageChanged: (index) {
-                        debugPrint(
-                          'READER_PAGE ${groups[index].first['page']}',
-                        );
-                        final controller = _controller;
-                        if (controller is LoadedPageController) {
-                          controller.cancelPendingNavigation();
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        if (notification.depth != 0) return false;
+                        if (notification is ScrollStartNotification) {
+                          _warmGeneration++;
+                        } else if (notification is ScrollEndNotification) {
+                          _afterScroll();
                         }
-                        _selected = spread ? index * 2 : index;
-                        final bundle = widget.bundle;
-                        if (bundle != null) {
-                          unawaited(
-                            _prefetch(groups[index].first['page'] as int),
-                          );
-                        }
+                        return false;
                       },
-                      itemBuilder: (context, index) => Row(
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          for (final page in groups[index])
-                            Expanded(
-                              child: _LoadedReaderPage(
-                                revision: _bundleRevision,
-                                page: () => widget.pages.firstWhere(
-                                  (p) => p['page'] == page['page'],
-                                ),
-                                buildPage: (page) => _page(
-                                  page,
-                                  text.size,
-                                  text.width,
-                                  pageHeight,
+                      child: PageView.builder(
+                        key: ValueKey(spread),
+                        controller: _controller,
+                        reverse: true,
+                        physics: _dragging
+                            ? const NeverScrollableScrollPhysics()
+                            : widget.bundle == null
+                            ? const PageScrollPhysics()
+                            : LoadedPagePhysics(
+                                first: () =>
+                                    (widget.bundle!.loadedNumbers.first - 1) ~/
+                                    (spread ? 2 : 1),
+                                last: () =>
+                                    (widget.bundle!.loadedNumbers.last - 1) ~/
+                                    (spread ? 2 : 1),
+                              ),
+                        itemCount: groups.length,
+                        onPageChanged: (index) {
+                          debugPrint(
+                            'READER_PAGE ${groups[index].first['page']}',
+                          );
+                          final controller = _controller;
+                          if (controller is LoadedPageController) {
+                            controller.cancelPendingNavigation();
+                          }
+                          _selected = spread ? index * 2 : index;
+                          _pendingPrefetch = groups[index].first['page'] as int;
+                          if (!_scrolling) _afterScroll();
+                        },
+                        itemBuilder: (context, index) => Row(
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            for (final page in groups[index])
+                              Expanded(
+                                child: _LoadedReaderPage(
+                                  revision: _bundleRevision,
+                                  page: () => widget.pages.firstWhere(
+                                    (p) => p['page'] == page['page'],
+                                  ),
+                                  buildPage: (page) => _page(
+                                    page,
+                                    text.size,
+                                    text.width,
+                                    pageHeight,
+                                  ),
                                 ),
                               ),
-                            ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );

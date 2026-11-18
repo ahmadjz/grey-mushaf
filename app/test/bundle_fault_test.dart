@@ -112,7 +112,7 @@ void main() {
         await old.pending;
       });
       await tester.pump();
-      expect(bundle.loadedNumbers, [1, 2, 3, 4]);
+      expect(bundle.loadedNumbers, [1, 2, 3, 4, 5, 6]);
       expect(find.byKey(const ValueKey('page-1')), findsOneWidget);
       expect(find.byKey(const ValueKey('page-2')), findsOneWidget);
       expect(find.byType(CircularProgressIndicator), findsNothing);
@@ -222,16 +222,17 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    final gate = assets.pauses['5.json'] = Completer<void>();
-    assets.failOnce.add('5.json');
+    final gate = assets.pauses['7.json'] = Completer<void>();
+    assets.failOnce.add('7.json');
     await tester.drag(find.byType(PageView), const Offset(411, 0));
     await tester.pumpAndSettle();
     await tester.drag(find.byType(PageView), const Offset(411, 0));
+    await tester.pumpAndSettle();
     await tester.runAsync(() async {
-      await assets.reached('5.json');
-      await assets.finished('6.json');
+      await assets.reached('7.json');
+      await assets.finished('8.json');
       gate.complete();
-      await assets.finished('5.json');
+      await assets.finished('7.json');
     });
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('page-3')), findsOneWidget);
@@ -254,12 +255,12 @@ void main() {
     );
     expect(find.byKey(const ValueKey('page-21')), findsOneWidget);
     await tester.runAsync(() async {
-      controller.jumpToPage(4);
+      controller.jumpToPage(6);
       await controller.pending;
     });
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('page-5')), findsOneWidget);
-    expect(assets.calls['5.json'], 2);
+    expect(find.byKey(const ValueKey('page-7')), findsOneWidget);
+    expect(assets.calls['7.json'], 2);
     expect(tester.takeException(), isNull);
   });
   testWidgets('navigation uses prepared word metrics without runtime shaping', (

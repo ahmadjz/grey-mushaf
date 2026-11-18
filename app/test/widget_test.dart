@@ -375,7 +375,7 @@ void main() {
   );
 
   testWidgets(
-    'drag crosses words and line break once, locks swipe until lift, ordinary swipe then changes page',
+    'long-press reveals one word, moving reveals nothing more, swipe locked until lift',
     (tester) async {
       await mount(tester);
       expect(word(1).exists(tester), isTrue);
@@ -383,14 +383,13 @@ void main() {
       await tester.pump(const Duration(milliseconds: 600));
       await gesture.moveTo(testCenter(tester, word(4)));
       await tester.pump();
-      for (final id in [1, 2, 3, 4]) {
-        expect(status(tester, id), contains('; revealed; reveals 1'));
-      }
       await gesture.moveTo(testCenter(tester, word(6)));
       await gesture.moveTo(testCenter(tester, word(1)));
       await tester.pump();
-      expect(status(tester, 6), contains('; revealed; reveals 1'));
       expect(status(tester, 1), contains('; revealed; reveals 1'));
+      for (final id in [2, 3, 4, 6]) {
+        expect(status(tester, id), contains('; unrevealed; reveals 0'));
+      }
       expect(
         tester.widget<PageView>(find.byType(PageView)).physics,
         isA<NeverScrollableScrollPhysics>(),
@@ -470,13 +469,13 @@ void main() {
     await gesture.moveTo(overhang);
     await tester.pump();
     expect(status(tester, id), contains('; revealed; reveals 2'));
-    expect(status(tester, next), contains('; revealed; reveals 1'));
+    expect(status(tester, next), contains('; unrevealed; reveals 0'));
     await gesture.up();
     await tester.pumpAndSettle();
   });
 
   testWidgets(
-    'empty gutter does nothing; dragging into each page counts once',
+    'empty gutter long-press does nothing, even when the finger then moves onto words',
     (tester) async {
       await mount(tester, landscape: true);
       await tester.drag(find.byType(PageView), const Offset(1000, 0));
@@ -497,8 +496,8 @@ void main() {
       await gesture.moveTo(b.center);
       await gesture.moveTo(a.center);
       await tester.pump();
-      expect(status(tester, leftId), contains('; revealed; reveals 1'));
-      expect(status(tester, rightId), contains('; revealed; reveals 1'));
+      expect(status(tester, leftId), contains('; unrevealed; reveals 0'));
+      expect(status(tester, rightId), contains('; unrevealed; reveals 0'));
       await gesture.up();
       await tester.pumpAndSettle();
     },
@@ -863,7 +862,7 @@ void main() {
   );
 
   testWidgets(
-    'spread drag crosses a line break, locks swiping and counts each word once',
+    'spread long-press reveals one word; moving across a line break locks swiping only',
     (tester) async {
       await mount(tester, landscape: true);
       final controller = tester
@@ -880,9 +879,8 @@ void main() {
       await gesture.moveTo(testCenter(tester, word(to)));
       await gesture.moveTo(testCenter(tester, word(from)));
       await tester.pump();
-      for (final id in [from, to]) {
-        expect(status(tester, id), contains('; revealed; reveals 1'));
-      }
+      expect(status(tester, from), contains('; revealed; reveals 1'));
+      expect(status(tester, to), contains('; unrevealed; reveals 0'));
       expect(controller.page, 1);
       expect(
         tester.widget<PageView>(find.byType(PageView)).physics,

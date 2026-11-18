@@ -17,9 +17,20 @@ void main() {
     () async {
       final bundle = await MushafBundle.open();
       expect(bundle.pages.length, 604);
-      expect(bundle.loadedNumbers, [1, 2, 3, 4]);
+      expect(bundle.loadedNumbers, [1, 2, 3, 4, 5, 6]);
       await bundle.loadNear(187);
-      expect(bundle.loadedNumbers, [185, 186, 187, 188, 189, 190]);
+      expect(bundle.loadedNumbers, [
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+      ]);
       expect(bundle.pages[186]['lines'], isNotEmpty);
       expect(bundle.pages.first['lines'], isNull);
     },

@@ -60,7 +60,7 @@ void main() {
     );
   }
   testWidgets(
-    'failed mid-drag save retains later words until Retry commits each',
+    'failed long-press save keeps the word grey until Retry; moving reveals nothing more',
     (tester) async {
       final store = ControlledStore();
       await tester.pumpWidget(
@@ -92,31 +92,18 @@ void main() {
       await tester.pumpAndSettle();
       await drag.moveTo(testCenter(tester, word(3)));
       await drag.moveTo(testCenter(tester, word(4)));
-      await drag.moveTo(testCenter(tester, word(1)));
       await drag.up();
       await tester.pumpAndSettle();
-      expect(
-        store.calls.length,
-        1,
-        reason: 'later words wait for explicit Retry',
-      );
+      expect(store.calls.length, 1);
       expectCommittedThrough(0);
       await tapTarget(tester, find.text('Retry'));
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(store.calls[1].uuid, store.calls[0].uuid);
-      for (var id = 1; id <= 4; id++) {
-        expect(store.calls.length, id + 1, reason: 'word $id must be queued');
-        expect(store.calls.last.key, wordKey('1:1:$id'));
-        expectCommittedThrough(id - 1);
-        store.pending!.complete();
-        await tester.pumpAndSettle();
-        expectCommittedThrough(id);
-      }
-      expect(
-        store.calls.length,
-        5,
-        reason: 'one retry, no duplicate from revisit',
-      );
+      expect(store.calls.last.key, wordKey('1:1:1'));
+      store.pending!.complete();
+      await tester.pumpAndSettle();
+      expectCommittedThrough(1);
+      expect(store.calls.length, 2);
     },
   );
   testWidgets(

@@ -198,6 +198,57 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     landscape. Further pages load after a swipe finishes, not during it. Showing the bars, a reveal
     or a slider move only redraws what changed. Nothing on the page looks different (R40).
 
+## R45–R57 (2026-11-18, owner)
+
+45. **Page-turn arrows.** Two faint round chevron buttons sit at the bottom corners, always shown,
+    with an on/off switch in Settings. The left arrow goes to the next page, the right to the
+    previous one; in landscape they move a whole spread. A long-press on an arrow lets the owner
+    drag it anywhere, and the spot is remembered per orientation. A tap on an arrow never reveals a
+    word or toggles the bars.
+46. **Marks.** A word carries up to three marks at once: visible (black, R2), a line under it
+    (single or double) and a shape around it (rectangle or circle). The line and the shape each
+    keep their own colour. Only "visible" counts toward the reveal count (R6).
+47. **Tools.** The toolbar's five tools are on/off switches sharing one active colour, and one
+    long-press applies every active tool. A mark the word already has is left as it is, even in
+    another colour (to change it, remove it and apply again). A single line on a double-lined word,
+    or a circle on a boxed word, replaces the old one (Claude's default).
+48. **Tap on a marked word.** A word that is only visible turns grey at once (R3). A word with a
+    line or shape shows a small box with a checkbox per mark and "Clear all".
+49. **Colours:** six fixed ones: red, blue, green, orange, purple, and black (white in dark mode).
+50. **The PDF export (R7) shows every mark.**
+51. **Floating toolbar,** like Xiaomi's quick ball: a faint circle showing the active tool in the
+    active colour. It can be dragged anywhere, tucks half away at a screen edge, and can be pinned
+    so it stays fixed. A tap opens a strip with the five tools, the colour, show/hide the top bar
+    and hide the toolbar; once hidden it comes back from the top bar menu. A tap on empty space
+    still toggles the bars (R29).
+52. **Top bar,** like the reference app: a back arrow to the surah list; the surah name with
+    "صفحة ٢١٦، جزء ١١" under it; a bookmark icon; and a ⋮ menu with search, the dark mode switch,
+    quick jump and Settings. It covers the status bar and the full width. No translation or audio
+    (R9).
+53. **Bookmarks:** the icon saves or removes the current page, any number of pages, listed on their
+    own bookmarks screen.
+54. **Quick jump:** a dialog that takes a page number, or a surah and ayah, like the reference app.
+55. **Search:** surah name, page and juz, plus text search from the QUL word text the owner
+    downloads (Claude's default; the owner had no preference).
+56. **Web, not native desktop, for now.** A web build on the VPS, usable only by users signed in with
+    a PocketBase account (R11). With a mouse, holding the button is a long-press, and the wheel or
+    arrow keys turn pages.
+57. **Order:** (1) top bar, borders and arrows; (2) marks and the floating toolbar; (3) surah list,
+    bookmarks, quick jump and search; then the phase 1 and 2 work still open (B/W mode, accounts
+    and sync, export), and the web build once sign-in exists.
+
+## R58–R60 (2026-11-18, owner)
+
+58. **Sync runs by itself.** Every change saves on the device first (R10). Once signed in, the app
+    syncs on launch and whenever the connection returns. Settings has a "Sync now" button showing
+    the last sync time and how many changes are waiting.
+59. **Borders,** like the reference app: a thin double line down the page's outer edge. In portrait
+    that is the right edge on odd pages and the left edge on even pages; in landscape both outer
+    edges and the spine.
+60. **Page header line:** a thin line at the top of each page with "الجزء ١١" on the right and the
+    surah name on the left, in portrait and landscape. In landscape it shrinks the text by a few
+    percent; this narrows R19 there.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

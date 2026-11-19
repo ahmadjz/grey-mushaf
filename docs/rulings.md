@@ -260,6 +260,24 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     On screens shorter than today's phones (16:9 phones, the Boox) the header line shrinks the
     portrait text by about 2% too; taller phones keep today's size.
 
+## R62 (2026-11-19, Claude's defaults, the owner may overrule)
+
+62. **Marks and floating toolbar details for run 2 of R57.** The tools are visible, single line,
+    double line, rectangle and circle. Single and double line exclude each other, as do rectangle
+    and circle, so turning one on turns its partner off. On first launch only "visible" is on and
+    the colour is red, so a long-press works as before; with every tool off a long-press does
+    nothing. The line sits just under the word and the shape around it, thin enough not to hide
+    the letters. In the tap box, unticking a mark removes it at once (it can be ticked back while
+    the box is open), "Clear all" removes every mark including visible and closes the box, and the
+    box closes by itself once nothing is left. A grey word with no marks ignores a tap, as before.
+    The quick ball sits on the right edge, half tucked, at first launch. It stays where it is
+    dropped and tucks half away only when dropped near the left or right edge; pinned, it cannot
+    be dragged. With several tools on, it shows the one turned on last, with a small count. The
+    strip also holds the pin switch. The tools, colour, ball spot, pin and hidden state are
+    remembered on the device and not synced. The five colours other than black stay the same in
+    dark mode. "Couldn't save" and "Couldn't load page" messages sit between the bottom arrows,
+    and a failed save of an arrow's spot offers Retry.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

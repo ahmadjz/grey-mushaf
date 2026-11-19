@@ -327,10 +327,18 @@ class SqliteRevealStore
         return before;
       }
       final style = action.mark?.style.name, color = action.mark?.color.name;
+      final latest =
+          (await txn.rawQuery(
+                'SELECT MAX(created_at) AS latest FROM mark_actions WHERE word_key = ? AND kind = ?',
+                [action.key, kind],
+              )).single['latest']
+              as int?;
       await txn.insert('mark_actions', {
         'action_uuid': action.uuid,
         'device_id': deviceId,
-        'created_at': action.createdAt,
+        'created_at': latest != null && latest >= action.createdAt
+            ? latest + 1
+            : action.createdAt,
         'word_key': action.key,
         'kind': kind,
         'style': style,

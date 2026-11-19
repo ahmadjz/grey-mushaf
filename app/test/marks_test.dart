@@ -24,15 +24,20 @@ class MemoryToolbar implements ToolbarSettings {
 
 class FailingMarkStore extends MemoryRevealStore {
   final failOn = <MarkKind>{};
+  bool failReveal = false;
   final saved = <Object>[];
+  final tried = <String>[];
   @override
   Future<void> save(WordAction action) async {
+    tried.add(action.uuid);
+    if (failReveal) throw StateError('injected');
     await super.save(action);
     saved.add(action);
   }
 
   @override
   Future<void> saveMark(MarkAction action) async {
+    tried.add(action.uuid);
     if (failOn.contains(action.kind)) throw StateError('injected');
     await super.saveMark(action);
     saved.add(action);
@@ -264,12 +269,25 @@ void main() {
       MarkAction,
       MarkAction,
     ]);
+    final marks = store.saved.whereType<MarkAction>().toList();
+    expect(marks.map((a) => a.kind), [MarkKind.line, MarkKind.shape]);
+    expect(store.tried, [
+      store.saved.first is WordAction
+          ? (store.saved.first as WordAction).uuid
+          : '',
+      marks.first.uuid,
+      marks.first.uuid,
+      marks.last.uuid,
+    ]);
   });
 
   test('R49: black marks paint white in dark mode, others keep colour', () {
     expect(MarkColor.black.paint(Colors.white), Colors.white);
     expect(MarkColor.black.paint(Colors.black), Colors.black);
-    expect(MarkColor.red.paint(Colors.white), MarkColor.red.paint(Colors.black));
+    expect(
+      MarkColor.red.paint(Colors.white),
+      MarkColor.red.paint(Colors.black),
+    );
     expect(MarkColor.values, hasLength(6));
   });
 
@@ -291,9 +309,7 @@ void main() {
     ]);
     expect(opened.toolbar.toolbar.color, MarkColor.purple);
     expect(
-      tester
-          .getSemantics(find.byKey(const ValueKey('toolbar-ball')))
-          .value,
+      tester.getSemantics(find.byKey(const ValueKey('toolbar-ball'))).value,
       'Visible, Double line',
     );
     await tester.tapAt(const Offset(5, 5));
@@ -367,7 +383,10 @@ void main() {
     expect(find.text("Couldn't save toolbar"), findsOneWidget);
     final message = tester.getRect(
       find
-          .descendant(of: find.byType(SnackBar), matching: find.byType(Material))
+          .descendant(
+            of: find.byType(SnackBar),
+            matching: find.byType(Material),
+          )
           .first,
     );
     for (final arrow in ['arrow-next', 'arrow-previous']) {
@@ -406,6 +425,146 @@ void main() {
     await tester.pumpAndSettle();
     expect(settings.arrowSpots, hasLength(1));
   });
+
+  testWidgets('R24/R62: a grey word whose reveal failed ignores a tap', (
+    tester,
+  ) async {
+    final store = FailingMarkStore()..failReveal = true;
+    await open(tester, store: store);
+    await longPressTarget(tester, word);
+    await tester.pumpAndSettle();
+    expect(find.text("Couldn't save"), findsOneWidget);
+    await tapTarget(tester, word);
+    await tester.pumpAndSettle();
+    store.failReveal = false;
+    await tester.tap(find.text('Retry'));
+    await tester.pumpAndSettle();
+    expect(label(tester), endsWith('; revealed; reveals 1'));
+    expect(store.tried, hasLength(2));
+  });
+
+  testWidgets('R48: the box follows a slow untick and allows a retick', (
+    tester,
+  ) async {
+    final store = _GatedStore();
+    final opened = await open(
+      tester,
+      store: store,
+      prefs: const ToolbarPrefs(tools: [MarkTool.singleLine, MarkTool.circle]),
+    );
+    final k = key(tester);
+    store.open();
+    await longPressTarget(tester, word);
+    await tester.pumpAndSettle();
+    store.close();
+    await tapTarget(tester, word);
+    await tester.pumpAndSettle();
+    final line = find.byKey(const ValueKey('mark-row-Single line'));
+    await tester.tap(line);
+    await tester.pump();
+    expect(tester.widget<CheckboxListTile>(line).value, isFalse);
+    await tester.tap(line);
+    await tester.pump();
+    expect(tester.widget<CheckboxListTile>(line).value, isTrue);
+    store.open();
+    await tester.pumpAndSettle();
+    expect(opened.store.marks(k).line, red);
+    expect(find.byKey(const ValueKey('mark-box')), findsOneWidget);
+  });
+
+  testWidgets('R48: dismissing the box during a slow save keeps the reader', (
+    tester,
+  ) async {
+    final store = _GatedStore();
+    await open(
+      tester,
+      store: store,
+      prefs: const ToolbarPrefs(tools: [MarkTool.singleLine]),
+    );
+    store.open();
+    await longPressTarget(tester, word);
+    await tester.pumpAndSettle();
+    store.close();
+    await tapTarget(tester, word);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('mark-row-Single line')));
+    await tester.pump();
+    await tester.tapAt(const Offset(5, 5));
+    await tester.pump(const Duration(milliseconds: 50));
+    store.open();
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('mark-box')), findsNothing);
+    expect(find.byType(Reader), findsOneWidget);
+  });
+
+  Future<int> countNear(WidgetTester tester, Color colour) async {
+    final pixels = await wordPixels(tester, word);
+    final found = word.resolve(tester);
+    final box = found.word.box.inflate(found.word.fontSize * .3);
+    final s = pixels.scale;
+    var count = 0;
+    for (var y = (box.top * s).floor(); y < (box.bottom * s).ceil(); y++) {
+      for (var x = (box.left * s).floor(); x < (box.right * s).ceil(); x++) {
+        if (x < 0 || y < 0 || x >= pixels.width || y >= pixels.height) continue;
+        final i = (y * pixels.width + x) * 4, p = pixels.rgba;
+        if ((p[i] - (colour.r * 255).round()).abs() < 24 &&
+            (p[i + 1] - (colour.g * 255).round()).abs() < 24 &&
+            (p[i + 2] - (colour.b * 255).round()).abs() < 24) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  for (final spread in [false, true]) {
+    testWidgets('R46/R49: marks paint into the cached page '
+        '${spread ? 'on a spread' : 'in portrait'}, follow changes and '
+        'turn black to white in dark mode', (tester) async {
+      if (spread) {
+        tester.view.physicalSize = const Size(1600, 800);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+      }
+      final store = MemoryRevealStore();
+      await open(tester, store: store);
+      final k = key(tester);
+      final model = word.resolve(tester).model;
+      await waitForCachedInk(tester, word);
+      final redColour = MarkColor.red.paint(Colors.black);
+      final blueColour = MarkColor.blue.paint(Colors.black);
+      expect(await countNear(tester, redColour), 0);
+
+      Future<void> set(WordMarks marks) async {
+        store.wordMarks[k] = marks;
+        model.changed();
+        await tester.pumpAndSettle();
+        await waitForCachedInk(tester, word);
+      }
+
+      await set((line: red, shape: null));
+      final single = await countNear(tester, redColour);
+      expect(single, greaterThan(0));
+      await set((
+        line: (style: MarkStyle.doubleLine, color: MarkColor.blue),
+        shape: null,
+      ));
+      expect(await countNear(tester, redColour), 0);
+      expect(await countNear(tester, blueColour), greaterThan(single));
+      await set((
+        line: null,
+        shape: (style: MarkStyle.circle, color: MarkColor.black),
+      ));
+      expect(await countNear(tester, blueColour), 0);
+      expect(await countNear(tester, Colors.black), greaterThan(0));
+      await openMenuItem(tester, 'Dark mode');
+      await waitForCachedInk(tester, word);
+      expect(await countNear(tester, Colors.white), greaterThan(0));
+      await set(noMarks);
+      expect(await countNear(tester, Colors.white), 0);
+    });
+  }
 
   test('R62: toolbar prefs keep order, drop partners and survive bad data', () {
     const prefs = ToolbarPrefs(
@@ -459,6 +618,23 @@ class _PausedStore extends MemoryRevealStore {
   Future<void> saveMark(MarkAction action) async {
     markCalls++;
     await gate.future;
+    await super.saveMark(action);
+  }
+}
+
+class _GatedStore extends MemoryRevealStore {
+  Completer<void>? _gate;
+  void open() {
+    _gate?.complete();
+    _gate = null;
+  }
+
+  void close() => _gate = Completer<void>();
+
+  @override
+  Future<void> saveMark(MarkAction action) async {
+    final gate = _gate;
+    if (gate != null) await gate.future;
     await super.saveMark(action);
   }
 }

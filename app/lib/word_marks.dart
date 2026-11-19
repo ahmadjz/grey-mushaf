@@ -41,9 +41,9 @@ extension WordMarksAccess on WordMarks {
 }
 
 class MarkAction {
-  MarkAction(this.key, this.kind, this.mark)
+  MarkAction(this.key, this.kind, this.mark, {int? createdAt})
     : uuid = const Uuid().v4(),
-      createdAt = DateTime.now().toUtc().millisecondsSinceEpoch {
+      createdAt = createdAt ?? DateTime.now().toUtc().millisecondsSinceEpoch {
     if (mark != null && mark!.style.kind != kind) {
       throw ArgumentError('${mark!.style} is not a $kind mark');
     }

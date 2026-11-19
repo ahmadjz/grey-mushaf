@@ -1,9 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:greymushaf/main.dart';
 import 'package:greymushaf/reveal_store.dart';
 import 'package:greymushaf/word_marks.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
+
+import '../test/word_target.dart';
 
 const _revealTables = [
   'local_metadata',
@@ -238,5 +242,166 @@ void main() {
     expect(store.toolbar.pinned, isTrue);
     expect(store.toolbar.hidden, isTrue);
     await store.close();
+  });
+
+  testWidgets('marks made in the reader survive a restart through SQLite', (
+    tester,
+  ) async {
+    final filename = path.join(await getDatabasesPath(), 'marks-reader.db');
+    await deleteDatabase(filename);
+    addTearDown(() => deleteDatabase(filename));
+    final pages = await loadPages();
+    var store = await SqliteRevealStore.open(databasePath: filename);
+    await store.saveToolbar(
+      const ToolbarPrefs(
+        tools: [MarkTool.visible, MarkTool.doubleLine, MarkTool.rectangle],
+        color: MarkColor.green,
+      ),
+    );
+    Future<void> show(SqliteRevealStore store) async {
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Reader(
+            pages: pages,
+            store: store,
+            settings: store,
+            toolbarSettings: store,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    const word = WordTarget(3);
+    await show(store);
+    await longPressTarget(tester, word);
+    for (
+      var i = 0;
+      i < 50 && !testSemantics(tester, word).label.contains('rectangle');
+      i++
+    ) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    await tester.pumpWidget(const SizedBox());
+    await store.close();
+
+    store = await SqliteRevealStore.open(databasePath: filename);
+    await show(store);
+    expect(
+      testSemantics(tester, word).label,
+      endsWith('; revealed; reveals 1; doubleLine green; rectangle green'),
+    );
+    final key = wordKey(
+      testSemantics(tester, word).label.split(';').first.trim(),
+    );
+    await tapTarget(tester, word);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('mark-row-Double line')));
+    for (
+      var i = 0;
+      i < 50 &&
+          store.marks(key).line !=
+              null;
+      i++
+    ) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    await tester.pumpWidget(const SizedBox());
+    await store.close();
+
+    store = await SqliteRevealStore.open(databasePath: filename);
+    await show(store);
+    expect(
+      testSemantics(tester, word).label,
+      endsWith('; revealed; reveals 1; rectangle green'),
+    );
+    await tester.pumpWidget(const SizedBox());
+    final db = await openDatabase(filename);
+    final tombstones = await db.query('word_marks', where: 'style IS NULL');
+    expect(tombstones, hasLength(1));
+    expect(tombstones.single['kind'], 'line');
+    await db.close();
+    await store.close();
+  });
+
+  testWidgets('a failed mark write leaves no row and no projection', (
+    tester,
+  ) async {
+    final filename = path.join(await getDatabasesPath(), 'marks-txn.db');
+    await deleteDatabase(filename);
+    addTearDown(() => deleteDatabase(filename));
+    final store = await SqliteRevealStore.open(databasePath: filename);
+    final db = await openDatabase(filename);
+    await db.execute(
+      "CREATE TRIGGER fail_marks BEFORE INSERT ON word_marks BEGIN SELECT RAISE(ABORT, 'proof failure'); END",
+    );
+    final key = wordKey('1:1:2');
+    final action = MarkAction(key, MarkKind.shape, (
+      style: MarkStyle.rectangle,
+      color: MarkColor.orange,
+    ));
+    await expectLater(
+      store.saveMark(action),
+      throwsA(isA<DatabaseException>()),
+    );
+    expect(store.marks(key), noMarks);
+    expect(await db.query('mark_actions'), isEmpty);
+    await db.execute('DROP TRIGGER fail_marks');
+    await store.saveMark(action);
+    expect(store.marks(key).shape?.color, MarkColor.orange);
+    expect((await db.query('mark_actions')).single['action_uuid'], action.uuid);
+    await db.close();
+    await store.close();
+  });
+
+  testWidgets('a removal after a clock step back still sorts last', (
+    tester,
+  ) async {
+    final filename = path.join(await getDatabasesPath(), 'marks-clock.db');
+    await deleteDatabase(filename);
+    addTearDown(() => deleteDatabase(filename));
+    final store = await SqliteRevealStore.open(databasePath: filename);
+    final key = wordKey('1:1:3');
+    final add = MarkAction(key, MarkKind.line, (
+      style: MarkStyle.singleLine,
+      color: MarkColor.red,
+    ), createdAt: 5000);
+    final remove = MarkAction(key, MarkKind.line, null, createdAt: 1000);
+    await store.saveMark(add);
+    await store.saveMark(remove);
+    final db = await openDatabase(filename);
+    final rows = await db.query('mark_actions', orderBy: 'local_seq');
+    expect(rows.map((r) => r['created_at']), [5000, 5001]);
+    expect(rows.map((r) => r['device_id']).toSet(), {store.deviceId});
+    expect(rows.last['style'], isNull);
+    await db.close();
+    await store.close();
+  });
+
+  testWidgets('a fresh database and an upgraded one share the mark schema', (
+    tester,
+  ) async {
+    final fresh = path.join(await getDatabasesPath(), 'marks-fresh.db');
+    final upgraded = path.join(await getDatabasesPath(), 'marks-upgraded.db');
+    for (final file in [fresh, upgraded]) {
+      await deleteDatabase(file);
+      addTearDown(() => deleteDatabase(file));
+    }
+    await (await SqliteRevealStore.open(databasePath: fresh)).close();
+    await _createVersionOne(upgraded);
+    await (await SqliteRevealStore.open(databasePath: upgraded)).close();
+    Future<List<Map<String, Object?>>> schema(String file) async {
+      final db = await openDatabase(file);
+      final rows = await db.query(
+        'sqlite_master',
+        columns: ['type', 'name', 'sql'],
+        orderBy: 'name',
+      );
+      await db.close();
+      return rows;
+    }
+
+    expect(await schema(upgraded), await schema(fresh));
   });
 }

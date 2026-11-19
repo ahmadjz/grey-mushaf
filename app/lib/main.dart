@@ -131,11 +131,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       contentTextStyle: _darkMode ? const TextStyle(color: Colors.white) : null,
       actionTextColor: _darkMode ? Colors.white : null,
       behavior: SnackBarBehavior.floating,
-      insetPadding: const EdgeInsets.fromLTRB(
-        _arrowSize + 8,
+      insetPadding: EdgeInsets.fromLTRB(
+        _cutout.left + _arrowSize + 8,
         0,
-        _arrowSize + 8,
-        8,
+        _cutout.right + _arrowSize + 8,
+        _cutout.bottom + 8,
       ),
     ),
   );
@@ -467,13 +467,14 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   final _wordKeys = <int, String>{};
   final _pending = Queue<Object>();
-  final _savedRevision = ValueNotifier<int>(0);
+  final _wordRevision = ValueNotifier<int>(0);
   bool _saving = false;
   bool _saveFailed = false;
 
   void _enqueue(Object action) {
     assert(action is WordAction || action is MarkAction);
     _pending.add(action);
+    _wordRevision.value++;
     if (!_saveFailed) unawaited(_savePending());
   }
 
@@ -509,7 +510,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         _pending.removeFirst();
         final key = next is WordAction ? next.key : (next as MarkAction).key;
         if (mounted) _pageInk[_wordPages[key]]?.changed();
-        _savedRevision.value++;
+        _wordRevision.value++;
       }
     } catch (_) {
       _saveFailed = true;
@@ -699,6 +700,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _settingFailures.dispose();
     _shownPage.dispose();
     _bundleRevision.dispose();
+    _wordRevision.dispose();
     for (final ink in _pageInk.values) {
       ink.dispose();
     }
@@ -756,10 +758,13 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   void _tapWord(int id) {
     final key = _wordKeys[id]!;
-    final now = _projected(key);
-    if (!now.marks.isEmpty) {
-      unawaited(_openMarkBox(key, now));
-    } else if (now.black) {
+    final shown = (
+      black: widget.store.state(key).black,
+      marks: widget.store.marks(key),
+    );
+    if (!shown.marks.isEmpty) {
+      unawaited(_openMarkBox(key, shown));
+    } else if (shown.black && _projected(key).black) {
       _enqueue(WordAction(key, false));
     }
   }
@@ -799,18 +804,18 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       builder: (dialogContext) => Theme(
         data: _theme,
         child: ValueListenableBuilder<int>(
-          valueListenable: _savedRevision,
+          valueListenable: _wordRevision,
           builder: (dialogContext, _, _) {
-            final committed = (
-              black: widget.store.state(key).black,
-              marks: widget.store.marks(key),
-            );
+            final intended = _projected(key);
             if (!closing &&
-                !rows.any((row) => row.on(committed)) &&
+                !rows.any((row) => row.on(intended)) &&
                 !_hasPending(key)) {
               closing = true;
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+                if (dialogContext.mounted &&
+                    ModalRoute.of(dialogContext)?.isCurrent == true) {
+                  Navigator.of(dialogContext).pop();
+                }
               });
             }
             return AlertDialog(
@@ -823,7 +828,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                     CheckboxListTile(
                       key: ValueKey('mark-row-${row.label}'),
                       dense: true,
-                      value: row.on(committed),
+                      value: row.on(intended),
                       title: Text(row.label),
                       secondary: row.swatch == null
                           ? null

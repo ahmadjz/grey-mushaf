@@ -13,6 +13,15 @@ import 'memory_reveal_store.dart';
 
 class TestSettings implements ReaderSettings {
   @override
+  bool arrowsShown = true;
+  @override
+  final arrowSpots = <String, Offset>{};
+  @override
+  Future<void> saveArrowsShown(bool shown) async => arrowsShown = shown;
+  @override
+  Future<void> saveArrowSpot(String key, Offset spot) async =>
+      arrowSpots[key] = spot;
+  @override
   int greyLevel = 176;
   @override
   int darkLevel = 80;
@@ -80,7 +89,7 @@ void main() {
       expect(calls, [false]);
       await tester.tapAt(const Offset(3, 450));
       await tester.pumpAndSettle();
-      expect(find.text('Settings'), findsOneWidget);
+      expect(find.byKey(const ValueKey('top-bar')), findsOneWidget);
       expect(calls.last, true);
       tester.view.padding = const FakeViewPadding(top: 24, bottom: 24);
       await tester.pumpAndSettle();
@@ -102,7 +111,7 @@ void main() {
       );
       await tester.tapAt(const Offset(3, 450));
       await tester.pumpAndSettle();
-      expect(find.text('Settings'), findsNothing);
+      expect(find.byKey(const ValueKey('top-bar')), findsNothing);
       expect(calls.last, false);
       expect(testRect(tester, word), before);
     },
@@ -125,9 +134,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tapAt(const Offset(3, 450));
     await tester.pumpAndSettle();
-    expect(find.text('Settings'), findsOneWidget);
-    await tapTarget(tester, find.text('Settings'));
-    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('top-bar')), findsOneWidget);
+    await openMenuItem(tester, 'Settings');
     final word = WordTarget.key(const ValueKey('word-1'));
     final before = testRect(tester, word);
     final slider = tester.widget<Slider>(find.byType(Slider));

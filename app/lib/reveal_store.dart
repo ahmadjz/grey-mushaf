@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'reader_settings.dart';
 
 import 'package:path/path.dart' as path;
@@ -28,7 +30,39 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
     this._states,
     this._greyLevel,
     this._darkLevel,
+    this._arrowsShown,
+    this._arrowSpots,
   );
+  bool _arrowsShown;
+  final Map<String, Offset> _arrowSpots;
+  @override
+  bool get arrowsShown => _arrowsShown;
+  @override
+  Map<String, Offset> get arrowSpots => Map.unmodifiable(_arrowSpots);
+
+  @override
+  Future<void> saveArrowsShown(bool shown) async {
+    await _db.insert('local_metadata', {
+      'key': 'reader_arrows_shown',
+      'value': shown ? '1' : '0',
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    _arrowsShown = shown;
+  }
+
+  @override
+  Future<void> saveArrowSpot(String key, Offset spot) async {
+    if (spot.dx < 0 || spot.dx > 1 || spot.dy < 0 || spot.dy > 1) {
+      throw RangeError('Arrow spot $spot is outside the screen');
+    }
+    await _db.insert('local_metadata', {
+      'key': '$_arrowSpotPrefix$key',
+      'value': '${spot.dx},${spot.dy}',
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    _arrowSpots[key] = spot;
+  }
+
+  static const _arrowSpotPrefix = 'reader_arrow_spot_';
+
   int _greyLevel;
   int _darkLevel;
   @override
@@ -140,7 +174,37 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
       final dark = darkParsed != null && darkParsed >= 32 && darkParsed <= 128
           ? darkParsed
           : 80;
-      return SqliteRevealStore._(db, device, states, grey, dark);
+      final arrowsShown =
+          (await db.query(
+            'local_metadata',
+            where: 'key = ?',
+            whereArgs: ['reader_arrows_shown'],
+          )).firstOrNull?['value'] !=
+          '0';
+      final spots = <String, Offset>{};
+      for (final row in await db.query(
+        'local_metadata',
+        where: 'key LIKE ?',
+        whereArgs: ['$_arrowSpotPrefix%'],
+      )) {
+        final parts = (row['value'] as String).split(',');
+        final x = parts.length == 2 ? double.tryParse(parts[0]) : null;
+        final y = parts.length == 2 ? double.tryParse(parts[1]) : null;
+        if (x == null || y == null || x < 0 || x > 1 || y < 0 || y > 1) {
+          continue;
+        }
+        spots[(row['key'] as String).substring(_arrowSpotPrefix.length)] =
+            Offset(x, y);
+      }
+      return SqliteRevealStore._(
+        db,
+        device,
+        states,
+        grey,
+        dark,
+        arrowsShown,
+        spots,
+      );
     } catch (_) {
       await db.close();
       rethrow;

@@ -162,3 +162,14 @@ Future<void> waitForCachedInk(WidgetTester tester, WordTarget target) async {
   }
   expect(model.hasCachedImage, isTrue);
 }
+
+Future<void> openMenuItem(WidgetTester tester, String label) async {
+  if (find.byKey(const ValueKey('top-bar')).evaluate().isEmpty) {
+    await tester.tapAt(const Offset(3, 450));
+    await tester.pumpAndSettle();
+  }
+  await tester.tap(find.byTooltip('Menu'));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text(label).last);
+  await tester.pumpAndSettle();
+}

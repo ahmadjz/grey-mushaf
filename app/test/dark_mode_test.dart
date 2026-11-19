@@ -13,16 +13,17 @@ import 'package:greymushaf/main.dart';
 import 'memory_reveal_store.dart';
 import 'save_feedback_test.dart' show ControlledStore;
 
-Future<void> openSettings(WidgetTester tester) async {
-  await tester.tapAt(const Offset(3, 450));
-  await tester.pumpAndSettle();
-  await tapTarget(tester, find.text('Settings'));
-  await tester.pumpAndSettle();
-}
+Future<void> openSettings(WidgetTester tester) =>
+    openMenuItem(tester, 'Settings');
 
 Future<void> toggleDark(WidgetTester tester) async {
-  await tapTarget(tester, find.byType(SwitchListTile));
-  await tester.pumpAndSettle();
+  final open = find.byTooltip('Close Settings').evaluate().isNotEmpty;
+  if (open) {
+    await tester.tap(find.byTooltip('Close Settings'));
+    await tester.pumpAndSettle();
+  }
+  await openMenuItem(tester, 'Dark mode');
+  if (open) await openSettings(tester);
 }
 
 void main() {
@@ -82,7 +83,7 @@ void main() {
         expect(tester.widget<Slider>(find.byType(Slider)).min, 32);
         expect(tester.widget<Slider>(find.byType(Slider)).max, 128);
         expect(
-          Theme.of(tester.element(find.text('Dark mode'))).brightness,
+          Theme.of(tester.element(find.text('Settings'))).brightness,
           Brightness.dark,
         );
         for (final value in [32.0, 128.0]) {

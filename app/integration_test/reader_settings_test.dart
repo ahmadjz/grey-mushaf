@@ -42,6 +42,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Menu'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Settings'));
       await tester.pumpAndSettle();
       for (final value in [128.0, 224.0]) {
@@ -58,6 +60,18 @@ void main() {
       store = await SqliteRevealStore.open(databasePath: filename);
       expect(store.greyLevel, 224);
       expect(other.greyLevel, 176);
+      expect(store.arrowsShown, isTrue);
+      expect(store.arrowSpots, isEmpty);
+      await store.saveArrowsShown(false);
+      await store.saveArrowSpot('portrait-next', const Offset(.3, .6));
+      await expectLater(
+        store.saveArrowSpot('landscape-next', const Offset(1.2, .5)),
+        throwsRangeError,
+      );
+      await store.close();
+      store = await SqliteRevealStore.open(databasePath: filename);
+      expect(store.arrowsShown, isFalse);
+      expect(store.arrowSpots, {'portrait-next': const Offset(.3, .6)});
       var db = await openDatabase(filename);
       expect(await db.query('word_actions'), isEmpty);
       expect(await db.query('reveal_events'), isEmpty);

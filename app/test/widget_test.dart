@@ -727,7 +727,7 @@ void main() {
           closeTo(size.width / (size.width > size.height ? 2 : 1), 1),
         );
         expect(first.width, greaterThan(page.width - 9));
-        expect(first.top - page.top, lessThanOrEqualTo(4));
+        expect(first.top - page.top, lessThanOrEqualTo(4 + 14));
         expect(page.bottom - last.bottom, lessThanOrEqualTo(26));
         for (var i = 1; i < 15; i++) {
           final a = testRect(tester, find.byKey(ValueKey('line-48-$i')));
@@ -767,14 +767,14 @@ void main() {
             (font['unitsPerEm'] as num) *
             sizes.single *
             15;
-        // R31 reserves 2% per side; R19 fills the remaining text area.
+        // R31 reserves 2% per side and R60 a 14px header; R19 fills the rest.
         final availableWidth = size.width > size.height
             ? page.width
             : page.width * .96;
         final fraction =
             (advanceWidth / availableWidth) > (inkHeight / page.height)
             ? advanceWidth / availableWidth
-            : inkHeight / page.height;
+            : inkHeight / (page.height - 14);
         expect(fraction, greaterThanOrEqualTo(.90));
         controller.jumpToPage(size.width > size.height ? 0 : 1);
         await tester.pumpAndSettle();

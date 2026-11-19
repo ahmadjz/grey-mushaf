@@ -46,7 +46,7 @@ void main() {
     final image = word.resolve(tester).model.cachedImage;
     await tester.tapAt(const Offset(4, 4));
     await tester.pumpAndSettle();
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.byKey(const ValueKey('top-bar')), findsOneWidget);
     expect(identical(word.resolve(tester).model.cachedImage, image), isTrue);
   });
 

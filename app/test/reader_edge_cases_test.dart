@@ -188,7 +188,7 @@ void main() {
     final blank = Offset((ar.right + br.left) / 2, ar.center.dy);
     await tester.tapAt(blank);
     await tester.pumpAndSettle();
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.byKey(const ValueKey('top-bar')), findsOneWidget);
     expect(store.states, before);
     for (final w in [a, b]) {
       expect(
@@ -198,7 +198,7 @@ void main() {
     }
     await tester.tapAt(blank);
     await tester.pumpAndSettle();
-    expect(find.text('Settings'), findsNothing);
+    expect(find.byKey(const ValueKey('top-bar')), findsNothing);
     expect(store.states, before);
   });
 

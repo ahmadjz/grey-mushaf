@@ -13,6 +13,7 @@ import 'bundle_metrics.dart';
 import 'mushaf_bundle.dart';
 import 'loaded_page_controller.dart';
 import 'heading_ink.dart';
+import 'mushaf_index.dart';
 import 'reveal_store.dart';
 import 'reader_settings.dart';
 
@@ -133,6 +134,68 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   final _settingFailures = ValueNotifier<Set<bool>>({});
   bool _settingsOpen = false;
   double _contentWidth = 0;
+  static const _headerHeight = 14.0;
+  static const _arrowSize = 44.0;
+  late bool _arrowsShown;
+  late final Map<String, Offset> _arrowSpots;
+  Offset? _arrowDragOrigin;
+  int? _arrowTarget;
+  int _groupCount = 0;
+  late final _shownPage = ValueNotifier<int>(
+    widget.pages.isEmpty ? 1 : widget.pages.first['page'] as int,
+  );
+
+  void _setDarkMode(bool dark) {
+    setState(() => _darkMode = dark);
+    unawaited(_setBars());
+  }
+
+  void _showSaveFailure(String what) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: _darkMode ? const Color(0xFF303030) : null,
+        content: Text(
+          "Couldn't save $what",
+          style: _darkMode ? const TextStyle(color: Colors.white) : null,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _saveArrowsShown(bool shown) async {
+    try {
+      await widget.settings?.saveArrowsShown(shown);
+    } catch (_) {
+      _showSaveFailure('arrows setting');
+    }
+  }
+
+  Future<void> _saveArrowSpot(String key) async {
+    try {
+      await widget.settings?.saveArrowSpot(key, _arrowSpots[key]!);
+    } catch (_) {
+      _showSaveFailure('arrow position');
+    }
+  }
+
+  void _turn(int delta) {
+    final controller = _controller;
+    if (!controller.hasClients) return;
+    final base =
+        _arrowTarget ??
+        (controller.page ?? controller.initialPage.toDouble()).round();
+    final target = base + delta;
+    if (target < 0 || target >= _groupCount) return;
+    _arrowTarget = target;
+    unawaited(
+      controller.animateToPage(
+        target,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+      ),
+    );
+  }
 
   Future<void> _readInsets() async {
     try {
@@ -260,12 +323,12 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         ],
                       ),
                       SwitchListTile(
-                        title: const Text('Dark mode'),
-                        value: _darkMode,
+                        title: const Text('Page-turn arrows'),
+                        value: _arrowsShown,
                         onChanged: (value) {
-                          setState(() => _darkMode = value);
+                          setState(() => _arrowsShown = value);
                           updateSheet(() {});
-                          unawaited(_setBars());
+                          unawaited(_saveArrowsShown(value));
                         },
                       ),
                       Text(
@@ -421,6 +484,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     super.initState();
     _greyLevel = widget.settings?.greyLevel ?? 176;
     _darkLevel = widget.settings?.darkLevel ?? 80;
+    _arrowsShown = widget.settings?.arrowsShown ?? true;
+    _arrowSpots = {...?widget.settings?.arrowSpots};
     WidgetsBinding.instance.addObserver(this);
     unawaited(_setBars());
     _measureBundle();
@@ -562,6 +627,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     widget.bundle?.cancelPendingLoads();
     WidgetsBinding.instance.removeObserver(this);
     _settingFailures.dispose();
+    _shownPage.dispose();
     _bundleRevision.dispose();
     for (final ink in _pageInk.values) {
       ink.dispose();
@@ -735,6 +801,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       });
       _spread = spread;
     }
+    _groupCount = groups.length;
+    final screen = MediaQuery.sizeOf(context);
     return Theme(
       data: _theme,
       child: Scaffold(
@@ -748,9 +816,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
-                  final pageHeight = constraints.maxHeight - 4;
+                  final pageHeight = constraints.maxHeight - 4 - _headerHeight;
                   final side = spread
-                      ? 2.0
+                      ? 7.0
                       : MediaQuery.sizeOf(context).width * .02;
                   _contentWidth = pageWidth - side * 2;
                   // Reserve number clearance only when the last line's spare ink
@@ -789,6 +857,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         if (notification is ScrollStartNotification) {
                           _warmGeneration++;
                         } else if (notification is ScrollEndNotification) {
+                          _arrowTarget = null;
                           _afterScroll();
                         }
                         return false;
@@ -819,6 +888,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                             controller.cancelPendingNavigation();
                           }
                           _selected = spread ? index * 2 : index;
+                          _shownPage.value = groups[index].first['page'] as int;
                           _pendingPrefetch = groups[index].first['page'] as int;
                           if (!_scrolling) _afterScroll();
                         },
@@ -848,28 +918,160 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 },
               ),
             ),
-            if (_barsVisible)
-              Positioned(
-                top: math.max(_statusTop, _cutout.top),
-                left: _cutout.left,
-                right: _cutout.right,
-                child: Material(
-                  color: (_darkMode ? const Color(0xFF181818) : Colors.white)
-                      .withValues(alpha: .96),
-                  elevation: 1,
-                  child: SizedBox(
-                    height: 40,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: _openSettings,
-                        child: const Text('Settings'),
-                      ),
-                    ),
-                  ),
+            if (_arrowsShown) ...[
+              _arrow('next', screen, spread),
+              _arrow('previous', screen, spread),
+            ],
+            if (_barsVisible) _topBar(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _topBar() => Positioned(
+    key: const ValueKey('top-bar'),
+    top: 0,
+    left: 0,
+    right: 0,
+    child: Material(
+      color: _darkMode ? const Color(0xFF181818) : Colors.white,
+      elevation: 1,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: math.max(_statusTop, _cutout.top),
+          left: _cutout.left + 4,
+          right: _cutout.right + 16,
+        ),
+        child: SizedBox(
+          height: 56,
+          child: Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              Expanded(
+                child: ValueListenableBuilder<int>(
+                  valueListenable: _shownPage,
+                  builder: (context, number, _) {
+                    final place = pagePlace(
+                      widget.pages.firstWhere((page) => page['page'] == number),
+                    );
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (place != null)
+                          Text(
+                            surahNames[place.surah - 1],
+                            textDirection: TextDirection.rtl,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        Text(
+                          place == null
+                              ? 'صفحة ${arabicDigits(number)}'
+                              : 'صفحة ${arabicDigits(number)}، جزء ${arabicDigits(place.juz)}',
+                          textDirection: TextDirection.rtl,
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
-          ],
+              PopupMenuButton<String>(
+                tooltip: 'Menu',
+                icon: const Icon(Icons.more_vert),
+                onSelected: (item) {
+                  if (item == 'dark') {
+                    _setDarkMode(!_darkMode);
+                  } else {
+                    unawaited(_openSettings());
+                  }
+                },
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 'dark',
+                    child: Row(
+                      children: [
+                        const Expanded(child: Text('Dark mode')),
+                        IgnorePointer(
+                          child: Switch(value: _darkMode, onChanged: (_) {}),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const PopupMenuItem(
+                    value: 'settings',
+                    child: Text('Settings'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+
+  Widget _arrow(String name, Size screen, bool spread) {
+    final key = '${spread ? 'landscape' : 'portrait'}-$name';
+    const half = _arrowSize / 2;
+    final safe = Rect.fromLTRB(
+      _cutout.left + half,
+      _cutout.top + half,
+      screen.width - _cutout.right - half,
+      screen.height - _cutout.bottom - half,
+    );
+    final spot = _arrowSpots[key];
+    final wanted = spot == null
+        ? Offset(
+            name == 'next' ? safe.left + 12 : safe.right - 12,
+            safe.bottom - 20,
+          )
+        : Offset(spot.dx * screen.width, spot.dy * screen.height);
+    final center = Offset(
+      wanted.dx.clamp(safe.left, math.max(safe.left, safe.right)),
+      wanted.dy.clamp(safe.top, math.max(safe.top, safe.bottom)),
+    );
+    void moveTo(Offset target) => setState(
+      () => _arrowSpots[key] = Offset(
+        (target.dx.clamp(safe.left, math.max(safe.left, safe.right))) /
+            screen.width,
+        (target.dy.clamp(safe.top, math.max(safe.top, safe.bottom))) /
+            screen.height,
+      ),
+    );
+    return Positioned(
+      left: center.dx - half,
+      top: center.dy - half,
+      child: GestureDetector(
+        key: ValueKey('arrow-$name'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _turn(name == 'next' ? 1 : -1),
+        onLongPressStart: (_) => _arrowDragOrigin = center,
+        onLongPressMoveUpdate: (details) =>
+            moveTo(_arrowDragOrigin! + details.offsetFromOrigin),
+        onLongPressEnd: (_) {
+          _arrowDragOrigin = null;
+          if (_arrowSpots.containsKey(key)) unawaited(_saveArrowSpot(key));
+        },
+        child: Semantics(
+          button: true,
+          label: name == 'next' ? 'Next page' : 'Previous page',
+          child: Container(
+            width: _arrowSize,
+            height: _arrowSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _foreground.withValues(alpha: .06),
+            ),
+            child: Icon(
+              name == 'next' ? Icons.chevron_left : Icons.chevron_right,
+              color: _foreground.withValues(alpha: .35),
+            ),
+          ),
         ),
       ),
     );
@@ -903,93 +1105,155 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     ink.dim = _dim;
     ink.foreground = _foreground;
     ink.background = _background;
+    final place = pagePlace(page);
+    final chrome = _darkMode ? const Color(0xFFB0B0B0) : Colors.black;
+    final spread = _spread == true;
     return PaintedInkPage(
       controller: ink,
       child: SizedBox(
         key: ValueKey('page-$number'),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-          child: Stack(
-            children: [
-              Positioned.fill(
-                bottom: strip,
-                child: number <= 2
-                    ? Center(
-                        child: SizedBox(
-                          height: textWidth * 892 / 543,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              for (final line in lines)
-                                Positioned(
-                                  left: 0,
-                                  right: 0,
-                                  // Source coordinates relative to the normal
-                                  // 543 x 892 ink block beginning at y=157.
-                                  top:
-                                      textWidth *
-                                      (line['type'] == 'surah_name'
-                                          ? 142
-                                          : 278.5 +
-                                                ((line['number'] as int) - 2) *
-                                                    47) /
-                                      543,
-                                  child: _line(
-                                    page,
-                                    line as Map<String, dynamic>,
-                                    fontSize,
-                                    textWidth,
-                                    height,
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : Column(
-                        children: [
-                          for (final line in lines)
-                            _line(
-                              page,
-                              line as Map<String, dynamic>,
-                              fontSize,
-                              textWidth,
-                              height,
-                            ),
-                        ],
-                      ),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: PageBorder(
+                key: ValueKey('page-border-$number'),
+                right: number.isOdd,
+                left: number.isEven || spread,
+                color: chrome,
               ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: IgnorePointer(
-                  child: RepaintBoundary(
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+              child: Column(
+                children: [
+                  Center(
                     child: SizedBox(
-                      height: 12,
-                      child: Center(
-                        child: Text(
-                          '$number'
-                              .split('')
-                              .map((digit) => '٠١٢٣٤٥٦٧٨٩'[int.parse(digit)])
-                              .join(),
-                          key: ValueKey('page-number-$number'),
-                          textScaler: TextScaler.noScaling,
-                          style: TextStyle(
-                            fontSize: 10,
-                            height: 1.2,
-                            color: _darkMode
-                                ? const Color(0xFFB0B0B0)
-                                : Colors.black,
+                      key: ValueKey('page-header-$number'),
+                      width: textWidth,
+                      height: _headerHeight,
+                      child: RepaintBoundary(
+                        child: IgnorePointer(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: chrome, width: .5),
+                              ),
+                            ),
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (place != null)
+                                  for (final label in [
+                                    'الجزء ${arabicDigits(place.juz)}',
+                                    surahNames[place.surah - 1],
+                                  ])
+                                    Flexible(
+                                      child: Text(
+                                        label,
+                                        textDirection: TextDirection.rtl,
+                                        textScaler: TextScaler.noScaling,
+                                        softWrap: false,
+                                        overflow: TextOverflow.clip,
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          height: 1.2,
+                                          color: chrome,
+                                        ),
+                                      ),
+                                    ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: pageHeight,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          bottom: strip,
+                          child: number <= 2
+                              ? Center(
+                                  child: SizedBox(
+                                    height: textWidth * 892 / 543,
+                                    child: Stack(
+                                      clipBehavior: Clip.none,
+                                      children: [
+                                        for (final line in lines)
+                                          Positioned(
+                                            left: 0,
+                                            right: 0,
+                                            // Source coordinates relative to the normal
+                                            // 543 x 892 ink block beginning at y=157.
+                                            top:
+                                                textWidth *
+                                                (line['type'] == 'surah_name'
+                                                    ? 142
+                                                    : 278.5 +
+                                                          ((line['number']
+                                                                      as int) -
+                                                                  2) *
+                                                              47) /
+                                                543,
+                                            child: _line(
+                                              page,
+                                              line as Map<String, dynamic>,
+                                              fontSize,
+                                              textWidth,
+                                              height,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Column(
+                                  children: [
+                                    for (final line in lines)
+                                      _line(
+                                        page,
+                                        line as Map<String, dynamic>,
+                                        fontSize,
+                                        textWidth,
+                                        height,
+                                      ),
+                                  ],
+                                ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: IgnorePointer(
+                            child: RepaintBoundary(
+                              child: SizedBox(
+                                height: 12,
+                                child: Center(
+                                  child: Text(
+                                    arabicDigits(number),
+                                    key: ValueKey('page-number-$number'),
+                                    textScaler: TextScaler.noScaling,
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      height: 1.2,
+                                      color: chrome,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -1145,4 +1409,58 @@ class _LoadedReaderPageState extends State<_LoadedReaderPage> {
 
   @override
   Widget build(BuildContext context) => content;
+}
+
+class PageBorder extends StatelessWidget {
+  const PageBorder({
+    super.key,
+    required this.left,
+    required this.right,
+    required this.color,
+  });
+  final bool left;
+  final bool right;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => IgnorePointer(
+    child: CustomPaint(painter: _PageBorderPainter(left, right, color)),
+  );
+}
+
+class _PageBorderPainter extends CustomPainter {
+  _PageBorderPainter(this.left, this.right, this.color);
+  final bool left;
+  final bool right;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final outer = Paint()
+      ..color = color
+      ..strokeWidth = 1.2;
+    final inner = Paint()
+      ..color = color
+      ..strokeWidth = .6;
+    for (final (show, outerX, innerX) in [
+      (right, size.width - 2, size.width - 4.5),
+      (left, 2.0, 4.5),
+    ]) {
+      if (!show) continue;
+      canvas.drawLine(
+        Offset(outerX, 2),
+        Offset(outerX, size.height - 2),
+        outer,
+      );
+      canvas.drawLine(
+        Offset(innerX, 3),
+        Offset(innerX, size.height - 3),
+        inner,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_PageBorderPainter old) =>
+      old.left != left || old.right != right || old.color != color;
 }

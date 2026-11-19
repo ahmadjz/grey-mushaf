@@ -30,12 +30,15 @@ void main() {
         .controller!
         .jumpToPage(pages.indexWhere((p) => p['page'] == 48));
     await tester.pumpAndSettle();
-    // Exact Medium_Phone repro, in physical pixels converted to logical pixels.
-    const blank = Offset(864 / 2.625, 799 / 2.625);
+    // Medium_Phone repro (864, 799 physical): half a pixel below line 6's top.
+    final blank = Offset(
+      864 / 2.625,
+      tester.getRect(find.byKey(const ValueKey('line-48-6'))).top + .5,
+    );
     await tester.tapAt(blank);
     await tester.pumpAndSettle();
     expect(store.state(key), (black: true, count: 3));
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.byKey(const ValueKey('top-bar')), findsOneWidget);
     final page = pages.singleWhere((p) => p['page'] == 48);
     final word = (page['lines'] as List)
         .expand((line) => line['words'] as List)
@@ -43,7 +46,7 @@ void main() {
     await tapTarget(tester, WordTarget.key(ValueKey('word-${word['id']}')));
     await tester.pumpAndSettle();
     expect(store.state(key), (black: false, count: 3));
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.byKey(const ValueKey('top-bar')), findsOneWidget);
     // The same blank part of the band must remain a generous long-press target.
     await tester.longPressAt(blank);
     await tester.pumpAndSettle();
@@ -51,6 +54,6 @@ void main() {
     await tester.tapAt(blank);
     await tester.pumpAndSettle();
     expect(store.state(key), (black: true, count: 4));
-    expect(find.text('Settings'), findsNothing);
+    expect(find.byKey(const ValueKey('top-bar')), findsNothing);
   });
 }

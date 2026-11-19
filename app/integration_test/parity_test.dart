@@ -126,13 +126,9 @@ void main() {
                 ),
               );
               await tester.pumpAndSettle();
-              await tester.tap(find.text('Settings'));
+              await tester.tap(find.byTooltip('Menu'));
               await tester.pumpAndSettle();
-              tester
-                  .widget<SwitchListTile>(find.byType(SwitchListTile))
-                  .onChanged!(true);
-              await tester.pumpAndSettle();
-              await tester.tap(find.byTooltip('Close Settings'));
+              await tester.tap(find.text('Dark mode'));
               await tester.pumpAndSettle();
               await tester.tapAt(
                 Offset(

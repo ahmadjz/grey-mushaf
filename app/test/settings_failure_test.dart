@@ -6,8 +6,18 @@ import 'package:greymushaf/main.dart';
 import 'package:greymushaf/reader_settings.dart';
 
 import 'memory_reveal_store.dart';
+import 'word_target.dart';
 
 class FailingSettings implements ReaderSettings {
+  @override
+  bool arrowsShown = true;
+  @override
+  final arrowSpots = <String, Offset>{};
+  @override
+  Future<void> saveArrowsShown(bool shown) async => arrowsShown = shown;
+  @override
+  Future<void> saveArrowSpot(String key, Offset spot) async =>
+      arrowSpots[key] = spot;
   @override
   int greyLevel = 176;
   @override
@@ -49,12 +59,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tapAt(const Offset(3, 450));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Settings'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(SwitchListTile));
-      await tester.pumpAndSettle();
+      await openMenuItem(tester, 'Dark mode');
+      await openMenuItem(tester, 'Settings');
       var slider = tester.widget<Slider>(find.byType(Slider));
       slider.onChanged!(32);
       slider.onChangeEnd!(32);
@@ -69,8 +75,10 @@ void main() {
       await tester.pump();
       expect(settings.darkLevel, 32);
       expect(identical(settings.pending, first), false);
-      await tester.tap(find.byType(SwitchListTile));
+      await tester.tap(find.byTooltip('Close Settings'));
       await tester.pumpAndSettle();
+      await openMenuItem(tester, 'Dark mode');
+      await openMenuItem(tester, 'Settings');
       settings.pending!.completeError(StateError('dark save failure'));
       await tester.pumpAndSettle();
       expect(
@@ -106,10 +114,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tapAt(const Offset(3, 450));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Settings'));
-      await tester.pumpAndSettle();
+      await openMenuItem(tester, 'Settings');
       final slider = tester.widget<Slider>(find.byType(Slider));
       slider.onChanged!(224);
       slider.onChangeEnd!(224);

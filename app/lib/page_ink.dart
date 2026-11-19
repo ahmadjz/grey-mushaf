@@ -10,6 +10,7 @@ import 'package:flutter/rendering.dart';
 
 import 'flat_ink.dart';
 import 'reveal_store.dart';
+import 'word_marks.dart';
 
 typedef InkMetric = ({double width, double left, double right});
 
@@ -143,7 +144,68 @@ class PageInkController extends ChangeNotifier {
       store.state(wordKey(word.location)).black ? foreground : dim;
   String label(InkWord word) {
     final saved = store.state(wordKey(word.location));
-    return '${word.location}; ${saved.black ? 'revealed' : 'unrevealed'}; reveals ${saved.count}';
+    final marks = store.marks(wordKey(word.location));
+    return '${word.location}; ${saved.black ? 'revealed' : 'unrevealed'}; reveals ${saved.count}'
+        '${[
+          for (final mark in [marks.line, marks.shape])
+            if (mark != null) '; ${mark.style.name} ${mark.color.name}',
+        ].join()}';
+  }
+
+  void paintMarks(Canvas canvas) {
+    for (final word in words) {
+      final marks = store.marks(wordKey(word.location));
+      if (marks.isEmpty) continue;
+      final stroke = math.max(1.2, word.fontSize * .035);
+      final pen = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = stroke
+        ..isAntiAlias = true;
+      final line = marks.line;
+      if (line != null) {
+        pen.color = line.color.paint(foreground);
+        final gap = stroke * 2.5;
+        final lines = line.style == MarkStyle.doubleLine ? 2 : 1;
+        final lowest = word.box.bottom - stroke / 2;
+        final first = math.min(
+          word.ink.bottom + word.fontSize * .05,
+          lowest - gap * (lines - 1),
+        );
+        for (var i = 0; i < lines; i++) {
+          final y = first + gap * i;
+          canvas.drawLine(
+            Offset(word.ink.left, y),
+            Offset(word.ink.right, y),
+            pen,
+          );
+        }
+      }
+      final shape = marks.shape;
+      if (shape != null) {
+        pen.color = shape.color.paint(foreground);
+        final pad = word.fontSize * .06;
+        final around = word.ink.inflate(pad);
+        final bounds = Rect.fromLTRB(
+          around.left,
+          math.max(around.top, word.box.top + stroke / 2),
+          around.right,
+          math.min(around.bottom, word.box.bottom - stroke / 2),
+        );
+        if (shape.style == MarkStyle.circle) {
+          canvas.drawOval(
+            Rect.fromLTRB(
+              bounds.left - pad,
+              bounds.top,
+              bounds.right + pad,
+              bounds.bottom,
+            ),
+            pen,
+          );
+        } else {
+          canvas.drawRect(bounds, pen);
+        }
+      }
+    }
   }
 
   Rect globalRect(Rect rect) {
@@ -512,6 +574,11 @@ class _PageRender extends RenderCustomPaint {
         },
       );
     }
+    final canvas = context.canvas;
+    canvas.save();
+    canvas.translate(offset.dx, offset.dy);
+    controller.paintMarks(canvas);
+    canvas.restore();
   }
 }
 

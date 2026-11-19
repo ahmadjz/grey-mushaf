@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/reveal_store.dart';
+import 'package:greymushaf/word_marks.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
@@ -18,17 +19,25 @@ void main() {
     final store = await SqliteRevealStore.open(databasePath: filename);
     final action = WordAction(wordKey('1:1:1'), true);
     await store.save(action);
+    await store.saveMark(
+      MarkAction(action.key, MarkKind.line, (
+        style: MarkStyle.singleLine,
+        color: MarkColor.blue,
+      )),
+    );
     debugPrint(
       'Downgrade proof identifiers: device=${store.deviceId}; action=${action.uuid}; word=${action.key}; metadata=device_id,identity_version',
     );
     final db = await openDatabase(filename);
-    await db.setVersion(2);
+    await db.setVersion(3);
     final beforeRows = <String, List<Map<String, Object?>>>{};
     for (final table in [
       'local_metadata',
       'word_actions',
       'reveal_events',
       'word_state',
+      'mark_actions',
+      'word_marks',
     ]) {
       beforeRows[table] = await db.query(table);
     }
@@ -50,13 +59,13 @@ void main() {
     }
     await inspect.close();
     final afterBytes = await File(filename).readAsBytes();
-    expect(version, 2);
+    expect(version, 3);
     expect(afterRows, beforeRows);
     expect(afterBytes, beforeBytes);
     expect(failure, isA<StateError>());
     expect(
       failure.toString(),
-      contains('Database version 2 is newer than supported version 1'),
+      contains('Database version 3 is newer than supported version 2'),
     );
   });
 }

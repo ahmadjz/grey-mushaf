@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +17,7 @@ import 'heading_ink.dart';
 import 'mushaf_index.dart';
 import 'reveal_store.dart';
 import 'reader_settings.dart';
+import 'word_marks.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +38,7 @@ Future<void> main() async {
           bundle: bundle,
           store: store,
           settings: store,
+          toolbarSettings: store,
         ),
       ),
     );
@@ -91,11 +94,13 @@ class Reader extends StatefulWidget {
     required this.store,
     this.onMeasureWord,
     this.settings,
+    this.toolbarSettings,
     this.bundle,
   });
   final MushafBundle? bundle;
   final RevealStore store;
   final ReaderSettings? settings;
+  final ToolbarSettings? toolbarSettings;
   final VoidCallback? onMeasureWord;
   final List<Map<String, dynamic>> pages;
 
@@ -121,13 +126,18 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       seedColor: Colors.grey,
       brightness: _darkMode ? Brightness.dark : Brightness.light,
     ),
-    snackBarTheme: _darkMode
-        ? const SnackBarThemeData(
-            backgroundColor: Color(0xFF303030),
-            contentTextStyle: TextStyle(color: Colors.white),
-            actionTextColor: Colors.white,
-          )
-        : null,
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: _darkMode ? const Color(0xFF303030) : null,
+      contentTextStyle: _darkMode ? const TextStyle(color: Colors.white) : null,
+      actionTextColor: _darkMode ? Colors.white : null,
+      behavior: SnackBarBehavior.floating,
+      insetPadding: const EdgeInsets.fromLTRB(
+        _arrowSize + 8,
+        0,
+        _arrowSize + 8,
+        8,
+      ),
+    ),
   );
 
   Future<void> _settingWrites = Future<void>.value();
@@ -151,7 +161,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     unawaited(_setBars());
   }
 
-  void _showSaveFailure(String what) {
+  void _showSaveFailure(String what, {VoidCallback? retry}) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -160,6 +170,13 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
           "Couldn't save $what",
           style: _darkMode ? const TextStyle(color: Colors.white) : null,
         ),
+        action: retry == null
+            ? null
+            : SnackBarAction(
+                textColor: _darkMode ? Colors.white : null,
+                label: 'Retry',
+                onPressed: retry,
+              ),
       ),
     );
   }
@@ -176,7 +193,27 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     try {
       await widget.settings?.saveArrowSpot(key, _arrowSpots[key]!);
     } catch (_) {
-      _showSaveFailure('arrow position');
+      _showSaveFailure(
+        'arrow position',
+        retry: () => unawaited(_saveArrowSpot(key)),
+      );
+    }
+  }
+
+  late ToolbarPrefs _toolbar;
+  bool _stripOpen = false;
+  Offset? _ballDrag;
+  static const _ballSize = 48.0;
+
+  Future<void> _saveToolbar(ToolbarPrefs prefs) async {
+    setState(() => _toolbar = prefs);
+    try {
+      await widget.toolbarSettings?.saveToolbar(prefs);
+    } catch (_) {
+      _showSaveFailure(
+        'toolbar',
+        retry: () => unawaited(_saveToolbar(_toolbar)),
+      );
     }
   }
 
@@ -429,14 +466,33 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   }
 
   final _wordKeys = <int, String>{};
-  final _pending = Queue<WordAction>();
+  final _pending = Queue<Object>();
+  final _savedRevision = ValueNotifier<int>(0);
   bool _saving = false;
   bool _saveFailed = false;
 
-  void _enqueue(int id, bool black) {
-    _pending.add(WordAction(_wordKeys[id]!, black));
+  void _enqueue(Object action) {
+    assert(action is WordAction || action is MarkAction);
+    _pending.add(action);
     if (!_saveFailed) unawaited(_savePending());
   }
+
+  ({bool black, WordMarks marks}) _projected(String key) {
+    var black = widget.store.state(key).black;
+    var marks = widget.store.marks(key);
+    for (final action in _pending) {
+      if (action is WordAction && action.key == key) black = action.black;
+      if (action is MarkAction && action.key == key) {
+        marks = marks.withMark(action.kind, action.mark);
+      }
+    }
+    return (black: black, marks: marks);
+  }
+
+  bool _hasPending(String key) => _pending.any(
+    (action) =>
+        (action is WordAction ? action.key : (action as MarkAction).key) == key,
+  );
 
   Future<void> _savePending() async {
     if (_saving) return;
@@ -444,9 +500,16 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _saveFailed = false;
     try {
       while (_pending.isNotEmpty) {
-        await widget.store.save(_pending.first);
-        final saved = _pending.removeFirst();
-        if (mounted) _pageInk[_wordPages[saved.key]]?.changed();
+        final next = _pending.first;
+        if (next is WordAction) {
+          await widget.store.save(next);
+        } else {
+          await widget.store.saveMark(next as MarkAction);
+        }
+        _pending.removeFirst();
+        final key = next is WordAction ? next.key : (next as MarkAction).key;
+        if (mounted) _pageInk[_wordPages[key]]?.changed();
+        _savedRevision.value++;
       }
     } catch (_) {
       _saveFailed = true;
@@ -492,6 +555,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _darkLevel = widget.settings?.darkLevel ?? 80;
     _arrowsShown = widget.settings?.arrowsShown ?? true;
     _arrowSpots = {...?widget.settings?.arrowSpots};
+    _toolbar = widget.toolbarSettings?.toolbar ?? const ToolbarPrefs();
     WidgetsBinding.instance.addObserver(this);
     unawaited(_setBars());
     _measureBundle();
@@ -675,8 +739,131 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   void _start(LongPressStartDetails details) {
     setState(() => _dragging = true);
     final id = _wordAt(details.globalPosition);
-    if (id != null) _enqueue(id, true);
+    if (id == null) return;
+    final key = _wordKeys[id]!;
+    final now = _projected(key);
+    for (final tool in _toolbar.tools) {
+      final style = tool.style;
+      if (style == null) {
+        if (!now.black) _enqueue(WordAction(key, true));
+      } else if (now.marks.of(style.kind)?.style != style) {
+        _enqueue(
+          MarkAction(key, style.kind, (style: style, color: _toolbar.color)),
+        );
+      }
+    }
   }
+
+  void _tapWord(int id) {
+    final key = _wordKeys[id]!;
+    final now = _projected(key);
+    if (!now.marks.isEmpty) {
+      unawaited(_openMarkBox(key, now));
+    } else if (now.black) {
+      _enqueue(WordAction(key, false));
+    }
+  }
+
+  Future<void> _openMarkBox(
+    String key,
+    ({bool black, WordMarks marks}) original,
+  ) async {
+    final rows =
+        <
+          ({
+            String label,
+            Color? swatch,
+            bool Function(({bool black, WordMarks marks}) word) on,
+            Object Function(bool on) act,
+          })
+        >[
+          if (original.black)
+            (
+              label: 'Visible',
+              swatch: null,
+              on: (word) => word.black,
+              act: (on) => WordAction(key, on),
+            ),
+          for (final kind in MarkKind.values)
+            if (original.marks.of(kind) case final mark?)
+              (
+                label: _styleLabels[mark.style]!,
+                swatch: mark.color.paint(_foreground),
+                on: (word) => word.marks.of(kind) != null,
+                act: (on) => MarkAction(key, kind, on ? mark : null),
+              ),
+        ];
+    var closing = false;
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => Theme(
+        data: _theme,
+        child: ValueListenableBuilder<int>(
+          valueListenable: _savedRevision,
+          builder: (dialogContext, _, _) {
+            final committed = (
+              black: widget.store.state(key).black,
+              marks: widget.store.marks(key),
+            );
+            if (!closing &&
+                !rows.any((row) => row.on(committed)) &&
+                !_hasPending(key)) {
+              closing = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+              });
+            }
+            return AlertDialog(
+              key: const ValueKey('mark-box'),
+              contentPadding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final row in rows)
+                    CheckboxListTile(
+                      key: ValueKey('mark-row-${row.label}'),
+                      dense: true,
+                      value: row.on(committed),
+                      title: Text(row.label),
+                      secondary: row.swatch == null
+                          ? null
+                          : CircleAvatar(
+                              radius: 8,
+                              backgroundColor: row.swatch,
+                            ),
+                      onChanged: (on) {
+                        if (on == null || on == row.on(_projected(key))) return;
+                        _enqueue(row.act(on));
+                      },
+                    ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    final now = _projected(key);
+                    for (final row in rows) {
+                      if (row.on(now)) _enqueue(row.act(false));
+                    }
+                    closing = true;
+                    Navigator.of(dialogContext).pop();
+                  },
+                  child: const Text('Clear all'),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  static const _styleLabels = {
+    MarkStyle.singleLine: 'Single line',
+    MarkStyle.doubleLine: 'Double line',
+    MarkStyle.rectangle: 'Rectangle',
+    MarkStyle.circle: 'Circle',
+  };
 
   void _end() {
     if (!_dragging) return;
@@ -857,8 +1044,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                       );
                       if (id == null) {
                         _toggleBars();
-                      } else if (widget.store.state(_wordKeys[id]!).black) {
-                        _enqueue(id, false);
+                      } else {
+                        _tapWord(id);
                       }
                     },
                     child: NotificationListener<ScrollNotification>(
@@ -936,6 +1123,15 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
               _arrow('previous', screen, spread),
             ],
             if (_barsVisible) _topBar(),
+            if (_stripOpen)
+              Positioned.fill(
+                child: GestureDetector(
+                  key: const ValueKey('toolbar-barrier'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => setState(() => _stripOpen = false),
+                ),
+              ),
+            if (!_toolbar.hidden) ..._ball(screen),
           ],
         ),
       ),
@@ -1000,6 +1196,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 onSelected: (item) {
                   if (item == 'dark') {
                     _setDarkMode(!_darkMode);
+                  } else if (item == 'toolbar') {
+                    unawaited(_saveToolbar(_toolbar.copyWith(hidden: false)));
                   } else {
                     unawaited(_openSettings());
                   }
@@ -1016,6 +1214,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                       ],
                     ),
                   ),
+                  if (_toolbar.hidden)
+                    const PopupMenuItem(
+                      value: 'toolbar',
+                      child: Text('Show toolbar'),
+                    ),
                   const PopupMenuItem(
                     value: 'settings',
                     child: Text('Settings'),
@@ -1028,6 +1231,253 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       ),
     ),
   );
+
+  static const _toolIcons = {
+    MarkTool.visible: Icons.visibility,
+    MarkTool.singleLine: Icons.format_underlined,
+    MarkTool.doubleLine: Icons.format_underlined,
+    MarkTool.rectangle: Icons.crop_square,
+    MarkTool.circle: Icons.circle_outlined,
+  };
+  static const _toolLabels = {
+    MarkTool.visible: 'Visible',
+    MarkTool.singleLine: 'Single line',
+    MarkTool.doubleLine: 'Double line',
+    MarkTool.rectangle: 'Rectangle',
+    MarkTool.circle: 'Circle',
+  };
+
+  Widget _toolIcon(MarkTool tool, Color color) {
+    final icon = Icon(_toolIcons[tool], color: color);
+    if (tool != MarkTool.doubleLine) return icon;
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        icon,
+        Positioned(
+          bottom: 0,
+          child: Container(width: 14, height: 2, color: color),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _ball(Size screen) {
+    const half = _ballSize / 2;
+    final left = _cutout.left, right = screen.width - _cutout.right;
+    final top = _cutout.top + half,
+        bottom = screen.height - _cutout.bottom - half;
+    Offset clamp(Offset point) => Offset(
+      point.dx.clamp(left, math.max(left, right)),
+      point.dy.clamp(top, math.max(top, bottom)),
+    );
+    final spot = _toolbar.spot;
+    final center = clamp(
+      _ballDrag ??
+          (spot == null
+              ? Offset(right, screen.height / 2)
+              : Offset(spot.dx * screen.width, spot.dy * screen.height)),
+    );
+    final colour = _toolbar.color.paint(_foreground);
+    final shown = _toolbar.tools.lastOrNull;
+    void drop() {
+      final at = _ballDrag;
+      if (at == null) return;
+      var x = clamp(at).dx;
+      if (x - left < _ballSize) x = left;
+      if (right - x < _ballSize) x = right;
+      final y = clamp(at).dy;
+      _ballDrag = null;
+      unawaited(
+        _saveToolbar(
+          _toolbar.copyWith(spot: Offset(x / screen.width, y / screen.height)),
+        ),
+      );
+    }
+
+    return [
+      Positioned(
+        left: center.dx - half,
+        top: center.dy - half,
+        child: GestureDetector(
+          key: const ValueKey('toolbar-ball'),
+          behavior: HitTestBehavior.opaque,
+          dragStartBehavior: DragStartBehavior.down,
+          onTap: () => setState(() => _stripOpen = !_stripOpen),
+          onPanStart: (_) {
+            if (!_toolbar.pinned) setState(() => _ballDrag = center);
+          },
+          onPanUpdate: (details) {
+            final at = _ballDrag;
+            if (at != null) setState(() => _ballDrag = at + details.delta);
+          },
+          onPanEnd: (_) => drop(),
+          onPanCancel: drop,
+          child: Semantics(
+            button: true,
+            label: 'Toolbar',
+            value: [for (final tool in _toolbar.tools) _toolLabels[tool]]
+                .join(', '),
+            child: Container(
+              width: _ballSize,
+              height: _ballSize,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _foreground.withValues(alpha: .08),
+                border: Border.all(color: colour.withValues(alpha: .5)),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (shown == null)
+                    Icon(Icons.block, color: _foreground.withValues(alpha: .35))
+                  else
+                    _toolIcon(shown, colour),
+                  if (_toolbar.tools.length > 1)
+                    Positioned(
+                      right: 6,
+                      top: 4,
+                      child: Text(
+                        '${_toolbar.tools.length}',
+                        style: TextStyle(fontSize: 10, color: colour),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      if (_stripOpen) _strip(screen, center),
+    ];
+  }
+
+  Widget _strip(Size screen, Offset ball) {
+    const width = 300.0;
+    final below = ball.dy < screen.height / 2;
+    final left = (ball.dx - width / 2)
+        .clamp(8.0, math.max(8.0, screen.width - width - 8))
+        .toDouble();
+    Widget toggle({
+      required String key,
+      required String tooltip,
+      required bool on,
+      required Widget icon,
+      required VoidCallback onPressed,
+    }) => IconButton(
+      key: ValueKey(key),
+      tooltip: tooltip,
+      isSelected: on,
+      style: IconButton.styleFrom(
+        backgroundColor: on ? _foreground.withValues(alpha: .12) : null,
+      ),
+      onPressed: onPressed,
+      icon: icon,
+    );
+    return Positioned(
+      left: left,
+      top: below ? ball.dy + _ballSize / 2 + 8 : null,
+      bottom: below ? null : screen.height - ball.dy + _ballSize / 2 + 8,
+      width: width,
+      child: Material(
+        key: const ValueKey('toolbar-strip'),
+        color: _darkMode ? const Color(0xFF181818) : Colors.white,
+        elevation: 4,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (final tool in MarkTool.values)
+                    toggle(
+                      key: 'tool-${tool.name}',
+                      tooltip: _toolLabels[tool]!,
+                      on: _toolbar.tools.contains(tool),
+                      icon: _toolIcon(
+                        tool,
+                        _toolbar.tools.contains(tool)
+                            ? _toolbar.color.paint(_foreground)
+                            : _foreground.withValues(alpha: .5),
+                      ),
+                      onPressed: () =>
+                          unawaited(_saveToolbar(_toolbar.toggle(tool))),
+                    ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (final colour in MarkColor.values)
+                    InkResponse(
+                      key: ValueKey('colour-${colour.name}'),
+                      onTap: () => unawaited(
+                        _saveToolbar(_toolbar.copyWith(color: colour)),
+                      ),
+                      child: Semantics(
+                        selected: _toolbar.color == colour,
+                        label: colour.name,
+                        child: Container(
+                          width: 28,
+                          height: 28,
+                          margin: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: colour.paint(_foreground),
+                            border: _toolbar.color == colour
+                                ? Border.all(
+                                    color: _foreground.withValues(alpha: .6),
+                                    width: 3,
+                                  )
+                                : Border.all(
+                                    color: _foreground.withValues(alpha: .15),
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  toggle(
+                    key: 'toolbar-top-bar',
+                    tooltip: _barsVisible ? 'Hide top bar' : 'Show top bar',
+                    on: _barsVisible,
+                    icon: const Icon(Icons.vertical_align_top),
+                    onPressed: _toggleBars,
+                  ),
+                  toggle(
+                    key: 'toolbar-pin',
+                    tooltip: _toolbar.pinned ? 'Unpin toolbar' : 'Pin toolbar',
+                    on: _toolbar.pinned,
+                    icon: const Icon(Icons.push_pin_outlined),
+                    onPressed: () => unawaited(
+                      _saveToolbar(_toolbar.copyWith(pinned: !_toolbar.pinned)),
+                    ),
+                  ),
+                  toggle(
+                    key: 'toolbar-hide',
+                    tooltip: 'Hide toolbar',
+                    on: false,
+                    icon: const Icon(Icons.visibility_off_outlined),
+                    onPressed: () {
+                      _stripOpen = false;
+                      unawaited(_saveToolbar(_toolbar.copyWith(hidden: true)));
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _arrow(String name, Size screen, bool spread) {
     final key = '${spread ? 'landscape' : 'portrait'}-$name';

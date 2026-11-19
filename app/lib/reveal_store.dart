@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'reader_settings.dart';
+import 'word_marks.dart';
 
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
@@ -20,14 +21,47 @@ class WordAction {
 abstract class RevealStore {
   WordState state(String key);
   Future<void> save(WordAction action);
+  WordMarks marks(String key);
+  Future<void> saveMark(MarkAction action);
+}
+
+const _styles = "'singleLine','doubleLine','rectangle','circle'";
+const _colors = "'red','blue','green','orange','purple','black'";
+const _markCheck =
+    '''CHECK ((style IS NULL AND color IS NULL) OR (style IS NOT NULL AND color IS NOT NULL
+    AND color IN ($_colors)
+    AND ((kind = 'line' AND style IN ('singleLine','doubleLine'))
+      OR (kind = 'shape' AND style IN ('rectangle','circle')))))''';
+
+Future<void> _createMarkTables(DatabaseExecutor db) async {
+  await db.execute('''CREATE TABLE mark_actions (
+    local_seq INTEGER PRIMARY KEY AUTOINCREMENT,
+    action_uuid TEXT UNIQUE NOT NULL, device_id TEXT NOT NULL,
+    created_at INTEGER NOT NULL, word_key TEXT NOT NULL,
+    kind TEXT NOT NULL CHECK(kind IN ('line','shape')),
+    style TEXT CHECK(style IS NULL OR style IN ($_styles)), color TEXT,
+    $_markCheck)''');
+  await db.execute(
+    'CREATE INDEX mark_actions_by_word ON mark_actions(word_key)',
+  );
+  await db.execute('''CREATE TABLE word_marks (
+    word_key TEXT NOT NULL,
+    kind TEXT NOT NULL CHECK(kind IN ('line','shape')),
+    style TEXT, color TEXT,
+    last_action_uuid TEXT NOT NULL REFERENCES mark_actions(action_uuid),
+    PRIMARY KEY (word_key, kind),
+    $_markCheck)''');
 }
 
 /// SQLite owns state; this map is only its committed rendering projection.
-class SqliteRevealStore implements RevealStore, ReaderSettings {
+class SqliteRevealStore
+    implements RevealStore, ReaderSettings, ToolbarSettings {
   SqliteRevealStore._(
     this._db,
     this.deviceId,
     this._states,
+    this._marks,
+    this._toolbar,
     this._greyLevel,
     this._darkLevel,
     this._arrowsShown,
@@ -35,6 +69,21 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
   );
   bool _arrowsShown;
   final Map<String, Offset> _arrowSpots;
+  final Map<String, WordMarks> _marks;
+  ToolbarPrefs _toolbar;
+  @override
+  ToolbarPrefs get toolbar => _toolbar;
+
+  @override
+  Future<void> saveToolbar(ToolbarPrefs prefs) async {
+    await _db.insert('local_metadata', {
+      'key': _toolbarKey,
+      'value': prefs.encode(),
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    _toolbar = prefs;
+  }
+
+  static const _toolbarKey = 'reader_toolbar';
   @override
   bool get arrowsShown => _arrowsShown;
   @override
@@ -99,7 +148,7 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
   static Future<SqliteRevealStore> open({String? databasePath}) async {
     final db = await openDatabase(
       databasePath ?? path.join(await getDatabasesPath(), 'reveals.db'),
-      version: 1,
+      version: 2,
       onDowngrade: (db, oldVersion, newVersion) {
         throw StateError(
           'Database version $oldVersion is newer than supported version $newVersion. '
@@ -139,6 +188,10 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
           'key': 'identity_version',
           'value': 'qul-v4-hafs:1',
         });
+        await _createMarkTables(db);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) await _createMarkTables(db);
       },
     );
     try {
@@ -197,10 +250,29 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
         spots[(row['key'] as String).substring(_arrowSpotPrefix.length)] =
             Offset(x, y);
       }
+      final marks = <String, WordMarks>{};
+      for (final row in await db.query(
+        'word_marks',
+        where: 'style IS NOT NULL',
+      )) {
+        final key = row['word_key'] as String;
+        final kind = MarkKind.values.byName(row['kind'] as String);
+        marks[key] = (marks[key] ?? noMarks).withMark(kind, _decodeMark(row));
+      }
+      final toolbar = ToolbarPrefs.decode(
+        (await db.query(
+              'local_metadata',
+              where: 'key = ?',
+              whereArgs: [_toolbarKey],
+            )).firstOrNull?['value']
+            as String?,
+      );
       return SqliteRevealStore._(
         db,
         device,
         states,
+        marks,
+        toolbar,
         grey,
         dark,
         arrowsShown,
@@ -215,8 +287,70 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
   static WordState _decode(Map<String, Object?> row) =>
       (black: row['is_black'] == 1, count: row['reveal_count'] as int);
 
+  static Mark? _decodeMark(Map<String, Object?> row) => row['style'] == null
+      ? null
+      : (
+          style: MarkStyle.values.byName(row['style'] as String),
+          color: MarkColor.values.byName(row['color'] as String),
+        );
+
   @override
   WordState state(String key) => _states[key] ?? greyWord;
+
+  @override
+  WordMarks marks(String key) => _marks[key] ?? noMarks;
+
+  // A removal keeps its row (null style) so sync knows the latest action.
+  @override
+  Future<void> saveMark(MarkAction action) async {
+    final kind = action.kind.name;
+    final committed = await _db.transaction((txn) async {
+      final rows = await txn.query(
+        'word_marks',
+        where: 'word_key = ?',
+        whereArgs: [action.key],
+      );
+      var before = noMarks;
+      for (final row in rows) {
+        before = before.withMark(
+          MarkKind.values.byName(row['kind'] as String),
+          _decodeMark(row),
+        );
+      }
+      final duplicate = await txn.query(
+        'mark_actions',
+        columns: ['action_uuid'],
+        where: 'action_uuid = ?',
+        whereArgs: [action.uuid],
+      );
+      if (duplicate.isNotEmpty || before.of(action.kind) == action.mark) {
+        return before;
+      }
+      final style = action.mark?.style.name, color = action.mark?.color.name;
+      await txn.insert('mark_actions', {
+        'action_uuid': action.uuid,
+        'device_id': deviceId,
+        'created_at': action.createdAt,
+        'word_key': action.key,
+        'kind': kind,
+        'style': style,
+        'color': color,
+      });
+      await txn.insert('word_marks', {
+        'word_key': action.key,
+        'kind': kind,
+        'style': style,
+        'color': color,
+        'last_action_uuid': action.uuid,
+      }, conflictAlgorithm: ConflictAlgorithm.replace);
+      return before.withMark(action.kind, action.mark);
+    });
+    if (committed.isEmpty) {
+      _marks.remove(action.key);
+    } else {
+      _marks[action.key] = committed;
+    }
+  }
 
   @override
   Future<void> save(WordAction action) async {

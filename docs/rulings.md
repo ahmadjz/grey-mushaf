@@ -273,7 +273,7 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     The quick ball sits on the right edge, half tucked, at first launch. It stays where it is
     dropped and tucks half away only when dropped near the left or right edge; pinned, it cannot
     be dragged. With several tools on, it shows the one turned on last, with a small count. The
-    strip also holds the pin switch. The tools, colour, ball spot, pin and hidden state are
+    strip also holds the pin switch; while it is open, a tap outside it only closes it. The tools, colour, ball spot, pin and hidden state are
     remembered on the device and not synced. The five colours other than black stay the same in
     dark mode. "Couldn't save" and "Couldn't load page" messages sit between the bottom arrows,
     and a failed save of an arrow's spot offers Retry.

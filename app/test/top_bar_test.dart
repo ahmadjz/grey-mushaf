@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/main.dart';
+import 'package:greymushaf/mushaf_bundle.dart';
 import 'package:greymushaf/mushaf_index.dart';
 import 'package:greymushaf/reader_settings.dart';
 
@@ -27,6 +28,20 @@ class ArrowSettings implements ReaderSettings {
   Future<void> saveArrowSpot(String key, Offset spot) async =>
       arrowSpots[key] = spot;
 }
+
+class FailOnceAssets extends CachingAssetBundle {
+  final failOnce = <String>{};
+  @override
+  Future<ByteData> load(String key) async {
+    if (failOnce.remove(key.split('/').last)) throw StateError('injected');
+    return rootBundle.load(key);
+  }
+}
+
+List<int> shown(WidgetTester tester, int from, int to) => [
+  for (var n = from; n <= to; n++)
+    if (find.byKey(ValueKey('page-$n')).evaluate().isNotEmpty) n,
+];
 
 void screen(WidgetTester tester, Size size) {
   tester.view.physicalSize = size;
@@ -88,6 +103,11 @@ void main() {
     expect(bar.height, greaterThan(24 + 40));
     expect(find.text('يونس'), findsWidgets);
     expect(find.text('صفحة ٢١٥، جزء ١١'), findsOneWidget);
+    expect(
+      tester.getRect(find.text('صفحة ٢١٥، جزء ١١')).right,
+      greaterThan(914 - 40),
+    );
+    expect(tester.getRect(find.byTooltip('Menu')).left, lessThan(30 + 40));
     expect(find.text('Settings'), findsNothing);
   });
 
@@ -106,6 +126,9 @@ void main() {
     await tester.fling(find.byType(PageView), const Offset(400, 0), 2000);
     await tester.pumpAndSettle();
     expect(find.text('صفحة ٢١٦، جزء ١١'), findsOneWidget);
+    tester.view.physicalSize = const Size(914, 411);
+    await tester.pumpAndSettle();
+    expect(find.text('صفحة ٢١٥، جزء ١١'), findsOneWidget);
   });
 
   testWidgets('the menu holds the dark mode switch and Settings', (
@@ -304,5 +327,110 @@ void main() {
     final arrow = tester.getRect(find.byKey(const ValueKey('arrow-previous')));
     expect(arrow.right, lessThanOrEqualTo(914));
     expect(arrow.bottom, lessThanOrEqualTo(411));
+  });
+
+  testWidgets('after a failed load the next arrow still moves one page', (
+    tester,
+  ) async {
+    screen(tester, const Size(411, 914));
+    insets(tester);
+    final assets = FailOnceAssets();
+    final bundle = (await tester.runAsync(
+      () => MushafBundle.open(assets: assets),
+    ))!;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(
+          pages: bundle.pages,
+          bundle: bundle,
+          store: MemoryRevealStore(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    Future<void> next() async {
+      await tester.tap(find.byKey(const ValueKey('arrow-next')));
+      for (var i = 0; i < 3; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 150)),
+        );
+        await tester.pumpAndSettle();
+      }
+    }
+
+    await next();
+    expect(shown(tester, 1, 10), [2]);
+    assets.failOnce.add('7.json');
+    await next();
+    expect(find.text("Couldn't load page"), findsOneWidget);
+    expect(shown(tester, 1, 10), [2]);
+    ScaffoldMessenger.of(tester.element(find.byType(PageView)))
+        .hideCurrentSnackBar();
+    await tester.pumpAndSettle();
+    await next();
+    expect(shown(tester, 1, 10), [3]);
+  });
+
+  testWidgets('two arrows dragged at once each follow their own finger', (
+    tester,
+  ) async {
+    screen(tester, const Size(411, 914));
+    insets(tester);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(pages: range(215, 218), store: MemoryRevealStore()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final next = find.byKey(const ValueKey('arrow-next'));
+    final previous = find.byKey(const ValueKey('arrow-previous'));
+    final a = tester.getCenter(next);
+    final b = tester.getCenter(previous);
+    final first = await tester.startGesture(a, pointer: 11);
+    final second = await tester.startGesture(b, pointer: 12);
+    await tester.pump(const Duration(seconds: 1));
+    await first.moveBy(const Offset(50, -100));
+    await tester.pump();
+    await first.up();
+    await tester.pump();
+    await second.moveBy(const Offset(-50, -100));
+    await tester.pump();
+    await second.up();
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    expect(
+      (tester.getCenter(next) - a - const Offset(50, -100)).distance,
+      lessThan(.01),
+    );
+    expect(
+      (tester.getCenter(previous) - b - const Offset(-50, -100)).distance,
+      lessThan(.01),
+    );
+  });
+
+  testWidgets('rotating during an arrow turn keeps the arrows in step', (
+    tester,
+  ) async {
+    screen(tester, const Size(411, 914));
+    insets(tester);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(pages: range(215, 222), store: MemoryRevealStore()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 3; i++) {
+      await tester.tap(find.byKey(const ValueKey('arrow-next')));
+      await tester.pump(const Duration(milliseconds: 40));
+    }
+    tester.view.physicalSize = const Size(914, 411);
+    await tester.pumpAndSettle();
+    final landed = shown(tester, 215, 222);
+    await tester.tap(find.byKey(const ValueKey('arrow-next')));
+    await tester.pumpAndSettle();
+    expect(shown(tester, 215, 222), [for (final n in landed) n + 2]);
+    await tester.tap(find.byKey(const ValueKey('arrow-previous')));
+    await tester.pumpAndSettle();
+    expect(shown(tester, 215, 222), landed);
   });
 }

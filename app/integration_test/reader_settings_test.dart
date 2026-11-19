@@ -68,6 +68,10 @@ void main() {
         store.saveArrowSpot('landscape-next', const Offset(1.2, .5)),
         throwsRangeError,
       );
+      await expectLater(
+        store.saveArrowSpot('landscape-next', const Offset(double.nan, .5)),
+        throwsRangeError,
+      );
       await store.close();
       store = await SqliteRevealStore.open(databasePath: filename);
       expect(store.arrowsShown, isFalse);

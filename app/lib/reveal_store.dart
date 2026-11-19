@@ -51,7 +51,7 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
 
   @override
   Future<void> saveArrowSpot(String key, Offset spot) async {
-    if (spot.dx < 0 || spot.dx > 1 || spot.dy < 0 || spot.dy > 1) {
+    if (!_onScreen(spot.dx) || !_onScreen(spot.dy)) {
       throw RangeError('Arrow spot $spot is outside the screen');
     }
     await _db.insert('local_metadata', {
@@ -62,6 +62,7 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
   }
 
   static const _arrowSpotPrefix = 'reader_arrow_spot_';
+  static bool _onScreen(double fraction) => fraction >= 0 && fraction <= 1;
 
   int _greyLevel;
   int _darkLevel;
@@ -190,7 +191,7 @@ class SqliteRevealStore implements RevealStore, ReaderSettings {
         final parts = (row['value'] as String).split(',');
         final x = parts.length == 2 ? double.tryParse(parts[0]) : null;
         final y = parts.length == 2 ? double.tryParse(parts[1]) : null;
-        if (x == null || y == null || x < 0 || x > 1 || y < 0 || y > 1) {
+        if (x == null || y == null || !_onScreen(x) || !_onScreen(y)) {
           continue;
         }
         spots[(row['key'] as String).substring(_arrowSpotPrefix.length)] =

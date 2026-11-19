@@ -138,7 +138,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   static const _arrowSize = 44.0;
   late bool _arrowsShown;
   late final Map<String, Offset> _arrowSpots;
-  Offset? _arrowDragOrigin;
+  final _arrowDragOrigins = <String, Offset>{};
   int? _arrowTarget;
   int _groupCount = 0;
   late final _shownPage = ValueNotifier<int>(
@@ -189,11 +189,15 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     if (target < 0 || target >= _groupCount) return;
     _arrowTarget = target;
     unawaited(
-      controller.animateToPage(
-        target,
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeOut,
-      ),
+      controller
+          .animateToPage(
+            target,
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeOut,
+          )
+          .whenComplete(() {
+            if (_arrowTarget == target) _arrowTarget = null;
+          }),
     );
   }
 
@@ -793,6 +797,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
             );
       WidgetsBinding.instance.addPostFrameCallback((_) {
         old.dispose();
+        if (mounted && index >= 0) {
+          _shownPage.value = groups[index].first['page'] as int;
+        }
         if (mounted && widget.bundle != null) {
           // Rotation invalidates navigation and prefetch alike. Restore the
           // visible window even when no page-change callback follows.
@@ -800,6 +807,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         }
       });
       _spread = spread;
+      _arrowTarget = null;
     }
     _groupCount = groups.length;
     final screen = MediaQuery.sizeOf(context);
@@ -857,7 +865,6 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         if (notification is ScrollStartNotification) {
                           _warmGeneration++;
                         } else if (notification is ScrollEndNotification) {
-                          _arrowTarget = null;
                           _afterScroll();
                         }
                         return false;
@@ -956,6 +963,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                       widget.pages.firstWhere((page) => page['page'] == number),
                     );
                     return Column(
+                      textDirection: TextDirection.rtl,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1026,10 +1034,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     );
     final spot = _arrowSpots[key];
     final wanted = spot == null
-        ? Offset(
-            name == 'next' ? safe.left + 12 : safe.right - 12,
-            safe.bottom - 20,
-          )
+        ? Offset(name == 'next' ? safe.left : safe.right, safe.bottom)
         : Offset(spot.dx * screen.width, spot.dy * screen.height);
     final center = Offset(
       wanted.dx.clamp(safe.left, math.max(safe.left, safe.right)),
@@ -1050,11 +1055,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         key: ValueKey('arrow-$name'),
         behavior: HitTestBehavior.opaque,
         onTap: () => _turn(name == 'next' ? 1 : -1),
-        onLongPressStart: (_) => _arrowDragOrigin = center,
+        onLongPressStart: (_) => _arrowDragOrigins[name] = center,
         onLongPressMoveUpdate: (details) =>
-            moveTo(_arrowDragOrigin! + details.offsetFromOrigin),
+            moveTo(_arrowDragOrigins[name]! + details.offsetFromOrigin),
         onLongPressEnd: (_) {
-          _arrowDragOrigin = null;
+          _arrowDragOrigins.remove(name);
           if (_arrowSpots.containsKey(key)) unawaited(_saveArrowSpot(key));
         },
         child: Semantics(

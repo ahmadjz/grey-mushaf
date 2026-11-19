@@ -255,7 +255,10 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     the page header line are those of the page's first ayah. Pages 1–2 get the header line and border
     too. The dark mode switch leaves Settings for the ⋮ menu; until run 3 the menu holds only the dark
     mode switch and Settings, and the bar has no back arrow or bookmark icon. The arrows start at the
-    bottom corners, and their Settings switch starts on.
+    bottom corners, and their Settings switch starts on. The arrows sit flush in the corners and can
+    cover the last line's corner words; a tap there turns the page until the arrow is dragged away.
+    On screens shorter than today's phones (16:9 phones, the Boox) the header line shrinks the
+    portrait text by about 2% too; taller phones keep today's size.
 
 ## Phases
 

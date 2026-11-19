@@ -497,6 +497,50 @@ void main() {
     expect(find.byType(Reader), findsOneWidget);
   });
 
+  testWidgets('R48: Clear all also clears a mark still waiting on Retry', (
+    tester,
+  ) async {
+    final store = FailingMarkStore()..failOn.add(MarkKind.shape);
+    await open(
+      tester,
+      store: store,
+      prefs: const ToolbarPrefs(
+        tools: [MarkTool.visible, MarkTool.singleLine, MarkTool.circle],
+      ),
+    );
+    final k = key(tester);
+    await longPressTarget(tester, word);
+    await tester.pumpAndSettle();
+    expect(store.marks(k), (line: red, shape: null));
+    await tapTarget(tester, word);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Clear all'));
+    await tester.pumpAndSettle();
+    store.failOn.clear();
+    await tester.tap(find.text('Retry'));
+    await tester.pumpAndSettle();
+    expect(store.marks(k), noMarks);
+    expect(store.state(k), (black: false, count: 1));
+  });
+
+  testWidgets('saves finish after the reader closes', (tester) async {
+    final store = _GatedStore();
+    await open(
+      tester,
+      store: store,
+      prefs: const ToolbarPrefs(tools: [MarkTool.singleLine, MarkTool.circle]),
+    );
+    final k = key(tester);
+    store.close();
+    await longPressTarget(tester, word);
+    await tester.pump();
+    await tester.pumpWidget(const SizedBox());
+    store.open();
+    await tester.pumpAndSettle();
+    expect(store.marks(k).line, red);
+    expect(store.marks(k).shape?.style, MarkStyle.circle);
+  });
+
   Future<int> countNear(WidgetTester tester, Color colour) async {
     final pixels = await wordPixels(tester, word);
     final found = word.resolve(tester);
@@ -507,6 +551,7 @@ void main() {
       for (var x = (box.left * s).floor(); x < (box.right * s).ceil(); x++) {
         if (x < 0 || y < 0 || x >= pixels.width || y >= pixels.height) continue;
         final i = (y * pixels.width + x) * 4, p = pixels.rgba;
+        if (p[i + 3] < 255) continue;
         if ((p[i] - (colour.r * 255).round()).abs() < 24 &&
             (p[i + 1] - (colour.g * 255).round()).abs() < 24 &&
             (p[i + 2] - (colour.b * 255).round()).abs() < 24) {
@@ -552,12 +597,13 @@ void main() {
       ));
       expect(await countNear(tester, redColour), 0);
       expect(await countNear(tester, blueColour), greaterThan(single));
+      final blackBefore = await countNear(tester, Colors.black);
       await set((
         line: null,
         shape: (style: MarkStyle.circle, color: MarkColor.black),
       ));
       expect(await countNear(tester, blueColour), 0);
-      expect(await countNear(tester, Colors.black), greaterThan(0));
+      expect(await countNear(tester, Colors.black), greaterThan(blackBefore));
       await openMenuItem(tester, 'Dark mode');
       await waitForCachedInk(tester, word);
       expect(await countNear(tester, Colors.white), greaterThan(0));

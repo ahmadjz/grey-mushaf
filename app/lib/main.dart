@@ -510,7 +510,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         _pending.removeFirst();
         final key = next is WordAction ? next.key : (next as MarkAction).key;
         if (mounted) _pageInk[_wordPages[key]]?.changed();
-        _wordRevision.value++;
+        if (mounted) _wordRevision.value++;
       }
     } catch (_) {
       _saveFailed = true;
@@ -847,8 +847,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 TextButton(
                   onPressed: () {
                     final now = _projected(key);
-                    for (final row in rows) {
-                      if (row.on(now)) _enqueue(row.act(false));
+                    if (now.black) _enqueue(WordAction(key, false));
+                    for (final kind in MarkKind.values) {
+                      if (now.marks.of(kind) != null) {
+                        _enqueue(MarkAction(key, kind, null));
+                      }
                     }
                     closing = true;
                     Navigator.of(dialogContext).pop();

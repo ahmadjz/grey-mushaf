@@ -249,6 +249,14 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     surah name on the left, in portrait and landscape. In landscape it shrinks the text by a few
     percent; this narrows R19 there.
 
+## R61 (2026-11-19, Claude's defaults, the owner may overrule)
+
+61. **Top bar and header details for run 1 of R57.** The surah name and juz shown in the top bar and
+    the page header line are those of the page's first ayah. Pages 1–2 get the header line and border
+    too. The dark mode switch leaves Settings for the ⋮ menu; until run 3 the menu holds only the dark
+    mode switch and Settings, and the bar has no back arrow or bookmark icon. The arrows start at the
+    bottom corners, and their Settings switch starts on.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

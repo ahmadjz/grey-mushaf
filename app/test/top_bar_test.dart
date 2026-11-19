@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,6 +36,15 @@ class FailOnceAssets extends CachingAssetBundle {
   @override
   Future<ByteData> load(String key) async {
     if (failOnce.remove(key.split('/').last)) throw StateError('injected');
+    return rootBundle.load(key);
+  }
+}
+
+class PausedAssets extends CachingAssetBundle {
+  final pauses = <String, Completer<void>>{};
+  @override
+  Future<ByteData> load(String key) async {
+    await pauses[key.split('/').last]?.future;
     return rootBundle.load(key);
   }
 }
@@ -432,5 +443,50 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('arrow-previous')));
     await tester.pumpAndSettle();
     expect(shown(tester, 215, 222), landed);
+  });
+
+  testWidgets('a swipe during a held arrow load resets the arrow target', (
+    tester,
+  ) async {
+    screen(tester, const Size(411, 914));
+    insets(tester);
+    final assets = PausedAssets();
+    final bundle = (await tester.runAsync(
+      () => MushafBundle.open(assets: assets),
+    ))!;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(
+          pages: bundle.pages,
+          bundle: bundle,
+          store: MemoryRevealStore(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    Future<void> settle() async {
+      for (var i = 0; i < 3; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 150)),
+        );
+        await tester.pumpAndSettle();
+      }
+    }
+
+    final next = find.byKey(const ValueKey('arrow-next'));
+    await tester.tap(next);
+    await settle();
+    expect(shown(tester, 1, 12), [2]);
+    final gate = assets.pauses['7.json'] = Completer<void>();
+    await tester.tap(next);
+    await settle();
+    await tester.fling(find.byType(PageView), const Offset(-400, 0), 2000);
+    await settle();
+    expect(shown(tester, 1, 12), [1]);
+    await tester.tap(next);
+    await settle();
+    gate.complete();
+    await settle();
+    expect(shown(tester, 1, 12), [2]);
   });
 }

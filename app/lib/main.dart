@@ -140,6 +140,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   late final Map<String, Offset> _arrowSpots;
   final _arrowDragOrigins = <String, Offset>{};
   int? _arrowTarget;
+  int _arrowTurns = 0;
   int _groupCount = 0;
   late final _shownPage = ValueNotifier<int>(
     widget.pages.isEmpty ? 1 : widget.pages.first['page'] as int,
@@ -188,6 +189,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final target = base + delta;
     if (target < 0 || target >= _groupCount) return;
     _arrowTarget = target;
+    final turn = ++_arrowTurns;
     unawaited(
       controller
           .animateToPage(
@@ -196,7 +198,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
             curve: Curves.easeOut,
           )
           .whenComplete(() {
-            if (_arrowTarget == target) _arrowTarget = null;
+            if (turn == _arrowTurns) _arrowTarget = null;
           }),
     );
   }
@@ -864,6 +866,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                         if (notification.depth != 0) return false;
                         if (notification is ScrollStartNotification) {
                           _warmGeneration++;
+                          if (notification.dragDetails != null) {
+                            _arrowTarget = null;
+                            _arrowTurns++;
+                          }
                         } else if (notification is ScrollEndNotification) {
                           _afterScroll();
                         }

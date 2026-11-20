@@ -684,11 +684,15 @@ void main() {
       await tester.pumpAndSettle();
       expect(failure, findsOneWidget);
       expect(find.byType(SnackBar), findsOneWidget);
+      await tester.tap(retry);
+      await tester.pump();
+      expect(find.byType(SnackBar), findsOneWidget);
       store.failOn.clear();
       await tester.tap(retry);
       await tester.pumpAndSettle();
       expect(failure, findsNothing);
       expect(find.byType(SnackBar), findsNothing);
+      expect(tester.takeException(), isNull);
       expect(find.byKey(const ValueKey('mark-box')), findsOneWidget);
       expect(store.marks(k).line, isNull);
       expect(store.state(k), (black: true, count: 1));

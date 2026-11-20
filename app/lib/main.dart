@@ -675,32 +675,34 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       _saveFailed = true;
       if (mounted) {
         _saveFailure.value = true;
-        _closeSaveMessage();
-        final message = _saveMessage = ScaffoldMessenger.of(context)
-            .showSnackBar(
-              SnackBar(
-                backgroundColor: _darkMode ? const Color(0xFF303030) : null,
-                content: Text(
-                  "Couldn't save",
-                  style: _darkMode
-                      ? const TextStyle(color: Colors.white)
-                      : null,
+        if (_saveMessage == null) {
+          final message = _saveMessage = ScaffoldMessenger.of(context)
+              .showSnackBar(
+                SnackBar(
+                  backgroundColor: _darkMode ? const Color(0xFF303030) : null,
+                  content: Text(
+                    "Couldn't save",
+                    style: _darkMode
+                        ? const TextStyle(color: Colors.white)
+                        : null,
+                  ),
+                  dismissDirection: DismissDirection.none,
+                  action: SnackBarAction(
+                    textColor: _darkMode ? Colors.white : null,
+                    label: 'Retry',
+                    onPressed: () {
+                      _saveMessage = null;
+                      unawaited(_savePending());
+                    },
+                  ),
                 ),
-                dismissDirection: DismissDirection.none,
-                action: SnackBarAction(
-                  textColor: _darkMode ? Colors.white : null,
-                  label: 'Retry',
-                  onPressed: () {
-                    unawaited(_savePending());
-                  },
-                ),
-              ),
-            );
-        unawaited(
-          message.closed.then((_) {
-            if (identical(_saveMessage, message)) _saveMessage = null;
-          }),
-        );
+              );
+          unawaited(
+            message.closed.then((_) {
+              if (identical(_saveMessage, message)) _saveMessage = null;
+            }),
+          );
+        }
       }
     } finally {
       _saving = false;
@@ -708,9 +710,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   }
 
   void _closeSaveMessage() {
-    final message = _saveMessage;
+    if (_saveMessage == null) return;
     _saveMessage = null;
-    message?.close();
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
 
   final _pageInk = <int, PageInkController>{};

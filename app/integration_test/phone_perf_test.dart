@@ -89,13 +89,28 @@ void main() {
       }
     }
 
+    final arrowMetrics = <Object>[];
     Future<void> arrow(int taps) async {
-      final before = controller().page!.round();
+      final c = controller();
+      final before = c.page!.round();
+      var sliding = 0;
+      void moved() {
+        if ((c.page! - c.page!.round()).abs() > .001) sliding++;
+      }
+
+      c.addListener(moved);
       for (var i = 0; i < taps; i++) {
         await tester.tap(find.byKey(const ValueKey('arrow-next')));
         await tester.pump(const Duration(milliseconds: 50));
       }
       await settle();
+      c.removeListener(moved);
+      arrowMetrics.add({
+        'landscape':
+            tester.view.physicalSize.width > tester.view.physicalSize.height,
+        'taps': taps,
+        'sliding_updates': sliding,
+      });
       expectShown(before + taps);
     }
 
@@ -199,6 +214,7 @@ void main() {
       }
     });
     motion['swipes'] = swipeMetrics;
+    motion['arrows'] = arrowMetrics;
     binding.reportData ??= {};
     binding.reportData!['motion'] = motion;
     binding.reportData!['frame_samples_ms'] = samples;

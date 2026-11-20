@@ -38,6 +38,7 @@ __pycache__/
 
 # Generated private mushaf bundle
 /app/assets/mushaf/
+/app/assets/index/
 .pytest_cache/
 
 # Private mushaf parity captures (never publish glyph images)

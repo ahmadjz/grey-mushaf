@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
+import 'bookmarks.dart';
 import 'flat_ink.dart';
 import 'page_ink.dart';
 import 'bundle_metrics.dart';
@@ -15,7 +16,11 @@ import 'mushaf_bundle.dart';
 import 'loaded_page_controller.dart';
 import 'heading_ink.dart';
 import 'mushaf_index.dart';
+import 'navigation_screen.dart';
+import 'quick_jump.dart';
+import 'quran_index.dart';
 import 'reveal_store.dart';
+import 'search_screen.dart';
 import 'reader_settings.dart';
 import 'word_marks.dart';
 
@@ -24,6 +29,9 @@ Future<void> main() async {
   try {
     final bundle = await MushafBundle.open();
     final store = await SqliteRevealStore.open();
+    final index = await QuranIndex.load(rootBundle);
+    final search = await SearchIndex.load(rootBundle);
+    await bundle.loadNear(store.lastPage);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       debugPrint('READER_FIRST_FRAME ${DateTime.now().millisecondsSinceEpoch}');
     });
@@ -39,6 +47,9 @@ Future<void> main() async {
           store: store,
           settings: store,
           toolbarSettings: store,
+          navigation: store,
+          index: index,
+          search: search,
         ),
       ),
     );
@@ -96,8 +107,14 @@ class Reader extends StatefulWidget {
     this.settings,
     this.toolbarSettings,
     this.bundle,
+    this.navigation,
+    this.index,
+    this.search,
   });
   final MushafBundle? bundle;
+  final NavigationStore? navigation;
+  final QuranIndex? index;
+  final SearchIndex? search;
   final RevealStore store;
   final ReaderSettings? settings;
   final ToolbarSettings? toolbarSettings;
@@ -153,8 +170,125 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   int _arrowTurns = 0;
   int _groupCount = 0;
   late final _shownPage = ValueNotifier<int>(
-    widget.pages.isEmpty ? 1 : widget.pages.first['page'] as int,
+    widget.pages.isEmpty ? 1 : widget.pages[_selected]['page'] as int,
   );
+  final _highlight = ValueNotifier<({int page, int surah, int ayah})?>(null);
+  List<List<Map<String, dynamic>>> _groups = const [];
+  late final Map<int, int> _bookmarks = {
+    ...?widget.navigation?.bookmarkSavedAt,
+  };
+  bool _bookmarkSaving = false;
+  int? _savedLastPage;
+
+  List<int> get _shownPages => [
+    for (final page
+        in _groups.isEmpty
+            ? const <Map<String, dynamic>>[]
+            : _groups[_groupOf(_shownPage.value)])
+      page['page'] as int,
+  ];
+
+  int _groupOf(int page) =>
+      math.max(0, _groups.indexWhere((g) => g.any((p) => p['page'] == page)));
+
+  Future<void> _toggleBookmark() async {
+    final store = widget.navigation;
+    if (store == null || _bookmarkSaving) return;
+    final shown = _shownPages;
+    final saved = shown.where(_bookmarks.containsKey).toList();
+    final actions = saved.isEmpty
+        ? [BookmarkAction(shown.first, true)]
+        : [for (final page in saved) BookmarkAction(page, false)];
+    await _saveBookmarks(actions);
+  }
+
+  Future<void> _saveBookmarks(List<BookmarkAction> actions) async {
+    final store = widget.navigation!;
+    setState(() => _bookmarkSaving = true);
+    try {
+      await store.saveBookmarks(actions);
+      if (!mounted) return;
+      setState(() {
+        _bookmarks
+          ..clear()
+          ..addAll(store.bookmarkSavedAt);
+      });
+    } catch (_) {
+      _showSaveFailure(
+        'bookmark',
+        retry: () => unawaited(_saveBookmarks(actions)),
+      );
+    } finally {
+      if (mounted) setState(() => _bookmarkSaving = false);
+    }
+  }
+
+  void _saveLastPage(int page) {
+    final store = widget.navigation;
+    if (store == null || page == _savedLastPage) return;
+    _savedLastPage = page;
+    unawaited(
+      store.saveLastPage(page).catchError((Object _) {
+        if (_savedLastPage == page) _savedLastPage = null;
+      }),
+    );
+  }
+
+  void _goTo(NavTarget? target) {
+    if (target == null || !mounted || _groups.isEmpty) return;
+    final selected = widget.pages.indexWhere((p) => p['page'] == target.page);
+    if (selected < 0) return;
+    final group = _groupOf(target.page);
+    final ayah = target.ayah;
+    _highlight.value = ayah == null
+        ? null
+        : (page: target.page, surah: target.surah!, ayah: ayah);
+    _selected = selected;
+    if (group == _groupOf(_shownPage.value)) return;
+    _arrowTarget = null;
+    _controller.jumpToPage(group);
+  }
+
+  Future<void> _openNavigation() async {
+    final index = widget.index;
+    if (index == null) return;
+    final target = await Navigator.of(context).push<NavTarget>(
+      MaterialPageRoute(
+        builder: (context) => Theme(
+          data: _theme,
+          child: NavigationScreen(index: index, store: widget.navigation),
+        ),
+      ),
+    );
+    if (!mounted) return;
+    setState(() {
+      _bookmarks
+        ..clear()
+        ..addAll(widget.navigation?.bookmarkSavedAt ?? const {});
+    });
+    _goTo(target);
+  }
+
+  Future<void> _openSearch() async {
+    final index = widget.index;
+    if (index == null) return;
+    final target = await Navigator.of(context).push<NavTarget>(
+      MaterialPageRoute(
+        builder: (context) => Theme(
+          data: _theme,
+          child: SearchScreen(index: index, search: widget.search),
+        ),
+      ),
+    );
+    _goTo(target);
+  }
+
+  Future<void> _openQuickJump() async {
+    final index = widget.index;
+    if (index == null) return;
+    final target = await showQuickJump(context, index, _shownPage.value);
+    _goTo(target);
+  }
 
   void _setDarkMode(bool dark) {
     setState(() => _darkMode = dark);
@@ -470,6 +604,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   final _wordRevision = ValueNotifier<int>(0);
   bool _saving = false;
   bool _saveFailed = false;
+  final _saveFailure = ValueNotifier<bool>(false);
 
   void _enqueue(Object action) {
     assert(action is WordAction || action is MarkAction);
@@ -499,6 +634,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     if (_saving) return;
     _saving = true;
     _saveFailed = false;
+    _saveFailure.value = false;
     try {
       while (_pending.isNotEmpty) {
         final next = _pending.first;
@@ -515,6 +651,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     } catch (_) {
       _saveFailed = true;
       if (mounted) {
+        _saveFailure.value = true;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: _darkMode ? const Color(0xFF303030) : null,
@@ -556,6 +693,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _darkLevel = widget.settings?.darkLevel ?? 80;
     _arrowsShown = widget.settings?.arrowsShown ?? true;
     _arrowSpots = {...?widget.settings?.arrowSpots};
+    final last = widget.navigation?.lastPage;
+    _selected = math.max(0, widget.pages.indexWhere((p) => p['page'] == last));
+    _savedLastPage = last;
     _toolbar = widget.toolbarSettings?.toolbar ?? const ToolbarPrefs();
     WidgetsBinding.instance.addObserver(this);
     unawaited(_setBars());
@@ -699,6 +839,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     _settingFailures.dispose();
     _shownPage.dispose();
+    _highlight.dispose();
+    _saveFailure.dispose();
     _bundleRevision.dispose();
     _wordRevision.dispose();
     for (final ink in _pageInk.values) {
@@ -824,6 +966,22 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _saveFailure,
+                    builder: (context, failed, _) => failed
+                        ? Row(
+                            key: const ValueKey('mark-box-failure'),
+                            children: [
+                              const SizedBox(width: 16),
+                              const Expanded(child: Text("Couldn't save")),
+                              TextButton(
+                                onPressed: () => unawaited(_savePending()),
+                                child: const Text('Retry'),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                   for (final row in rows)
                     CheckboxListTile(
                       key: ValueKey('mark-row-${row.label}'),
@@ -888,6 +1046,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   void _afterScroll() {
     if (!_onPage) return;
+    if (widget.pages.isNotEmpty) {
+      _saveLastPage(widget.pages[_selected]['page'] as int);
+    }
     final pending = _pendingPrefetch;
     _pendingPrefetch = null;
     if (pending != null && widget.bundle != null) {
@@ -1007,6 +1168,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       _arrowTarget = null;
     }
     _groupCount = groups.length;
+    _groups = groups;
     final screen = MediaQuery.sizeOf(context);
     return Theme(
       data: _theme,
@@ -1046,6 +1208,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                     onLongPressEnd: (_) => _end(),
                     onLongPressCancel: _end,
                     onTapUp: (details) {
+                      _highlight.value = null;
                       final id = _wordAt(
                         details.globalPosition,
                         shortTap: true,
@@ -1095,7 +1258,19 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                           if (controller is LoadedPageController) {
                             controller.cancelPendingNavigation();
                           }
-                          _selected = spread ? index * 2 : index;
+                          final requested = widget.pages[_selected]['page'];
+                          if (!groups[index].any(
+                            (p) => p['page'] == requested,
+                          )) {
+                            _selected = spread ? index * 2 : index;
+                          }
+                          final highlight = _highlight.value;
+                          if (highlight != null &&
+                              !groups[index].any(
+                                (p) => p['page'] == highlight.page,
+                              )) {
+                            _highlight.value = null;
+                          }
                           _shownPage.value = groups[index].first['page'] as int;
                           _pendingPrefetch = groups[index].first['page'] as int;
                           if (!_scrolling) _afterScroll();
@@ -1165,6 +1340,12 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
           child: Row(
             textDirection: TextDirection.rtl,
             children: [
+              if (widget.index != null)
+                IconButton(
+                  tooltip: 'Surah list',
+                  icon: const Icon(Icons.arrow_forward),
+                  onPressed: () => unawaited(_openNavigation()),
+                ),
               Expanded(
                 child: ValueListenableBuilder<int>(
                   valueListenable: _shownPage,
@@ -1198,11 +1379,32 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                   },
                 ),
               ),
+              if (widget.navigation != null)
+                ValueListenableBuilder<int>(
+                  valueListenable: _shownPage,
+                  builder: (context, _, _) {
+                    final saved = _shownPages.any(_bookmarks.containsKey);
+                    return IconButton(
+                      key: const ValueKey('bookmark-button'),
+                      tooltip: saved ? 'Remove bookmark' : 'Bookmark page',
+                      icon: Icon(
+                        saved ? Icons.bookmark : Icons.bookmark_border,
+                      ),
+                      onPressed: _bookmarkSaving
+                          ? null
+                          : () => unawaited(_toggleBookmark()),
+                    );
+                  },
+                ),
               PopupMenuButton<String>(
                 tooltip: 'Menu',
                 icon: const Icon(Icons.more_vert),
                 onSelected: (item) {
-                  if (item == 'dark') {
+                  if (item == 'search') {
+                    unawaited(_openSearch());
+                  } else if (item == 'jump') {
+                    unawaited(_openQuickJump());
+                  } else if (item == 'dark') {
                     _setDarkMode(!_darkMode);
                   } else if (item == 'toolbar') {
                     unawaited(_saveToolbar(_toolbar.copyWith(hidden: false)));
@@ -1211,6 +1413,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                   }
                 },
                 itemBuilder: (context) => [
+                  if (widget.index != null)
+                    const PopupMenuItem(value: 'search', child: Text('Search')),
                   PopupMenuItem(
                     value: 'dark',
                     child: Row(
@@ -1222,6 +1426,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                       ],
                     ),
                   ),
+                  if (widget.index != null)
+                    const PopupMenuItem(
+                      value: 'jump',
+                      child: Text('Quick jump'),
+                    ),
                   if (_toolbar.hidden)
                     const PopupMenuItem(
                       value: 'toolbar',
@@ -1577,7 +1786,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final place = pagePlace(page);
     final chrome = _darkMode ? const Color(0xFFB0B0B0) : Colors.black;
     final spread = _spread == true;
-    return PaintedInkPage(
+    final painted = PaintedInkPage(
       controller: ink,
       child: SizedBox(
         key: ValueKey('page-$number'),
@@ -1725,6 +1934,24 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
           ],
         ),
       ),
+    );
+    return Stack(
+      children: [
+        painted,
+        Positioned.fill(
+          child: IgnorePointer(
+            child: CustomPaint(
+              key: ValueKey('ayah-shade-$number'),
+              painter: AyahShadePainter(
+                ink: ink,
+                page: number,
+                highlight: _highlight,
+                dark: _darkMode,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -1932,4 +2159,60 @@ class _PageBorderPainter extends CustomPainter {
   @override
   bool shouldRepaint(_PageBorderPainter old) =>
       old.left != left || old.right != right || old.color != color;
+}
+
+class AyahShadePainter extends CustomPainter {
+  AyahShadePainter({
+    required this.ink,
+    required this.page,
+    required this.highlight,
+    required this.dark,
+  }) : super(repaint: Listenable.merge([ink, highlight]));
+  final PageInkController ink;
+  final int page;
+  final ValueNotifier<({int page, int surah, int ayah})?> highlight;
+  final bool dark;
+
+  // Multiply (light) and screen (dark) leave black and white letters unchanged.
+  static const _lightShade = Color(0xFFD3E6F2);
+  static const _darkShade = Color(0xFF1F3A48);
+
+  List<Rect> runs() {
+    final target = highlight.value;
+    if (target == null || target.page != page) return const [];
+    final prefix = '${target.surah}:${target.ayah}:';
+    final lines = <double, Rect>{};
+    for (final word in ink.words) {
+      if (!word.location.startsWith(prefix)) continue;
+      final rect = Rect.fromLTRB(
+        word.box.left,
+        word.band.top,
+        word.box.right,
+        word.band.bottom,
+      );
+      lines.update(
+        word.band.top,
+        (run) => run.expandToInclude(rect),
+        ifAbsent: () => rect,
+      );
+    }
+    return lines.values.toList();
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = dark ? _darkShade : _lightShade
+      ..blendMode = dark ? BlendMode.screen : BlendMode.multiply;
+    for (final run in runs()) {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(run.inflate(2), const Radius.circular(4)),
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(AyahShadePainter old) =>
+      old.ink != ink || old.page != page || old.dark != dark;
 }

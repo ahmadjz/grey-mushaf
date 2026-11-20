@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/main.dart';
 import 'package:greymushaf/reader_settings.dart';
@@ -654,6 +655,77 @@ void main() {
     await tester.pumpAndSettle();
     expect(store.markCalls, 1);
     expect(opened.store.marks(key(tester)).line, red);
+  });
+
+  testWidgets(
+    'R24/R66: a failed save while the box is open offers Retry in it',
+    (tester) async {
+      final store = FailingMarkStore();
+      await open(
+        tester,
+        store: store,
+        prefs: const ToolbarPrefs(
+          tools: [MarkTool.visible, MarkTool.singleLine],
+        ),
+      );
+      await longPressTarget(tester, word);
+      await tester.pumpAndSettle();
+      final k = key(tester);
+      await tapTarget(tester, word);
+      await tester.pumpAndSettle();
+      store.failOn.add(MarkKind.line);
+      await tester.tap(find.text('Single line'));
+      await tester.pumpAndSettle();
+      final failure = find.byKey(const ValueKey('mark-box-failure'));
+      expect(failure, findsOneWidget);
+      final retry = find.descendant(of: failure, matching: find.text('Retry'));
+      expect(retry.hitTestable(), findsOneWidget);
+      store.failOn.clear();
+      await tester.tap(retry);
+      await tester.pumpAndSettle();
+      expect(failure, findsNothing);
+      expect(find.byKey(const ValueKey('mark-box')), findsOneWidget);
+      expect(store.marks(k).line, isNull);
+      expect(store.state(k), (black: true, count: 1));
+    },
+  );
+
+  testWidgets('R62: save messages clear the arrows past a screen cutout', (
+    tester,
+  ) async {
+    const channel = MethodChannel('tech.ahmadjz.greymushaf/reader');
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      channel,
+      (call) async => <String, double>{
+        'left': 40,
+        'top': 0,
+        'right': 24,
+        'bottom': 16,
+        'statusTop': 0,
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        channel,
+        null,
+      ),
+    );
+    final store = FailingMarkStore()..failReveal = true;
+    await open(tester, store: store);
+    await longPressTarget(tester, word);
+    await tester.pumpAndSettle();
+    final message = tester.getRect(
+      find
+          .descendant(
+            of: find.byType(SnackBar),
+            matching: find.byType(Material),
+          )
+          .first,
+    );
+    final screen = tester.getSize(find.byType(Reader));
+    expect(message.left, greaterThanOrEqualTo(40 + 44 + 8));
+    expect(message.right, lessThanOrEqualTo(screen.width - 24 - 44 - 8));
+    expect(message.bottom, lessThanOrEqualTo(screen.height - 16 - 8));
   });
 }
 

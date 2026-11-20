@@ -178,9 +178,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       actionTextColor: _darkMode ? Colors.white : null,
       behavior: SnackBarBehavior.floating,
       insetPadding: EdgeInsets.fromLTRB(
-        _cutout.left + _arrowSize + 8,
+        _cutout.left + _arrowInset + _arrowSize + 8,
         0,
-        _cutout.right + _arrowSize + 8,
+        _cutout.right + _arrowInset + _arrowSize + 8,
         _cutout.bottom + 8,
       ),
     ),
@@ -191,7 +191,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   bool _settingsOpen = false;
   double _contentWidth = 0;
   static const _headerHeight = 14.0;
-  static const _arrowSize = 44.0;
+  bool get _largeScreen =>
+      (MediaQuery.maybeSizeOf(context)?.shortestSide ?? 0) >= 600;
+  double get _arrowSize => _largeScreen ? 64 : 44;
+  double get _arrowInset => _largeScreen ? 16 : 0;
   late bool _arrowsShown;
   late final Map<String, Offset> _arrowSpots;
   final _arrowDragOrigins = <String, Offset>{};
@@ -1800,7 +1803,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   Widget _arrow(String name, Size screen, bool spread) {
     final key = '${spread ? 'landscape' : 'portrait'}-$name';
-    const half = _arrowSize / 2;
+    final half = _arrowSize / 2;
     final safe = Rect.fromLTRB(
       _cutout.left + half,
       _cutout.top + half,
@@ -1808,8 +1811,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       screen.height - _cutout.bottom - half,
     );
     final spot = _arrowSpots[key];
+    final corner = safe.deflate(_arrowInset);
     final wanted = spot == null
-        ? Offset(name == 'next' ? safe.left : safe.right, safe.bottom)
+        ? Offset(name == 'next' ? corner.left : corner.right, corner.bottom)
         : Offset(spot.dx * screen.width, spot.dy * screen.height);
     final center = Offset(
       wanted.dx.clamp(safe.left, math.max(safe.left, safe.right)),
@@ -1849,6 +1853,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
             ),
             child: Icon(
               name == 'next' ? Icons.chevron_left : Icons.chevron_right,
+              size: _largeScreen ? 36 : null,
               color: _foreground.withValues(alpha: .35),
             ),
           ),

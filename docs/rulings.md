@@ -331,6 +331,12 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     well as in B/W (extends R45 and R72). A finger swipe still follows the finger. Quick jump and
     search already jump.
 
+## R75 (2026-11-20, owner; sizes are Claude's defaults)
+
+75. **Bigger arrows on the Boox.** On large screens (the Boox and tablets) the arrows are 64 dp
+    instead of 44, with a bigger chevron, and start 16 dp in from the bottom corners instead of
+    flush (narrows R61). Phones keep today's arrows. A spot the owner dragged an arrow to is kept.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

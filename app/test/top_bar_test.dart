@@ -537,4 +537,35 @@ void main() {
     await settle();
     expect(shown(tester, 1, 12), [6]);
   });
+
+  testWidgets(
+    'R75: Boox-sized screens get bigger arrows set in from the corners',
+    (tester) async {
+      for (final (size, extent, inset) in [
+        (const Size(936, 1248), 64.0, 16.0),
+        (const Size(411, 914), 44.0, 0.0),
+      ]) {
+        screen(tester, size);
+        insets(tester);
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Reader(
+              key: ValueKey(size),
+              pages: range(215, 218),
+              store: MemoryRevealStore(),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        final next = tester.getRect(find.byKey(const ValueKey('arrow-next')));
+        final previous = tester.getRect(
+          find.byKey(const ValueKey('arrow-previous')),
+        );
+        expect(next.size, Size(extent, extent));
+        expect(next.left, inset);
+        expect(next.bottom, size.height - inset);
+        expect(previous.right, size.width - inset);
+      }
+    },
+  );
 }

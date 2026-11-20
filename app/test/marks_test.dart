@@ -680,10 +680,15 @@ void main() {
       expect(failure, findsOneWidget);
       final retry = find.descendant(of: failure, matching: find.text('Retry'));
       expect(retry.hitTestable(), findsOneWidget);
+      await tester.tap(retry);
+      await tester.pumpAndSettle();
+      expect(failure, findsOneWidget);
+      expect(find.byType(SnackBar), findsOneWidget);
       store.failOn.clear();
       await tester.tap(retry);
       await tester.pumpAndSettle();
       expect(failure, findsNothing);
+      expect(find.byType(SnackBar), findsNothing);
       expect(find.byKey(const ValueKey('mark-box')), findsOneWidget);
       expect(store.marks(k).line, isNull);
       expect(store.state(k), (black: true, count: 1));

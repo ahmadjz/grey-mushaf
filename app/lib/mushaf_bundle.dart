@@ -24,7 +24,7 @@ class MushafBundle {
       if (p['lines'] != null) p['page'] as int,
   ];
 
-  static Future<MushafBundle> open({AssetBundle? assets}) async {
+  static Future<MushafBundle> open({AssetBundle? assets, int near = 1}) async {
     assets ??= rootBundle;
     final numbers =
         jsonDecode(await assets.loadString('assets/mushaf/pages.json')) as List;
@@ -42,7 +42,7 @@ class MushafBundle {
     await (FontLoader(
       'surah-name-v4',
     )..addFont(assets.load('assets/mushaf/surah-name-v4.ttf'))).load();
-    await bundle.loadNear(1);
+    await bundle.loadNear(near);
     return bundle;
   }
 

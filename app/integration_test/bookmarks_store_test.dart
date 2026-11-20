@@ -260,6 +260,35 @@ void main() {
     expect(await _rows(filename, _savedTables), before);
   });
 
+  testWidgets(
+    'a failed upgrade from version 1 rolls back marks and bookmarks',
+    (tester) async {
+      final filename = await _fresh('bookmarks-failed-v1.db');
+      await _create(filename, 1);
+      var db = await openDatabase(filename);
+      await db.execute('CREATE TABLE bookmarks (blocker INTEGER)');
+      await db.close();
+      final tables = _savedTables.take(4).toList();
+      final before = await _rows(filename, tables);
+      await expectLater(
+        SqliteRevealStore.open(databasePath: filename),
+        throwsA(isA<DatabaseException>()),
+      );
+      db = await openDatabase(filename);
+      expect(await db.getVersion(), 1);
+      expect(
+        await db.query(
+          'sqlite_master',
+          where:
+              "type = 'table' AND name IN ('mark_actions', 'bookmark_actions')",
+        ),
+        isEmpty,
+      );
+      await db.close();
+      expect(await _rows(filename, tables), before);
+    },
+  );
+
   testWidgets('a spread change commits both pages or neither', (tester) async {
     final filename = await _fresh('bookmarks-atomic.db');
     var store = await SqliteRevealStore.open(databasePath: filename);
@@ -295,7 +324,8 @@ void main() {
     await store.saveBookmarks([BookmarkAction(5, true, createdAt: 1000)]);
     await store.saveBookmarks([BookmarkAction(5, false, createdAt: 900)]);
     await store.saveBookmarks([BookmarkAction(5, true, createdAt: 800)]);
-    expect(store.bookmarkSavedAt, {5: 1002});
+    await store.saveBookmarks([BookmarkAction(6, true, createdAt: 700)]);
+    expect(store.bookmarkSavedAt, {5: 1002, 6: 1003});
     await store.close();
   });
 

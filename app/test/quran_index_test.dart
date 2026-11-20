@@ -36,8 +36,21 @@ void main() {
     expect(search.find('الصلاه').map((a) => a.ayah), [3]);
     expect(search.find('  ـ  '), isEmpty);
     final hit = search.find('الذين').single;
-    final start = hit.folded.indexOf(foldQuery('الذين'));
-    expect(hit.text.substring(start, start + 5), 'الذين');
+    final range = hit.matches('الذين').single;
+    expect(hit.text.substring(range.start, range.end), 'الذين');
+  });
+
+  test('voweled text matches a plain query and highlights whole words', () {
+    final ayah = AyahText(
+      2,
+      104,
+      16,
+      'يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا تَقُولُوا۟',
+    );
+    expect(SearchIndex([ayah]).find('أيها الذين'), [ayah]);
+    final range = ayah.matches('ايها الذين').single;
+    expect(ayah.text.substring(range.start, range.end), 'أَيُّهَا ٱلَّذِينَ');
+    expect(ayah.matches('لا').length, 1);
   });
 
   test('numbers read in either digit form', () {

@@ -7,10 +7,14 @@ import 'quran_index.dart';
 Future<NavTarget?> showQuickJump(
   BuildContext context,
   QuranIndex index,
-  int currentPage,
-) => showDialog<NavTarget>(
+  int currentPage, {
+  required ThemeData theme,
+}) => showDialog<NavTarget>(
   context: context,
-  builder: (context) => _QuickJump(index: index, currentPage: currentPage),
+  builder: (context) => Theme(
+    data: theme,
+    child: _QuickJump(index: index, currentPage: currentPage),
+  ),
 );
 
 class _QuickJump extends StatefulWidget {

@@ -291,14 +291,15 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 
 ## R66 (2026-11-20, Claude's defaults, the owner may overrule)
 
-66. **Navigation details for run 3 of R57.** Each surah row shows its number, name, "مكية/مدنية · N
-    آية" and its first page; a "الجزء N" row with its page sits where each juz begins in the list,
+66. **Navigation details for run 3 of R57.** Each surah row shows its number, name, "مكية - N آيات"
+    (or مدنية, as in the reference app) and its first page; a "الجزء N" row with its page sits where each juz begins in the list,
     and tapping it opens that juz. In a landscape spread the bookmark icon is filled when either
     page is saved; a tap removes the saved pages, or saves the right-hand page. The bookmarks tab
     lists the newest first, each with surah, page, juz and a remove button. Quick jump is one dialog
     with a page field and a surah picker with an ayah field. In search, a number also finds that page
     and juz, a surah name finds the surah, and text matching treats أ/إ/آ/ا, ى/ي and ة/ه as the same
-    letter. The search shading clears on the next tap or page turn. The last page read stays on
+    letter. A quick jump to a surah and ayah shades that ayah too. The search shading clears on the
+    next tap or page turn. The last page read stays on
     the device and is not synced. A failed save while the mark box is open shows "Couldn't save"
     with Retry inside the box.
 

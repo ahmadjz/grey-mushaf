@@ -27,11 +27,9 @@ import 'word_marks.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    final bundle = await MushafBundle.open();
     final store = await SqliteRevealStore.open();
+    final bundle = await MushafBundle.open(near: store.lastPage);
     final index = await QuranIndex.load(rootBundle);
-    final search = await SearchIndex.load(rootBundle);
-    await bundle.loadNear(store.lastPage);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       debugPrint('READER_FIRST_FRAME ${DateTime.now().millisecondsSinceEpoch}');
     });
@@ -49,7 +47,7 @@ Future<void> main() async {
           toolbarSettings: store,
           navigation: store,
           index: index,
-          search: search,
+          loadSearch: () => SearchIndex.load(rootBundle),
         ),
       ),
     );
@@ -109,12 +107,12 @@ class Reader extends StatefulWidget {
     this.bundle,
     this.navigation,
     this.index,
-    this.search,
+    this.loadSearch,
   });
   final MushafBundle? bundle;
   final NavigationStore? navigation;
   final QuranIndex? index;
-  final SearchIndex? search;
+  final Future<SearchIndex?> Function()? loadSearch;
   final RevealStore store;
   final ReaderSettings? settings;
   final ToolbarSettings? toolbarSettings;
@@ -178,6 +176,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     ...?widget.navigation?.bookmarkSavedAt,
   };
   bool _bookmarkSaving = false;
+  Future<SearchIndex?>? _search;
+  int? _requestedPage;
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? _saveMessage;
   int? _savedLastPage;
 
   List<int> get _shownPages => [
@@ -237,15 +238,27 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   void _goTo(NavTarget? target) {
     if (target == null || !mounted || _groups.isEmpty) return;
     final selected = widget.pages.indexWhere((p) => p['page'] == target.page);
+
     if (selected < 0) return;
     final group = _groupOf(target.page);
     final ayah = target.ayah;
     _highlight.value = ayah == null
         ? null
         : (page: target.page, surah: target.surah!, ayah: ayah);
-    _selected = selected;
-    if (group == _groupOf(_shownPage.value)) return;
     _arrowTarget = null;
+    if (group == _groupOf(_shownPage.value)) {
+      final controller = _controller;
+      if (controller is LoadedPageController) {
+        controller.cancelPendingNavigation();
+        widget.bundle?.cancelPendingLoads();
+        unawaited(_prefetch(target.page));
+      }
+      _requestedPage = null;
+      _selected = selected;
+      _saveLastPage(target.page);
+      return;
+    }
+    _requestedPage = target.page;
     _controller.jumpToPage(group);
   }
 
@@ -276,7 +289,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
       MaterialPageRoute(
         builder: (context) => Theme(
           data: _theme,
-          child: SearchScreen(index: index, search: widget.search),
+          child: SearchScreen(
+            index: index,
+            search: _search ??=
+                widget.loadSearch?.call() ?? Future<SearchIndex?>.value(),
+          ),
         ),
       ),
     );
@@ -286,7 +303,12 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   Future<void> _openQuickJump() async {
     final index = widget.index;
     if (index == null) return;
-    final target = await showQuickJump(context, index, _shownPage.value);
+    final target = await showQuickJump(
+      context,
+      index,
+      _shownPage.value,
+      theme: _theme,
+    );
     _goTo(target);
   }
 
@@ -648,31 +670,47 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         if (mounted) _pageInk[_wordPages[key]]?.changed();
         if (mounted) _wordRevision.value++;
       }
+      if (mounted) _closeSaveMessage();
     } catch (_) {
       _saveFailed = true;
       if (mounted) {
         _saveFailure.value = true;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: _darkMode ? const Color(0xFF303030) : null,
-            content: Text(
-              "Couldn't save",
-              style: _darkMode ? const TextStyle(color: Colors.white) : null,
-            ),
-            dismissDirection: DismissDirection.none,
-            action: SnackBarAction(
-              textColor: _darkMode ? Colors.white : null,
-              label: 'Retry',
-              onPressed: () {
-                unawaited(_savePending());
-              },
-            ),
-          ),
+        _closeSaveMessage();
+        final message = _saveMessage = ScaffoldMessenger.of(context)
+            .showSnackBar(
+              SnackBar(
+                backgroundColor: _darkMode ? const Color(0xFF303030) : null,
+                content: Text(
+                  "Couldn't save",
+                  style: _darkMode
+                      ? const TextStyle(color: Colors.white)
+                      : null,
+                ),
+                dismissDirection: DismissDirection.none,
+                action: SnackBarAction(
+                  textColor: _darkMode ? Colors.white : null,
+                  label: 'Retry',
+                  onPressed: () {
+                    unawaited(_savePending());
+                  },
+                ),
+              ),
+            );
+        unawaited(
+          message.closed.then((_) {
+            if (identical(_saveMessage, message)) _saveMessage = null;
+          }),
         );
       }
     } finally {
       _saving = false;
     }
+  }
+
+  void _closeSaveMessage() {
+    final message = _saveMessage;
+    _saveMessage = null;
+    message?.close();
   }
 
   final _pageInk = <int, PageInkController>{};
@@ -1258,12 +1296,21 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                           if (controller is LoadedPageController) {
                             controller.cancelPendingNavigation();
                           }
-                          final requested = widget.pages[_selected]['page'];
-                          if (!groups[index].any(
-                            (p) => p['page'] == requested,
-                          )) {
-                            _selected = spread ? index * 2 : index;
-                          }
+                          final requested = _requestedPage;
+                          _requestedPage = null;
+                          final keep =
+                              requested ?? widget.pages[_selected]['page'];
+                          final kept =
+                              groups[index].any((p) => p['page'] == keep)
+                              ? widget.pages.indexWhere(
+                                  (p) => p['page'] == keep,
+                                )
+                              : -1;
+                          _selected = kept >= 0
+                              ? kept
+                              : spread
+                              ? index * 2
+                              : index;
                           final highlight = _highlight.value;
                           if (highlight != null &&
                               !groups[index].any(
@@ -1937,7 +1984,6 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     );
     return Stack(
       children: [
-        painted,
         Positioned.fill(
           child: IgnorePointer(
             child: CustomPaint(
@@ -1951,6 +1997,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
             ),
           ),
         ),
+        painted,
       ],
     );
   }
@@ -2173,7 +2220,6 @@ class AyahShadePainter extends CustomPainter {
   final ValueNotifier<({int page, int surah, int ayah})?> highlight;
   final bool dark;
 
-  // Multiply (light) and screen (dark) leave black and white letters unchanged.
   static const _lightShade = Color(0xFFD3E6F2);
   static const _darkShade = Color(0xFF1F3A48);
 
@@ -2201,12 +2247,13 @@ class AyahShadePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = dark ? _darkShade : _lightShade
-      ..blendMode = dark ? BlendMode.screen : BlendMode.multiply;
+    final paint = Paint()..color = dark ? _darkShade : _lightShade;
     for (final run in runs()) {
       canvas.drawRRect(
-        RRect.fromRectAndRadius(run.inflate(2), const Radius.circular(4)),
+        RRect.fromRectAndRadius(
+          Rect.fromLTRB(run.left - 3, run.top, run.right + 3, run.bottom),
+          const Radius.circular(4),
+        ),
         paint,
       );
     }

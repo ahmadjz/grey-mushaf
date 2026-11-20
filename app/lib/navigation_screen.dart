@@ -21,6 +21,7 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   final _removing = <int>{};
+  final _messenger = GlobalKey<ScaffoldMessengerState>();
 
   Future<void> _remove(int page) async {
     final store = widget.store;
@@ -31,12 +32,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
         await store.saveBookmarks([action]);
       } catch (_) {
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
+        setState(() => _removing.remove(page));
+        _messenger.currentState?.showSnackBar(
           SnackBar(
             content: const Text("Couldn't save bookmark"),
             action: SnackBarAction(
               label: 'Retry',
-              onPressed: () => unawaited(attempt()),
+              onPressed: () => unawaited(_remove(page)),
             ),
           ),
         );
@@ -122,23 +124,26 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   Widget build(BuildContext context) => Directionality(
     textDirection: TextDirection.rtl,
-    child: DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('القرآن الكريم'),
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'السور'),
-              Tab(text: 'العلامات'),
+    child: ScaffoldMessenger(
+      key: _messenger,
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('القرآن الكريم'),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: 'السور'),
+                Tab(text: 'العلامات'),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              ListView(children: _surahRows(context)),
+              _bookmarks(context),
             ],
           ),
-        ),
-        body: TabBarView(
-          children: [
-            ListView(children: _surahRows(context)),
-            _bookmarks(context),
-          ],
         ),
       ),
     ),

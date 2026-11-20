@@ -7,9 +7,9 @@ import 'quran_index.dart';
 const suggestionCount = 5;
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key, required this.index, this.search});
+  const SearchScreen({super.key, required this.index, required this.search});
   final QuranIndex index;
-  final SearchIndex? search;
+  final Future<SearchIndex?> search;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -18,6 +18,26 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final _query = TextEditingController();
   bool _full = false;
+  bool _loading = true;
+  SearchIndex? _search;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.search.then(
+      (search) {
+        if (mounted) {
+          setState(() {
+            _search = search;
+            _loading = false;
+          });
+        }
+      },
+      onError: (Object _) {
+        if (mounted) setState(() => _loading = false);
+      },
+    );
+  }
 
   @override
   void dispose() {
@@ -57,21 +77,18 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _ayahRow(AyahText ayah, String query, {required int maxLines}) {
     final theme = Theme.of(context);
-    final folded = foldQuery(query);
     final spans = <TextSpan>[];
     var at = 0;
-    while (folded.isNotEmpty) {
-      final found = ayah.folded.indexOf(folded, at);
-      if (found < 0) break;
+    for (final match in ayah.matches(query)) {
       spans
-        ..add(TextSpan(text: ayah.text.substring(at, found)))
+        ..add(TextSpan(text: ayah.text.substring(at, match.start)))
         ..add(
           TextSpan(
-            text: ayah.text.substring(found, found + folded.length),
+            text: ayah.text.substring(match.start, match.end),
             style: TextStyle(color: theme.colorScheme.primary),
           ),
         );
-      at = found + folded.length;
+      at = match.end;
     }
     spans.add(TextSpan(text: ayah.text.substring(at)));
     return ListTile(
@@ -95,7 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final query = _query.text;
-    final search = widget.search;
+    final search = _search;
     final hits = search?.find(query) ?? const <AyahText>[];
     final showFull = _full && hits.isNotEmpty;
     return Directionality(
@@ -139,7 +156,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 ]
               : [
                   ..._placeRows(query),
-                  if (search == null && foldQuery(query).isNotEmpty)
+                  if (_loading && foldQuery(query).isNotEmpty)
+                    const LinearProgressIndicator(),
+                  if (!_loading &&
+                      search == null &&
+                      foldQuery(query).isNotEmpty)
                     const ListTile(
                       key: ValueKey('search-unavailable'),
                       title: Text('البحث في النص غير متاح'),

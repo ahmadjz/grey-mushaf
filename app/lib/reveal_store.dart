@@ -129,8 +129,7 @@ class SqliteRevealStore
         }
         final latest =
             (await txn.rawQuery(
-                  'SELECT MAX(created_at) AS latest FROM bookmark_actions WHERE page = ?',
-                  [action.page],
+                  'SELECT MAX(created_at) AS latest FROM bookmark_actions',
                 )).single['latest']
                 as int?;
         final at = latest != null && latest >= action.createdAt

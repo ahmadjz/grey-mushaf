@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +10,16 @@ import 'package:greymushaf/mushaf_bundle.dart';
 import 'package:greymushaf/quran_index.dart';
 
 import 'memory_reveal_store.dart';
+import 'word_target.dart';
+
+class PausedAssets extends CachingAssetBundle {
+  final pauses = <String, Completer<void>>{};
+  @override
+  Future<ByteData> load(String key) async {
+    await pauses[key.split('/').last]?.future;
+    return rootBundle.load(key);
+  }
+}
 
 class MemoryNavigation implements NavigationStore {
   MemoryNavigation({this.lastPage = 1});
@@ -62,11 +74,13 @@ void main() {
     WidgetTester tester, {
     MemoryNavigation? navigation,
     Size size = const Size(411, 914),
+    AssetBundle? assets,
   }) async {
     screen(tester, size);
     final store = navigation ?? MemoryNavigation();
-    bundle = (await tester.runAsync(MushafBundle.open))!;
-    await tester.runAsync(() => bundle.loadNear(store.lastPage));
+    bundle = (await tester.runAsync(
+      () => MushafBundle.open(assets: assets, near: store.lastPage),
+    ))!;
     await tester.pumpWidget(
       MaterialApp(
         home: Reader(
@@ -75,7 +89,7 @@ void main() {
           store: MemoryRevealStore(),
           navigation: store,
           index: index,
-          search: search,
+          loadSearch: () async => search,
         ),
       ),
     );
@@ -333,5 +347,141 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('search-surah-2')));
     await settleJump(tester);
     expect(shown(2), isTrue);
+  });
+
+  int wordId(int page, String prefix) =>
+      ((bundle.pages[page - 1]['lines'] as List)
+                  .expand((line) => line['words'] as List)
+                  .firstWhere(
+                    (w) => (w['location'] as String).startsWith(prefix),
+                  )
+              as Map)['id']
+          as int;
+
+  testWidgets('R65: the shade sits behind the words, which keep their grey', (
+    tester,
+  ) async {
+    await open(tester, navigation: MemoryNavigation(lastPage: 16));
+    final target = WordTarget(wordId(16, '2:104:'));
+    expect(await wordColor(tester, target), const Color(0xFFB0B0B0));
+    await menu(tester, 'Search');
+    await tester.enterText(find.byKey(const ValueKey('search-field')), 'راعنا');
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('search-ayah-2:104')));
+    await settleJump(tester);
+    expect(shade(tester, 16), isNotEmpty);
+    expect(await wordColor(tester, target), const Color(0xFFB0B0B0));
+    final runs = shade(tester, 16)..sort((a, b) => a.top.compareTo(b.top));
+    for (var i = 1; i < runs.length; i++) {
+      expect(runs[i].top, greaterThanOrEqualTo(runs[i - 1].bottom));
+    }
+  });
+
+  testWidgets(
+    'R54: a jump to the shown page cancels a far jump still loading',
+    (tester) async {
+      final assets = PausedAssets()..pauses['p300.ttf'] = Completer<void>();
+      await open(tester, assets: assets);
+      await menu(tester, 'Quick jump');
+      await tester.enterText(find.byKey(const ValueKey('jump-page')), '300');
+      await tester.tap(find.byKey(const ValueKey('jump-go')));
+      await tester.pumpAndSettle();
+      await menu(tester, 'Quick jump');
+      await tester.enterText(find.byKey(const ValueKey('jump-page')), '1');
+      await tester.tap(find.byKey(const ValueKey('jump-go')));
+      await tester.pumpAndSettle();
+      assets.pauses.remove('p300.ttf')!.complete();
+      await settleJump(tester);
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 200)),
+      );
+      await tester.pumpAndSettle();
+      expect(shown(1), isTrue);
+      expect(shown(300), isFalse);
+    },
+  );
+
+  testWidgets('R63: an even page reached in a spread stays after rotating', (
+    tester,
+  ) async {
+    final store = await open(tester, size: const Size(914, 411));
+    await menu(tester, 'Quick jump');
+    await tester.enterText(find.byKey(const ValueKey('jump-page')), '22');
+    await tester.tap(find.byKey(const ValueKey('jump-go')));
+    await settleJump(tester);
+    expect(shown(21) && shown(22), isTrue);
+    expect(store.lastPage, 22);
+    tester.view.physicalSize = const Size(411, 914);
+    await settleJump(tester);
+    expect(shown(22), isTrue);
+    expect(shown(21), isFalse);
+  });
+
+  testWidgets('R64/R66: bookmarks list newest first and open their page', (
+    tester,
+  ) async {
+    final store = MemoryNavigation()..saved.addAll({100: 1, 300: 3, 200: 2});
+    await open(tester, navigation: store);
+    await showBars(tester);
+    await tester.tap(find.byTooltip('Surah list'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('العلامات'));
+    await tester.pumpAndSettle();
+    final tops = [
+      for (final page in [300, 200, 100])
+        tester.getRect(find.byKey(ValueKey('bookmark-$page'))).top,
+    ];
+    expect(tops[0] < tops[1] && tops[1] < tops[2], isTrue);
+    store.fail = true;
+    await tester.tap(
+      find.descendant(
+        of: find.byKey(const ValueKey('bookmark-200')),
+        matching: find.byTooltip('Remove bookmark'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text("Couldn't save bookmark"), findsOneWidget);
+    final remove = tester.widget<IconButton>(
+      find.descendant(
+        of: find.byKey(const ValueKey('bookmark-200')),
+        matching: find.byType(IconButton),
+      ),
+    );
+    expect(remove.onPressed, isNotNull);
+    store.fail = false;
+    await tester.tap(find.byKey(const ValueKey('bookmark-200')));
+    await settleJump(tester);
+    expect(find.byType(Reader), findsOneWidget);
+    expect(shown(200), isTrue);
+    expect(find.text("Couldn't save bookmark"), findsNothing);
+  });
+
+  testWidgets('R27: a juz row opens its first page', (tester) async {
+    await open(tester);
+    await showBars(tester);
+    await tester.tap(find.byTooltip('Surah list'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('juz-2')),
+      300,
+      scrollable: find.descendant(
+        of: find.byType(ListView),
+        matching: find.byType(Scrollable),
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('juz-2')));
+    await settleJump(tester);
+    expect(shown(index.juzPage(2)), isTrue);
+  });
+
+  testWidgets('R38: quick jump is dark in dark mode', (tester) async {
+    await open(tester);
+    await menu(tester, 'Dark mode');
+    await menu(tester, 'Quick jump');
+    expect(
+      Theme.of(tester.element(find.byKey(const ValueKey('jump-page'))))
+          .brightness,
+      Brightness.dark,
+    );
   });
 }

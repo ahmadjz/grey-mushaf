@@ -7,6 +7,7 @@ import sqlite3
 ROOT = Path(__file__).resolve().parents[1]
 LAYOUT = 'layout/qpc-v4-tajweed-15-lines.db'
 WORDS = 'words/qpc-v4.db'
+SYMBOLS = str.maketrans('', '', '‏۞۩')
 
 
 def _read_only(path: Path) -> sqlite3.Connection:
@@ -57,8 +58,8 @@ def build_search(imlaei: Path, index: dict) -> list:
     texts: dict[tuple[int, int], list[str]] = {}
     with _read_only(imlaei) as db:
         for location, text in db.execute('SELECT location, text FROM words ORDER BY id'):
-            word = text.replace('‏', '').strip()
-            if not word or word.isdigit() or word in '۞۩':
+            word = text.translate(SYMBOLS).strip()
+            if not word or word.isdigit():
                 continue
             texts.setdefault(_ayah(location), []).append(word)
     result = []

@@ -303,6 +303,19 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     the device and is not synced. A failed save while the mark box is open shows "Couldn't save"
     with Retry inside the box.
 
+## R67–R72 (2026-11-20, owner)
+
+67. **B/W grey words** use the same grey as light mode, and the grey slider still works.
+68. **B/W marks are all drawn black** (white in dark mode) and the toolbar's colour row hides. Each
+    mark keeps its stored colour, which shows again once B/W is off.
+69. **B/W page and chrome.** Borders and the header line stay black, at least 1 px thick. The search
+    shading is light grey instead of light blue. The top bar, Settings, switches and sliders are
+    black, white and grey only, with no colour accents.
+70. **Dark mode works in B/W:** a black page, dim words, white revealed words and white marks.
+71. **The B/W switch is in Settings.** It starts on for a Boox (`Build.MANUFACTURER == ONYX`) and off
+    elsewhere; once the owner flips it, the choice is remembered on that device across launches.
+72. **In B/W the page changes instantly,** with no slide (arrows, quick jump, search results).
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

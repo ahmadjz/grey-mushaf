@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/main.dart';
+import 'package:greymushaf/mushaf_bundle.dart';
+import 'package:greymushaf/quran_index.dart';
+import 'package:greymushaf/search_screen.dart';
 import 'package:greymushaf/page_ink.dart';
 import 'package:greymushaf/reader_settings.dart';
 import 'package:greymushaf/reveal_store.dart';
 import 'package:greymushaf/word_marks.dart';
 
 import 'memory_reveal_store.dart';
-import 'top_bar_test.dart' show insets, screen;
+import 'top_bar_test.dart' show insets, screen, shown;
 import 'word_target.dart';
 
 class BlackWhiteSettings implements ReaderSettings {
@@ -248,6 +252,103 @@ void main() {
       scheme.onErrorContainer,
     ]) {
       expect(isGrey(colour), isTrue);
+    }
+  });
+
+  testWidgets('in B/W rapid arrows on loaded pages land without a slide', (
+    tester,
+  ) async {
+    screen(tester, const Size(411, 914));
+    insets(tester);
+    final bundle = (await tester.runAsync(() => MushafBundle.open()))!;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(
+          pages: bundle.pages,
+          bundle: bundle,
+          store: MemoryRevealStore(),
+          settings: BlackWhiteSettings(),
+          eInk: true,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('arrow-next')));
+    await tester.tap(find.byKey(const ValueKey('arrow-next')));
+    for (var i = 0; i < 3; i++) {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 150)),
+      );
+      await tester.pump();
+    }
+    expect(shown(tester, 1, 10), [3]);
+    expect(tester.getRect(find.byKey(const ValueKey('page-3'))).left, 0);
+    await tester.tap(find.byKey(const ValueKey('arrow-previous')));
+    for (var i = 0; i < 3; i++) {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 150)),
+      );
+      await tester.pump();
+    }
+    expect(shown(tester, 1, 10), [2]);
+  });
+
+  testWidgets('dark mode in B/W keeps a grey shade and white marks', (
+    tester,
+  ) async {
+    await open(tester, eInk: true);
+    await openMenuItem(tester, 'Dark mode');
+    final painter =
+        tester
+                .widget<CustomPaint>(
+                  find.byKey(const ValueKey('ayah-shade-215')),
+                )
+                .painter
+            as AyahShadePainter;
+    expect(painter.dark, isTrue);
+    expect(isGrey(painter.shade), isTrue);
+    final ink = tester
+        .widget<PaintedInkPage>(find.byType(PaintedInkPage).first)
+        .controller;
+    expect(ink.markColor(MarkColor.blue), Colors.white);
+  });
+
+  testWidgets('B/W search marks matches by weight, not colour', (tester) async {
+    final index = (await tester.runAsync(() => QuranIndex.load(rootBundle)))!;
+    final search = (await tester.runAsync(() => SearchIndex.load(rootBundle)))!;
+    for (final blackWhite in [true, false]) {
+      await tester.pumpWidget(
+        MaterialApp(
+          key: ValueKey(blackWhite),
+          home: SearchScreen(
+            index: index,
+            search: Future.value(search),
+            blackWhite: blackWhite,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(const ValueKey('search-field')),
+        'أيها الذين',
+      );
+      await tester.pumpAndSettle();
+      final text = tester.widget<RichText>(
+        find
+            .descendant(
+              of: find.byKey(const ValueKey('search-ayah-2:104')),
+              matching: find.byType(RichText),
+            )
+            .first,
+      );
+      final spans = <TextSpan>[];
+      text.text.visitChildren((span) {
+        if (span is TextSpan && span.style != null) spans.add(span);
+        return true;
+      });
+      final match = spans.firstWhere((span) => span.text!.contains('الذين'));
+      expect(match.style!.fontWeight == FontWeight.bold, blackWhite);
+      expect(match.style!.decoration == TextDecoration.underline, blackWhite);
     }
   });
 

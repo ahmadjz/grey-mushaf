@@ -322,6 +322,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
           data: _theme,
           child: SearchScreen(
             index: index,
+            blackWhite: _blackWhite,
             search: _search ??=
                 widget.loadSearch?.call() ?? Future<SearchIndex?>.value(),
           ),

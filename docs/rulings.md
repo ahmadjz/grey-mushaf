@@ -316,6 +316,14 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     elsewhere; once the owner flips it, the choice is remembered on that device across launches.
 72. **In B/W the page changes instantly,** with no slide (arrows, quick jump, search results).
 
+## R73 (2026-11-20, Claude's defaults, the owner may overrule)
+
+73. **B/W details.** In search results the searched words are bold and underlined instead of
+    coloured (R65). The mark box swatches, the toolbar's tool icons and error text are black, white
+    or grey too. A swipe still follows the finger; only arrows, quick jump and search jump at once.
+    The automatic Boox check can be faked on a debug build with
+    `adb shell setprop debug.greymushaf.manufacturer ONYX`; release builds ignore it.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

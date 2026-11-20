@@ -7,7 +7,13 @@ import 'quran_index.dart';
 const suggestionCount = 5;
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key, required this.index, required this.search});
+  const SearchScreen({
+    super.key,
+    required this.index,
+    required this.search,
+    this.blackWhite = false,
+  });
+  final bool blackWhite;
   final QuranIndex index;
   final Future<SearchIndex?> search;
 
@@ -85,7 +91,12 @@ class _SearchScreenState extends State<SearchScreen> {
         ..add(
           TextSpan(
             text: ayah.text.substring(match.start, match.end),
-            style: TextStyle(color: theme.colorScheme.primary),
+            style: widget.blackWhite
+                ? const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                  )
+                : TextStyle(color: theme.colorScheme.primary),
           ),
         );
       at = match.end;

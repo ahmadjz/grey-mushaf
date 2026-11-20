@@ -37,7 +37,7 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 
 10. **Offline first, sync optional.** The app works fully offline with no account. In Settings the
     user can sign in and enable sync, and then every signed-in device shares the same weak words,
-    bookmarks and last page. Signing out keeps the local data.
+    marks and bookmarks. Signing out keeps the local data. *(The last page no longer syncs: R76.)*
 
 ## R11 (2026-10-21, owner)
 
@@ -49,7 +49,7 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 
 ## R12 (2026-10-21, Claude's default, the owner may overrule)
 
-12. **Conflicts:** each word's state is the last action by server receive order. Actions carry a UUID
+12. *(Conflict order replaced by R77; idempotent UUIDs and summed counts still hold.)* **Conflicts:** each word's state is the last action by server receive order. Actions carry a UUID
     and a device id, so retries are idempotent and there are no clock-skew ties. Reveal counts are
     stored as append-only events and summed, never overwritten.
 
@@ -336,6 +336,26 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 75. **Bigger arrows on the Boox.** On large screens (the Boox and tablets) the arrows are 64 dp
     instead of 44, with a bigger chevron, and start 16 dp in from the bottom corners instead of
     flush (narrows R61). Phones keep today's arrows. A spot the owner dragged an arrow to is kept.
+
+## R76–R80 (2026-11-20, owner)
+
+76. **The last page is not synced.** Each device opens on its own last page (replaces R10's last page
+    clause; confirms R66).
+77. **Newest change wins.** When two devices changed the same word, mark or bookmark, the change made
+    last (by when it was made) wins once both have synced. Every reveal from every device still adds
+    to the reveal count (R6), even one a newer change later overrode.
+78. **Sign-in has its own screen,** opened from an "Account" row in Settings: email, password, Sign in,
+    Create account and Forgot password. Signed in, Settings shows the email, "Sync now", the last sync
+    time, the number of changes waiting, and Sign out (R58).
+79. **Email and password only for now.** Google sign-in (R11) comes in a later run.
+80. **The server is `mushaf.ahmadjz.tech`:** a dedicated PocketBase container
+    (`/opt/vps-infra/pocketbase-mushaf`, 127.0.0.1:8093) behind the shared Caddy, which gets one new
+    site block and a reload.
+
+## R81 (2026-11-20, Claude's defaults, the owner may overrule)
+
+81. **Account details.** Signing in requires a verified email. Changes made while signed out upload at
+    the next sign-in.
 
 ## Phases
 

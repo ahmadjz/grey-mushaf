@@ -379,6 +379,23 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     Finding kept for then: `ai-pages/` holds only 74 of 604 pages, so a 604-page export would draw
     from the QUL fonts and page data.
 
+## R85–R87 (2026-11-20, owner)
+
+85. **The web build lives at `mushaf.ahmadjz.tech`,** the same address as the sync server: the reader
+    at the root, PocketBase under `/api`. If sharing the address causes a problem, it moves to
+    `read.mushaf.ahmadjz.tech`.
+86. **The web page needs a connection.** Working offline in the browser is not promised.
+87. **The mushaf fonts and page data are served by the VPS behind sign-in.** A signed-out browser
+    gets none of them. This is not publishing (R16), because only signed-in accounts can load them.
+
+## R88 (2026-11-20, Claude's defaults, the owner may overrule)
+
+88. **Web details.** Signed out, the web page opens on the sign-in screen, and the reader appears
+    after sign-in. The browser keeps a working copy of the account's words, marks and bookmarks and
+    syncs it like a device (R58), so a refresh opens at once. One account per browser, as per device
+    (R83). Signing out on the web stops the fonts loading until the next sign-in. The web has no B/W
+    switch default (R71 starts it off).
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

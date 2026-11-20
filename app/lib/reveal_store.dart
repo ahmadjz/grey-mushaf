@@ -120,6 +120,7 @@ class SqliteRevealStore
   bool? _blackWhite;
   final Map<String, String> _sync;
   final _remoteChanges = StreamController<SyncChange>.broadcast();
+  final _localChanges = StreamController<void>.broadcast();
 
   @override
   bool? get blackWhite => _blackWhite;
@@ -182,6 +183,7 @@ class SqliteRevealStore
       return changes;
     });
     _applyBookmarks(committed);
+    if (committed.isNotEmpty) _localChanges.add(null);
   }
 
   void _applyBookmarks(Map<int, int?> changes) => changes.forEach((page, at) {
@@ -528,7 +530,9 @@ class SqliteRevealStore
       await _settleMark(txn, action.key, action.kind);
       return _readMarks(txn, action.key);
     });
-    if (committed != null) _applyMarks(action.key, committed);
+    if (committed == null) return;
+    _applyMarks(action.key, committed);
+    _localChanges.add(null);
   }
 
   void _applyMarks(String key, WordMarks marks) {
@@ -603,7 +607,9 @@ class SqliteRevealStore
       }
       return _settleWord(txn, action.key, exists: before != null);
     });
-    if (committed != null) _states[action.key] = committed;
+    if (committed == null) return;
+    _states[action.key] = committed;
+    _localChanges.add(null);
   }
 
   static Future<WordState?> _readWord(DatabaseExecutor txn, String key) async {
@@ -783,6 +789,9 @@ class SqliteRevealStore
   Stream<SyncChange> get remoteChanges => _remoteChanges.stream;
 
   @override
+  Stream<void> get localChanges => _localChanges.stream;
+
+  @override
   Future<SyncChange> applyRemote(
     List<SyncRecord> records, {
     Map<String, String?> metadata = const {},
@@ -896,6 +905,7 @@ class SqliteRevealStore
 
   Future<void> close() async {
     await _remoteChanges.close();
+    await _localChanges.close();
     await _db.close();
   }
 }

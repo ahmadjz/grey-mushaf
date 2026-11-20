@@ -57,6 +57,15 @@ migrate(
     settings.meta.appName = "Grey Mushaf";
     settings.meta.appURL = "https://mushaf.ahmadjz.tech";
     settings.rateLimits.enabled = true;
+    settings.rateLimits.rules = [
+      ...settings.rateLimits.rules,
+      ...["word_actions", "mark_actions", "bookmark_actions"].map((name) => ({
+        label: `${name}:create`,
+        maxRequests: 300,
+        duration: 10,
+        audience: "@auth",
+      })),
+    ];
     settings.batch.enabled = false;
     app.save(settings);
 

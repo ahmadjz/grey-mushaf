@@ -58,6 +58,9 @@ def server(tmp_path_factory):
     assert status == 200
     status, settings = call(base, 'GET', '/api/settings', None, auth['token'])
     assert settings['rateLimits']['enabled'] is True
+    labels = {rule['label']: rule['maxRequests'] for rule in settings['rateLimits']['rules']}
+    assert labels['word_actions:create'] == 300
+    assert '*:auth' in labels
     assert settings['meta']['appURL'] == 'https://mushaf.ahmadjz.tech'
     assert settings['batch']['enabled'] is False
     call(base, 'PATCH', '/api/settings', {'rateLimits': {'enabled': False}}, auth['token'])

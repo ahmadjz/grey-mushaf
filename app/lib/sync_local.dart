@@ -44,4 +44,5 @@ abstract class SyncLocal {
     Map<String, String?> metadata,
   });
   Stream<SyncChange> get remoteChanges;
+  Stream<void> get localChanges;
 }

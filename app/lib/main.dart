@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
+import 'account_screen.dart';
 import 'bookmarks.dart';
 import 'flat_ink.dart';
 import 'page_ink.dart';
@@ -21,6 +22,8 @@ import 'quick_jump.dart';
 import 'quran_index.dart';
 import 'reveal_store.dart';
 import 'search_screen.dart';
+import 'sync.dart';
+import 'sync_local.dart';
 import 'reader_settings.dart';
 import 'word_marks.dart';
 
@@ -31,6 +34,8 @@ Future<void> main() async {
     final bundle = await MushafBundle.open(near: store.lastPage);
     final index = await QuranIndex.load(rootBundle);
     final eInk = await isEInkDevice();
+    final sync = SyncEngine(store, PocketBaseApi(syncServer));
+    unawaited(sync.start());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       debugPrint('READER_FIRST_FRAME ${DateTime.now().millisecondsSinceEpoch}');
     });
@@ -50,6 +55,7 @@ Future<void> main() async {
           index: index,
           loadSearch: () => SearchIndex.load(rootBundle),
           eInk: eInk,
+          sync: sync,
         ),
       ),
     );
@@ -121,8 +127,10 @@ class Reader extends StatefulWidget {
     this.index,
     this.loadSearch,
     this.eInk = false,
+    this.sync,
   });
   final bool eInk;
+  final SyncEngine? sync;
   final MushafBundle? bundle;
   final NavigationStore? navigation;
   final QuranIndex? index;
@@ -479,7 +487,26 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) unawaited(_setBars());
+    if (state != AppLifecycleState.resumed) return;
+    unawaited(_setBars());
+    if (widget.sync case final sync?) unawaited(sync.sync());
+  }
+
+  StreamSubscription<SyncChange>? _remoteChanges;
+
+  void _showRemoteChange(SyncChange change) {
+    if (!mounted) return;
+    for (final key in change.words) {
+      _pageInk[_wordPages[key]]?.changed();
+    }
+    if (change.words.isNotEmpty) _wordRevision.value++;
+    if (change.bookmarks) {
+      setState(() {
+        _bookmarks
+          ..clear()
+          ..addAll(widget.navigation?.bookmarkSavedAt ?? const {});
+      });
+    }
   }
 
   void _toggleBars() {
@@ -580,6 +607,8 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                           unawaited(_saveBlackWhite(value));
                         },
                       ),
+                      if (widget.sync case final sync?)
+                        SyncSettings(engine: sync, theme: _theme),
                       Text(
                         _darkMode
                             ? 'Dark text brightness'
@@ -789,6 +818,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _savedLastPage = last;
     _toolbar = widget.toolbarSettings?.toolbar ?? const ToolbarPrefs();
     WidgetsBinding.instance.addObserver(this);
+    _remoteChanges = widget.sync?.local.remoteChanges.listen(_showRemoteChange);
     unawaited(_setBars());
     _measureBundle();
   }
@@ -925,6 +955,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    unawaited(_remoteChanges?.cancel());
     _warmTimer?.cancel();
     widget.bundle?.cancelPendingLoads();
     WidgetsBinding.instance.removeObserver(this);

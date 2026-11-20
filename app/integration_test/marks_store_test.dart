@@ -298,13 +298,7 @@ void main() {
     await tapTarget(tester, word);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('mark-row-Double line')));
-    for (
-      var i = 0;
-      i < 50 &&
-          store.marks(key).line !=
-              null;
-      i++
-    ) {
+    for (var i = 0; i < 50 && store.marks(key).line != null; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
     await tester.pumpWidget(const SizedBox());

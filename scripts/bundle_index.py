@@ -87,7 +87,9 @@ def write(source: Path, imlaei: Path | None, output: Path, page_count: int = 604
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, default=ROOT / 'assets-src/qul-v4')
-    parser.add_argument('--imlaei', type=Path, default=ROOT / 'assets-src/qul-v4/words/imlaei-simple.db')
+    parser.add_argument('--imlaei', type=Path, help='Defaults to words/imlaei.db, then words/imlaei-simple.db')
     parser.add_argument('--output', type=Path, default=ROOT / 'app/assets/index')
     args = parser.parse_args()
-    write(args.source, args.imlaei if args.imlaei.is_file() else None, args.output)
+    candidates = [args.imlaei] if args.imlaei else [
+        args.source / 'words/imlaei.db', args.source / 'words/imlaei-simple.db']
+    write(args.source, next((p for p in candidates if p.is_file()), None), args.output)

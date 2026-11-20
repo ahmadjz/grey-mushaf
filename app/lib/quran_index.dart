@@ -69,19 +69,26 @@ String foldQuery(String query) => foldLetters(
 
 class AyahText {
   AyahText(this.surah, this.ayah, this.page, this.text) {
-    final folded = StringBuffer();
+    if (!_marksAndTatweel.hasMatch(text)) {
+      folded = foldLetters(text);
+      return;
+    }
+    final letters = StringBuffer();
+    final origins = <int>[];
     for (var i = 0; i < text.length; i++) {
       final letter = text[i];
       if (_marksAndTatweel.hasMatch(letter)) continue;
-      folded.write(_folds[letter] ?? letter);
-      _origins.add(i);
+      letters.write(_folds[letter] ?? letter);
+      origins.add(i);
     }
-    this.folded = folded.toString();
+    folded = letters.toString();
+    _origins = origins;
   }
   final int surah, ayah, page;
   final String text;
   late final String folded;
-  final _origins = <int>[];
+  List<int>? _origins;
+  int _origin(int at) => _origins?[at] ?? at;
 
   List<({int start, int end})> matches(String query) {
     final folded = foldQuery(query);
@@ -92,11 +99,11 @@ class AyahText {
       at >= 0;
       at = this.folded.indexOf(folded, at + folded.length)
     ) {
-      var end = _origins[at + folded.length - 1] + 1;
+      var end = _origin(at + folded.length - 1) + 1;
       while (end < text.length && _marksAndTatweel.hasMatch(text[end])) {
         end++;
       }
-      ranges.add((start: _origins[at], end: end));
+      ranges.add((start: _origin(at), end: end));
     }
     return ranges;
   }

@@ -38,7 +38,7 @@ base..head f0267f9..3c1f1e9: fa3095c, 823fbeb, 3c1f1e9.
 - integration on emulator, faked ONYX: isEInk=true, B/W choice survives reopen, junk reads unset — 2 passed (device-emulator.log)
 - live emulator (debug, faked ONYX): first launch B/W on — black ball, black/grey switches and slider, grey slider kept (docs/runs/shots/bw-emu-strip-preview.png, bw-emu-settings-preview.png); switched off + restart → stays off; switched back on; fake prop cleared
 - live phone 2be3110f (release over the owner's install, same key, data kept): B/W off, teal accents, red ball (docs/runs/shots/bw-phone-settings-preview.png); stay_on restored to 0
-- Boox: not observed (not plugged in)
+- Boox NoteAir3 655E999A (MANUFACTURER ONYX), release ea8c7ad build incl. instant arrows, installed -r 17:55: app was in a user-disabled state (enabled=3), re-enabled with pm enable; first launch opens in B/W: black ball, Black & white switch on, black/grey switches, grey slider kept (docs/runs/shots/bw-boox-reader-preview.png, bw-boox-settings-preview.png)
 - Imlaei: no new file; imlaei-simple.db still phonetic (هذا 0, هاذا 227, الرحمن 0); search text not rebuilt
 
 ## Step 5/7 review
@@ -52,4 +52,4 @@ r2 (required, H confirmed): Fable APPROVE, Sol no new findings.
 
 ## Step 8 close — done
 Release arm64 APK copied to repo-root grey-mushaf.apk (gitignored), installed on the phone.
-next action: owner tries B/W on the Boox (sideload grey-mushaf.apk; it should start in B/W).
+next action: none for R8; owner judges B/W on the Boox in use.

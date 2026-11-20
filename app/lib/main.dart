@@ -3,10 +3,13 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:sqflite/sqflite.dart' show databaseFactory;
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 import 'account_screen.dart';
 import 'bookmarks.dart';
@@ -25,16 +28,38 @@ import 'search_screen.dart';
 import 'sync.dart';
 import 'sync_local.dart';
 import 'reader_settings.dart';
+import 'web_shell.dart';
 import 'word_marks.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    final store = await SqliteRevealStore.open();
-    final bundle = await MushafBundle.open(near: store.lastPage);
-    final index = await QuranIndex.load(rootBundle);
-    final eInk = await isEInkDevice();
+    if (kIsWeb) databaseFactory = databaseFactoryFfiWeb;
+    final store = await SqliteRevealStore.open(
+      databasePath: kIsWeb ? 'reveals.db' : null,
+    );
     final sync = SyncEngine(store, PocketBaseApi(syncServer));
+    Future<Widget> openReader() async {
+      final bundle = await MushafBundle.open(near: store.lastPage);
+      final index = await QuranIndex.load(rootBundle);
+      final eInk = await isEInkDevice();
+      return Reader(
+        pages: bundle.pages,
+        bundle: bundle,
+        store: store,
+        settings: store,
+        toolbarSettings: store,
+        navigation: store,
+        index: index,
+        loadSearch: () => SearchIndex.load(rootBundle),
+        eInk: eInk,
+        sync: sync,
+      );
+    }
+
+    final home = kIsWeb
+        ? WebShell(engine: sync, openReader: openReader)
+        : await openReader();
     unawaited(
       sync.start().catchError(
         (Object error) => debugPrint('Sync could not start: $error'),
@@ -49,18 +74,7 @@ Future<void> main() async {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
         ),
-        home: Reader(
-          pages: bundle.pages,
-          bundle: bundle,
-          store: store,
-          settings: store,
-          toolbarSettings: store,
-          navigation: store,
-          index: index,
-          loadSearch: () => SearchIndex.load(rootBundle),
-          eInk: eInk,
-          sync: sync,
-        ),
+        home: home,
       ),
     );
   } catch (error) {

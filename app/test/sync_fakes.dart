@@ -74,6 +74,8 @@ class FakeServer {
   var verified = true;
   int? clampTo;
   String user = 'user-a';
+  final sessions = <String>[];
+  int sessionStatus = 204;
 
   Future<http.Response> handle(http.Request request) async {
     requests.add('${request.method} ${request.url.path}');
@@ -82,6 +84,10 @@ class FakeServer {
       return http.Response('{"message":"x"}', status);
     }
     final path = request.url.path;
+    if (path == '/api/mushaf/session') {
+      sessions.add('${request.method} ${request.headers['Authorization']}');
+      return http.Response('', sessionStatus);
+    }
     final body = request.body.isEmpty ? null : jsonDecode(request.body) as Map;
     if (path.endsWith('/auth-with-password')) {
       if (!verified) return http.Response('{"message":"x"}', 403);

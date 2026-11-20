@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 import 'sync.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key, required this.engine});
+  const AccountScreen({
+    super.key,
+    required this.engine,
+    this.popOnSignIn = true,
+  });
   final SyncEngine engine;
+  final bool popOnSignIn;
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -53,7 +58,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   Future<void> _signIn() => _run(() async {
     await widget.engine.signIn(_address, _password.text);
-    if (mounted) Navigator.pop(context);
+    if (mounted && widget.popOnSignIn) Navigator.pop(context);
     return null;
   });
 

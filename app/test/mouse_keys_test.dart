@@ -95,7 +95,9 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     final store = MemoryRevealStore();
     await tester.pumpWidget(
-      MaterialApp(home: Reader(pages: range(216, 216), store: store)),
+      MaterialApp(
+        home: Reader(pages: range(216, 216), store: store),
+      ),
     );
     await tester.pumpAndSettle();
     final gesture = await tester.startGesture(

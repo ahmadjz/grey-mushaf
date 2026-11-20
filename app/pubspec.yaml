@@ -12,6 +12,7 @@ dependencies:
   path: ^1.9.1
   flutter:
     sdk: flutter
+  sqflite_common_ffi_web: ^1.2.2
 dev_dependencies:
   integration_test:
     sdk: flutter

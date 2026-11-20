@@ -125,6 +125,19 @@ class PocketBaseApi {
     throw Refused(_message(body) ?? 'Sign-in failed ($status)');
   }
 
+  Future<void> openWebSession(String token) async {
+    final (status, body) = await _send(
+      'POST',
+      '/api/mushaf/session',
+      token: token,
+    );
+    if (status == 204) return;
+    if (status == 401 || status == 403) throw const SignedOut();
+    throw Refused(_message(body) ?? 'Server error ($status)');
+  }
+
+  Future<void> closeWebSession() => _send('DELETE', '/api/mushaf/session');
+
   Future<Session> refresh(String token) async {
     final (status, body) = await _send(
       'POST',

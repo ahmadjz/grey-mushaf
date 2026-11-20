@@ -56,3 +56,5 @@ docs/runs/2026-10-24-perf-after/parity/
 /docs/runs/2026-11-20-instant-arrows/emu-after/portrait_trace.json
 /docs/runs/2026-11-20-instant-arrows/emu-after2/landscape_trace.json
 /docs/runs/2026-11-20-instant-arrows/emu-after2/portrait_trace.json
+/app/web/sqlite3.wasm
+/app/web/sqflite_sw.js

@@ -357,6 +357,14 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
 81. **Account details.** Signing in requires a verified email. Changes made while signed out upload at
     the next sign-in.
 
+## R82 (2026-11-20, owner; the reset details are Claude's defaults)
+
+82. **No sign-up in the app for now.** The owner creates his friends' accounts himself in the
+    PocketBase admin page, already verified. The sign-in screen has only email, password and Sign in:
+    "Create account" and "Forgot password" are left out (narrows R11 and R78), and the owner resets
+    a forgotten password in the admin page. TODO later: self sign-up, verification and reset emails
+    over Gmail SMTP.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

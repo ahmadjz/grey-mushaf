@@ -423,17 +423,11 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     if (target < 0 || target >= _groupCount) return;
     _arrowTarget = target;
     final turn = ++_arrowTurns;
-    if (_blackWhite) controller.jumpToPage(target);
+    controller.jumpToPage(target);
     unawaited(
-      (_blackWhite
-              ? controller is LoadedPageController
-                    ? controller.pending
-                    : Future<void>.value()
-              : controller.animateToPage(
-                  target,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeOut,
-                ))
+      (controller is LoadedPageController
+              ? controller.pending
+              : Future<void>.value())
           .whenComplete(() {
             if (turn == _arrowTurns) _arrowTarget = null;
           }),

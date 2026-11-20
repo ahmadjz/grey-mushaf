@@ -274,9 +274,12 @@ void main() {
     );
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('arrow-next')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 16));
     expect(find.byKey(const ValueKey('page-217')), findsOneWidget);
     expect(find.byKey(const ValueKey('page-218')), findsOneWidget);
+    expect(find.byKey(const ValueKey('page-215')), findsNothing);
+    expect(find.byKey(const ValueKey('page-216')), findsNothing);
   });
 
   testWidgets('a long-press drags an arrow and remembers it per orientation', (

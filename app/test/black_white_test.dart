@@ -157,16 +157,14 @@ void main() {
     expect(tester.getRect(find.byKey(const ValueKey('page-216'))).left, 0);
   });
 
-  testWidgets('in colour an arrow still slides', (tester) async {
+  testWidgets('in colour an arrow also changes the page at once', (
+    tester,
+  ) async {
     await open(tester, eInk: false);
     await tester.tap(find.byKey(const ValueKey('arrow-next')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 16));
-    expect(
-      tester.getRect(find.byKey(const ValueKey('page-216'))).left,
-      isNot(0),
-    );
-    await tester.pumpAndSettle();
+    expect(tester.getRect(find.byKey(const ValueKey('page-216'))).left, 0);
   });
 
   testWidgets('the search shade is grey in B/W and blue in colour', (
@@ -255,43 +253,46 @@ void main() {
     }
   });
 
-  testWidgets('in B/W rapid arrows on loaded pages land without a slide', (
-    tester,
-  ) async {
-    screen(tester, const Size(411, 914));
-    insets(tester);
-    final bundle = (await tester.runAsync(() => MushafBundle.open()))!;
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Reader(
-          pages: bundle.pages,
-          bundle: bundle,
-          store: MemoryRevealStore(),
-          settings: BlackWhiteSettings(),
-          eInk: true,
-        ),
-      ),
+  for (final eInk in [true, false]) {
+    testWidgets(
+      'rapid arrows on loaded pages land without a slide, eInk $eInk',
+      (tester) async {
+        screen(tester, const Size(411, 914));
+        insets(tester);
+        final bundle = (await tester.runAsync(() => MushafBundle.open()))!;
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Reader(
+              pages: bundle.pages,
+              bundle: bundle,
+              store: MemoryRevealStore(),
+              settings: BlackWhiteSettings(),
+              eInk: eInk,
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('arrow-next')));
+        await tester.tap(find.byKey(const ValueKey('arrow-next')));
+        for (var i = 0; i < 3; i++) {
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 150)),
+          );
+          await tester.pump();
+        }
+        expect(shown(tester, 1, 10), [3]);
+        expect(tester.getRect(find.byKey(const ValueKey('page-3'))).left, 0);
+        await tester.tap(find.byKey(const ValueKey('arrow-previous')));
+        for (var i = 0; i < 3; i++) {
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 150)),
+          );
+          await tester.pump();
+        }
+        expect(shown(tester, 1, 10), [2]);
+      },
     );
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('arrow-next')));
-    await tester.tap(find.byKey(const ValueKey('arrow-next')));
-    for (var i = 0; i < 3; i++) {
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 150)),
-      );
-      await tester.pump();
-    }
-    expect(shown(tester, 1, 10), [3]);
-    expect(tester.getRect(find.byKey(const ValueKey('page-3'))).left, 0);
-    await tester.tap(find.byKey(const ValueKey('arrow-previous')));
-    for (var i = 0; i < 3; i++) {
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 150)),
-      );
-      await tester.pump();
-    }
-    expect(shown(tester, 1, 10), [2]);
-  });
+  }
 
   testWidgets('dark mode in B/W keeps a grey shade and white marks', (
     tester,

@@ -278,6 +278,30 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     dark mode. "Couldn't save" and "Couldn't load page" messages sit between the bottom arrows,
     and a failed save of an arrow's spot offers Retry.
 
+## R63–R65 (2026-11-20, owner)
+
+63. **The app opens on the reader at the page last read.** The top bar's back arrow (R52) opens the
+    surah list; picking a surah, juz or bookmark there takes the reader to its page.
+64. **Bookmarks are a second tab on the surah list screen:** السور | العلامات.
+65. **Search works like the reference app.** Typing shows up to five matching ayahs under the search
+    field, each with its text and "سورة (٢) البقرة: ١٠٤ (صفحة ١٦)", plus a "full results" row. The
+    full results screen shows the count ("٩٢ نتيجة في البحث عن ...") and every ayah with the searched
+    words coloured. Opening a result goes to its page with the ayah shaded behind its words; the
+    words keep their own grey or black.
+
+## R66 (2026-11-20, Claude's defaults, the owner may overrule)
+
+66. **Navigation details for run 3 of R57.** Each surah row shows its number, name, "مكية/مدنية · N
+    آية" and its first page; a "الجزء N" row with its page sits where each juz begins in the list,
+    and tapping it opens that juz. In a landscape spread the bookmark icon is filled when either
+    page is saved; a tap removes the saved pages, or saves the right-hand page. The bookmarks tab
+    lists the newest first, each with surah, page, juz and a remove button. Quick jump is one dialog
+    with a page field and a surah picker with an ayah field. In search, a number also finds that page
+    and juz, a surah name finds the surah, and text matching treats أ/إ/آ/ا, ى/ي and ة/ه as the same
+    letter. The search shading clears on the next tap or page turn. The last page read stays on
+    the device and is not synced. A failed save while the mark box is open shows "Couldn't save"
+    with Retry inside the box.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

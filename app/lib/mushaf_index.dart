@@ -17,12 +17,23 @@ const surahNames = [
   'الفلق', 'الناس',
 ];
 
-const _juzStarts = [
+const juzStarts = [
   (1, 1), (2, 142), (2, 253), (3, 93), (4, 24), (4, 148), (5, 82), (6, 111), //
   (7, 88), (8, 41), (9, 93), (11, 6), (12, 53), (15, 1), (17, 1), (18, 75), //
   (21, 1), (23, 1), (25, 21), (27, 56), (29, 46), (33, 31), (36, 28), //
   (39, 32), (41, 47), (46, 1), (51, 31), (58, 1), (67, 1), (78, 1),
 ];
+
+const medinanSurahs = {
+  2, 3, 4, 5, 8, 9, 13, 22, 24, 33, 47, 48, 49, 55, 57, 58, 59, 60, 61, 62, //
+  63, 64, 65, 66, 76, 98, 99, 110,
+};
+
+int juzOf(int surah, int ayah) =>
+    juzStarts.lastIndexWhere(
+      (start) => surah > start.$1 || (surah == start.$1 && ayah >= start.$2),
+    ) +
+    1;
 
 String arabicDigits(int value) =>
     '$value'.split('').map((digit) => '٠١٢٣٤٥٦٧٨٩'[int.parse(digit)]).join();
@@ -35,10 +46,7 @@ String arabicDigits(int value) =>
       final parts = (word['location'] as String).split(':');
       final surah = int.parse(parts[0]);
       final ayah = int.parse(parts[1]);
-      final juz = _juzStarts.lastIndexWhere(
-        (start) => surah > start.$1 || (surah == start.$1 && ayah >= start.$2),
-      );
-      return (surah: surah, juz: juz + 1);
+      return (surah: surah, juz: juzOf(surah, ayah));
     }
   }
   return null;

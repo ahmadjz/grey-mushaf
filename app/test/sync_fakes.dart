@@ -12,7 +12,6 @@ class FakeLocal implements SyncLocal {
   final pending = <SyncRecord>[];
   final uploaded = <String>{};
   final applied = <SyncRecord>[];
-  var forgot = 0;
   final _local = StreamController<void>.broadcast();
 
   @override
@@ -33,13 +32,14 @@ class FakeLocal implements SyncLocal {
   @override
   Future<int> pendingCount() async =>
       pending.where((r) => !uploaded.contains(r.uuid)).length;
+  final serverTimes = <String, int>{};
   @override
-  Future<void> markUploaded(Iterable<String> uuids) async =>
-      uploaded.addAll(uuids);
-  @override
-  Future<void> forgetUploads() async {
-    forgot++;
-    uploaded.clear();
+  Future<void> markUploaded(
+    SyncRecord record, {
+    required int serverTime,
+  }) async {
+    uploaded.add(record.uuid);
+    serverTimes[record.uuid] = serverTime;
   }
 
   @override
@@ -52,8 +52,9 @@ class FakeLocal implements SyncLocal {
     return SyncChange({for (final r in records) '${r.fields['word']}'}, false);
   }
 
+  final remote = StreamController<SyncChange>.broadcast();
   @override
-  Stream<SyncChange> get remoteChanges => const Stream.empty();
+  Stream<SyncChange> get remoteChanges => remote.stream;
   @override
   Stream<void> get localChanges => _local.stream;
 }
@@ -66,6 +67,7 @@ class FakeServer {
   int? failNextWith;
   Future<void> Function(http.Request)? pauseCreate;
   var verified = true;
+  int? clampTo;
   String user = 'user-a';
 
   Future<http.Response> handle(http.Request request) async {
@@ -102,7 +104,11 @@ class FakeServer {
           400,
         );
       }
-      list.add({...body!.cast<String, Object?>(), 'seq': list.length + 1});
+      list.add({
+        ...body!.cast<String, Object?>(),
+        'seq': list.length + 1,
+        if (clampTo != null) 'created_at': clampTo,
+      });
       return _json(list.last);
     }
     final filter = request.url.queryParameters['filter']!;

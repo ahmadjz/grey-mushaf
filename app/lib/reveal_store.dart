@@ -602,7 +602,9 @@ class SqliteRevealStore
         'action_uuid': action.uuid,
         'created_at': at,
       });
-      if (action.black && !(before?.black ?? false)) {
+      final wins =
+          (await _wordWinner(txn, action.key))['action_uuid'] == action.uuid;
+      if (wins && action.black && !(before?.black ?? false)) {
         await txn.insert('reveal_events', {'action_uuid': action.uuid});
       }
       return _settleWord(txn, action.key, exists: before != null);
@@ -621,16 +623,21 @@ class SqliteRevealStore
     return rows.isEmpty ? null : _decode(rows.single);
   }
 
+  static Future<Map<String, Object?>> _wordWinner(
+    DatabaseExecutor txn,
+    String key,
+  ) async => (await txn.rawQuery(
+    'SELECT w.action_uuid, w.target_black FROM $_wordActionsTimed '
+    'WHERE w.word_key = ? ORDER BY $_wordTime DESC, w.action_uuid DESC LIMIT 1',
+    [key],
+  )).single;
+
   static Future<WordState> _settleWord(
     DatabaseExecutor txn,
     String key, {
     required bool exists,
   }) async {
-    final winner = (await txn.rawQuery(
-      'SELECT w.action_uuid, w.target_black FROM $_wordActionsTimed '
-      'WHERE w.word_key = ? ORDER BY $_wordTime DESC, w.action_uuid DESC LIMIT 1',
-      [key],
-    )).single;
+    final winner = await _wordWinner(txn, key);
     final count =
         (await txn.rawQuery(
               'SELECT COUNT(*) AS n FROM reveal_events r JOIN word_actions w '
@@ -772,18 +779,65 @@ class SqliteRevealStore
     return total;
   }
 
+  // The server may clamp a future time; adopting it keeps every device on the same order.
   @override
-  Future<void> markUploaded(Iterable<String> uuids) =>
-      _db.transaction((txn) async {
-        for (final uuid in uuids) {
-          await txn.insert('uploaded_actions', {
-            'action_uuid': uuid,
-          }, conflictAlgorithm: ConflictAlgorithm.ignore);
-        }
-      });
-
-  @override
-  Future<void> forgetUploads() => _db.delete('uploaded_actions');
+  Future<void> markUploaded(
+    SyncRecord record, {
+    required int serverTime,
+  }) async {
+    final adopt = serverTime != record.createdAt;
+    final (states, marks, bookmarks) = await _db.transaction((txn) async {
+      await txn.insert('uploaded_actions', {
+        'action_uuid': record.uuid,
+      }, conflictAlgorithm: ConflictAlgorithm.ignore);
+      final states = <String, WordState>{};
+      final marks = <String, WordMarks>{};
+      final bookmarks = <int, int?>{};
+      if (!adopt) return (states, marks, bookmarks);
+      final uuid = [record.uuid];
+      switch (record.kind) {
+        case SyncKind.word:
+          await txn.insert('word_action_times', {
+            'action_uuid': record.uuid,
+            'created_at': serverTime,
+          }, conflictAlgorithm: ConflictAlgorithm.replace);
+          final key = record.fields['word'] as String;
+          states[key] = await _settleWord(txn, key, exists: true);
+        case SyncKind.mark:
+          await txn.update(
+            'mark_actions',
+            {'created_at': serverTime},
+            where: 'action_uuid = ?',
+            whereArgs: uuid,
+          );
+          final key = record.fields['word'] as String;
+          await _settleMark(
+            txn,
+            key,
+            MarkKind.values.byName(record.fields['kind'] as String),
+          );
+          marks[key] = await _readMarks(txn, key);
+        case SyncKind.bookmark:
+          await txn.update(
+            'bookmark_actions',
+            {'created_at': serverTime},
+            where: 'action_uuid = ?',
+            whereArgs: uuid,
+          );
+          final page = record.fields['page'] as int;
+          bookmarks[page] = await _settleBookmark(txn, page);
+      }
+      return (states, marks, bookmarks);
+    });
+    _states.addAll(states);
+    marks.forEach(_applyMarks);
+    _applyBookmarks(bookmarks);
+    final change = SyncChange({
+      ...states.keys,
+      ...marks.keys,
+    }, bookmarks.isNotEmpty);
+    if (!change.isEmpty) _remoteChanges.add(change);
+  }
 
   @override
   Stream<SyncChange> get remoteChanges => _remoteChanges.stream;

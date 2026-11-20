@@ -1,5 +1,5 @@
 /// <reference path="../pb_data/types.d.ts" />
-// seq is the pull cursor: assigned inside the create's write, so it only grows in commit order.
+// seq is the pull cursor; the unique (user, seq) index refuses a concurrent clash, which the app retries.
 onRecordCreate(
   (e) => {
     const record = e.record;

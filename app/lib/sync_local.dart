@@ -37,8 +37,7 @@ abstract class SyncLocal {
   Future<void> saveSyncValues(Map<String, String?> values);
   Future<List<SyncRecord>> pendingUploads(SyncKind kind, {int limit});
   Future<int> pendingCount();
-  Future<void> markUploaded(Iterable<String> uuids);
-  Future<void> forgetUploads();
+  Future<void> markUploaded(SyncRecord record, {required int serverTime});
   Future<SyncChange> applyRemote(
     List<SyncRecord> records, {
     Map<String, String?> metadata,

@@ -32,13 +32,15 @@ class NotVerified extends SyncProblem {
   const NotVerified() : super('This account is not verified yet');
 }
 
+class _Stale implements Exception {
+  const _Stale();
+}
+
 class Refused extends SyncProblem {
   const Refused(super.message);
 }
 
 typedef Session = ({String token, String user, String email});
-
-enum Created { created, duplicate }
 
 class PocketBaseApi {
   PocketBaseApi(
@@ -129,26 +131,34 @@ class PocketBaseApi {
     throw Refused(_message(body) ?? 'Server error ($status)');
   }
 
-  Future<Created> create(
+  Future<int> create(
     String token,
     String collection,
     Map<String, Object?> body,
   ) async {
-    final (status, response) = await _send(
-      'POST',
-      '/api/collections/$collection/records',
-      body: body,
-      token: token,
-    );
-    if (status == 200) return Created.created;
-    if (status == 401) throw const SignedOut();
-    if (status == 400) {
-      final existing = await _find(token, collection, body['uuid'] as String);
-      if (existing != null && _samePayload(existing, body)) {
-        return Created.duplicate;
+    for (var attempt = 1; ; attempt++) {
+      final (status, response) = await _send(
+        'POST',
+        '/api/collections/$collection/records',
+        body: body,
+        token: token,
+      );
+      if (status == 200) return _serverTime(response, body);
+      if (status == 401) throw const SignedOut();
+      if (status == 400) {
+        final existing = await _find(token, collection, body['uuid'] as String);
+        if (existing != null && _samePayload(existing, body)) {
+          return _serverTime(existing, body);
+        }
+        if (existing == null && attempt < 2) continue;
       }
+      throw Refused(_message(response) ?? 'Server refused a change ($status)');
     }
-    throw Refused(_message(response) ?? 'Server refused a change ($status)');
+  }
+
+  static int _serverTime(Object? record, Map<String, Object?> body) {
+    final time = record is Map ? record['created_at'] : null;
+    return time is num ? time.toInt() : body['created_at'] as int;
   }
 
   static bool _samePayload(Map existing, Map<String, Object?> body) {
@@ -238,6 +248,7 @@ class SyncEngine extends ChangeNotifier {
   Future<void>? _running;
   bool _again = false;
 
+  bool foreground = true;
   bool syncing = false;
   int waiting = 0;
   SyncProblem? problem;
@@ -260,7 +271,9 @@ class SyncEngine extends ChangeNotifier {
     });
     _localSubscription = local.localChanges.listen((_) => localChanged());
     if (poll != null) {
-      _pollTimer = Timer.periodic(poll!, (_) => unawaited(sync()));
+      _pollTimer = Timer.periodic(poll!, (_) {
+        if (foreground) unawaited(sync());
+      });
     }
     await _countWaiting();
     await sync();
@@ -274,14 +287,21 @@ class SyncEngine extends ChangeNotifier {
 
   Future<void> _countWaiting() async {
     waiting = await local.pendingCount();
-    notifyListeners();
+    _notify();
+  }
+
+  void _notify() {
+    if (!_disposed) notifyListeners();
+  }
+
+  void _check(int generation) {
+    if (generation != _generation) throw const _Stale();
   }
 
   Future<void> signIn(String email, String password) async {
     final session = await api.signIn(email.trim(), password);
     _generation++;
     final changedAccount = local.syncValue('owner') != session.user;
-    if (changedAccount) await local.forgetUploads();
     await local.saveSyncValues({
       'token': session.token,
       'token_at': '${DateTime.now().millisecondsSinceEpoch}',
@@ -301,10 +321,11 @@ class SyncEngine extends ChangeNotifier {
     _generation++;
     await local.saveSyncValues({'token': null, 'token_at': null});
     problem = null;
-    notifyListeners();
+    _notify();
   }
 
   Future<void> sync() {
+    if (_disposed) return Future.value();
     if (_running != null) {
       _again = true;
       return _running!;
@@ -316,7 +337,7 @@ class SyncEngine extends ChangeNotifier {
     do {
       _again = false;
       await _once();
-    } while (_again && signedIn);
+    } while (_again && signedIn && !_disposed);
   }
 
   Future<void> _once() async {
@@ -324,14 +345,14 @@ class SyncEngine extends ChangeNotifier {
     if (token == null || owner == null) return;
     final generation = _generation;
     syncing = true;
-    notifyListeners();
+    _notify();
     try {
       var current = token;
       final refreshedAt = int.tryParse(local.syncValue('token_at') ?? '') ?? 0;
       final now = DateTime.now().millisecondsSinceEpoch;
       if (now - refreshedAt > const Duration(hours: 12).inMilliseconds) {
         current = (await api.refresh(token)).token;
-        if (generation != _generation) return;
+        _check(generation);
         await local.saveSyncValues({'token': current, 'token_at': '$now'});
       }
       SyncProblem? refused;
@@ -345,11 +366,13 @@ class SyncEngine extends ChangeNotifier {
       for (final kind in SyncKind.values) {
         await _pull(kind, current, generation);
       }
-      if (generation != _generation) return;
+      _check(generation);
       await local.saveSyncValues({
         'last_sync': '${DateTime.now().millisecondsSinceEpoch}',
       });
       problem = refused;
+    } on _Stale {
+      return;
     } on SignedOut catch (error) {
       if (generation == _generation) {
         _generation++;
@@ -374,15 +397,15 @@ class SyncEngine extends ChangeNotifier {
       final batch = await local.pendingUploads(kind, limit: pageSize);
       if (batch.isEmpty) return;
       for (final record in batch) {
-        await api.create(token, kind.collection, {
+        final serverTime = await api.create(token, kind.collection, {
           'user': owner,
           'uuid': record.uuid,
           'device': record.device,
           'created_at': record.createdAt,
           ...record.fields,
         });
-        if (generation != _generation) return;
-        await local.markUploaded([record.uuid]);
+        _check(generation);
+        await local.markUploaded(record, serverTime: serverTime);
       }
     }
   }
@@ -397,7 +420,8 @@ class SyncEngine extends ChangeNotifier {
         cursor,
         pageSize,
       );
-      if (generation != _generation || items.isEmpty) return;
+      _check(generation);
+      if (items.isEmpty) return;
       final records = <SyncRecord>[];
       for (final item in items) {
         final record = parseRemote(kind, item);
@@ -410,8 +434,11 @@ class SyncEngine extends ChangeNotifier {
     }
   }
 
+  bool _disposed = false;
+
   @override
   void dispose() {
+    _disposed = true;
     _generation++;
     _pollTimer?.cancel();
     _settleTimer?.cancel();

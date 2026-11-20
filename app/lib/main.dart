@@ -35,7 +35,11 @@ Future<void> main() async {
     final index = await QuranIndex.load(rootBundle);
     final eInk = await isEInkDevice();
     final sync = SyncEngine(store, PocketBaseApi(syncServer));
-    unawaited(sync.start());
+    unawaited(
+      sync.start().catchError(
+        (Object error) => debugPrint('Sync could not start: $error'),
+      ),
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       debugPrint('READER_FIRST_FRAME ${DateTime.now().millisecondsSinceEpoch}');
     });
@@ -487,6 +491,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    widget.sync?.foreground = state == AppLifecycleState.resumed;
     if (state != AppLifecycleState.resumed) return;
     unawaited(_setBars());
     if (widget.sync case final sync?) unawaited(sync.sync());

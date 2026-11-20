@@ -41,6 +41,8 @@ class _AccountScreenState extends State<AccountScreen> {
       message = await action();
     } on SyncProblem catch (error) {
       message = error.message;
+    } catch (_) {
+      message = 'Sign-in failed, try again';
     }
     if (!mounted) return;
     setState(() {

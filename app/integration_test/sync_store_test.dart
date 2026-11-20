@@ -100,16 +100,16 @@ void main() {
     ]);
 
     await store.save(WordAction(key, true, createdAt: 1500));
-    expect(store.state(key), (black: false, count: 3));
+    expect(store.state(key), (black: false, count: 2));
     await store.save(WordAction(key, true, createdAt: 2500));
-    expect(store.state(key), (black: true, count: 4));
+    expect(store.state(key), (black: true, count: 3));
     await listening.cancel();
     await store.close();
 
     final reopened = await SqliteRevealStore.open(
       databasePath: path.join(await getDatabasesPath(), 'sync-newest.db'),
     );
-    expect(reopened.state(key), (black: true, count: 4));
+    expect(reopened.state(key), (black: true, count: 3));
     await reopened.close();
   });
 
@@ -255,7 +255,8 @@ void main() {
       'saved': true,
     });
 
-    await store.markUploaded([reveal.uuid, reveal.uuid]);
+    await store.markUploaded(words.first, serverTime: 10);
+    await store.markUploaded(words.first, serverTime: 10);
     await store.saveSyncValues({'cursor': '7', 'gone': 'x'});
     await store.saveSyncValues({'gone': null});
     await store.close();
@@ -263,9 +264,6 @@ void main() {
     expect(await store.pendingCount(), 3);
     expect(store.syncValue('cursor'), '7');
     expect(store.syncValue('gone'), isNull);
-
-    await store.forgetUploads();
-    expect(await store.pendingCount(), 5);
     await store.close();
   });
 
@@ -298,4 +296,52 @@ void main() {
       await store.close();
     },
   );
+
+  testWidgets('a clamped upload adopts the server time so a later grey wins', (
+    tester,
+  ) async {
+    final store = await SqliteRevealStore.open(
+      databasePath: await _fresh('sync-clamp.db'),
+    );
+    final key = wordKey('6:1:1');
+    const line = (style: MarkStyle.singleLine, color: MarkColor.red);
+    await store.save(WordAction(key, true, createdAt: 9000000000000));
+    await store.saveMark(
+      MarkAction(key, MarkKind.line, line, createdAt: 9000000000000),
+    );
+    await store.saveBookmarks([
+      BookmarkAction(8, true, createdAt: 9000000000000),
+    ]);
+    final changes = <SyncChange>[];
+    final listening = store.remoteChanges.listen(changes.add);
+    for (final kind in SyncKind.values) {
+      final record = (await store.pendingUploads(kind)).single;
+      await store.markUploaded(record, serverTime: 1000);
+    }
+    await store.applyRemote([
+      word('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', key, false, 2000),
+      SyncRecord(
+        SyncKind.mark,
+        'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
+        'b',
+        2000,
+        {'word': key, 'kind': 'line', 'style': '', 'color': ''},
+      ),
+      SyncRecord(
+        SyncKind.bookmark,
+        'cccccccc-cccc-4ccc-8ccc-cccccccccccc',
+        'b',
+        2000,
+        {'page': 8, 'saved': false},
+      ),
+    ]);
+    expect(store.state(key), (black: false, count: 1));
+    expect(store.marks(key), noMarks);
+    expect(store.bookmarkSavedAt, isEmpty);
+    await tester.pump();
+    expect(changes, isNotEmpty);
+    expect(await store.pendingCount(), 0);
+    await listening.cancel();
+    await store.close();
+  });
 }

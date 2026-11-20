@@ -63,6 +63,7 @@ def server(tmp_path_factory):
     assert '*:auth' in labels
     assert settings['meta']['appURL'] == 'https://mushaf.ahmadjz.tech'
     assert settings['batch']['enabled'] is False
+    assert settings['trustedProxy'] == {'headers': ['X-Forwarded-For'], 'useLeftmostIP': False}
     call(base, 'PATCH', '/api/settings', {'rateLimits': {'enabled': False}}, auth['token'])
     yield base, auth['token']
     process.terminate()
@@ -95,7 +96,7 @@ def test_an_unverified_account_cannot_sign_in(server):
     _, email, password = sign_up(base, admin, verified=False)
     status, _ = call(base, 'POST', '/api/collections/users/auth-with-password',
                      {'identity': email, 'password': password})
-    assert status in (400, 403)
+    assert status == 403
 
 
 def test_another_user_cannot_read_or_write_my_records(server):

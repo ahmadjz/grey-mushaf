@@ -212,6 +212,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   final _arrowDragOrigins = <String, Offset>{};
   int? _arrowTarget;
   int _arrowTurns = 0;
+  Timer? _wheelBurst;
   int _groupCount = 0;
   late final _shownPage = ValueNotifier<int>(
     widget.pages.isEmpty ? 1 : widget.pages[_selected]['page'] as int,
@@ -426,6 +427,31 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
         retry: () => unawaited(_saveToolbar(_toolbar)),
       );
     }
+  }
+
+  void _wheelTurn(PointerSignalEvent event) {
+    if (event is! PointerScrollEvent) return;
+    GestureBinding.instance.pointerSignalResolver.register(event, (event) {
+      final dy = (event as PointerScrollEvent).scrollDelta.dy;
+      final burst = _wheelBurst?.isActive ?? false;
+      _wheelBurst?.cancel();
+      _wheelBurst = Timer(const Duration(milliseconds: 200), () {});
+      if (!burst && dy != 0) _turn(dy > 0 ? 1 : -1);
+    });
+  }
+
+  KeyEventResult _keyTurn(FocusNode node, KeyEvent event) {
+    if (event is! KeyDownEvent && event is! KeyRepeatEvent) {
+      return KeyEventResult.ignored;
+    }
+    final delta = switch (event.logicalKey) {
+      LogicalKeyboardKey.arrowLeft => 1,
+      LogicalKeyboardKey.arrowRight => -1,
+      _ => 0,
+    };
+    if (delta == 0) return KeyEventResult.ignored;
+    _turn(delta);
+    return KeyEventResult.handled;
   }
 
   void _turn(int delta) {
@@ -960,6 +986,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    _wheelBurst?.cancel();
     unawaited(_remoteChanges?.cancel());
     _warmTimer?.cancel();
     widget.bundle?.cancelPendingLoads();
@@ -1303,159 +1330,173 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     final screen = MediaQuery.sizeOf(context);
     return Theme(
       data: _theme,
-      child: Scaffold(
-        backgroundColor: _background,
-        resizeToAvoidBottomInset: false,
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            Padding(
-              padding: _cutout,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
-                  final pageHeight = constraints.maxHeight - 4 - _headerHeight;
-                  final side = spread
-                      ? 7.0
-                      : MediaQuery.sizeOf(context).width * .02;
-                  _contentWidth = pageWidth - side * 2;
-                  // Reserve number clearance only when the last line's spare ink
-                  // space cannot contain it. This bound keeps one font size throughout.
-                  final text = _textSize(_contentWidth, (pageHeight - 14) / 15);
-                  final base = DefaultTextStyle.of(context).style;
-                  final restyled =
-                      base != _baseTextStyle || text.size != _wordSize;
-                  _baseTextStyle = base;
-                  _wordSize = text.size;
-                  if (restyled) {
-                    WidgetsBinding.instance.addPostFrameCallback(
-                      (_) => _prewarm(),
+      child: Focus(
+        autofocus: true,
+        onKeyEvent: _keyTurn,
+        child: Scaffold(
+          backgroundColor: _background,
+          resizeToAvoidBottomInset: false,
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              Padding(
+                padding: _cutout,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final pageWidth = constraints.maxWidth / (spread ? 2 : 1);
+                    final pageHeight =
+                        constraints.maxHeight - 4 - _headerHeight;
+                    final side = spread
+                        ? 7.0
+                        : MediaQuery.sizeOf(context).width * .02;
+                    _contentWidth = pageWidth - side * 2;
+                    // Reserve number clearance only when the last line's spare ink
+                    // space cannot contain it. This bound keeps one font size throughout.
+                    final text = _textSize(
+                      _contentWidth,
+                      (pageHeight - 14) / 15,
                     );
-                  }
-                  return GestureDetector(
-                    key: _viewport,
-                    behavior: HitTestBehavior.opaque,
-                    onLongPressStart: _start,
-                    onLongPressEnd: (_) => _end(),
-                    onLongPressCancel: _end,
-                    onTapUp: (details) {
-                      _highlight.value = null;
-                      final id = _wordAt(
-                        details.globalPosition,
-                        shortTap: true,
+                    final base = DefaultTextStyle.of(context).style;
+                    final restyled =
+                        base != _baseTextStyle || text.size != _wordSize;
+                    _baseTextStyle = base;
+                    _wordSize = text.size;
+                    if (restyled) {
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => _prewarm(),
                       );
-                      if (id == null) {
-                        _toggleBars();
-                      } else {
-                        _tapWord(id);
-                      }
-                    },
-                    child: NotificationListener<ScrollNotification>(
-                      onNotification: (notification) {
-                        if (notification.depth != 0) return false;
-                        if (notification is ScrollStartNotification) {
-                          _warmGeneration++;
-                          if (notification.dragDetails != null) {
-                            _arrowTarget = null;
-                            _arrowTurns++;
-                          }
-                        } else if (notification is ScrollEndNotification) {
-                          _afterScroll();
+                    }
+                    return GestureDetector(
+                      key: _viewport,
+                      behavior: HitTestBehavior.opaque,
+                      onLongPressStart: _start,
+                      onLongPressEnd: (_) => _end(),
+                      onLongPressCancel: _end,
+                      onTapUp: (details) {
+                        _highlight.value = null;
+                        final id = _wordAt(
+                          details.globalPosition,
+                          shortTap: true,
+                        );
+                        if (id == null) {
+                          _toggleBars();
+                        } else {
+                          _tapWord(id);
                         }
-                        return false;
                       },
-                      child: PageView.builder(
-                        key: ValueKey(spread),
-                        controller: _controller,
-                        reverse: true,
-                        physics: _dragging
-                            ? const NeverScrollableScrollPhysics()
-                            : widget.bundle == null
-                            ? const PageScrollPhysics()
-                            : LoadedPagePhysics(
-                                first: () =>
-                                    (widget.bundle!.loadedNumbers.first - 1) ~/
-                                    (spread ? 2 : 1),
-                                last: () =>
-                                    (widget.bundle!.loadedNumbers.last - 1) ~/
-                                    (spread ? 2 : 1),
-                              ),
-                        itemCount: groups.length,
-                        onPageChanged: (index) {
-                          debugPrint(
-                            'READER_PAGE ${groups[index].first['page']}',
-                          );
-                          final controller = _controller;
-                          if (controller is LoadedPageController) {
-                            controller.cancelPendingNavigation();
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (notification) {
+                          if (notification.depth != 0) return false;
+                          if (notification is ScrollStartNotification) {
+                            _warmGeneration++;
+                            if (notification.dragDetails != null) {
+                              _arrowTarget = null;
+                              _arrowTurns++;
+                            }
+                          } else if (notification is ScrollEndNotification) {
+                            _afterScroll();
                           }
-                          final requested = _requestedPage;
-                          _requestedPage = null;
-                          final keep =
-                              requested ?? widget.pages[_selected]['page'];
-                          final kept =
-                              groups[index].any((p) => p['page'] == keep)
-                              ? widget.pages.indexWhere(
-                                  (p) => p['page'] == keep,
-                                )
-                              : -1;
-                          _selected = kept >= 0
-                              ? kept
-                              : spread
-                              ? index * 2
-                              : index;
-                          final highlight = _highlight.value;
-                          if (highlight != null &&
-                              !groups[index].any(
-                                (p) => p['page'] == highlight.page,
-                              )) {
-                            _highlight.value = null;
-                          }
-                          _shownPage.value = groups[index].first['page'] as int;
-                          _pendingPrefetch = groups[index].first['page'] as int;
-                          if (!_scrolling) _afterScroll();
+                          return false;
                         },
-                        itemBuilder: (context, index) => Row(
-                          textDirection: TextDirection.rtl,
-                          children: [
-                            for (final page in groups[index])
-                              Expanded(
-                                child: _LoadedReaderPage(
-                                  revision: _bundleRevision,
-                                  page: () => widget.pages.firstWhere(
-                                    (p) => p['page'] == page['page'],
-                                  ),
-                                  buildPage: (page) => _page(
-                                    page,
-                                    text.size,
-                                    text.width,
-                                    pageHeight,
-                                  ),
+                        child: PageView.builder(
+                          key: ValueKey(spread),
+                          controller: _controller,
+                          reverse: true,
+                          physics: _dragging
+                              ? const NeverScrollableScrollPhysics()
+                              : widget.bundle == null
+                              ? const PageScrollPhysics()
+                              : LoadedPagePhysics(
+                                  first: () =>
+                                      (widget.bundle!.loadedNumbers.first -
+                                          1) ~/
+                                      (spread ? 2 : 1),
+                                  last: () =>
+                                      (widget.bundle!.loadedNumbers.last - 1) ~/
+                                      (spread ? 2 : 1),
                                 ),
-                              ),
-                          ],
+                          itemCount: groups.length,
+                          onPageChanged: (index) {
+                            debugPrint(
+                              'READER_PAGE ${groups[index].first['page']}',
+                            );
+                            final controller = _controller;
+                            if (controller is LoadedPageController) {
+                              controller.cancelPendingNavigation();
+                            }
+                            final requested = _requestedPage;
+                            _requestedPage = null;
+                            final keep =
+                                requested ?? widget.pages[_selected]['page'];
+                            final kept =
+                                groups[index].any((p) => p['page'] == keep)
+                                ? widget.pages.indexWhere(
+                                    (p) => p['page'] == keep,
+                                  )
+                                : -1;
+                            _selected = kept >= 0
+                                ? kept
+                                : spread
+                                ? index * 2
+                                : index;
+                            final highlight = _highlight.value;
+                            if (highlight != null &&
+                                !groups[index].any(
+                                  (p) => p['page'] == highlight.page,
+                                )) {
+                              _highlight.value = null;
+                            }
+                            _shownPage.value =
+                                groups[index].first['page'] as int;
+                            _pendingPrefetch =
+                                groups[index].first['page'] as int;
+                            if (!_scrolling) _afterScroll();
+                          },
+                          itemBuilder: (context, index) => Listener(
+                            onPointerSignal: _wheelTurn,
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                for (final page in groups[index])
+                                  Expanded(
+                                    child: _LoadedReaderPage(
+                                      revision: _bundleRevision,
+                                      page: () => widget.pages.firstWhere(
+                                        (p) => p['page'] == page['page'],
+                                      ),
+                                      buildPage: (page) => _page(
+                                        page,
+                                        text.size,
+                                        text.width,
+                                        pageHeight,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            if (_arrowsShown) ...[
-              _arrow('next', screen, spread),
-              _arrow('previous', screen, spread),
-            ],
-            if (_barsVisible) _topBar(),
-            if (_stripOpen)
-              Positioned.fill(
-                child: GestureDetector(
-                  key: const ValueKey('toolbar-barrier'),
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => setState(() => _stripOpen = false),
+                    );
+                  },
                 ),
               ),
-            if (!_toolbar.hidden) ..._ball(screen),
-          ],
+              if (_arrowsShown) ...[
+                _arrow('next', screen, spread),
+                _arrow('previous', screen, spread),
+              ],
+              if (_barsVisible) _topBar(),
+              if (_stripOpen)
+                Positioned.fill(
+                  child: GestureDetector(
+                    key: const ValueKey('toolbar-barrier'),
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => setState(() => _stripOpen = false),
+                  ),
+                ),
+              if (!_toolbar.hidden) ..._ball(screen),
+            ],
+          ),
         ),
       ),
     );

@@ -372,6 +372,13 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     account." Nothing is deleted or mixed between accounts. Signing out and back in with the same
     account works as before. To hand a device to someone else, clear the app's data first.
 
+## R84 (2026-11-20, owner)
+
+84. **The PDF export (R7, R50) is on hold.** Nothing of it is built for now; the export rulings
+    (start, delivery, page shape, mark colours, range, render source) stay open until it resumes.
+    Finding kept for then: `ai-pages/` holds only 74 of 604 pages, so a 604-page export would draw
+    from the QUL fonts and page data.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

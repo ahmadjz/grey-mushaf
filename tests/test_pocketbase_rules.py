@@ -73,7 +73,7 @@ def sign_up(base, admin, verified=True):
     email = f'{uuid.uuid4().hex[:10]}@test.local'
     password = 'user-password-123'
     status, user = call(base, 'POST', '/api/collections/users/records',
-                        {'email': email, 'password': password, 'passwordConfirm': password})
+                        {'email': email, 'password': password, 'passwordConfirm': password}, admin)
     assert status == 200, user
     if verified:
         assert call(base, 'PATCH', f'/api/collections/users/records/{user["id"]}',
@@ -190,3 +190,12 @@ def test_seq_grows_per_user_and_the_future_is_clamped(server):
     assert record['created_at'] <= time.time() * 1000 + 1000
     _, listing = call(base, 'GET', f'{path}?filter=(seq>1)&sort=seq', None, mine)
     assert [item['seq'] for item in listing['items']] == [2, 3]
+
+
+def test_only_the_owner_creates_accounts(server):
+    base, admin = server
+    password = 'user-password-123'
+    body = {'email': 'stranger@test.local', 'password': password, 'passwordConfirm': password}
+    assert call(base, 'POST', '/api/collections/users/records', body)[0] in (400, 403)
+    _, mine = sign_up(base, admin)
+    assert call(base, 'POST', '/api/collections/users/records', body, mine)[0] in (400, 403)

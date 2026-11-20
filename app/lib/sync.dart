@@ -29,7 +29,7 @@ class SignedOut extends SyncProblem {
 }
 
 class NotVerified extends SyncProblem {
-  const NotVerified() : super('Verify your email first');
+  const NotVerified() : super('This account is not verified yet');
 }
 
 class Refused extends SyncProblem {
@@ -114,40 +114,6 @@ class PocketBaseApi {
     if (status == 403) throw const NotVerified();
     if (status == 400) throw const Refused('Wrong email or password');
     throw Refused(_message(body) ?? 'Sign-in failed ($status)');
-  }
-
-  Future<void> signUp(String email, String password) async {
-    final (status, body) = await _send(
-      'POST',
-      '/api/collections/users/records',
-      body: {'email': email, 'password': password, 'passwordConfirm': password},
-    );
-    if (status != 200) throw Refused(_signUpMessage(body, status));
-    await requestVerification(email);
-  }
-
-  static String _signUpMessage(Object? body, int status) {
-    final data = body is Map ? body['data'] : null;
-    if (data is Map) {
-      final email = data['email'], password = data['password'];
-      if (email is Map && email['code'] == 'validation_not_unique') {
-        return 'That email already has an account';
-      }
-      if (email is Map) return 'Check the email address';
-      if (password is Map) return 'Use a password of at least 8 characters';
-    }
-    return _message(body) ?? 'Could not create the account ($status)';
-  }
-
-  Future<void> requestVerification(String email) =>
-      _expectNoContent('/api/collections/users/request-verification', email);
-
-  Future<void> requestPasswordReset(String email) =>
-      _expectNoContent('/api/collections/users/request-password-reset', email);
-
-  Future<void> _expectNoContent(String path, String email) async {
-    final (status, body) = await _send('POST', path, body: {'email': email});
-    if (status != 204) throw Refused(_message(body) ?? 'Request failed');
   }
 
   Future<Session> refresh(String token) async {

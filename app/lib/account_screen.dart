@@ -17,7 +17,6 @@ class _AccountScreenState extends State<AccountScreen> {
   final _password = TextEditingController();
   bool _busy = false;
   String? _message;
-  bool _unverified = false;
 
   @override
   void dispose() {
@@ -36,14 +35,10 @@ class _AccountScreenState extends State<AccountScreen> {
     setState(() {
       _busy = true;
       _message = null;
-      _unverified = false;
     });
     String? message;
     try {
       message = await action();
-    } on NotVerified catch (error) {
-      message = error.message;
-      _unverified = true;
     } on SyncProblem catch (error) {
       message = error.message;
     }
@@ -58,21 +53,6 @@ class _AccountScreenState extends State<AccountScreen> {
     await widget.engine.signIn(_address, _password.text);
     if (mounted) Navigator.pop(context);
     return null;
-  });
-
-  Future<void> _create() => _run(() async {
-    await widget.engine.api.signUp(_address, _password.text);
-    return 'Check your email to verify the account, then sign in';
-  });
-
-  Future<void> _forgot() => _run(() async {
-    await widget.engine.api.requestPasswordReset(_address);
-    return 'If that email has an account, a reset link is on its way';
-  });
-
-  Future<void> _resend() => _run(() async {
-    await widget.engine.api.requestVerification(_address);
-    return 'Verification email sent';
   });
 
   @override
@@ -109,27 +89,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Text(_message!),
               ),
             ),
-          if (_unverified)
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: TextButton(
-                onPressed: _busy ? null : _resend,
-                child: const Text('Resend email'),
-              ),
-            ),
           FilledButton(
             onPressed: _busy ? null : _signIn,
             child: const Text('Sign in'),
           ),
           const SizedBox(height: 8),
-          OutlinedButton(
-            onPressed: _busy ? null : _create,
-            child: const Text('Create account'),
-          ),
-          TextButton(
-            onPressed: _busy ? null : _forgot,
-            child: const Text('Forgot password'),
-          ),
           if (_busy) const LinearProgressIndicator(),
         ],
       ),

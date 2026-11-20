@@ -32,44 +32,47 @@ void main() {
     );
   }
 
-  testWidgets('signed out, the Account row opens the sign-in screen (R78)', (
-    tester,
-  ) async {
-    await showSettings(tester);
-    expect(find.text('Not signed in · sync is off'), findsOneWidget);
-    expect(find.text('Sync now'), findsNothing);
-    await tester.tap(find.text('Account'));
-    await tester.pumpAndSettle();
-    for (final label in ['Sign in', 'Create account', 'Forgot password']) {
-      expect(find.text(label), findsOneWidget);
-    }
+  testWidgets(
+    'signed out, the Account row opens the sign-in screen (R78, R82)',
+    (tester) async {
+      await showSettings(tester);
+      expect(find.text('Not signed in · sync is off'), findsOneWidget);
+      expect(find.text('Sync now'), findsNothing);
+      await tester.tap(find.text('Account'));
+      await tester.pumpAndSettle();
+      expect(find.text('Sign in'), findsOneWidget);
+      expect(find.text('Create account'), findsNothing);
+      expect(find.text('Forgot password'), findsNothing);
 
-    await tester.enterText(find.byKey(const ValueKey('account-email')), 'a@x');
-    await tester.enterText(
-      find.byKey(const ValueKey('account-password')),
-      'bad',
-    );
-    await tester.tap(find.text('Sign in'));
-    await tester.pumpAndSettle();
-    expect(find.text('Wrong email or password'), findsOneWidget);
+      await tester.enterText(
+        find.byKey(const ValueKey('account-email')),
+        'a@x',
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey('account-password')),
+        'bad',
+      );
+      await tester.tap(find.text('Sign in'));
+      await tester.pumpAndSettle();
+      expect(find.text('Wrong email or password'), findsOneWidget);
 
-    server.verified = false;
-    await tester.tap(find.text('Sign in'));
-    await tester.pumpAndSettle();
-    expect(find.text('Verify your email first'), findsOneWidget);
-    expect(find.text('Resend email'), findsOneWidget);
+      server.verified = false;
+      await tester.tap(find.text('Sign in'));
+      await tester.pumpAndSettle();
+      expect(find.text('This account is not verified yet'), findsOneWidget);
 
-    server.verified = true;
-    await tester.enterText(
-      find.byKey(const ValueKey('account-password')),
-      'right-password',
-    );
-    await tester.tap(find.text('Sign in'));
-    await tester.pumpAndSettle();
-    expect(find.text('Sign in'), findsNothing);
-    expect(find.text('a@x'), findsOneWidget);
-    expect(find.text('Sync now'), findsOneWidget);
-  });
+      server.verified = true;
+      await tester.enterText(
+        find.byKey(const ValueKey('account-password')),
+        'right-password',
+      );
+      await tester.tap(find.text('Sign in'));
+      await tester.pumpAndSettle();
+      expect(find.text('Sign in'), findsNothing);
+      expect(find.text('a@x'), findsOneWidget);
+      expect(find.text('Sync now'), findsOneWidget);
+    },
+  );
 
   testWidgets(
     'signed in, Settings shows the last sync and changes waiting (R58)',

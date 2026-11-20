@@ -151,14 +151,27 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   int get _activeLevel => _darkMode ? _darkLevel : _greyLevel;
   Color get _dim =>
       Color.fromARGB(255, _activeLevel, _activeLevel, _activeLevel);
-  ThemeData get _theme => ThemeData(
-    colorScheme: ColorScheme.fromSeed(
+  Color _markInk(MarkColor colour) =>
+      _blackWhite ? _foreground : colour.paint(_foreground);
+  ColorScheme get _scheme {
+    final scheme = ColorScheme.fromSeed(
       seedColor: Colors.grey,
       dynamicSchemeVariant: _blackWhite
           ? DynamicSchemeVariant.monochrome
           : DynamicSchemeVariant.tonalSpot,
       brightness: _darkMode ? Brightness.dark : Brightness.light,
-    ),
+    );
+    if (!_blackWhite) return scheme;
+    return scheme.copyWith(
+      error: scheme.onSurface,
+      onError: scheme.surface,
+      errorContainer: scheme.surfaceContainerHighest,
+      onErrorContainer: scheme.onSurface,
+    );
+  }
+
+  ThemeData get _theme => ThemeData(
+    colorScheme: _scheme,
     snackBarTheme: SnackBarThemeData(
       backgroundColor: _darkMode ? const Color(0xFF303030) : null,
       contentTextStyle: _darkMode ? const TextStyle(color: Colors.white) : null,
@@ -1015,7 +1028,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
             if (original.marks.of(kind) case final mark?)
               (
                 label: _styleLabels[mark.style]!,
-                swatch: mark.color.paint(_foreground),
+                swatch: _markInk(mark.color),
                 on: (word) => word.marks.of(kind) != null,
                 act: (on) => MarkAction(key, kind, on ? mark : null),
               ),
@@ -1584,9 +1597,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
               ? Offset(right, screen.height / 2)
               : Offset(spot.dx * screen.width, spot.dy * screen.height)),
     );
-    final colour = _blackWhite
-        ? _foreground
-        : _toolbar.color.paint(_foreground);
+    final colour = _markInk(_toolbar.color);
     final shown = _toolbar.tools.lastOrNull;
     void drop() {
       final at = _ballDrag;
@@ -1708,7 +1719,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                       icon: _toolIcon(
                         tool,
                         _toolbar.tools.contains(tool)
-                            ? _toolbar.color.paint(_foreground)
+                            ? _markInk(_toolbar.color)
                             : _foreground.withValues(alpha: .5),
                       ),
                       onPressed: () =>

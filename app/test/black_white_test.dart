@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/main.dart';
 import 'package:greymushaf/page_ink.dart';
 import 'package:greymushaf/reader_settings.dart';
+import 'package:greymushaf/reveal_store.dart';
 import 'package:greymushaf/word_marks.dart';
 
 import 'memory_reveal_store.dart';
@@ -47,6 +48,7 @@ void main() {
     WidgetTester tester, {
     required bool eInk,
     BlackWhiteSettings? settings,
+    MemoryRevealStore? store,
   }) async {
     screen(tester, const Size(411, 914));
     insets(tester);
@@ -55,7 +57,7 @@ void main() {
         home: Reader(
           key: ValueKey(eInk),
           pages: range(215, 218),
-          store: MemoryRevealStore(),
+          store: store ?? MemoryRevealStore(),
           settings: settings ?? BlackWhiteSettings(),
           eInk: eInk,
         ),
@@ -195,6 +197,58 @@ void main() {
       ((header.decoration as BoxDecoration).border as Border).bottom.width,
       greaterThanOrEqualTo(1),
     );
+  });
+
+  testWidgets('B/W strip tools and the tap box show no colour', (tester) async {
+    final store = MemoryRevealStore();
+    await open(tester, eInk: true, store: store);
+    final first = tester
+        .widget<PaintedInkPage>(find.byType(PaintedInkPage).first)
+        .controller
+        .words
+        .first;
+    final word = WordTarget(first.id);
+    final key = wordKey(first.location);
+    store.wordMarks[key] = (
+      line: (style: MarkStyle.singleLine, color: MarkColor.red),
+      shape: null,
+    );
+    await tapTarget(tester, word);
+    await tester.pumpAndSettle();
+    final swatch = tester.widget<CircleAvatar>(
+      find.descendant(
+        of: find.byKey(const ValueKey('mark-box')),
+        matching: find.byType(CircleAvatar),
+      ),
+    );
+    expect(isGrey(swatch.backgroundColor!), isTrue);
+    await tester.tapAt(const Offset(5, 5));
+    await tester.pumpAndSettle();
+    await openStrip(tester);
+    final icon = tester.widget<Icon>(
+      find
+          .descendant(
+            of: find.byKey(const ValueKey('tool-visible')),
+            matching: find.byType(Icon),
+          )
+          .first,
+    );
+    expect(isGrey(icon.color!), isTrue);
+  });
+
+  testWidgets('B/W errors are not red', (tester) async {
+    await open(tester, eInk: true);
+    await openMenuItem(tester, 'Settings');
+    final scheme = Theme.of(tester.element(find.text('Black & white')))
+        .colorScheme;
+    for (final colour in [
+      scheme.error,
+      scheme.onError,
+      scheme.errorContainer,
+      scheme.onErrorContainer,
+    ]) {
+      expect(isGrey(colour), isTrue);
+    }
   });
 
   test('B/W marks use the page ink, colour marks keep their colour', () {

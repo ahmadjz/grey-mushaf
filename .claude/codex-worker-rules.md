@@ -1,7 +1,7 @@
 # Rules for a Codex worker on the grey mushaf app
 
-You are doing the hands-on work for Claude's `/quran-quick` skill. These rules outrank anything in the
-task that conflicts with them.
+You are the writer, explorer, pre-checker or reviewer for Claude's `/quran-quick` skill; the task says
+which. These rules outrank anything in the task that conflicts with them.
 
 ## Where things are
 
@@ -57,7 +57,53 @@ replies on the same thread with the ruling, and then you continue.
 - Two attempts at the same failing command, then stop and report.
 - **Never fabricate a result.** Report a check you did not run as `not run: <why>`.
 
+## Keep the context small
+
+The owner pays for every token you re-read, and this thread may be reused for the next ask.
+Stay in the scope your prompt gives. A reviewer reads the affected code, not only the diff: start
+from the diff hunks, then read the callers and callees of every changed symbol, the module's existing
+patterns and invariants, and the tests covering it; stop at unrelated modules. Never re-read an
+unchanged file.
+
+- Start with narrow `rg -n` on named paths; use `rg -l` to find files and `rg -m 5` to cap matches
+  per file while scanning. Use line ranges or enclosing functions rather than whole large files.
+- Run `git diff --stat` before hunks (`git diff --stat base..head` for a review), then diff named
+  files. Default to <=120 lines per source/diff read and <=50 lines per log excerpt. When more
+  output is needed, give a one-line reason before expanding. Say when output was truncated and
+  name the saved file and unread range. Never hide failures behind a clipped success excerpt.
+- Redirect Flutter analyze/test/build, Gradle, pytest and integration logs to a named file under
+  `docs/runs/shots/` (gitignored). Save the command's exit code before `tail -50 <log>` and
+  `rg -n -m 10 'FAIL|FAILED|Exception|Error|error:' <log>`. Report the real exit code, final
+  result and relevant failure lines; a successful tail/grep is not a successful test.
+  Poll long builds every 10-30 seconds, with <=50 new lines per poll. Do not replay earlier logs.
+- For UI state prefer Flutter widget/integration assertions and semantics, including
+  `app/integration_test/restart_proof_test.dart` for separate-process reveal durability.
+  `app/test_driver/proof_driver.dart` writes JSON to `PROOF_OUT`; extract phase, PID, assertions
+  and cleanup needed for the check, never dump the entire JSON. Use filtered `adb logcat` or
+  a targeted `adb shell uiautomator dump` read for Android state. Bound `ssh vps` logs the same way.
+- Screenshots, browser/device captures and `view_image` are only for a proof or failure diagnosis,
+  at most 2 per check, including retries. Save Android captures with
+  `adb -s <serial> exec-out screencap -p > docs/runs/shots/<check>-raw.png`, then, when available,
+  `magick docs/runs/shots/<check>-raw.png -resize '720x>' docs/runs/shots/<check>-preview.png`.
+  Inspect the <=720px-wide preview. If resizing is unavailable, report it; keep the two-image cap.
+- Keep original pixels on disk for numeric parity proof. `app/test_driver/parity_driver.dart`
+  saves PNGs and `capture.json` under `PARITY_OUT` and removes screenshot bytes from response data.
+  Let required parity batches save originals locally, but return counts, paths and bounded diff
+  summaries from `app/tool/parity_diff.dart` / `app/tool/rgba_diff.dart`, never PNG/base64 payloads,
+  full capture JSON, frame arrays or timeline dumps. Visually inspect at most two representative
+  proofs per check. For PDF exports return page count and sample line-break results, with at most
+  two downscaled page images per check; keep full PDFs/renders on disk.
+- Never read a whole Claude orchestrator SKILL.md. The caller supplies the relevant step text or
+  line range. Project repo skills you are told to follow stay readable.
+- Count tool calls for this turn, including polls and captures. Stop and report what you have if
+  this turn passes 60 tool calls. Return completed checks, evidence paths, open items and the next
+  action. Do not keep polling or capturing until the build finishes. This is a turn limit, not a
+  reason to discard a reusable thread.
+
 ## Your final message
+
+Start with this header, using the route and reviewer details supplied by the caller:
+`mode <default|balanced|low-claude> · route <routine|sensitive> (<why>) · writer <model effort> · reviewers <model effort, ...> · escalated <no|why>`.
 
 Keep it short, in plain lines: what you changed (`file:line`), each check with a one-line result, the
 commit SHAs, what you did not verify, and any `NEEDS_DECISION:`.

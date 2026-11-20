@@ -76,9 +76,40 @@ Evidence:
 Production test accounts (ids): proof-a sz28sym3n7489or and proof-b fzidz88izrybmba kept for the live proof,
 delete afterwards; deleted: n3mhmzpb0doe4wo, tb2s7mhjhpjirns, 37yb980aszsjb3e, 9mtg8fz4ojb42uj.
 
-Not run yet: live two-device proof in the real app; verify/reset email delivery `not observed` (owner SMTP).
+Owner rulings 2026-11-20: R82 (no sign-up; the owner creates verified accounts in the admin page; sign-up,
+verify and reset mail are a TODO). Use two emulators for the live proof. R83 (one account per device) is a
+Claude default from review round 2. More commits: ccc1c94 R82 · 050c283 no sign-up (migration 1763660000,
+deployed; public sign-up 403) · 09f806a review fixes round 1 · ee9b1ed review fixes round 2 + R83 rulings
+commit. vps-infra: 6f20a13 blocks superusers by collection id too (was reachable: 400 → now 404).
 
-Next action: live proof on two emulators (Medium_Phone + Tablet_API_37, debug build against production,
-proof-a): airplane mode on A, reveal; mark on B; force-stop both; reconnect; check word semantics on both.
-Boox waits on the owner (its real data would mix with proof words). Then Step 5 review (Fable medium +
-fresh Sol medium), Opus full check, fixes, delete proof accounts, push, memory.
+## Step 4 live proof — done (emulator-5554 phone + emulator-5556 tablet, debug build, production)
+
+- run 1 (pre-review build): phone in airplane mode reveals 1:2:1 ("1 change waiting · No connection"); tablet
+  double-lines 1:2:2; both force-stopped and relaunched; phone reconnects; after one poll both show 1:2:1
+  revealed (count 1) and 1:2:2 red double line (shots/sync-live/both-after.png)
+- fresh device: the flutter-test runs reinstalled the app on the phone; signing in again pulled every word
+- run 2 (final build ee9b1ed): phone offline reveals 1:3:1; tablet double-lines 1:3:2 and re-greys 1:2:1;
+  restart both; reconnect; both: 1:2:1 grey count 1, 1:3:1 revealed count 1, 1:3:2 red double line
+- isolation on production: see above (B can read nothing of A); public sign-up 403
+
+## Step 5–7 review — done
+
+r1 Sol 01a1fa8c: 2 HIGH (clamp divergence, stale pass after switch), 1 MEDIUM (losing reveal counted), 1 LOW
+(dispose) → all fixed. r1 Fable: 3 HIGH (same two + account-switch merge), 4 MEDIUM (Caddy by-id bypass —
+confirmed live; trusted proxy; Reader wiring untested; hook comment/seq clash) → fixed; LOW 8–15: fixed 10,
+12, 14; accepted 8 (a refused record blocks its kind), 9 (revoked token caught at 12 h refresh), 11 (open
+bookmarks tab doesn't refresh), 13 (token in app storage), 15 (proof accounts — now deleted).
+r2 Sol: 1 HIGH (stale check missed local awaits) + account mixing → fixed with checks before each request and
+R83. r2 Fable: all r1 fixes hold; MEDIUM account mixing → R83; LOW unguarded background errors → catch-all.
+Opus full check of the final engine, store and wiring: no open item.
+Gates final: flutter analyze ok · flutter test 182 passed · pytest rules 7 passed · store integration
+sync_store 8/8, sqlite, bookmarks_store, marks_store, downgrade pass · two-store test vs local PocketBase pass.
+
+Cleanup: production accounts sz28sym3n7489or and fzidz88izrybmba deleted (records cascade: 0 left; 0 users).
+
+Not observed: Boox (not attached; owner chose emulators); verify/reset email (out by R82).
+Open for later: self sign-up + Gmail SMTP (R82 TODO), Google sign-in (R79), token in plain app storage,
+the visa site's Caddy block has the same superuser-by-id hole (not this project's; owner told).
+
+Next action: none for this run. Owner creates friends' accounts via `ssh -L 8093:127.0.0.1:8093 vps`, then
+http://127.0.0.1:8093/_/ (login in /opt/pocketbase-mushaf/superuser.txt), users → New record, verified on.

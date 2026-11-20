@@ -365,6 +365,13 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     a forgotten password in the admin page. TODO later: self sign-up, verification and reset emails
     over Gmail SMTP.
 
+## R83 (2026-11-20, Claude's default, the owner may overrule)
+
+83. **One account per device.** Once a device has synced with an account, signing in there with a
+    different account is refused with "This device holds another account's words. Sign in with that
+    account." Nothing is deleted or mixed between accounts. Signing out and back in with the same
+    account works as before. To hand a device to someone else, clear the app's data first.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

@@ -6,6 +6,8 @@ abstract class ReaderSettings {
   int get darkLevel;
   bool get arrowsShown;
   Map<String, Offset> get arrowSpots;
+  bool? get blackWhite;
+  Future<void> saveBlackWhite(bool on);
   Future<void> saveDarkLevel(int level);
   Future<void> saveGreyLevel(int level);
   Future<void> saveArrowsShown(bool shown);

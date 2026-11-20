@@ -56,6 +56,10 @@ class FlakyArrowSettings implements ReaderSettings {
   @override
   final arrowSpots = <String, Offset>{};
   @override
+  bool? blackWhite;
+  @override
+  Future<void> saveBlackWhite(bool on) async => blackWhite = on;
+  @override
   Future<void> saveDarkLevel(int level) async {}
   @override
   Future<void> saveGreyLevel(int level) async {}

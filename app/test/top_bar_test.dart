@@ -21,6 +21,10 @@ class ArrowSettings implements ReaderSettings {
   @override
   final arrowSpots = <String, Offset>{};
   @override
+  bool? blackWhite;
+  @override
+  Future<void> saveBlackWhite(bool on) async => blackWhite = on;
+  @override
   Future<void> saveDarkLevel(int level) async => darkLevel = level;
   @override
   Future<void> saveGreyLevel(int level) async => greyLevel = level;

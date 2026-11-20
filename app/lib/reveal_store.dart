@@ -85,7 +85,23 @@ class SqliteRevealStore
     this._arrowSpots,
     this._lastPage,
     this._bookmarks,
+    this._blackWhite,
   );
+  bool? _blackWhite;
+
+  @override
+  bool? get blackWhite => _blackWhite;
+
+  @override
+  Future<void> saveBlackWhite(bool on) async {
+    await _db.insert('local_metadata', {
+      'key': _blackWhiteKey,
+      'value': on ? '1' : '0',
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    _blackWhite = on;
+  }
+
+  static const _blackWhiteKey = 'reader_black_white';
   int _lastPage;
   final Map<int, int> _bookmarks;
 
@@ -388,6 +404,15 @@ class SqliteRevealStore
         spots,
         lastPage != null && lastPage >= 1 && lastPage <= 604 ? lastPage : 1,
         bookmarks,
+        switch ((await db.query(
+          'local_metadata',
+          where: 'key = ?',
+          whereArgs: [_blackWhiteKey],
+        )).firstOrNull?['value']) {
+          '1' => true,
+          '0' => false,
+          _ => null,
+        },
       );
     } catch (_) {
       await db.close();

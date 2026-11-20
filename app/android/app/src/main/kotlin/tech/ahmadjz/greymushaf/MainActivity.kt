@@ -1,5 +1,7 @@
 package tech.ahmadjz.greymushaf
 
+import android.content.pm.ApplicationInfo
+import android.os.Build
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -22,6 +24,7 @@ class MainActivity : FlutterActivity() {
                         applyBars()
                         result.success(null)
                     }
+                    "isEInk" -> result.success(manufacturer().equals("ONYX", ignoreCase = true))
                     "setBarsVisible" -> {
                         barsVisible = call.arguments as Boolean
                         applyBars()
@@ -42,6 +45,19 @@ class MainActivity : FlutterActivity() {
                     else -> result.notImplemented()
                 }
             }
+    }
+
+    private fun manufacturer(): String {
+        val debuggable = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+        if (debuggable) {
+            val fake = runCatching {
+                Class.forName("android.os.SystemProperties")
+                    .getMethod("get", String::class.java)
+                    .invoke(null, "debug.greymushaf.manufacturer") as String
+            }.getOrDefault("")
+            if (fake.isNotEmpty()) return fake
+        }
+        return Build.MANUFACTURER
     }
 
     private fun applyBars() {

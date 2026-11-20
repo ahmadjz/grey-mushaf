@@ -14,6 +14,10 @@ class FailingSettings implements ReaderSettings {
   @override
   final arrowSpots = <String, Offset>{};
   @override
+  bool? blackWhite;
+  @override
+  Future<void> saveBlackWhite(bool on) async => blackWhite = on;
+  @override
   Future<void> saveArrowsShown(bool shown) async => arrowsShown = shown;
   @override
   Future<void> saveArrowSpot(String key, Offset spot) async =>

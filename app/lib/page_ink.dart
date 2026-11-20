@@ -123,6 +123,9 @@ class PageInkController extends ChangeNotifier {
   Color dim = const Color(0xFFB0B0B0),
       foreground = Colors.black,
       background = Colors.white;
+  bool blackWhite = false;
+  Color markColor(MarkColor colour) =>
+      blackWhite ? foreground : colour.paint(foreground);
   final words = <InkWord>[];
   final _globalRects =
       HashMap<Rect, ({RenderBox source, Offset offset, Rect local})>.identity();
@@ -163,7 +166,7 @@ class PageInkController extends ChangeNotifier {
         ..isAntiAlias = true;
       final line = marks.line;
       if (line != null) {
-        pen.color = line.color.paint(foreground);
+        pen.color = markColor(line.color);
         final gap = stroke * 2.5;
         final lines = line.style == MarkStyle.doubleLine ? 2 : 1;
         final lowest = word.box.bottom - stroke / 2;
@@ -182,7 +185,7 @@ class PageInkController extends ChangeNotifier {
       }
       final shape = marks.shape;
       if (shape != null) {
-        pen.color = shape.color.paint(foreground);
+        pen.color = markColor(shape.color);
         final pad = word.fontSize * .06;
         final around = word.ink.inflate(pad);
         final bounds = Rect.fromLTRB(
@@ -358,6 +361,7 @@ class _PageRender extends RenderCustomPaint {
     controller.dim,
     controller.foreground,
     controller.background,
+    controller.blackWhite,
   );
 
   @override

@@ -30,6 +30,7 @@ Future<void> main() async {
     final store = await SqliteRevealStore.open();
     final bundle = await MushafBundle.open(near: store.lastPage);
     final index = await QuranIndex.load(rootBundle);
+    final eInk = await isEInkDevice();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       debugPrint('READER_FIRST_FRAME ${DateTime.now().millisecondsSinceEpoch}');
     });
@@ -48,6 +49,7 @@ Future<void> main() async {
           navigation: store,
           index: index,
           loadSearch: () => SearchIndex.load(rootBundle),
+          eInk: eInk,
         ),
       ),
     );
@@ -57,6 +59,16 @@ Future<void> main() async {
         home: Scaffold(body: Center(child: Text('Cannot open reader: $error'))),
       ),
     );
+  }
+}
+
+Future<bool> isEInkDevice() async {
+  try {
+    return await const MethodChannel('tech.ahmadjz.greymushaf/reader')
+            .invokeMethod<bool>('isEInk') ??
+        false;
+  } on MissingPluginException {
+    return false;
   }
 }
 
@@ -108,7 +120,9 @@ class Reader extends StatefulWidget {
     this.navigation,
     this.index,
     this.loadSearch,
+    this.eInk = false,
   });
+  final bool eInk;
   final MushafBundle? bundle;
   final NavigationStore? navigation;
   final QuranIndex? index;
@@ -131,6 +145,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   late int _greyLevel;
   late int _darkLevel;
   bool _darkMode = false;
+  late bool _blackWhite;
   Color get _background => _darkMode ? Colors.black : Colors.white;
   Color get _foreground => _darkMode ? Colors.white : Colors.black;
   int get _activeLevel => _darkMode ? _darkLevel : _greyLevel;
@@ -139,6 +154,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   ThemeData get _theme => ThemeData(
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.grey,
+      dynamicSchemeVariant: _blackWhite
+          ? DynamicSchemeVariant.monochrome
+          : DynamicSchemeVariant.tonalSpot,
       brightness: _darkMode ? Brightness.dark : Brightness.light,
     ),
     snackBarTheme: SnackBarThemeData(
@@ -337,6 +355,14 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     );
   }
 
+  Future<void> _saveBlackWhite(bool on) async {
+    try {
+      await widget.settings?.saveBlackWhite(on);
+    } catch (_) {
+      _showSaveFailure('black & white setting');
+    }
+  }
+
   Future<void> _saveArrowsShown(bool shown) async {
     try {
       await widget.settings?.saveArrowsShown(shown);
@@ -383,13 +409,17 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     if (target < 0 || target >= _groupCount) return;
     _arrowTarget = target;
     final turn = ++_arrowTurns;
+    if (_blackWhite) controller.jumpToPage(target);
     unawaited(
-      controller
-          .animateToPage(
-            target,
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeOut,
-          )
+      (_blackWhite
+              ? controller is LoadedPageController
+                    ? controller.pending
+                    : Future<void>.value()
+              : controller.animateToPage(
+                  target,
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeOut,
+                ))
           .whenComplete(() {
             if (turn == _arrowTurns) _arrowTarget = null;
           }),
@@ -528,6 +558,15 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                           setState(() => _arrowsShown = value);
                           updateSheet(() {});
                           unawaited(_saveArrowsShown(value));
+                        },
+                      ),
+                      SwitchListTile(
+                        title: const Text('Black & white'),
+                        value: _blackWhite,
+                        onChanged: (value) {
+                          setState(() => _blackWhite = value);
+                          updateSheet(() {});
+                          unawaited(_saveBlackWhite(value));
                         },
                       ),
                       Text(
@@ -732,6 +771,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     _greyLevel = widget.settings?.greyLevel ?? 176;
     _darkLevel = widget.settings?.darkLevel ?? 80;
     _arrowsShown = widget.settings?.arrowsShown ?? true;
+    _blackWhite = widget.settings?.blackWhite ?? widget.eInk;
     _arrowSpots = {...?widget.settings?.arrowSpots};
     final last = widget.navigation?.lastPage;
     _selected = math.max(0, widget.pages.indexWhere((p) => p['page'] == last));
@@ -1544,7 +1584,9 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
               ? Offset(right, screen.height / 2)
               : Offset(spot.dx * screen.width, spot.dy * screen.height)),
     );
-    final colour = _toolbar.color.paint(_foreground);
+    final colour = _blackWhite
+        ? _foreground
+        : _toolbar.color.paint(_foreground);
     final shown = _toolbar.tools.lastOrNull;
     void drop() {
       final at = _ballDrag;
@@ -1674,39 +1716,40 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                     ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  for (final colour in MarkColor.values)
-                    InkResponse(
-                      key: ValueKey('colour-${colour.name}'),
-                      onTap: () => unawaited(
-                        _saveToolbar(_toolbar.copyWith(color: colour)),
-                      ),
-                      child: Semantics(
-                        selected: _toolbar.color == colour,
-                        label: colour.name,
-                        child: Container(
-                          width: 28,
-                          height: 28,
-                          margin: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: colour.paint(_foreground),
-                            border: _toolbar.color == colour
-                                ? Border.all(
-                                    color: _foreground.withValues(alpha: .6),
-                                    width: 3,
-                                  )
-                                : Border.all(
-                                    color: _foreground.withValues(alpha: .15),
-                                  ),
+              if (!_blackWhite)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (final colour in MarkColor.values)
+                      InkResponse(
+                        key: ValueKey('colour-${colour.name}'),
+                        onTap: () => unawaited(
+                          _saveToolbar(_toolbar.copyWith(color: colour)),
+                        ),
+                        child: Semantics(
+                          selected: _toolbar.color == colour,
+                          label: colour.name,
+                          child: Container(
+                            width: 28,
+                            height: 28,
+                            margin: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: colour.paint(_foreground),
+                              border: _toolbar.color == colour
+                                  ? Border.all(
+                                      color: _foreground.withValues(alpha: .6),
+                                      width: 3,
+                                    )
+                                  : Border.all(
+                                      color: _foreground.withValues(alpha: .15),
+                                    ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                ],
-              ),
+                  ],
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -1832,6 +1875,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     ink.dim = _dim;
     ink.foreground = _foreground;
     ink.background = _background;
+    ink.blackWhite = _blackWhite;
     final place = pagePlace(page);
     final chrome = _darkMode ? const Color(0xFFB0B0B0) : Colors.black;
     final spread = _spread == true;
@@ -1847,6 +1891,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 right: number.isOdd,
                 left: number.isEven || spread,
                 color: chrome,
+                thinnest: _blackWhite ? 1 : .6,
               ),
             ),
             Padding(
@@ -1863,7 +1908,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                           child: DecoratedBox(
                             decoration: BoxDecoration(
                               border: Border(
-                                bottom: BorderSide(color: chrome, width: .5),
+                                bottom: BorderSide(
+                                  color: chrome,
+                                  width: _blackWhite ? 1 : .5,
+                                ),
                               ),
                             ),
                             child: Row(
@@ -1995,6 +2043,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 page: number,
                 highlight: _highlight,
                 dark: _darkMode,
+                blackWhite: _blackWhite,
               ),
             ),
           ),
@@ -2162,22 +2211,27 @@ class PageBorder extends StatelessWidget {
     required this.left,
     required this.right,
     required this.color,
+    this.thinnest = .6,
   });
   final bool left;
   final bool right;
   final Color color;
+  final double thinnest;
 
   @override
   Widget build(BuildContext context) => IgnorePointer(
-    child: CustomPaint(painter: _PageBorderPainter(left, right, color)),
+    child: CustomPaint(
+      painter: _PageBorderPainter(left, right, color, thinnest),
+    ),
   );
 }
 
 class _PageBorderPainter extends CustomPainter {
-  _PageBorderPainter(this.left, this.right, this.color);
+  _PageBorderPainter(this.left, this.right, this.color, this.thinnest);
   final bool left;
   final bool right;
   final Color color;
+  final double thinnest;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -2186,7 +2240,7 @@ class _PageBorderPainter extends CustomPainter {
       ..strokeWidth = 1.2;
     final inner = Paint()
       ..color = color
-      ..strokeWidth = .6;
+      ..strokeWidth = thinnest;
     for (final (show, outerX, innerX) in [
       (right, size.width - 2, size.width - 4.5),
       (left, 2.0, 4.5),
@@ -2207,7 +2261,10 @@ class _PageBorderPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_PageBorderPainter old) =>
-      old.left != left || old.right != right || old.color != color;
+      old.left != left ||
+      old.right != right ||
+      old.color != color ||
+      old.thinnest != thinnest;
 }
 
 class AyahShadePainter extends CustomPainter {
@@ -2216,7 +2273,9 @@ class AyahShadePainter extends CustomPainter {
     required this.page,
     required this.highlight,
     required this.dark,
+    this.blackWhite = false,
   }) : super(repaint: Listenable.merge([ink, highlight]));
+  final bool blackWhite;
   final PageInkController ink;
   final int page;
   final ValueNotifier<({int page, int surah, int ayah})?> highlight;
@@ -2224,6 +2283,14 @@ class AyahShadePainter extends CustomPainter {
 
   static const _lightShade = Color(0xFFD3E6F2);
   static const _darkShade = Color(0xFF1F3A48);
+  static const _lightGreyShade = Color(0xFFDDDDDD);
+  static const _darkGreyShade = Color(0xFF383838);
+  Color get shade => switch ((dark, blackWhite)) {
+    (false, false) => _lightShade,
+    (true, false) => _darkShade,
+    (false, true) => _lightGreyShade,
+    (true, true) => _darkGreyShade,
+  };
 
   List<Rect> runs() {
     final target = highlight.value;
@@ -2249,7 +2316,7 @@ class AyahShadePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = dark ? _darkShade : _lightShade;
+    final paint = Paint()..color = shade;
     for (final run in runs()) {
       canvas.drawRRect(
         RRect.fromRectAndRadius(
@@ -2263,5 +2330,8 @@ class AyahShadePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(AyahShadePainter old) =>
-      old.ink != ink || old.page != page || old.dark != dark;
+      old.ink != ink ||
+      old.page != page ||
+      old.dark != dark ||
+      old.blackWhite != blackWhite;
 }

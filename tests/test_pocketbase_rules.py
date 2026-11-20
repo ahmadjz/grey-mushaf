@@ -1,3 +1,5 @@
+import http.client
+import http.cookies
 import json
 import os
 from pathlib import Path
@@ -36,6 +38,12 @@ def call(base, method, path, body=None, token=None):
 @pytest.fixture(scope='module')
 def server(tmp_path_factory):
     data = tmp_path_factory.mktemp('pb_data')
+    web = tmp_path_factory.mktemp('web')
+    (web / 'public' / 'assets').mkdir(parents=True)
+    (web / 'public' / 'index.html').write_text('<html>shell</html>')
+    (web / 'public' / 'assets' / 'AssetManifest.bin.json').write_text('"manifest"')
+    (web / 'private' / 'mushaf').mkdir(parents=True)
+    (web / 'private' / 'mushaf' / '50.json').write_text('{"page": 50}')
     with socket.socket() as probe:
         probe.bind(('127.0.0.1', 0))
         port = probe.getsockname()[1]
@@ -45,7 +53,8 @@ def server(tmp_path_factory):
     subprocess.run([PB_BIN, 'superuser', 'upsert', *ADMIN, f'--dir={data}'],
                    check=True, capture_output=True)
     process = subprocess.Popen([PB_BIN, 'serve', f'--http=127.0.0.1:{port}', *args],
-                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                               env={**os.environ, 'MUSHAF_WEB_DIR': str(web)})
     base = f'http://127.0.0.1:{port}'
     for _ in range(100):
         try:
@@ -200,3 +209,92 @@ def test_only_the_owner_creates_accounts(server):
     assert call(base, 'POST', '/api/collections/users/records', body)[0] in (400, 403)
     _, mine = sign_up(base, admin)
     assert call(base, 'POST', '/api/collections/users/records', body, mine)[0] in (400, 403)
+
+
+def fetch(base, method, path, token=None, cookie=None):
+    headers = {}
+    if token:
+        headers['Authorization'] = token
+    if cookie:
+        headers['Cookie'] = f'mushaf_session={cookie}'
+    connection = http.client.HTTPConnection(base.removeprefix('http://'))
+    connection.request(method, path, headers=headers)
+    response = connection.getresponse()
+    body = response.read()
+    connection.close()
+    return response.status, response.headers, body
+
+
+def session_cookie(headers):
+    cookie = http.cookies.SimpleCookie(headers['Set-Cookie'])['mushaf_session']
+    return cookie
+
+
+MUSHAF_PAGE = '/assets/assets/mushaf/50.json'
+
+
+def test_signed_out_gets_the_shell_but_no_mushaf(server):
+    base, _ = server
+    status, _, body = fetch(base, 'GET', '/')
+    assert (status, body) == (200, b'<html>shell</html>')
+    assert fetch(base, 'GET', '/surah/2')[2] == b'<html>shell</html>'
+    assert fetch(base, 'GET', '/assets/AssetManifest.bin.json')[0] == 200
+    status, headers, body = fetch(base, 'GET', MUSHAF_PAGE)
+    assert status == 401 and b'page' not in body
+    assert 'no-store' in headers['Cache-Control']
+
+
+def test_a_signed_in_cookie_opens_the_mushaf_until_sign_out(server):
+    base, admin = server
+    _, token = sign_up(base, admin)
+    status, headers, _ = fetch(base, 'POST', '/api/mushaf/session', token=token)
+    assert status == 204
+    cookie = session_cookie(headers)
+    assert cookie['httponly'] and cookie['secure'] and cookie['samesite'] == 'Strict'
+    assert cookie['path'] == '/'
+    status, headers, body = fetch(base, 'GET', MUSHAF_PAGE, cookie=cookie.value)
+    assert (status, body) == (200, b'{"page": 50}')
+    assert 'no-store' in headers['Cache-Control'] and 'private' in headers['Cache-Control']
+    status, headers, _ = fetch(base, 'DELETE', '/api/mushaf/session')
+    assert status == 204
+    assert session_cookie(headers).value == ''
+    assert headers['Set-Cookie'].lower().count('max-age=0') == 1
+
+
+def test_only_a_verified_users_token_makes_a_session(server):
+    base, admin = server
+    assert fetch(base, 'POST', '/api/mushaf/session')[0] == 401
+    assert fetch(base, 'POST', '/api/mushaf/session', token='garbage')[0] == 401
+    assert fetch(base, 'POST', '/api/mushaf/session', token=admin)[0] in (401, 403)
+    for cookie in ('garbage', admin):
+        assert fetch(base, 'GET', MUSHAF_PAGE, cookie=cookie)[0] == 401
+
+
+def test_the_cookie_alone_never_reads_or_writes_records(server):
+    base, admin = server
+    user, token = sign_up(base, admin)
+    cookie = session_cookie(fetch(base, 'POST', '/api/mushaf/session', token=token)[1]).value
+    assert fetch(base, 'GET', '/api/collections/word_actions/records', cookie=cookie)[2].count(b'"items":[]') == 1
+    connection = http.client.HTTPConnection(base.removeprefix('http://'))
+    connection.request('POST', '/api/collections/word_actions/records',
+                       body=json.dumps(word_action(user)),
+                       headers={'Content-Type': 'application/json', 'Cookie': f'mushaf_session={cookie}'})
+    assert connection.getresponse().status in (400, 401, 403)
+    connection.close()
+
+
+@pytest.mark.parametrize('path', [
+    '/assets%2Fassets/mushaf/50.json',
+    '/assets/assets%2Fmushaf%2F50.json',
+    '/assets//assets/mushaf/50.json',
+    '/assets/./assets/mushaf/50.json',
+    '/x/../assets/assets/mushaf/50.json',
+    '/Assets/assets/mushaf/50.json',
+    '/mushaf/50.json',
+    '/private/mushaf/50.json',
+    '/../private/mushaf/50.json',
+    '/%2e%2e/private/mushaf/50.json',
+])
+def test_no_path_spelling_reaches_the_mushaf_signed_out(server, path):
+    base, _ = server
+    assert b'"page": 50' not in fetch(base, 'GET', path)[2]

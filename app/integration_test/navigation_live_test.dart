@@ -81,6 +81,10 @@ void main() {
     await hold(tester, 'shade');
     await tester.tapAt(Offset(3, size.height / 2));
     await tester.pumpAndSettle();
+    if (find.byTooltip('Bookmark page').evaluate().isEmpty) {
+      await tester.tapAt(Offset(3, size.height / 2));
+      await tester.pumpAndSettle();
+    }
     await tester.tap(find.byTooltip('Bookmark page'));
     await tester.pumpAndSettle();
     await tester.runAsync(

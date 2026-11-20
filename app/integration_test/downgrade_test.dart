@@ -29,7 +29,7 @@ void main() {
       'Downgrade proof identifiers: device=${store.deviceId}; action=${action.uuid}; word=${action.key}; metadata=device_id,identity_version',
     );
     final db = await openDatabase(filename);
-    await db.setVersion(3);
+    await db.setVersion(4);
     final beforeRows = <String, List<Map<String, Object?>>>{};
     for (final table in [
       'local_metadata',
@@ -38,6 +38,8 @@ void main() {
       'word_state',
       'mark_actions',
       'word_marks',
+      'bookmark_actions',
+      'bookmarks',
     ]) {
       beforeRows[table] = await db.query(table);
     }
@@ -59,13 +61,13 @@ void main() {
     }
     await inspect.close();
     final afterBytes = await File(filename).readAsBytes();
-    expect(version, 3);
+    expect(version, 4);
     expect(afterRows, beforeRows);
     expect(afterBytes, beforeBytes);
     expect(failure, isA<StateError>());
     expect(
       failure.toString(),
-      contains('Database version 3 is newer than supported version 2'),
+      contains('Database version 4 is newer than supported version 3'),
     );
   });
 }

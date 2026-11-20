@@ -152,7 +152,7 @@ void main() {
     expect(await _rows(filename), before);
 
     final db = await openDatabase(filename);
-    expect(await db.getVersion(), 2);
+    expect(await db.getVersion(), 3);
     expect((await db.query('mark_actions')).length, 4);
     await db.close();
   });

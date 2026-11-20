@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'bookmarks.dart';
 import 'reader_settings.dart';
 import 'word_marks.dart';
 
@@ -53,9 +54,25 @@ Future<void> _createMarkTables(DatabaseExecutor db) async {
     $_markCheck)''');
 }
 
+Future<void> _createBookmarkTables(DatabaseExecutor db) async {
+  await db.execute('''CREATE TABLE bookmark_actions (
+    local_seq INTEGER PRIMARY KEY AUTOINCREMENT,
+    action_uuid TEXT UNIQUE NOT NULL, device_id TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    page INTEGER NOT NULL CHECK(page BETWEEN 1 AND 604),
+    saved INTEGER NOT NULL CHECK(saved IN (0,1)))''');
+  await db.execute(
+    '''CREATE TABLE bookmarks (
+    page INTEGER PRIMARY KEY NOT NULL CHECK(page BETWEEN 1 AND 604),
+    saved INTEGER NOT NULL CHECK(saved IN (0,1)),
+    saved_at INTEGER NOT NULL,
+    last_action_uuid TEXT NOT NULL REFERENCES bookmark_actions(action_uuid))''',
+  );
+}
+
 /// SQLite owns state; this map is only its committed rendering projection.
 class SqliteRevealStore
-    implements RevealStore, ReaderSettings, ToolbarSettings {
+    implements RevealStore, ReaderSettings, ToolbarSettings, NavigationStore {
   SqliteRevealStore._(
     this._db,
     this.deviceId,
@@ -66,7 +83,85 @@ class SqliteRevealStore
     this._darkLevel,
     this._arrowsShown,
     this._arrowSpots,
+    this._lastPage,
+    this._bookmarks,
   );
+  int _lastPage;
+  final Map<int, int> _bookmarks;
+
+  @override
+  int get lastPage => _lastPage;
+
+  @override
+  Future<void> saveLastPage(int page) async {
+    if (page < 1 || page > 604) throw RangeError.range(page, 1, 604, 'page');
+    await _db.insert('local_metadata', {
+      'key': _lastPageKey,
+      'value': '$page',
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    _lastPage = page;
+  }
+
+  static const _lastPageKey = 'reader_last_page';
+
+  @override
+  Map<int, int> get bookmarkSavedAt => Map.unmodifiable(_bookmarks);
+
+  // A removal keeps its row (saved = 0) so sync knows the latest action.
+  @override
+  Future<void> saveBookmarks(List<BookmarkAction> actions) async {
+    final committed = await _db.transaction((txn) async {
+      final changes = <int, int?>{};
+      for (final action in actions) {
+        final duplicate = await txn.query(
+          'bookmark_actions',
+          columns: ['action_uuid'],
+          where: 'action_uuid = ?',
+          whereArgs: [action.uuid],
+        );
+        final row = (await txn.query(
+          'bookmarks',
+          where: 'page = ?',
+          whereArgs: [action.page],
+        )).firstOrNull;
+        if (duplicate.isNotEmpty || (row?['saved'] == 1) == action.saved) {
+          continue;
+        }
+        final latest =
+            (await txn.rawQuery(
+                  'SELECT MAX(created_at) AS latest FROM bookmark_actions WHERE page = ?',
+                  [action.page],
+                )).single['latest']
+                as int?;
+        final at = latest != null && latest >= action.createdAt
+            ? latest + 1
+            : action.createdAt;
+        await txn.insert('bookmark_actions', {
+          'action_uuid': action.uuid,
+          'device_id': deviceId,
+          'created_at': at,
+          'page': action.page,
+          'saved': action.saved ? 1 : 0,
+        });
+        await txn.insert('bookmarks', {
+          'page': action.page,
+          'saved': action.saved ? 1 : 0,
+          'saved_at': at,
+          'last_action_uuid': action.uuid,
+        }, conflictAlgorithm: ConflictAlgorithm.replace);
+        changes[action.page] = action.saved ? at : null;
+      }
+      return changes;
+    });
+    committed.forEach((page, at) {
+      if (at == null) {
+        _bookmarks.remove(page);
+      } else {
+        _bookmarks[page] = at;
+      }
+    });
+  }
+
   bool _arrowsShown;
   final Map<String, Offset> _arrowSpots;
   final Map<String, WordMarks> _marks;
@@ -148,7 +243,7 @@ class SqliteRevealStore
   static Future<SqliteRevealStore> open({String? databasePath}) async {
     final db = await openDatabase(
       databasePath ?? path.join(await getDatabasesPath(), 'reveals.db'),
-      version: 2,
+      version: 3,
       onDowngrade: (db, oldVersion, newVersion) {
         throw StateError(
           'Database version $oldVersion is newer than supported version $newVersion. '
@@ -189,9 +284,11 @@ class SqliteRevealStore
           'value': 'qul-v4-hafs:1',
         });
         await _createMarkTables(db);
+        await _createBookmarkTables(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) await _createMarkTables(db);
+        if (oldVersion < 3) await _createBookmarkTables(db);
       },
     );
     try {
@@ -267,6 +364,19 @@ class SqliteRevealStore
             )).firstOrNull?['value']
             as String?,
       );
+      final lastPage = int.tryParse(
+        (await db.query(
+                  'local_metadata',
+                  where: 'key = ?',
+                  whereArgs: [_lastPageKey],
+                )).firstOrNull?['value']
+                as String? ??
+            '',
+      );
+      final bookmarks = {
+        for (final row in await db.query('bookmarks', where: 'saved = 1'))
+          row['page'] as int: row['saved_at'] as int,
+      };
       return SqliteRevealStore._(
         db,
         device,
@@ -277,6 +387,8 @@ class SqliteRevealStore
         dark,
         arrowsShown,
         spots,
+        lastPage != null && lastPage >= 1 && lastPage <= 604 ? lastPage : 1,
+        bookmarks,
       );
     } catch (_) {
       await db.close();

@@ -324,6 +324,13 @@ Revealed words are weak spots and stay black, so over time the owner remembers w
     The automatic Boox check can be faked on a debug build with
     `adb shell setprop debug.greymushaf.manufacturer ONYX`; release builds ignore it.
 
+## R74 (2026-11-20, owner)
+
+74. **Arrow turns are instant everywhere.** A tap on the left or right arrow shows the next or
+    previous page (a whole spread in landscape) at once, with no slide, in colour on the phone as
+    well as in B/W (extends R45 and R72). A finger swipe still follows the finger. Quick jump and
+    search already jump.
+
 ## Phases
 
 0. **Feasibility spike:** get the 1441 word data (QUL V4 layout plus words, and fonts if they can be

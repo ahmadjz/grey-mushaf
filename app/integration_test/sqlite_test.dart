@@ -34,7 +34,7 @@ void main() {
     await store.save(WordAction(wordKey('1:1:1'), true));
     expect(store.state(key), (black: true, count: 2));
     final db = await openDatabase(filename);
-    expect((await db.query('word_actions')).length, 3);
+    expect((await db.query('word_actions')).length, 4);
     expect((await db.query('reveal_events')).length, 2);
     await db.execute(
       "CREATE TRIGGER fail_projection BEFORE UPDATE ON word_state BEGIN SELECT RAISE(ABORT, 'proof failure'); END",
@@ -42,7 +42,7 @@ void main() {
     final grey = WordAction(key, false);
     await expectLater(store.save(grey), throwsA(isA<DatabaseException>()));
     expect(store.state(key), (black: true, count: 2));
-    expect((await db.query('word_actions')).length, 3);
+    expect((await db.query('word_actions')).length, 4);
     await db.execute('DROP TRIGGER fail_projection');
     await store.save(grey);
     await store.save(grey);
@@ -65,7 +65,7 @@ void main() {
     expect(label(), contains('; unrevealed; reveals 0'));
     expect(find.text("Couldn't save"), findsOneWidget);
     expect((await db.query('reveal_events')).length, 2);
-    expect((await db.query('word_actions')).length, 4);
+    expect((await db.query('word_actions')).length, 5);
     await db.execute('DROP TRIGGER fail_reveal');
     await tester.pumpAndSettle();
     expect(find.text('Retry').hitTestable(), findsOneWidget);

@@ -209,7 +209,7 @@ void main() {
       );
       expect(after['bookmarks']!.first['last_action_uuid'], first.uuid);
       final db = await openDatabase(filename);
-      expect(await db.getVersion(), 3);
+      expect(await db.getVersion(), 4);
       expect((await db.query('bookmark_actions')).length, 4);
       expect(await db.rawQuery('PRAGMA foreign_key_check'), isEmpty);
       await db.close();
@@ -227,7 +227,7 @@ void main() {
     await store.close();
     expect(await _rows(filename, tables), before);
     final db = await openDatabase(filename);
-    expect(await db.getVersion(), 3);
+    expect(await db.getVersion(), 4);
     expect((await db.query('bookmarks')).single['page'], 3);
     await db.close();
   });

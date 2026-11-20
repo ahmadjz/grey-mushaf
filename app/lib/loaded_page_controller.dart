@@ -41,26 +41,6 @@ class LoadedPageController extends PageController {
   }
 
   @override
-  Future<void> animateToPage(
-    int page, {
-    required Duration duration,
-    required Curve curve,
-  }) {
-    final request = ++_request;
-    return pending = () async {
-      if (!await _prepare(page, request)) return;
-      if (request == _request && hasClients) {
-        // A far destination has no loaded intermediate pages to animate over.
-        if (((this.page ?? initialPage.toDouble()) - page).abs() > 1) {
-          super.jumpToPage(page);
-        } else {
-          await super.animateToPage(page, duration: duration, curve: curve);
-        }
-      }
-    }();
-  }
-
-  @override
   void dispose() {
     _request++;
     super.dispose();

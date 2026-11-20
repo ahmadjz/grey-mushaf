@@ -1232,9 +1232,13 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
                 );
               },
               prepare: (index) async {
-                final loaded = await widget.bundle!.loadNear(
-                  spread ? index * 2 + 1 : index + 1,
-                );
+                final bundle = widget.bundle!;
+                final first = spread ? index * 2 + 1 : index + 1;
+                final shown = [first, if (spread && first < 604) first + 1];
+                if (shown.every((n) => bundle.pages[n - 1]['lines'] != null)) {
+                  return;
+                }
+                final loaded = await bundle.loadNear(first);
                 if (mounted && loaded) {
                   _measureBundle();
                   _bundleRevision.value++;

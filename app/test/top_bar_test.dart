@@ -381,12 +381,12 @@ void main() {
     assets.failOnce.add('7.json');
     await next();
     expect(find.text("Couldn't load page"), findsOneWidget);
-    expect(shown(tester, 1, 10), [2]);
+    expect(shown(tester, 1, 10), [3]);
     ScaffoldMessenger.of(tester.element(find.byType(PageView)))
         .hideCurrentSnackBar();
     await tester.pumpAndSettle();
     await next();
-    expect(shown(tester, 1, 10), [3]);
+    expect(shown(tester, 1, 10), [4]);
   });
 
   testWidgets('two arrows dragged at once each follow their own finger', (
@@ -452,6 +452,44 @@ void main() {
     expect(shown(tester, 215, 222), landed);
   });
 
+  testWidgets('an arrow onto a loaded page does not wait for far pages', (
+    tester,
+  ) async {
+    screen(tester, const Size(411, 914));
+    insets(tester);
+    final assets = PausedAssets();
+    final bundle = (await tester.runAsync(
+      () => MushafBundle.open(assets: assets),
+    ))!;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Reader(
+          pages: bundle.pages,
+          bundle: bundle,
+          store: MemoryRevealStore(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final next = find.byKey(const ValueKey('arrow-next'));
+    await tester.tap(next);
+    await tester.pumpAndSettle();
+    final gate = assets.pauses['7.json'] = Completer<void>();
+    await tester.tap(next);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 16));
+    expect(shown(tester, 1, 12), [3]);
+    gate.complete();
+    for (var i = 0; i < 3; i++) {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 150)),
+      );
+      await tester.pumpAndSettle();
+    }
+    expect(shown(tester, 1, 12), [3]);
+    expect(bundle.pages[6]['lines'], isNotNull);
+  });
+
   testWidgets('a swipe during a held arrow load resets the arrow target', (
     tester,
   ) async {
@@ -485,15 +523,18 @@ void main() {
     await settle();
     expect(shown(tester, 1, 12), [2]);
     final gate = assets.pauses['7.json'] = Completer<void>();
-    await tester.tap(next);
-    await settle();
+    for (var i = 0; i < 5; i++) {
+      await tester.tap(next);
+      await settle();
+    }
+    expect(shown(tester, 1, 12), [6]);
     await tester.fling(find.byType(PageView), const Offset(-400, 0), 2000);
     await settle();
-    expect(shown(tester, 1, 12), [1]);
+    expect(shown(tester, 1, 12), [5]);
     await tester.tap(next);
     await settle();
     gate.complete();
     await settle();
-    expect(shown(tester, 1, 12), [2]);
+    expect(shown(tester, 1, 12), [6]);
   });
 }

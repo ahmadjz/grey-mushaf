@@ -1,0 +1,245 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        ee8ba64 tech.ahmadjz.greymushaf/.MainActivity filter f3a04cd
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        cb8b182 tech.ahmadjz.greymushaf/androidx.profileinstaller.ProfileInstallReceiver filter 46f20c9
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        cb8b182 tech.ahmadjz.greymushaf/androidx.profileinstaller.ProfileInstallReceiver filter d456093
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      androidx.profileinstaller.action.SKIP_FILE:
+        cb8b182 tech.ahmadjz.greymushaf/androidx.profileinstaller.ProfileInstallReceiver filter ea918d0
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        cb8b182 tech.ahmadjz.greymushaf/androidx.profileinstaller.ProfileInstallReceiver filter 3c463ce
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+
+Domain verification status:
+
+Permissions:
+  Permission [tech.ahmadjz.greymushaf.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (a2b71f4):
+    sourcePackage=tech.ahmadjz.greymushaf
+    uid=10269 gids=[] type=0 prot=signature
+    perm=PermissionInfo{7f00d1d tech.ahmadjz.greymushaf.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+
+Registered ContentProviders:
+  tech.ahmadjz.greymushaf/androidx.startup.InitializationProvider:
+    Provider{6a29b92 tech.ahmadjz.greymushaf/androidx.startup.InitializationProvider}
+
+ContentProvider Authorities:
+  [tech.ahmadjz.greymushaf.androidx-startup]:
+    Provider{6a29b92 tech.ahmadjz.greymushaf/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{38ee963 tech.ahmadjz.greymushaf}
+
+Key Set Manager:
+  [tech.ahmadjz.greymushaf]
+      Signing KeySets: 100
+
+Packages:
+  Package [tech.ahmadjz.greymushaf] (487b960):
+    userId=10269
+    pkg=Package{8855e19 tech.ahmadjz.greymushaf}
+    codePath=/data/app/~~8VP4q8qN-E4gkdMvX704-Q==/tech.ahmadjz.greymushaf-AnTg61__lDyq6FceVHQj7Q==
+    resourcePath=/data/app/~~8VP4q8qN-E4gkdMvX704-Q==/tech.ahmadjz.greymushaf-AnTg61__lDyq6FceVHQj7Q==
+    legacyNativeLibraryDir=/data/app/~~8VP4q8qN-E4gkdMvX704-Q==/tech.ahmadjz.greymushaf-AnTg61__lDyq6FceVHQj7Q==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=arm64-v8a
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=1 minSdk=24 targetSdk=36
+    minExtensionVersions=[]
+    versionName=0.1.0
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=2
+    applicationInfo=PackageImpl{8855e19 tech.ahmadjz.greymushaf}
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    queriesPackages=[]
+    queriesIntents=[Intent { act=android.intent.action.PROCESS_TEXT dat=content://*/* typ=text/plain }]
+    dataDir=/data/user/0/tech.ahmadjz.greymushaf
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      androidx.window.extensions
+      androidx.window.sidecar
+    timeStamp=2026-11-01 09:54:57
+    firstInstallTime=2026-11-01 09:39:11
+    lastUpdateTime=2026-11-01 09:54:57
+    signatures=PackageSignatures{3cadede version:2, signatures:[f3c42837], past signatures:[]}
+    installPermissionsFixed=true
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    declared permissions:
+      tech.ahmadjz.greymushaf.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature, INSTALLED
+    requested permissions:
+      tech.ahmadjz.greymushaf.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+    install permissions:
+      tech.ahmadjz.greymushaf.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+    User 0: ceDataInode=239745 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false
+      overlay paths:
+        /product/overlay/GestureLineOverlay.apk
+        /data/resource-cache/com.android.systemui-neutral-awhX.frro
+        /data/resource-cache/com.android.systemui-accent-tgB8.frro
+      legacy overlay paths:
+        /product/overlay/GestureLineOverlay.apk
+      runtime permissions:
+
+Queries:
+  system apps queryable: false
+  queries via package name:
+  queries via intent:
+    com.android.thememanager:
+      tech.ahmadjz.greymushaf
+    com.miui.weather2:
+      tech.ahmadjz.greymushaf
+    com.mi.globalminusscreen:
+      tech.ahmadjz.greymushaf
+    com.miui.player:
+      tech.ahmadjz.greymushaf
+    com.miui.global.packageinstaller:
+      tech.ahmadjz.greymushaf
+    com.xiaomi.midrop:
+      tech.ahmadjz.greymushaf
+    com.xiaomi.account:
+      tech.ahmadjz.greymushaf
+    com.miui.msa.global:
+      tech.ahmadjz.greymushaf
+    com.xiaomi.glgm:
+      tech.ahmadjz.greymushaf
+    com.miui.videoplayer:
+      tech.ahmadjz.greymushaf
+    com.miui.fm:
+      tech.ahmadjz.greymushaf
+    com.wireguard.android:
+      tech.ahmadjz.greymushaf
+    com.ea.game.pvzfree_row:
+      tech.ahmadjz.greymushaf
+    tech.ahmadjz.greymushaf:
+      com.google.android.googlequicksearchbox
+      com.openai.chatgpt
+    com.openai.chatgpt:
+      tech.ahmadjz.greymushaf
+    com.whatsapp:
+      tech.ahmadjz.greymushaf
+  queryable via interaction:
+    User 0:
+      [com.xiaomi.barrage,com.android.inputdevices,com.longcheertel.midtest,com.qti.snapdragon.qdcm_ff,com.android.keychain,com.android.settings,com.longcheertel.sarauth,com.goodix.fingerprint,com.miui.screenrecorder,android,com.android.systemui,com.android.server.telecom,com.miui.securitycenter,com.longcheertel.cit,com.qualcomm.qti.qdma,com.miui.powerkeeper,com.android.wallpaperbackup,com.miui.securitycore,com.android.dynsystem,com.longcheertel.AutoTest,com.miui.face,com.xiaomi.joyose,com.qti.diagservices,com.miui.notification,com.xiaomi.mi_connect_service,com.qualcomm.qti.services.secureui,com.miui.freeform,com.android.provision,com.android.providers.settings,com.xiaomi.powerchecker,com.xiaomi.misettings,com.android.location.fused,com.miui.audiomonitor,com.qualcomm.qti.xrvd.service,miui.systemui.plugin,com.miui.bugreport,com.miui.touchassistant,com.miui.daemon,com.miui.wmsvc,com.android.localtransport]:
+        tech.ahmadjz.greymushaf
+      com.google.android.inputmethod.latin:
+        tech.ahmadjz.greymushaf
+  queryable via uses-library:
+
+Package Changes:
+  Sequence number=388
+  User 0:
+    seq=35, package=com.google.android.googlequicksearchbox
+    seq=36, package=com.whatsapp
+    seq=37, package=com.android.chrome
+    seq=38, package=com.openai.chatgpt
+    seq=39, package=com.google.android.apps.messaging
+    seq=41, package=com.google.android.marvin.talkback
+    seq=42, package=com.google.android.contacts
+    seq=52, package=com.google.android.webview
+    seq=55, package=com.xiaomi.glgm
+    seq=57, package=com.miui.cleaner
+    seq=59, package=host.exp.exponent
+    seq=63, package=com.google.android.gms
+    seq=64, package=com.google.android.dialer
+    seq=67, package=com.google.android.gm
+    seq=69, package=wifiapp.volfw.watchpower
+    seq=70, package=com.roznamaaa
+    seq=71, package=com.linkedin.android
+    seq=72, package=ch.protonvpn.android
+    seq=73, package=keepass2android.keepass2android
+    seq=74, package=com.google.android.calendar
+    seq=75, package=com.google.android.apps.wellbeing
+    seq=76, package=com.miui.player
+    seq=77, package=com.google.android.apps.restore
+    seq=78, package=com.google.android.tts
+    seq=80, package=com.canva.editor
+    seq=81, package=com.google.android.apps.subscriptions.red
+    seq=82, package=com.miui.videoplayer
+    seq=83, package=com.google.android.projection.gearhead
+    seq=92, package=com.google.android.apps.docs.editors.sheets
+    seq=95, package=com.google.android.apps.maps
+    seq=96, package=com.google.android.youtube
+    seq=113, package=com.android.thememanager
+    seq=134, package=com.facebook.system
+    seq=312, package=com.google.android.ext.services
+    seq=358, package=com.android.vending
+    seq=360, package=com.xiaomi.discover
+    seq=380, package=com.facebook.appmanager
+    seq=382, package=com.masarat.salati
+    seq=387, package=tech.ahmadjz.greymushaf
+
+
+Dexopt state:
+  [tech.ahmadjz.greymushaf]
+    path: /data/app/~~8VP4q8qN-E4gkdMvX704-Q==/tech.ahmadjz.greymushaf-AnTg61__lDyq6FceVHQj7Q==/base.apk
+      arm64: [status=verify] [reason=install]
+      odex file size: base.odex: 16Kb base.vdex: 548Kb 
+
+
+Compiler stats:
+  [tech.ahmadjz.greymushaf]
+     base.apk - 186
+
+APEX session state:
+  Session ID: 252550741
+    State: STAGED
+
+Active APEX packages:
+
+
+Inactive APEX packages:
+
+
+Factory APEX packages:
+
+
+Snapshot statistics
+   Unrecorded-hits: 5  Cork-level: 0
+   Summary stats               TotBlds     TotUsed     TotCork     BigBlds    ShortLvd     TotTime     MaxTime
+          0:28         now           9       31288           0           0           3          20           7
+          1:28        0:28           0           0           0           0           0           0           0
+          2:28        1:28           0           0           0           0           0           0           0
+          3:28        2:28          18       34929           0           0           3          16           5
+          4:28        3:28          17       29253           0           0           1          15           3
+          5:28        4:28           0           0           0           0           0           0           0
+          6:28        5:28           0           0           0           0           0           0           0
+          7:28        6:28           0           0           0           0           0           0           0
+          8:28        7:28           9       30794           0           0           1          11           5
+          9:28        8:28           0           0           0           0           0           0           0
+      19:26:00         now        1198     2618905           0          13         310        1615          35
+
+   Build times                  <= 1ms      <= 2ms      <= 5ms     <= 10ms     <= 20ms     <= 50ms    <= 100ms     > 100ms
+          0:28         now           6           0           2           1           0           0           0           0
+          1:28        0:28           0           0           0           0           0           0           0           0
+          2:28        1:28           0           0           0           0           0           0           0           0
+          3:28        2:28          16           1           1           0           0           0           0           0
+          4:28        3:28          16           0           1           0           0           0           0           0
+          5:28        4:28           0           0           0           0           0           0           0           0
+          6:28        5:28           0           0           0           0           0           0           0           0
+          7:28        6:28           0           0           0           0           0           0           0           0
+          8:28        7:28           8           0           1           0           0           0           0           0
+          9:28        8:28           0           0           0           0           0           0           0           0
+      19:26:00         now        1008         116          51          12           8           3           0           0
+
+   Use counters                   <= 1        <= 2        <= 5       <= 10       <= 20       <= 50      <= 100       > 100
+          0:28         now           3           0           0           0           0           0           0           6
+          1:28        0:28           0           0           0           0           0           0           0           0
+          2:28        1:28           0           0           0           0           0           0           0           0
+          3:28        2:28           2           0           1           0           0           1           0          14
+          4:28        3:28           1           0           0           1           0           1           1          13
+          5:28        4:28           0           0           0           0           0           0           0           0
+          6:28        5:28           0           0           0           0           0           0           0           0
+          7:28        6:28           0           0           0           0           0           0           0           0
+          8:28        7:28           1           0           0           0           0           1           0           7
+          9:28        8:28           0           0           0           0           0           0           0           0
+      19:26:00         now         153          23         133          54          60          86          86         602

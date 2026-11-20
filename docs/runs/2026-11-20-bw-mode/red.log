@@ -1,0 +1,70 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart
+test/black_white_test.dart:59:11: Error: No named parameter with the name 'eInk'.
+          eInk: eInk,
+          ^^^^
+lib/main.dart:100:9: Context: Found this candidate, but the arguments don't match.
+  const Reader({
+        ^^^^^^
+test/black_white_test.dart:165:29: Error: The getter 'shade' isn't defined for the type 'AyahShadePainter'.
+ - 'AyahShadePainter' is from 'package:greymushaf/main.dart' ('lib/main.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'shade'.
+      expect(isGrey(painter.shade), eInk);
+                            ^^^^^
+test/black_white_test.dart:174:19: Error: The getter 'thinnest' isn't defined for the type 'PageBorder'.
+ - 'PageBorder' is from 'package:greymushaf/main.dart' ('lib/main.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'thinnest'.
+    expect(border.thinnest, greaterThanOrEqualTo(1));
+                  ^^^^^^^^
+test/black_white_test.dart:190:16: Error: The method 'markColor' isn't defined for the type 'PageInkController'.
+ - 'PageInkController' is from 'package:greymushaf/page_ink.dart' ('lib/page_ink.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'markColor'.
+    expect(ink.markColor(MarkColor.red), MarkColor.red.paint(Colors.white));
+               ^^^^^^^^^
+test/black_white_test.dart:191:9: Error: The setter 'blackWhite' isn't defined for the type 'PageInkController'.
+ - 'PageInkController' is from 'package:greymushaf/page_ink.dart' ('lib/page_ink.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named 'blackWhite'.
+    ink.blackWhite = true;
+        ^^^^^^^^^^
+test/black_white_test.dart:193:18: Error: The method 'markColor' isn't defined for the type 'PageInkController'.
+ - 'PageInkController' is from 'package:greymushaf/page_ink.dart' ('lib/page_ink.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'markColor'.
+      expect(ink.markColor(colour), Colors.white);
+                 ^^^^^^^^^
+00:00 +0 -1: loading /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart [E]
+  Failed to load "/home/ahmadjz/Documents/Quran/app/test/black_white_test.dart":
+  Compilation failed for testPath=/home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: test/black_white_test.dart:59:11: Error: No named parameter with the name 'eInk'.
+            eInk: eInk,
+            ^^^^
+  lib/main.dart:100:9: Context: Found this candidate, but the arguments don't match.
+    const Reader({
+          ^^^^^^
+  test/black_white_test.dart:165:29: Error: The getter 'shade' isn't defined for the type 'AyahShadePainter'.
+   - 'AyahShadePainter' is from 'package:greymushaf/main.dart' ('lib/main.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'shade'.
+        expect(isGrey(painter.shade), eInk);
+                              ^^^^^
+  test/black_white_test.dart:174:19: Error: The getter 'thinnest' isn't defined for the type 'PageBorder'.
+   - 'PageBorder' is from 'package:greymushaf/main.dart' ('lib/main.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'thinnest'.
+      expect(border.thinnest, greaterThanOrEqualTo(1));
+                    ^^^^^^^^
+  test/black_white_test.dart:190:16: Error: The method 'markColor' isn't defined for the type 'PageInkController'.
+   - 'PageInkController' is from 'package:greymushaf/page_ink.dart' ('lib/page_ink.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'markColor'.
+      expect(ink.markColor(MarkColor.red), MarkColor.red.paint(Colors.white));
+                 ^^^^^^^^^
+  test/black_white_test.dart:191:9: Error: The setter 'blackWhite' isn't defined for the type 'PageInkController'.
+   - 'PageInkController' is from 'package:greymushaf/page_ink.dart' ('lib/page_ink.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named 'blackWhite'.
+      ink.blackWhite = true;
+          ^^^^^^^^^^
+  test/black_white_test.dart:193:18: Error: The method 'markColor' isn't defined for the type 'PageInkController'.
+   - 'PageInkController' is from 'package:greymushaf/page_ink.dart' ('lib/page_ink.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'markColor'.
+        expect(ink.markColor(colour), Colors.white);
+                   ^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: loading /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart

@@ -1,0 +1,8 @@
+Found 3 connected devices:
+  sdk gphone16k x86 64 (mobile) • emulator-5554 • android-x64    • Android 17 (API 37) (emulator)
+  Linux (desktop)               • linux         • linux-x64      • Fedora Linux 44 (KDE Plasma Desktop Edition) 7.0.10-201.fc44.x86_64
+  Chrome (web)                  • chrome        • web-javascript • Google Chrome 148.0.7778.215
+
+Run "flutter emulators" to list and start any available device emulators.
+
+If you expected another device to be detected, please run "flutter doctor" to diagnose potential issues. You may also try increasing the time to wait for connected devices with the "--device-timeout" flag. Visit https://flutter.dev/setup/ for troubleshooting tips.

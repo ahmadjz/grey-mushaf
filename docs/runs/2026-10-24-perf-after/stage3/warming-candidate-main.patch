@@ -1,0 +1,97 @@
+diff --git a/app/lib/main.dart b/app/lib/main.dart
+index b45a0d7..183d921 100644
+--- a/app/lib/main.dart
++++ b/app/lib/main.dart
+@@ -2,12 +2,14 @@ import 'dart:async';
+ import 'dart:collection';
+ import 'dart:convert';
+ import 'dart:math' as math;
++import 'dart:ui' as ui;
+ 
+ import 'package:flutter/material.dart';
+ import 'package:flutter/services.dart';
+ 
+ import 'flat_ink.dart';
+ import 'page_ink.dart';
++import 'glyph_warmer.dart';
+ import 'bundle_metrics.dart';
+ import 'mushaf_bundle.dart';
+ import 'loaded_page_controller.dart';
+@@ -404,6 +406,61 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
+     }
+   }
+ 
++  late final _glyphWarmer = GlyphWarmer<({int page, double size, double dpr})>(
++    _warmPage,
++  );
++
++  void _queueGlyphWarm() {
++    if (!mounted || widget.bundle == null) return;
++    final first = _spread == true ? (_selected ~/ 2) * 2 + 1 : _selected + 1;
++    final count = _spread == true ? 2 : 1;
++    final pages = [
++      for (var n = first + count; n < first + count * 2; n++) n,
++      for (var n = first - count; n < first; n++) n,
++    ];
++    _glyphWarmer.request([
++      for (final n in pages)
++        if (n >= 1 && n <= 604 && widget.pages[n - 1]['lines'] != null)
++          (page: n, size: _size, dpr: MediaQuery.devicePixelRatioOf(context)),
++    ]);
++  }
++
++  Future<void> _warmPage(({int page, double size, double dpr}) target) async {
++    if (!mounted) return;
++    final page = widget.pages[target.page - 1];
++    if (page['lines'] == null) return;
++    final recorder = ui.PictureRecorder();
++    final canvas = Canvas(recorder)..scale(target.dpr);
++    final paragraphs = <TextPainter>[];
++    ui.Picture? picture;
++    ui.Image? image;
++    try {
++      for (final line in page['lines'] as List) {
++        for (final word in line['words'] as List) {
++          final width = _metrics[word['id']]?.width;
++          if (width == null) continue;
++          final paragraph = TextPainter(
++            text: TextSpan(
++              text: word['text'] as String,
++              style: wordStyle(target.page, target.size),
++            ),
++            textDirection: TextDirection.rtl,
++          )..layout(maxWidth: width * target.size);
++          paragraphs.add(paragraph);
++          paragraph.paint(canvas, const Offset(4, 4));
++        }
++      }
++      picture = recorder.endRecording();
++      image = await picture.toImage(1024, 256);
++    } finally {
++      image?.dispose();
++      (picture ?? recorder.endRecording()).dispose();
++      for (final paragraph in paragraphs) {
++        paragraph.dispose();
++      }
++    }
++  }
++
+   final _pageInk = <int, PageInkController>{};
+   final _wordPages = <String, int>{};
+   final _bundleRevision = ValueNotifier<int>(0);
+@@ -537,6 +594,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
+       if (mounted && loaded) {
+         _measureBundle();
+         _bundleRevision.value++;
++        _queueGlyphWarm();
+       }
+     } catch (_) {
+       _showLoadError(
+@@ -557,6 +615,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
+     WidgetsBinding.instance.removeObserver(this);
+     _settingFailures.dispose();
+     _bundleRevision.dispose();
++    _glyphWarmer.dispose();
+     for (final ink in _pageInk.values) {
+       ink.dispose();
+     }

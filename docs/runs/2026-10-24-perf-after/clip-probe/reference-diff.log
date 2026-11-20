@@ -1,0 +1,15 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/tool/parity_diff.dart
+00:00 +0: all reference images have identical raw RGBA pixels
+00:02 +0 -1: all reference images have identical raw RGBA pixels [E]
+  Expected: <0>
+    Actual: <20429>
+  Exact RGBA parity required; see diff.json
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  tool/parity_diff.dart 67:5                          main.<fn>
+  
+00:02 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/tool/parity_diff.dart: all reference images have identical raw RGBA pixels

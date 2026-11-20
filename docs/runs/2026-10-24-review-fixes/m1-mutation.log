@@ -1,0 +1,61 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: durable save invalidates rendered pixels
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: Color:<Color(alpha: 1.0000, red: 0.0000, green: 0.0000, blue: 0.0000, colorSpace:
+ColorSpace.sRGB)>
+  Actual: Color:<Color(alpha: 1.0000, red: 0.6902, green: 0.6902, blue: 0.6902, colorSpace:
+ColorSpace.sRGB)>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart:43:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart line 43
+The test description was:
+  durable save invalidates rendered pixels
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +0 -1: durable save invalidates rendered pixels [E]
+  Test failed. See exception logs above.
+  The test description was: durable save invalidates rendered pixels
+  
+00:03 +0 -1: durable save invalidates rendered semantics
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: contains '; revealed; reveals 1'
+  Actual: '1:1:1; unrevealed; reveals 0'
+   Which: does not contain '; revealed; reveals 1'
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart:45:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart line 45
+The test description was:
+  durable save invalidates rendered semantics
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:06 +0 -2: durable save invalidates rendered semantics [E]
+  Test failed. See exception logs above.
+  The test description was: durable save invalidates rendered semantics
+  
+00:06 +0 -2: (tearDownAll)
+00:06 +0 -2: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart: durable save invalidates rendered pixels
+  /home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart: durable save invalidates rendered semantics

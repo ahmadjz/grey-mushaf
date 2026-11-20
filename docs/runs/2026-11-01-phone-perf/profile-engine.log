@@ -1,0 +1,140 @@
+--------- beginning of main
+11-01 09:46:38.595 12363 12363 I adjz.greymusha: Late-enabling -Xcheck:jni
+11-01 09:46:38.656 12363 12363 I adjz.greymusha: Using generational CollectorTypeCC GC.
+11-01 09:46:38.694 12363 12363 D ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+11-01 09:46:38.699 12363 12363 I MessageMonitor: Load libmiui_runtime
+11-01 09:46:38.760 12363 12363 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10269; state: ENABLED
+11-01 09:46:38.775 12363 12408 D AppScoutStateMachine: 12363-ScoutStateMachinecreated
+11-01 09:46:38.958 12363 12363 D nativeloader: Configuring clns-4 for other apk /data/app/~~JeC-zoENrzV7WPa6xJyyhw==/tech.ahmadjz.greymushaf-lYMW3xMR34_K7vjScwEs0g==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~JeC-zoENrzV7WPa6xJyyhw==/tech.ahmadjz.greymushaf-lYMW3xMR34_K7vjScwEs0g==/lib/arm64:/data/app/~~JeC-zoENrzV7WPa6xJyyhw==/tech.ahmadjz.greymushaf-lYMW3xMR34_K7vjScwEs0g==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/tech.ahmadjz.greymushaf
+11-01 09:46:38.967 12363 12363 I Perf    : Connecting to perf service.
+11-01 09:46:38.972 12363 12363 V GraphicsEnvironment: ANGLE Developer option for 'tech.ahmadjz.greymushaf' set to: 'default'
+11-01 09:46:38.972 12363 12363 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+--------- beginning of system
+11-01 09:46:38.975 12363 12363 I ForceDarkHelperStubImpl: initialize for tech.ahmadjz.greymushaf , ForceDarkOrigin
+11-01 09:46:38.976 12363 12363 D nativeloader: Load libforcedarkimpl.so using system ns (caller=/system/framework/miui-framework.jar): ok
+11-01 09:46:38.976 12363 12363 D OpenGLRenderer: JNI_OnLoad success
+11-01 09:46:38.977 12363 12363 I MiuiForceDarkConfig: setConfig density:2.750000, mainRule:0, secondaryRule:0, tertiaryRule:0
+11-01 09:46:38.978 12363 12363 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-01 09:46:38.979 12363 12363 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-01 09:46:39.088 12363 12526 D nativeloader: Load /data/app/~~JeC-zoENrzV7WPa6xJyyhw==/tech.ahmadjz.greymushaf-lYMW3xMR34_K7vjScwEs0g==/base.apk!/lib/arm64-v8a/libflutter.so using class loader ns clns-4 (caller=/data/app/~~JeC-zoENrzV7WPa6xJyyhw==/tech.ahmadjz.greymushaf-lYMW3xMR34_K7vjScwEs0g==/base.apk): ok
+11-01 09:46:39.102 12363 12530 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-01 09:46:39.116 12363 12363 E adjz.greymusha: hiddenapi: Accessing hidden method Landroid/view/SurfaceControl$Builder;->setHidden(Z)Landroid/view/SurfaceControl$Builder; (runtime_flags=0, domain=platform, api=blocked) from /data/app/~~JeC-zoENrzV7WPa6xJyyhw==/tech.ahmadjz.greymushaf-lYMW3xMR34_K7vjScwEs0g==/base.apk (domain=app, TargetSdkVersion=36) using linking: denied
+11-01 09:46:39.144 12363 12536 W libc    : Access denied finding property "ro.vendor.mediatek.platform"
+11-01 09:46:39.200 12363 12558 I flutter : The Dart VM service is listening on http://127.0.0.1:38315/_nN-8iPdzFc=/
+11-01 09:46:39.200 12363 12536 D vulkan  : searching for layers in '/data/app/~~JeC-zoENrzV7WPa6xJyyhw==/tech.ahmadjz.greymushaf-lYMW3xMR34_K7vjScwEs0g==/lib/arm64'
+11-01 09:46:39.201 12363 12536 D vulkan  : searching for layers in '/data/app/~~JeC-zoENrzV7WPa6xJyyhw==/tech.ahmadjz.greymushaf-lYMW3xMR34_K7vjScwEs0g==/base.apk!/lib/arm64-v8a'
+11-01 09:46:39.219 12363 12536 I AdrenoVK-0: ===== BEGIN DUMP OF OVERRIDDEN SETTINGS =====
+11-01 09:46:39.219 12363 12536 I AdrenoVK-0: ===== END DUMP OF OVERRIDDEN SETTINGS =====
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: QUALCOMM build          : 820d4a4028, I5580630f49
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: Build Date              : 11/04/21
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: Shader Compiler Version : EV031.32.02.16
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: Local Branch            : 
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: Remote Branch           : 
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: Remote Branch           : 
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: Reconstruct Branch      : 
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: Build Config            : S P 10.0.7 AArch64
+11-01 09:46:39.221 12363 12536 I AdrenoVK-0: Driver Path             : /vendor/lib64/hw/vulkan.adreno.so
+11-01 09:46:39.242 12363 12536 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: QUALCOMM build                   : 820d4a4028, I5580630f49
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: Build Date                       : 11/04/21
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: OpenGL ES Shader Compiler Version: EV031.32.02.16
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: Local Branch                     : 
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: Remote Branch                    : 
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: Remote Branch                    : 
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: Reconstruct Branch               : 
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: Build Config                     : S P 10.0.7 AArch64
+11-01 09:46:39.245 12363 12536 I AdrenoGLES-0: Driver Path                      : /vendor/lib64/egl/libGLESv2_adreno.so
+11-01 09:46:39.252 12363 12536 I AdrenoGLES-0: PFP: 0x016ee190, ME: 0x00000000
+11-01 09:46:39.264 12363 12536 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+11-01 09:46:39.831 12363 12363 D ViewScrollStubImpl: the value of mScrollFrictionRes is: 0.015
+11-01 09:46:39.872 12363 12363 I adjz.greymusha: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported,test-api) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-01 09:46:39.872 12363 12363 I adjz.greymusha: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-01 09:46:39.872 12363 12363 I adjz.greymusha: hiddenapi: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-01 09:46:39.872 12363 12363 I adjz.greymusha: hiddenapi: Accessing hidden method Landroid/util/LongArray;->get(I)J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-01 09:46:39.908 12363 12363 D MiuiMultiWindowUtils: freeform resolution args raw data:{  "zizhan":{    "freeform_args": {      "inner":{        "vertical_portrait":{"aspect_ratio":0.626, "original_ratio":0.5643,"original_scale":0.74,"top_margin":0.168,"left_margin":0.484},        "horizontal_portrait":{"aspect_ratio":0.626, "original_ratio":0.5643,"original_scale":0.74,"top_margin":0.1222,"left_margin":0.59745},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.604,"top_margin":0.2596,"left_margin":0.2624},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.604,"top_margin":0.213,"left_margin":0.3758}      },      "outer":{        "vertical_portrait":{"aspect_ratio":0.626, "original_ratio":1,"original_scale":0.74,"top_margin":0.0753,"left_margin":-1},        "horizontal_portrait":{"aspect_ratio":0.626, "original_ratio":1,"original_scale":0.5756,"top_margin":-1,"left_margin":0.0753},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":0.6847,"original_scale":0.587,"top_margin":0.0753,"left_margin":-1},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":0.6847,"original_scale":0.587,"top_margin":-1,"left_margin":0.0753}}    },    "mini_freeform_args":{      "inner":{        "vertical_portrait":{"aspect_ratio":0.626, "original_ratio":0.147},        "horizontal_portrait":{"aspect_ratio":0.626, "original_ratio":0.147},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":0.165},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":0.165}      },      "outer":{        "vertical_portrait":{"aspect_ratio":0.626, "original_ratio":0.26},        "horizontal_portrait":{"aspect_ratio":0.626, "original_ratio":0.26},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":0.293},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":0.293}}    }  },  "wide_default":{    "freeform_args": {        "vertical_portrait":{"aspect_ratio":0.625, "original_ratio":0.58,"original_scale":0.7574,"top_margin":0.125,"left_margin":-1},        "horizontal_portrait":{"aspect_ratio":0.625, "original_ratio":0.58,"original_scale":0.7574,"top_margin":-1,"left_margin":0.0714},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.5153,"top_margin":0.125,"left_margin":-1},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.5153,"top_margin":-1,"left_margin":0.0714}    },    "mini_freeform_args":{        "vertical_portrait":{"aspect_ratio":0.5625, "original_ratio":0.144},        "horizontal_portrait":{"aspect_ratio":0.5625, "original_ratio":0.144},        "vertical_landscape":{"aspect_ratio":-1, "original_ratio":0.144},        "horizontal_landscape":{"aspect_ratio":-1, "original_ratio":0.144}    }  },  "narrow_default": {    "freeform_args": {        "vertical_portrait":{"aspect_ratio":0.5625, "original_ratio":1,"original_scale":0.7182,"top_margin":0.142,"left_margin":-1},        "horizontal_portrait":{"aspect_ratio":0.8, "original_ratio":1,"original_scale":0.7182,"top_margin":-1,"left_margin":0.05},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":0.6545,"original_scale":0.4473,"top_margin":0.142,"left_margin":-1},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":0.6545,"original_scale":0.4473,"top_margin":-1,"left_margin":0.05}    },    "mini_freeform_args":{        "vertical_portrait":{"aspect_ratio":0.5625, "original_ratio":0.3},        "horizontal_portrait":{"aspect_ratio":0.5625, "original_ratio":0.3},        "vertical_landscape":{"aspect_ratio":1.7778, "original_ratio":0.3},        "horizontal_landscape":{"aspect_ratio":1.7778, "original_ratio":0.3}    }  },  "regular_default": {    "freeform_args": {      "vertical_portrait":{"aspect_ratio":0.625, "original_ratio":1,"original_scale":0.7,"top_margin":0.109,"left_margin":-1},      "horizontal_portrait":{"aspect_ratio":0.6667, "original_ratio":1,"original_scale":0.6102,"top_margin":-1,"left_margin":0.026},      "vertical_landscape":{"aspect_ratio
+11-01 09:46:39.920 12363 12363 W System.err: org.json.JSONException: No value for joyeuse
+11-01 09:46:39.935 12363 12363 W System.err: 	at org.json.JSONObject.get(JSONObject.java:398)
+11-01 09:46:39.935 12363 12363 W System.err: 	at org.json.JSONObject.getJSONObject(JSONObject.java:618)
+11-01 09:46:39.935 12363 12363 W System.err: 	at android.util.MiuiMultiWindowUtils.initFreeFormResolutionArgsOfDevice(MiuiMultiWindowUtils.java:1433)
+11-01 09:46:39.935 12363 12363 W System.err: 	at android.util.MiuiMultiWindowUtils.initFreeFormResolutionArgs(MiuiMultiWindowUtils.java:1427)
+11-01 09:46:39.936 12363 12363 W System.err: 	at android.util.MiuiMultiWindowUtils.<clinit>(MiuiMultiWindowUtils.java:209)
+11-01 09:46:39.936 12363 12363 W System.err: 	at com.android.internal.policy.DecorViewMultiWinStubImpl.<init>(DecorViewMultiWinStubImpl.java:19)
+11-01 09:46:39.936 12363 12363 W System.err: 	at com.android.internal.policy.DecorViewMultiWinStubImpl$Provider$SINGLETON.<clinit>(DecorViewMultiWinStubImpl$Provider.java:21)
+11-01 09:46:39.936 12363 12363 W System.err: 	at com.android.internal.policy.DecorViewMultiWinStubImpl$Provider.provideSingleton(DecorViewMultiWinStubImpl$Provider.java:10)
+11-01 09:46:39.936 12363 12363 W System.err: 	at com.android.internal.policy.DecorViewMultiWinStubImpl$Provider.provideSingleton(DecorViewMultiWinStubImpl$Provider.java:8)
+11-01 09:46:39.937 12363 12363 W System.err: 	at com.miui.base.MiuiStubRegistry.get(MiuiStubRegistry.java:129)
+11-01 09:46:39.937 12363 12363 W System.err: 	at com.miui.base.MiuiStubRegistry.get(MiuiStubRegistry.java:123)
+11-01 09:46:39.937 12363 12363 W System.err: 	at com.miui.base.MiuiStubUtil.getInstance(MiuiStubUtil.java:46)
+11-01 09:46:39.937 12363 12363 W System.err: 	at com.miui.base.MiuiStubUtil.getImpl(MiuiStubUtil.java:30)
+11-01 09:46:39.937 12363 12363 W System.err: 	at com.android.internal.policy.DecorViewMultiWinStub$SingletonHolder.<clinit>(DecorViewMultiWinStub.java:11)
+11-01 09:46:39.937 12363 12363 W System.err: 	at com.android.internal.policy.DecorViewMultiWinStub.newInstance(DecorViewMultiWinStub.java:16)
+11-01 09:46:39.937 12363 12363 W System.err: 	at com.android.internal.policy.DecorView.<init>(DecorView.java:335)
+11-01 09:46:39.937 12363 12363 W System.err: 	at com.android.internal.policy.PhoneWindow.generateDecor(PhoneWindow.java:2380)
+11-01 09:46:39.938 12363 12363 W System.err: 	at com.android.internal.policy.PhoneWindow.installDecor(PhoneWindow.java:2760)
+11-01 09:46:39.938 12363 12363 W System.err: 	at com.android.internal.policy.PhoneWindow.setContentView(PhoneWindow.java:487)
+11-01 09:46:39.938 12363 12363 W System.err: 	at com.android.internal.policy.PhoneWindow.setContentView(PhoneWindow.java:478)
+11-01 09:46:39.938 12363 12363 W System.err: 	at android.app.Activity.setContentView(Activity.java:3618)
+11-01 09:46:39.938 12363 12363 W System.err: 	at io.flutter.embedding.android.FlutterActivity.onCreate(FlutterActivity.java:652)
+11-01 09:46:39.938 12363 12363 W System.err: 	at android.app.Activity.performCreate(Activity.java:8163)
+11-01 09:46:39.938 12363 12363 W System.err: 	at android.app.Activity.performCreate(Activity.java:8130)
+11-01 09:46:39.938 12363 12363 W System.err: 	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1330)
+11-01 09:46:39.939 12363 12363 W System.err: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3744)
+11-01 09:46:39.939 12363 12363 W System.err: 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3938)
+11-01 09:46:39.939 12363 12363 W System.err: 	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:103)
+11-01 09:46:39.939 12363 12363 W System.err: 	at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:135)
+11-01 09:46:39.939 12363 12363 W System.err: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:95)
+11-01 09:46:39.939 12363 12363 W System.err: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2291)
+11-01 09:46:39.939 12363 12363 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+11-01 09:46:39.940 12363 12363 W System.err: 	at android.os.Looper.loopOnce(Looper.java:210)
+11-01 09:46:39.940 12363 12363 W System.err: 	at android.os.Looper.loop(Looper.java:299)
+11-01 09:46:39.940 12363 12363 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:8319)
+11-01 09:46:39.940 12363 12363 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-01 09:46:39.940 12363 12363 W System.err: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:556)
+11-01 09:46:39.940 12363 12363 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1038)
+11-01 09:46:39.941 12363 12363 D IS_CTS_MODE: false
+11-01 09:46:39.941 12363 12363 D MULTI_WINDOW_SWITCH_ENABLED: false
+11-01 09:46:39.942 12363 12363 D IS_CTS_MODE: false
+11-01 09:46:39.942 12363 12363 D MULTI_WINDOW_SWITCH_ENABLED: false
+11-01 09:46:39.942 12363 12363 D IS_CTS_MODE: false
+11-01 09:46:39.942 12363 12363 D MULTI_WINDOW_SWITCH_ENABLED: false
+11-01 09:46:39.951 12363 12363 D DecorView[]: getWindowModeFromSystem  windowmode is 1
+11-01 09:46:39.968 12363 12363 W Activity: PerfMonitor: Slow Operation: Activity tech.ahmadjz.greymushaf/.MainActivity onCreate took 937ms
+11-01 09:46:40.016 12363 12363 D DecorView[]: getWindowModeFromSystem  windowmode is 1
+11-01 09:46:40.017 12363 12363 D DecorView[]: updateDecorCaptionStatus displayWindowDecor is false
+11-01 09:46:40.050 12363 12363 W Looper  : PerfMonitor longMsg : seq=4 plan=09:46:38.765 late=238ms wall=1033ms running=229ms runnable=45ms io=25ms h=android.app.ActivityThread$H w=159 procState=-1
+11-01 09:46:40.052 12363 12363 W Looper  : PerfMonitor looperActivity : package=tech.ahmadjz.greymushaf/.MainActivity time=0ms latency=1287ms running=0ms  procState=-1  historyMsgCount=4 (msgIndex=2 wall=1033ms seq=4 running=229ms runnable=45ms io=25ms late=238ms h=android.app.ActivityThread$H w=159) (msgIndex=3 wall=243ms seq=3 running=193ms runnable=27ms io=7ms h=android.app.ActivityThread$H w=110) (msgIndex=4 wall=1033ms seq=4 running=229ms runnable=45ms io=25ms late=238ms h=android.app.ActivityThread$H w=159)
+11-01 09:46:40.053 12363 12363 I Choreographer: Skipped 63 frames!  The application may be doing too much work on its main thread.
+11-01 09:46:40.136 12363 12509 D hw-ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+11-01 09:46:40.148 12363 12363 D SurfaceView: UPDATE null, mIsCastMode = false
+11-01 09:46:41.070 12363 12363 W Looper  : PerfMonitor longMsg : seq=7 plan=09:46:38.990 late=1063ms wall=1016ms running=60ms runnable=30ms io=7ms h=android.view.Choreographer$FrameHandler c=android.view.Choreographer$FrameDisplayEventReceiver procState=-1
+11-01 09:46:41.070 12363 12363 W Looper  : PerfMonitor doFrame : time=1016ms vsyncFrame=0 latency=1063ms procState=-1 historyMsgCount=6 (msgIndex=2 wall=1033ms seq=4 running=229ms runnable=45ms io=25ms late=238ms h=android.app.ActivityThread$H w=159) (msgIndex=3 wall=1016ms seq=7 running=60ms runnable=30ms io=7ms late=1063ms h=android.view.Choreographer$FrameHandler c=android.view.Choreographer$FrameDisplayEventReceiver) (msgIndex=4 wall=1033ms seq=4 running=229ms runnable=45ms io=25ms late=238ms h=android.app.ActivityThread$H w=159)
+11-01 09:46:41.084 12363 12363 I Choreographer: Skipped 58 frames!  The application may be doing too much work on its main thread.
+11-01 09:46:41.085 12363 12363 D SurfaceView: UPDATE Surface(name=SurfaceView[tech.ahmadjz.greymushaf/tech.ahmadjz.greymushaf.MainActivity])/@0x98408ef, mIsProjectionMode = false
+11-01 09:46:41.088 12363 12363 W Looper  : PerfMonitor doFrame : time=3ms vsyncFrame=0 latency=975ms procState=-1 historyMsgCount=6
+11-01 09:46:41.093 12363 12363 I flutter : 00:00 +0: repeatable reader profile baseline
+11-01 09:46:41.120 12363 12536 E adjz.greymusha: open libmigui.so failed! dlopen - dlopen failed: library "libmigui.so" not found
+11-01 09:46:41.225 12363 12363 D DecorView[]: onWindowFocusChanged hasWindowFocus true
+11-01 09:46:41.244 12363 12363 D DecorView[]: getWindowModeFromSystem  windowmode is 1
+11-01 09:46:41.245 12363 12363 D DecorView[]: updateDecorCaptionStatus displayWindowDecor is false
+11-01 09:46:41.319 12363 12363 I flutter : READER_FIRST_FRAME 1793515601319
+11-01 09:46:41.358 12363 12363 D DecorView[]: getWindowModeFromSystem  windowmode is 1
+11-01 09:46:41.358 12363 12363 D DecorView[]: updateDecorCaptionStatus displayWindowDecor is false
+11-01 09:46:41.395 12363 12363 D DecorView[]: getWindowModeFromSystem  windowmode is 1
+11-01 09:46:41.395 12363 12363 D DecorView[]: updateDecorCaptionStatus displayWindowDecor is false
+11-01 09:46:42.627 12363 12363 I flutter : READER_PAGE 2
+11-01 09:46:45.322 12363 12797 D ProfileInstaller: Installing profile for tech.ahmadjz.greymushaf
+11-01 09:46:46.053 12363 12363 I flutter : READER_PAGE 3
+11-01 09:46:47.547 12363 12363 I flutter : READER_PAGE 4
+11-01 09:46:48.987 12363 12363 I flutter : READER_PAGE 5
+11-01 09:46:50.505 12363 12363 I flutter : READER_PAGE 6
+11-01 09:46:51.899 12363 12363 I flutter : READER_PAGE 7
+11-01 09:46:53.354 12363 12363 I flutter : READER_PAGE 8
+11-01 09:46:54.785 12363 12363 I flutter : READER_PAGE 9
+11-01 09:46:56.243 12363 12363 I flutter : READER_PAGE 10
+11-01 09:46:57.669 12363 12363 I flutter : READER_PAGE 11
+11-01 09:46:59.211 12363 12363 I flutter : READER_PAGE 12
+11-01 09:47:00.601 12363 12363 I flutter : READER_PAGE 13
+11-01 09:47:02.065 12363 12363 I flutter : READER_PAGE 14
+11-01 09:47:03.459 12363 12363 I flutter : READER_PAGE 15
+11-01 09:47:04.877 12363 12363 I flutter : READER_PAGE 16
+11-01 09:47:06.347 12363 12363 I flutter : READER_PAGE 17

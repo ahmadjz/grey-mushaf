@@ -1,0 +1,175 @@
+{
+  "portrait": {
+    "window_s": 1.448943,
+    "ui_frames": 55,
+    "page_paint_frames_histogram": {
+      "0": 54,
+      "1": 1
+    },
+    "page_render_paints": 1,
+    "durations_inclusive": {
+      "GPURasterizer::Draw": {
+        "count": 50,
+        "avg_ms": 14.21986,
+        "worst_ms": 32.496,
+        "sum_ms": 710.993
+      },
+      "LayerTree::Paint": {
+        "count": 50,
+        "avg_ms": 0.19358,
+        "worst_ms": 0.887,
+        "sum_ms": 9.679
+      },
+      "CreateGlyphAtlas": {
+        "count": 100,
+        "avg_ms": 1.52057,
+        "worst_ms": 21.388,
+        "sum_ms": 152.05700000000002
+      },
+      "UpdateAtlasBitmap": {
+        "count": 8,
+        "avg_ms": 7.772625000000001,
+        "worst_ms": 16.14,
+        "sum_ms": 62.181000000000004
+      },
+      "AppendToExistingAtlas": {
+        "count": 8,
+        "avg_ms": 0.025625,
+        "worst_ms": 0.039,
+        "sum_ms": 0.205
+      },
+      "Canvas::saveLayer": {
+        "count": 300,
+        "avg_ms": 0.018993333333333334,
+        "worst_ms": 0.731,
+        "sum_ms": 5.698
+      },
+      "RenderPassGLES::EncodeCommandsInReactor": {
+        "count": 200,
+        "avg_ms": 0.686645,
+        "worst_ms": 4.82,
+        "sum_ms": 137.329
+      },
+      "BUILD": {
+        "count": 2,
+        "avg_ms": 0.5065,
+        "worst_ms": 0.89,
+        "sum_ms": 1.013
+      },
+      "LAYOUT": {
+        "count": 50,
+        "avg_ms": 0.7572399999999999,
+        "worst_ms": 34.678,
+        "sum_ms": 37.861999999999995
+      },
+      "PAINT": {
+        "count": 50,
+        "avg_ms": 0.09452,
+        "worst_ms": 1.62,
+        "sum_ms": 4.726
+      },
+      "SEMANTICS": {
+        "count": 50,
+        "avg_ms": 4.60728,
+        "worst_ms": 11.888,
+        "sum_ms": 230.364
+      },
+      "_PageRender": {
+        "count": 1,
+        "avg_ms": 1.469,
+        "worst_ms": 1.469,
+        "sum_ms": 1.469
+      }
+    },
+    "cache_names": [
+      "RasterCache"
+    ]
+  },
+  "landscape": {
+    "window_s": 1.527308,
+    "ui_frames": 55,
+    "page_paint_frames_histogram": {
+      "0": 53,
+      "2": 1,
+      "4": 1
+    },
+    "page_render_paints": 6,
+    "durations_inclusive": {
+      "GPURasterizer::Draw": {
+        "count": 55,
+        "avg_ms": 10.031818181818181,
+        "worst_ms": 60.822,
+        "sum_ms": 551.75
+      },
+      "LayerTree::Paint": {
+        "count": 55,
+        "avg_ms": 0.17596363636363635,
+        "worst_ms": 0.876,
+        "sum_ms": 9.677999999999999
+      },
+      "CreateGlyphAtlas": {
+        "count": 110,
+        "avg_ms": 1.0983363636363637,
+        "worst_ms": 52.36,
+        "sum_ms": 120.817
+      },
+      "UpdateAtlasBitmap": {
+        "count": 15,
+        "avg_ms": 4.888866666666667,
+        "worst_ms": 35.682,
+        "sum_ms": 73.333
+      },
+      "AppendToExistingAtlas": {
+        "count": 15,
+        "avg_ms": 0.04953333333333333,
+        "worst_ms": 0.327,
+        "sum_ms": 0.743
+      },
+      "Canvas::saveLayer": {
+        "count": 508,
+        "avg_ms": 0.014442913385826772,
+        "worst_ms": 0.689,
+        "sum_ms": 7.337
+      },
+      "RenderPassGLES::EncodeCommandsInReactor": {
+        "count": 309,
+        "avg_ms": 0.6039255663430421,
+        "worst_ms": 2.565,
+        "sum_ms": 186.613
+      },
+      "BUILD": {
+        "count": 2,
+        "avg_ms": 0.897,
+        "worst_ms": 1.686,
+        "sum_ms": 1.794
+      },
+      "LAYOUT": {
+        "count": 55,
+        "avg_ms": 1.4144545454545456,
+        "worst_ms": 64.635,
+        "sum_ms": 77.795
+      },
+      "PAINT": {
+        "count": 55,
+        "avg_ms": 0.29412727272727274,
+        "worst_ms": 9.278,
+        "sum_ms": 16.177
+      },
+      "SEMANTICS": {
+        "count": 55,
+        "avg_ms": 6.168072727272727,
+        "worst_ms": 11.287,
+        "sum_ms": 339.244
+      },
+      "_PageRender": {
+        "count": 6,
+        "avg_ms": 2.0071666666666665,
+        "worst_ms": 2.45,
+        "sum_ms": 12.043
+      }
+    },
+    "cache_names": [
+      "RasterCache"
+    ]
+  }
+}

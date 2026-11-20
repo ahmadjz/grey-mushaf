@@ -1,0 +1,87 @@
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+Got dependencies!
+4 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                            8.8s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (111.6MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        283ms
+D/CompatChangeReporter( 6118): Compat change id reported: 377864165; UID 10232; state: ENABLED
+W/HWUI    ( 6118): Unknown dataspace 0
+W/libc    ( 6118): Access denied finding property "vendor.mesa.virtgpu.kumquat"
+D/WindowOnBackDispatcher( 6118): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@d7a4d9c
+I/WindowExtensionsImpl( 6118): Initializing Window Extensions, vendor API level=10, activity embedding enabled=true
+W/UiContextUtils( 6118): Requested context is a non-UI Context. Creating a UI-Context with display: 0. Context: Context=android.app.Application@cef654f, of which baseContext=android.app.ContextImpl@79170d0
+D/VRI[MainActivity]( 6118): WindowInsets changed: 1080x2400 statusBars:[0,63,0,0] navigationBars:[0,0,0,63] mandatorySystemGestures:[0,63,0,84] 
+I/Surface ( 6118): Creating surface for consumer unnamed-6118-0 with slotExpansion=1 for 64 slots
+I/Surface ( 6118): Creating surface for consumer VRI[MainActivity]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+I/Surface ( 6118): Creating surface for consumer unnamed-6118-1 with slotExpansion=1 for 64 slots
+I/Surface ( 6118): Creating surface for consumer 728070b SurfaceView[tech.ahmadjz.greymushaf/tech.ahmadjz.greymushaf.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+D/WindowLayoutComponentImpl( 6118): Register WindowLayoutInfoListener on Context=tech.ahmadjz.greymushaf.MainActivity@bdc36a6, of which baseContext=android.app.ContextImpl@e84c83
+I/adjz.greymushaf( 6118): Compiler allocated 5239KB to compile void android.view.ViewRootImpl.performTraversals(long)
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:45505/nZuZ8nI4Kf4=/
+VMServiceFlutterDriver: Isolate found with number: 5983899160248363
+VMServiceFlutterDriver: Isolate 5983899160248363 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 6118): 00:00 +0: repeatable reader profile baseline
+I/flutter ( 6118): READER_FIRST_FRAME 1792827602884
+D/InsetsController( 6118): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity]( 6118): WindowInsets changed: statusBars:null navigationBars:null 
+VMServiceFlutterDriver: Connected to Flutter application.
+D/InsetsController( 6118): hide(ime())
+I/ImeTracker( 6118): tech.ahmadjz.greymushaf:ba369e61: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+W/InteractionJankMonitor( 6118): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=tech.ahmadjz.greymushaf
+I/flutter ( 6118): READER_PAGE 2
+D/ProfileInstaller( 6118): Installing profile for tech.ahmadjz.greymushaf
+I/flutter ( 6118): READER_PAGE 3
+I/flutter ( 6118): READER_PAGE 4
+I/flutter ( 6118): READER_PAGE 5
+I/flutter ( 6118): READER_PAGE 6
+I/flutter ( 6118): READER_PAGE 7
+I/flutter ( 6118): READER_PAGE 8
+I/flutter ( 6118): READER_PAGE 9
+I/flutter ( 6118): READER_PAGE 10
+I/flutter ( 6118): READER_PAGE 11
+I/flutter ( 6118): READER_PAGE 12
+I/flutter ( 6118): READER_PAGE 13
+I/flutter ( 6118): READER_PAGE 14
+I/flutter ( 6118): READER_PAGE 15
+I/flutter ( 6118): READER_PAGE 16
+I/flutter ( 6118): READER_PAGE 17
+I/flutter ( 6118): READER_PAGE 18
+I/flutter ( 6118): READER_PAGE 19
+I/flutter ( 6118): READER_PAGE 20
+I/adjz.greymushaf( 6118): Explicit concurrent mark compact GC freed 928KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 2763KB/5527KB, paused 28us,1.570ms total 12.067ms
+I/flutter ( 6118): READER_PAGE 21
+I/flutter ( 6118): READER_PAGE 22
+I/flutter ( 6118): READER_PAGE 450
+D/VRI[MainActivity]( 6118): WindowInsets changed: 2400x1080 
+I/flutter ( 6118): READER_PAGE 451
+I/flutter ( 6118): READER_PAGE 453
+I/flutter ( 6118): READER_PAGE 455
+I/flutter ( 6118): READER_PAGE 457
+I/flutter ( 6118): READER_PAGE 459
+I/flutter ( 6118): READER_PAGE 461
+I/flutter ( 6118): READER_PAGE 463
+I/flutter ( 6118): READER_PAGE 465
+I/flutter ( 6118): READER_PAGE 467
+I/flutter ( 6118): READER_PAGE 469
+I/flutter ( 6118): READER_PAGE 471
+I/flutter ( 6118): READER_PAGE 473
+I/flutter ( 6118): READER_PAGE 475
+I/flutter ( 6118): READER_PAGE 477
+I/flutter ( 6118): READER_PAGE 479
+I/flutter ( 6118): READER_PAGE 481
+I/flutter ( 6118): READER_PAGE 483
+I/flutter ( 6118): READER_PAGE 485
+I/flutter ( 6118): READER_PAGE 487
+I/flutter ( 6118): READER_PAGE 489
+I/flutter ( 6118): 01:14 +1: (tearDownAll)
+I/flutter ( 6118): 01:14 +2: All tests passed!
+D/VRI[MainActivity]( 6118): WindowInsets changed: 1080x2400 
+All tests passed.

@@ -1,0 +1,5 @@
+Analyzing app...                                                
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • test/reader_edge_cases_test.dart:231:13 • curly_braces_in_flow_control_structures
+
+1 issue found. (ran in 1.9s)

@@ -1,0 +1,30 @@
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+5 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                           18.8s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (111.0MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        307ms
+D/WindowLayoutComponentImpl(10737): Register WindowLayoutInfoListener on Context=tech.ahmadjz.greymushaf.MainActivity@b1a5c94, of which baseContext=android.app.ContextImpl@a8aae00
+I/adjz.greymushaf(10737): Compiler allocated 5230KB to compile void android.view.ViewRootImpl.performTraversals(long)
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:37305/I3hl0aVquIc=/
+VMServiceFlutterDriver: Isolate found with number: 5268251919851083
+VMServiceFlutterDriver: Isolate 5268251919851083 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter (10737): 00:00 +0: durable reveal across separate Android processes (read)
+D/InsetsController(10737): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](10737): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController(10737): hide(ime())
+I/ImeTracker(10737): tech.ahmadjz.greymushaf:59e5c94: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter (10737): 00:00 +1: (tearDownAll)
+I/flutter (10737): 00:00 +2: All tests passed!
+All tests passed.
+Leaving the application running.

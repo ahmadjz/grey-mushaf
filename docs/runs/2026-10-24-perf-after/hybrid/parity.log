@@ -1,0 +1,452 @@
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+5 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                           19.4s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (111.0MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        304ms
+D/WindowLayoutComponentImpl(24084): Register WindowLayoutInfoListener on Context=tech.ahmadjz.greymushaf.MainActivity@bdc36a6, of which baseContext=android.app.ContextImpl@e84c83
+I/adjz.greymushaf(24084): Compiler allocated 5230KB to compile void android.view.ViewRootImpl.performTraversals(long)
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:41735/eLZnUliYOoY=/
+VMServiceFlutterDriver: Isolate found with number: 2937028006590935
+VMServiceFlutterDriver: Isolate 2937028006590935 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter (24084): 00:00 +0: exact reader parity reference and persisted reveal matrix
+I/Surface (24084): Creating surface for consumer unnamed-24084-2 with slotExpansion=1 for 64 slots
+I/Surface (24084): Creating surface for consumer ImageReader-1080x2400f1m3-24084-0 with slotExpansion=1 for 64 slots
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:4677e968: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+VMServiceFlutterDriver: Connected to Flutter application.
+W/InteractionJankMonitor(24084): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=tech.ahmadjz.greymushaf
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:83e80ecb: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/ProfileInstaller(24084): Installing profile for tech.ahmadjz.greymushaf
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:b99cab52: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:f969481d: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:b8624697: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:39ea53ee: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:d4e67997: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 2
+I/flutter (24084): READER_PAGE 2
+I/flutter (24084): READER_PAGE 2
+I/flutter (24084): READER_PAGE 2
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:31e949db: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 2
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:6c621513: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 2
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:48c8f41b: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 2
+I/flutter (24084): READER_PAGE 2
+I/flutter (24084): READER_PAGE 2
+I/flutter (24084): READER_PAGE 2
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:dcfcaa80: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 2
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:789e8f6d: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 2
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:c47ea4cd: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 50
+I/flutter (24084): READER_PAGE 50
+I/flutter (24084): READER_PAGE 50
+I/flutter (24084): READER_PAGE 50
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:e25ea4fe: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 50
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:566bbe1b: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 50
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:e48d8268: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 50
+I/flutter (24084): READER_PAGE 50
+I/flutter (24084): READER_PAGE 50
+I/flutter (24084): READER_PAGE 50
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:69e9739d: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 50
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:f1d17dae: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 50
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:7f7e794: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 187
+I/flutter (24084): READER_PAGE 187
+I/flutter (24084): READER_PAGE 187
+I/flutter (24084): READER_PAGE 187
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:e0099733: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 187
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:b20bf882: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 187
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:f6a2ed40: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 187
+I/flutter (24084): READER_PAGE 187
+I/flutter (24084): READER_PAGE 187
+I/flutter (24084): READER_PAGE 187
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:9394bc9b: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 187
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:eae480a3: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 187
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:52e2def5: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 604
+I/flutter (24084): READER_PAGE 604
+I/flutter (24084): READER_PAGE 604
+I/flutter (24084): READER_PAGE 604
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:b6d33452: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 604
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:e66147f2: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 604
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:22f0a063: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 604
+I/flutter (24084): READER_PAGE 604
+I/flutter (24084): READER_PAGE 604
+I/flutter (24084): READER_PAGE 604
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:9f99acf: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 604
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:9b1a00ca: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 604
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:1f6ab454: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 63
+I/flutter (24084): READER_PAGE 63
+I/flutter (24084): READER_PAGE 63
+I/flutter (24084): READER_PAGE 63
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:74084965: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 63
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:bd59b697: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 63
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:14ef5bab: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 63
+I/flutter (24084): READER_PAGE 63
+I/flutter (24084): READER_PAGE 63
+I/flutter (24084): READER_PAGE 63
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:80228e8b: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 63
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:22d71b40: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 63
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:fd2b08d8: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+D/VRI[MainActivity](24084): WindowInsets changed: 2400x1080 
+E/ConsumerBase(24084): [ImageReader-1080x2400f1m3-24084-0] abandonLocked: ConsumerBase is abandoned!
+I/Surface (24084): Creating surface for consumer unnamed-24084-3 with slotExpansion=1 for 64 slots
+I/Surface (24084): Creating surface for consumer ImageReader-2400x1080f1m3-24084-1 with slotExpansion=1 for 64 slots
+E/BufferQueueProducer(24084): [ImageReader-1080x2400f1m3-24084-0](id:5e1400000002,api:1,p:24084,c:24084) cancelBuffer: BufferQueue has been abandoned
+I/flutter (24084): READER_PAGE 49
+I/flutter (24084): READER_PAGE 49
+I/flutter (24084): READER_PAGE 49
+I/flutter (24084): READER_PAGE 49
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:46b3eb4d: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 49
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:92d20cef: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 49
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:e8ed31b9: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 49
+I/flutter (24084): READER_PAGE 49
+I/flutter (24084): READER_PAGE 49
+I/flutter (24084): READER_PAGE 49
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:37b92da4: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 49
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:5b2e10b9: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): READER_PAGE 49
+D/InsetsController(24084): Setting requestedVisibleTypes to 503 (was 496)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:[0,63,0,0] navigationBars:[0,0,0,63] 
+D/InsetsController(24084): hide(ime())
+I/ImeTracker(24084): tech.ahmadjz.greymushaf:e41a5445: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@3986b83
+D/WindowOnBackDispatcher(24084): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@360c3a5
+D/InsetsController(24084): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](24084): WindowInsets changed: statusBars:null navigationBars:null 
+I/flutter (24084): PARITY_CLEANUP deleted perf-parity-proof.db and all records listed in capture.json; no accounts/tokens
+E/ConsumerBase(24084): [ImageReader-2400x1080f1m3-24084-1] abandonLocked: ConsumerBase is abandoned!
+I/flutter (24084): 02:38 +1: (tearDownAll)
+I/Choreographer(24084): Skipped 160 frames!  The application may be doing too much work on its main thread.
+D/VRI[MainActivity](24084): WindowInsets changed: 1080x2400 
+I/flutter (24084): 02:41 +2: All tests passed!
+I/HWUI    (24084): Davey! duration=2716ms; Flags=0, FrameTimelineVsyncId=1003560, IntendedVsync=4495181927446, Vsync=4497848594006, InputEventId=0, HandleInputStart=4497859247960, AnimationStart=4497859248830, PerformTraversalsStart=4497859249129, DrawStart=4497888210249, FrameDeadline=4495198594112, FrameStartTime=4497859104149, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=4497848594006, SyncQueued=4497888289960, SyncStart=4497888444910, IssueDrawCommandsStart=4497888533140, SwapBuffers=4497888713441, FrameCompleted=4497898699685, DequeueBufferDuration=2282773, QueueBufferDuration=219090, GpuCompleted=4497898699685, SwapBuffersCompleted=4497891587765, DisplayPresentTime=0, CommandSubmissionCompleted=4497888713441, 
+All tests passed.

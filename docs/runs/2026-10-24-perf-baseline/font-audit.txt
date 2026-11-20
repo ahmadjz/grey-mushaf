@@ -1,0 +1,3 @@
+Counter({'color_base_glyphs': 88220, 'marker_bases': 6236, 'base_equals_last_ink_outline': 6228, 'single_field_layer': 6220, 'COLR_v0': 604})
+examples [(1, 'uniFC45', [('glyph00021', 10, '#2CA4ABFF'), ('glyph00022', 11, '#FF0080FF'), ('glyph00023', 12, '#D8E9D8FF'), ('glyph00024', 13, '#000000FF')], 309), (1, 'uniFC4A', [('glyph00021', 10, '#2CA4ABFF'), ('glyph00022', 11, '#FF0080FF'), ('glyph00023', 12, '#D8E9D8FF'), ('glyph00036', 13, '#000000FF')], 314), (1, 'uniFC4D', [('glyph00021', 10, '#2CA4ABFF'), ('glyph00022', 11, '#FF0080FF'), ('glyph00023', 12, '#D8E9D8FF'), ('glyph00049', 13, '#000000FF')], 332)]
+Compare outlines only; no raster parity claimed. Source assets unchanged.

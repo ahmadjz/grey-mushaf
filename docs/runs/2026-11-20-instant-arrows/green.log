@@ -1,0 +1,66 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: (setUpAll)
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: (setUpAll)
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: a Boox starts in black and white without the colour row
+00:00 +1: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: a Boox starts in black and white without the colour row
+00:00 +2: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the top bar spans the screen from the very top
+00:00 +3: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: a phone keeps the colour row and natural colours
+00:00 +3: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the bar title follows the page after a swipe
+READER_PAGE 216
+00:01 +4: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the bar title follows the page after a swipe
+00:01 +5: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: the Settings switch turns B/W off and remembers it
+00:01 +6: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +7: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +8: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +8: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: in B/W an arrow changes the page at once
+READER_PAGE 216
+00:01 +9: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +10: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: in colour an arrow also changes the page at once
+READER_PAGE 216
+00:01 +11: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: each page has a header line and an outer-edge border
+00:01 +12: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: the search shade is grey in B/W and blue in colour
+00:01 +13: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: landscape borders the outer edges and the spine once
+00:01 +14: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: B/W borders and header line are at least 1 px
+00:01 +15: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: arrows turn pages without revealing or showing the bars
+READER_PAGE 216
+READER_PAGE 217
+READER_PAGE 218
+00:01 +16: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: B/W strip tools and the tap box show no colour
+00:01 +17: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a landscape arrow moves a whole spread
+READER_PAGE 217
+00:01 +18: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a landscape arrow moves a whole spread
+00:01 +19: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+READER_PAGE 2
+READER_PAGE 3
+00:01 +20: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+00:01 +21: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+00:01 +21: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: after a failed load the next arrow still moves one page
+READER_PAGE 2
+00:02 +21: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+READER_PAGE 2
+00:02 +22: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: after a failed load the next arrow still moves one page
+00:02 +22: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+READER_PAGE 2
+READER_PAGE 3
+00:02 +22: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: after a failed load the next arrow still moves one page
+READER_PAGE 3
+00:03 +22: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+READER_PAGE 2
+00:03 +23: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+00:03 +24: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+00:03 +24: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: rotating during an arrow turn keeps the arrows in step
+READER_PAGE 216
+READER_PAGE 217
+READER_PAGE 218
+READER_PAGE 219
+READER_PAGE 217
+00:03 +25: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+00:03 +26: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a swipe during a held arrow load resets the arrow target
+READER_PAGE 2
+00:03 +27: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a swipe during a held arrow load resets the arrow target
+00:03 +28: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a swipe during a held arrow load resets the arrow target
+00:03 +29: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a swipe during a held arrow load resets the arrow target
+READER_PAGE 1
+READER_PAGE 2
+00:05 +30: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: (tearDownAll)
+00:06 +30: All tests passed!

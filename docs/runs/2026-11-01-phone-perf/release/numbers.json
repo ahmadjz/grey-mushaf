@@ -1,0 +1,49 @@
+{
+  "device": "Redmi Note 9 Pro (2be3110f), Android12 API31, arm64, 60Hz",
+  "build": "release",
+  "cold": [
+    {
+      "reader_ms": 1414,
+      "display_ms": 1469
+    },
+    {
+      "reader_ms": 1173,
+      "display_ms": 1264
+    },
+    {
+      "reader_ms": 1177,
+      "display_ms": 1255
+    },
+    {
+      "reader_ms": 1176,
+      "display_ms": 1251
+    },
+    {
+      "reader_ms": 1168,
+      "display_ms": 1234
+    }
+  ],
+  "after20_pss_kib": 172866,
+  "page_changes": [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21"
+  ]
+}

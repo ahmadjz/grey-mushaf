@@ -1,0 +1,70 @@
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+Got dependencies!
+4 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                           19.9s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (111.6MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        265ms
+D/WindowLayoutComponentImpl( 6830): Register WindowLayoutInfoListener on Context=tech.ahmadjz.greymushaf.MainActivity@b1a5c94, of which baseContext=android.app.ContextImpl@2104639
+I/adjz.greymushaf( 6830): Compiler allocated 5230KB to compile void android.view.ViewRootImpl.performTraversals(long)
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:41767/Qd-6l_jQyP8=/
+VMServiceFlutterDriver: Isolate found with number: 2120869894338059
+VMServiceFlutterDriver: Isolate 2120869894338059 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 6830): 00:00 +0: repeatable reader profile baseline
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 6830): READER_FIRST_FRAME 1792828025551
+D/InsetsController( 6830): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity]( 6830): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController( 6830): hide(ime())
+I/ImeTracker( 6830): tech.ahmadjz.greymushaf:2f45e70f: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+W/InteractionJankMonitor( 6830): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=tech.ahmadjz.greymushaf
+I/flutter ( 6830): READER_PAGE 2
+D/ProfileInstaller( 6830): Installing profile for tech.ahmadjz.greymushaf
+I/flutter ( 6830): READER_PAGE 3
+I/flutter ( 6830): READER_PAGE 4
+I/flutter ( 6830): READER_PAGE 5
+I/flutter ( 6830): READER_PAGE 6
+I/flutter ( 6830): READER_PAGE 7
+I/flutter ( 6830): READER_PAGE 8
+I/flutter ( 6830): READER_PAGE 9
+I/flutter ( 6830): READER_PAGE 10
+I/flutter ( 6830): READER_PAGE 11
+I/flutter ( 6830): READER_PAGE 12
+I/flutter ( 6830): READER_PAGE 13
+I/flutter ( 6830): READER_PAGE 14
+I/flutter ( 6830): READER_PAGE 15
+I/flutter ( 6830): READER_PAGE 16
+I/flutter ( 6830): READER_PAGE 17
+I/flutter ( 6830): READER_PAGE 18
+I/flutter ( 6830): READER_PAGE 19
+I/flutter ( 6830): READER_PAGE 20
+I/flutter ( 6830): READER_PAGE 21
+I/flutter ( 6830): READER_PAGE 22
+I/scudo   ( 6830): Can't populate more pages for size class 8720.
+Unhandled exception:
+DriverError: Failed to fulfill RequestData due to remote error
+Original error: ext.flutter.driver: (-32000) Service connection disposed
+Original stack trace:
+#0      new _OutstandingRequest (package:vm_service/src/vm_service.dart:280:34)
+#1      VmService._call.<anonymous closure> (package:vm_service/src/vm_service.dart:1962:25)
+#2      VmService._call (package:vm_service/src/vm_service.dart:1974:8)
+#3      VmService.callServiceExtension (package:vm_service/src/vm_service.dart:1913:14)
+#4      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:327:12)
+#5      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:13)
+#6      integrationDriver (package:integration_test/integration_test_driver.dart:71:42)
+<asynchronous suspension>
+
+
+#0      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:340:7)
+<asynchronous suspension>
+#1      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:7)
+<asynchronous suspension>
+#2      integrationDriver (package:integration_test/integration_test_driver.dart:71:29)
+<asynchronous suspension>

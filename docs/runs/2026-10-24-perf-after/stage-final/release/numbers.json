@@ -1,0 +1,36 @@
+{
+  "device": "Medium_Phone,4096MB,x86_64,API37,Impeller OpenGLES",
+  "build": "release",
+  "cold": [
+    {
+      "reader_ms": 340,
+      "display_ms": 402,
+      "pss_kib": 70745
+    },
+    {
+      "reader_ms": 318,
+      "display_ms": 389,
+      "pss_kib": 69851
+    },
+    {
+      "reader_ms": 313,
+      "display_ms": 355,
+      "pss_kib": 69201
+    },
+    {
+      "reader_ms": 316,
+      "display_ms": 367,
+      "pss_kib": 70020
+    },
+    {
+      "reader_ms": 310,
+      "display_ms": 358,
+      "pss_kib": 69816
+    }
+  ],
+  "after20_pss_kib": 105033,
+  "coverage": 604,
+  "missing": [],
+  "after604_pss_kib": 286369,
+  "settled_pss_kib": 285407
+}

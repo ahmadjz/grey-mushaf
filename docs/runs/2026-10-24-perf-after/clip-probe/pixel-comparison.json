@@ -1,0 +1,2711 @@
+{
+  "totals": {
+    "old": 84,
+    "resolved": 72,
+    "remaining": 12,
+    "new": 20417,
+    "total": 20429,
+    "maxDelta": 192
+  },
+  "byPage": {
+    "page-1": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 1214,
+      "total": 1214
+    },
+    "page-187": {
+      "old": 12,
+      "resolved": 12,
+      "remaining": 0,
+      "new": 4048,
+      "total": 4048
+    },
+    "page-2": {
+      "old": 12,
+      "resolved": 0,
+      "remaining": 12,
+      "new": 1052,
+      "total": 1064
+    },
+    "page-50": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 3707,
+      "total": 3707
+    },
+    "page-604": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 2558,
+      "total": 2558
+    },
+    "page-63": {
+      "old": 36,
+      "resolved": 36,
+      "remaining": 0,
+      "new": 4344,
+      "total": 4344
+    },
+    "spread-49-50": {
+      "old": 24,
+      "resolved": 24,
+      "remaining": 0,
+      "new": 3494,
+      "total": 3494
+    }
+  },
+  "images": {
+    "page-1-dark-128-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 103,
+      "total": 103,
+      "maxDelta": 101,
+      "originalPixels": []
+    },
+    "page-1-dark-128-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 103,
+      "total": 103,
+      "maxDelta": 96,
+      "originalPixels": []
+    },
+    "page-1-dark-32-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 101,
+      "total": 101,
+      "maxDelta": 101,
+      "originalPixels": []
+    },
+    "page-1-dark-32-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 101,
+      "total": 101,
+      "maxDelta": 24,
+      "originalPixels": []
+    },
+    "page-1-dark-80-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 101,
+      "total": 101,
+      "maxDelta": 101,
+      "originalPixels": []
+    },
+    "page-1-dark-80-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 101,
+      "total": 101,
+      "maxDelta": 60,
+      "originalPixels": []
+    },
+    "page-1-light-128-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 101,
+      "total": 101,
+      "maxDelta": 101,
+      "originalPixels": []
+    },
+    "page-1-light-128-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 101,
+      "total": 101,
+      "maxDelta": 96,
+      "originalPixels": []
+    },
+    "page-1-light-176-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 101,
+      "total": 101,
+      "maxDelta": 101,
+      "originalPixels": []
+    },
+    "page-1-light-176-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 101,
+      "total": 101,
+      "maxDelta": 60,
+      "originalPixels": []
+    },
+    "page-1-light-224-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 100,
+      "total": 100,
+      "maxDelta": 101,
+      "originalPixels": []
+    },
+    "page-1-light-224-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 100,
+      "total": 100,
+      "maxDelta": 23,
+      "originalPixels": []
+    },
+    "page-187-dark-128-mixed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 338,
+      "total": 338,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            24,
+            24,
+            24,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-dark-128-unrevealed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 338,
+      "total": 338,
+      "maxDelta": 96,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            24,
+            24,
+            24,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-dark-32-mixed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 336,
+      "total": 336,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            6,
+            6,
+            6,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-dark-32-unrevealed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 336,
+      "total": 336,
+      "maxDelta": 24,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            6,
+            6,
+            6,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-dark-80-mixed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 338,
+      "total": 338,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            15,
+            15,
+            15,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-dark-80-unrevealed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 338,
+      "total": 338,
+      "maxDelta": 60,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            15,
+            15,
+            15,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-light-128-mixed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 338,
+      "total": 338,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            231,
+            231,
+            231,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-light-128-unrevealed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 338,
+      "total": 338,
+      "maxDelta": 96,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            231,
+            231,
+            231,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-light-176-mixed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 338,
+      "total": 338,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            240,
+            240,
+            240,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-light-176-unrevealed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 338,
+      "total": 338,
+      "maxDelta": 60,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            240,
+            240,
+            240,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-light-224-mixed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 336,
+      "total": 336,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            249,
+            249,
+            249,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-187-light-224-unrevealed.png": {
+      "old": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "new": 336,
+      "total": 336,
+      "maxDelta": 23,
+      "originalPixels": [
+        {
+          "x": 153,
+          "y": 1540,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            249,
+            249,
+            249,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-dark-128-mixed.png": {
+      "old": 1,
+      "resolved": 0,
+      "remaining": 1,
+      "new": 90,
+      "total": 91,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 748,
+          "y": 1226,
+          "reference": [
+            53,
+            53,
+            53,
+            255
+          ],
+          "before": [
+            52,
+            52,
+            52,
+            255
+          ],
+          "after": [
+            52,
+            52,
+            52,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-dark-128-unrevealed.png": {
+      "old": 1,
+      "resolved": 0,
+      "remaining": 1,
+      "new": 90,
+      "total": 91,
+      "maxDelta": 96,
+      "originalPixels": [
+        {
+          "x": 748,
+          "y": 1226,
+          "reference": [
+            53,
+            53,
+            53,
+            255
+          ],
+          "before": [
+            52,
+            52,
+            52,
+            255
+          ],
+          "after": [
+            52,
+            52,
+            52,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-dark-32-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 87,
+      "total": 87,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-2-dark-32-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 87,
+      "total": 87,
+      "maxDelta": 24,
+      "originalPixels": []
+    },
+    "page-2-dark-80-mixed.png": {
+      "old": 1,
+      "resolved": 0,
+      "remaining": 1,
+      "new": 88,
+      "total": 89,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 354,
+          "y": 1333,
+          "reference": [
+            53,
+            53,
+            53,
+            255
+          ],
+          "before": [
+            54,
+            54,
+            54,
+            255
+          ],
+          "after": [
+            54,
+            54,
+            54,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-dark-80-unrevealed.png": {
+      "old": 1,
+      "resolved": 0,
+      "remaining": 1,
+      "new": 88,
+      "total": 89,
+      "maxDelta": 60,
+      "originalPixels": [
+        {
+          "x": 354,
+          "y": 1333,
+          "reference": [
+            53,
+            53,
+            53,
+            255
+          ],
+          "before": [
+            54,
+            54,
+            54,
+            255
+          ],
+          "after": [
+            54,
+            54,
+            54,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-light-128-mixed.png": {
+      "old": 3,
+      "resolved": 0,
+      "remaining": 3,
+      "new": 88,
+      "total": 91,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 747,
+          "y": 1226,
+          "reference": [
+            235,
+            235,
+            235,
+            255
+          ],
+          "before": [
+            234,
+            234,
+            234,
+            255
+          ],
+          "after": [
+            234,
+            234,
+            234,
+            255
+          ]
+        },
+        {
+          "x": 353,
+          "y": 1332,
+          "reference": [
+            142,
+            142,
+            142,
+            255
+          ],
+          "before": [
+            143,
+            143,
+            143,
+            255
+          ],
+          "after": [
+            143,
+            143,
+            143,
+            255
+          ]
+        },
+        {
+          "x": 353,
+          "y": 1333,
+          "reference": [
+            157,
+            157,
+            157,
+            255
+          ],
+          "before": [
+            156,
+            156,
+            156,
+            255
+          ],
+          "after": [
+            156,
+            156,
+            156,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-light-128-unrevealed.png": {
+      "old": 3,
+      "resolved": 0,
+      "remaining": 3,
+      "new": 88,
+      "total": 91,
+      "maxDelta": 96,
+      "originalPixels": [
+        {
+          "x": 747,
+          "y": 1226,
+          "reference": [
+            235,
+            235,
+            235,
+            255
+          ],
+          "before": [
+            234,
+            234,
+            234,
+            255
+          ],
+          "after": [
+            234,
+            234,
+            234,
+            255
+          ]
+        },
+        {
+          "x": 353,
+          "y": 1332,
+          "reference": [
+            142,
+            142,
+            142,
+            255
+          ],
+          "before": [
+            143,
+            143,
+            143,
+            255
+          ],
+          "after": [
+            143,
+            143,
+            143,
+            255
+          ]
+        },
+        {
+          "x": 353,
+          "y": 1333,
+          "reference": [
+            157,
+            157,
+            157,
+            255
+          ],
+          "before": [
+            156,
+            156,
+            156,
+            255
+          ],
+          "after": [
+            156,
+            156,
+            156,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-light-176-mixed.png": {
+      "old": 1,
+      "resolved": 0,
+      "remaining": 1,
+      "new": 88,
+      "total": 89,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 748,
+          "y": 1226,
+          "reference": [
+            222,
+            222,
+            222,
+            255
+          ],
+          "before": [
+            223,
+            223,
+            223,
+            255
+          ],
+          "after": [
+            223,
+            223,
+            223,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-light-176-unrevealed.png": {
+      "old": 1,
+      "resolved": 0,
+      "remaining": 1,
+      "new": 88,
+      "total": 89,
+      "maxDelta": 60,
+      "originalPixels": [
+        {
+          "x": 748,
+          "y": 1226,
+          "reference": [
+            222,
+            222,
+            222,
+            255
+          ],
+          "before": [
+            223,
+            223,
+            223,
+            255
+          ],
+          "after": [
+            223,
+            223,
+            223,
+            255
+          ]
+        }
+      ]
+    },
+    "page-2-light-224-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 85,
+      "total": 85,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-2-light-224-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 85,
+      "total": 85,
+      "maxDelta": 23,
+      "originalPixels": []
+    },
+    "page-50-dark-128-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 310,
+      "total": 310,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-50-dark-128-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 310,
+      "total": 310,
+      "maxDelta": 96,
+      "originalPixels": []
+    },
+    "page-50-dark-32-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 308,
+      "total": 308,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-50-dark-32-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 307,
+      "total": 307,
+      "maxDelta": 24,
+      "originalPixels": []
+    },
+    "page-50-dark-80-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 310,
+      "total": 310,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-50-dark-80-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 309,
+      "total": 309,
+      "maxDelta": 60,
+      "originalPixels": []
+    },
+    "page-50-light-128-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 310,
+      "total": 310,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-50-light-128-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 309,
+      "total": 309,
+      "maxDelta": 96,
+      "originalPixels": []
+    },
+    "page-50-light-176-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 310,
+      "total": 310,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-50-light-176-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 309,
+      "total": 309,
+      "maxDelta": 60,
+      "originalPixels": []
+    },
+    "page-50-light-224-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 308,
+      "total": 308,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-50-light-224-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 307,
+      "total": 307,
+      "maxDelta": 23,
+      "originalPixels": []
+    },
+    "page-604-dark-128-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 214,
+      "total": 214,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-604-dark-128-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 214,
+      "total": 214,
+      "maxDelta": 128,
+      "originalPixels": []
+    },
+    "page-604-dark-32-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-604-dark-32-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 32,
+      "originalPixels": []
+    },
+    "page-604-dark-80-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-604-dark-80-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 80,
+      "originalPixels": []
+    },
+    "page-604-light-128-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-604-light-128-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 127,
+      "originalPixels": []
+    },
+    "page-604-light-176-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-604-light-176-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 79,
+      "originalPixels": []
+    },
+    "page-604-light-224-mixed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 192,
+      "originalPixels": []
+    },
+    "page-604-light-224-unrevealed.png": {
+      "old": 0,
+      "resolved": 0,
+      "remaining": 0,
+      "new": 213,
+      "total": 213,
+      "maxDelta": 31,
+      "originalPixels": []
+    },
+    "page-63-dark-128-mixed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 363,
+      "total": 363,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            6,
+            6,
+            6,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            19,
+            19,
+            19,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            7,
+            7,
+            7,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-dark-128-unrevealed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 363,
+      "total": 363,
+      "maxDelta": 127,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            6,
+            6,
+            6,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            19,
+            19,
+            19,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            7,
+            7,
+            7,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-dark-32-mixed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 360,
+      "total": 360,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            2,
+            2,
+            2,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            5,
+            5,
+            5,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            2,
+            2,
+            2,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-dark-32-unrevealed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 360,
+      "total": 360,
+      "maxDelta": 32,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            2,
+            2,
+            2,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            5,
+            5,
+            5,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            2,
+            2,
+            2,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-dark-80-mixed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 363,
+      "total": 363,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            4,
+            4,
+            4,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            12,
+            12,
+            12,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            4,
+            4,
+            4,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-dark-80-unrevealed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 363,
+      "total": 363,
+      "maxDelta": 79,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            4,
+            4,
+            4,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            12,
+            12,
+            12,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            4,
+            4,
+            4,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-light-128-mixed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 363,
+      "total": 363,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            249,
+            249,
+            249,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            236,
+            236,
+            236,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            248,
+            248,
+            248,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-light-128-unrevealed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 363,
+      "total": 363,
+      "maxDelta": 126,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            249,
+            249,
+            249,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            236,
+            236,
+            236,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            248,
+            248,
+            248,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-light-176-mixed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 363,
+      "total": 363,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            251,
+            251,
+            251,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            243,
+            243,
+            243,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            251,
+            251,
+            251,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-light-176-unrevealed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 363,
+      "total": 363,
+      "maxDelta": 78,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            251,
+            251,
+            251,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            243,
+            243,
+            243,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            251,
+            251,
+            251,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-light-224-mixed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 360,
+      "total": 360,
+      "maxDelta": 192,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            254,
+            254,
+            254,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            250,
+            250,
+            250,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            253,
+            253,
+            253,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "page-63-light-224-unrevealed.png": {
+      "old": 3,
+      "resolved": 3,
+      "remaining": 0,
+      "new": 360,
+      "total": 360,
+      "maxDelta": 31,
+      "originalPixels": [
+        {
+          "x": 281,
+          "y": 1320,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            254,
+            254,
+            254,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1321,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            250,
+            250,
+            250,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 281,
+          "y": 1322,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            253,
+            253,
+            253,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-dark-128-mixed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 301,
+      "total": 301,
+      "maxDelta": 128,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            50,
+            50,
+            50,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            5,
+            5,
+            5,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-dark-128-unrevealed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 301,
+      "total": 301,
+      "maxDelta": 85,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            50,
+            50,
+            50,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            5,
+            5,
+            5,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-dark-32-mixed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 283,
+      "total": 283,
+      "maxDelta": 128,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            13,
+            13,
+            13,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            1,
+            1,
+            1,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-dark-32-unrevealed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 281,
+      "total": 281,
+      "maxDelta": 21,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            13,
+            13,
+            13,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            1,
+            1,
+            1,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-dark-80-mixed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 297,
+      "total": 297,
+      "maxDelta": 128,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            31,
+            31,
+            31,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            3,
+            3,
+            3,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-dark-80-unrevealed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 296,
+      "total": 296,
+      "maxDelta": 53,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            31,
+            31,
+            31,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "before": [
+            3,
+            3,
+            3,
+            255
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-light-128-mixed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 297,
+      "total": 297,
+      "maxDelta": 128,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            205,
+            205,
+            205,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            251,
+            251,
+            251,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-light-128-unrevealed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 296,
+      "total": 296,
+      "maxDelta": 84,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            205,
+            205,
+            205,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            251,
+            251,
+            251,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-light-176-mixed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 297,
+      "total": 297,
+      "maxDelta": 128,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            224,
+            224,
+            224,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            252,
+            252,
+            252,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-light-176-unrevealed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 296,
+      "total": 296,
+      "maxDelta": 52,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            224,
+            224,
+            224,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            252,
+            252,
+            252,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-light-224-mixed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 276,
+      "total": 276,
+      "maxDelta": 128,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            243,
+            243,
+            243,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            254,
+            254,
+            254,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    },
+    "spread-49-50-light-224-unrevealed.png": {
+      "old": 2,
+      "resolved": 2,
+      "remaining": 0,
+      "new": 273,
+      "total": 273,
+      "maxDelta": 21,
+      "originalPixels": [
+        {
+          "x": 1580,
+          "y": 955,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            243,
+            243,
+            243,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "x": 1580,
+          "y": 956,
+          "reference": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "before": [
+            254,
+            254,
+            254,
+            255
+          ],
+          "after": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ]
+    }
+  }
+}

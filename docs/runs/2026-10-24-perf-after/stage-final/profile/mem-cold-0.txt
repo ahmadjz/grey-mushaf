@@ -1,0 +1,73 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 14281592 Realtime: 14281592
+
+** MEMINFO in pid 11558 [tech.ahmadjz.greymushaf] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap    27250    27060      176       68    28104    46416    39848     2075
+  Dalvik Heap     2335     2292       12     3496     3660     5239     2620     2619
+ Dalvik Other     6561     2376        4        7    11084                           
+        Stack      964      964        0        0      972                           
+       Ashmem       15        0        0        0      620                           
+    Other dev       13        0       12        0      148                           
+     .so mmap     5711      564     1156       26    38884                           
+    .jar mmap     4344        0      856        0    43260                           
+    .apk mmap    15487    15288       32        0    16580                           
+    .ttf mmap     4231        0     4056        0     4692                           
+    .dex mmap    10566    10544        0        0    11148                           
+    .oat mmap       60        0        0        0     1792                           
+    .art mmap     8278     7832      152       86    20264                           
+   Other mmap     4064        4     1848        0     7184                           
+      Unknown    14694    14688        0       10    15144                           
+        TOTAL   108266    81612     8304     3693   203536    51655    42468     4694
+ 
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:    10276                          23924
+         Native Heap:    27060                          28104
+                Code:    32900                         125112
+               Stack:      964                            972
+            Graphics:        0                              0
+       Private Other:    18716
+              System:    18350
+             Unknown:                                   25424
+ 
+           TOTAL PSS:   108266            TOTAL RSS:   203536       TOTAL SWAP PSS:     3693
+ 
+ Objects
+               Views:        6         ViewRootImpl:        1
+         AppContexts:        6           Activities:        1
+              Assets:       22        AssetManagers:        0
+       Local Binders:       23        Proxy Binders:       59
+       Parcel memory:       11         Parcel count:       35
+    Death Recipients:        0             WebViews:        0
+ 
+ Native Allocations
+                         Count                       Total(kB)
+                        ------                         ------
+    Other (malloced):      315                             28
+ Other (nonmalloced):       88                             63
+ 
+ Mapped Bitmaps
+                         Count                       Size(KB)
+                        ------                         ------
+              Mapped:        0                              0
+              Unique:        0                              0
+ 
+ SQL
+         MEMORY_USED:       89
+  PAGECACHE_OVERFLOW:       25          MALLOC_SIZE:       46
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b) cache hits cache misses cache size  Dbname
+PER CONNECTION STATS
+         4       52             39     6    19     3  /data/user/0/tech.ahmadjz.greymushaf/databases/reveals.db
+POOL STATS
+     cache hits  cache misses    cache size  Dbname
+              6            20             3  /data/user/0/tech.ahmadjz.greymushaf/databases/reveals.db
+ 
+ Asset Allocations
+    : 17K
+ 

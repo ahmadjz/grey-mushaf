@@ -1,0 +1,14 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart
+test/grouped_ink_test.dart:25:12: Error: Method not found: 'groupableInk'.
+    expect(groupableInk(boxes, ink, 2), [true, false, false, false, false]);
+           ^^^^^^^^^^^^
+00:00 +0 -1: loading /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart [E]
+  Failed to load "/home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart":
+  Compilation failed for testPath=/home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart: test/grouped_ink_test.dart:25:12: Error: Method not found: 'groupableInk'.
+      expect(groupableInk(boxes, ink, 2), [true, false, false, false, false]);
+             ^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart: loading /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart

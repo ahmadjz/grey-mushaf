@@ -1,0 +1,26 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart
+test/grouped_ink_test.dart:6:8: Error: Error when reading 'lib/grouped_ink.dart': No such file or directory
+import 'package:greymushaf/grouped_ink.dart';
+       ^
+test/grouped_ink_test.dart:15:15: Error: Method not found: 'GroupedInkWord'.
+            ? GroupedInkWord(color:i.isEven?const Color(0xFFB0B0B0):const Color(0xFF000000), background:background,
+              ^^^^^^^^^^^^^^
+test/grouped_ink_test.dart:21:27: Error: Method not found: 'GroupedInkPage'.
+      if(grouped) content=GroupedInkPage(child:content);
+                          ^^^^^^^^^^^^^^
+00:00 +0 -1: loading /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart [E]
+  Failed to load "/home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart":
+  Compilation failed for testPath=/home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart: test/grouped_ink_test.dart:6:8: Error: Error when reading 'lib/grouped_ink.dart': No such file or directory
+  import 'package:greymushaf/grouped_ink.dart';
+         ^
+  test/grouped_ink_test.dart:15:15: Error: Method not found: 'GroupedInkWord'.
+              ? GroupedInkWord(color:i.isEven?const Color(0xFFB0B0B0):const Color(0xFF000000), background:background,
+                ^^^^^^^^^^^^^^
+  test/grouped_ink_test.dart:21:27: Error: Method not found: 'GroupedInkPage'.
+        if(grouped) content=GroupedInkPage(child:content);
+                            ^^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart: loading /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart

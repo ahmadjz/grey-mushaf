@@ -1,0 +1,212 @@
+{
+  "stage0": {
+    "portrait_first_glyph_cold_swipe": {
+      "frames": 59,
+      "ui": {
+        "avg": 0.22150847457627118,
+        "p90": 0.236,
+        "worst": 3.538,
+        "jank": 0,
+        "jankPercent": 0.0
+      },
+      "raster": {
+        "avg": 14.77735593220339,
+        "p90": 17.308,
+        "worst": 20.211,
+        "jank": 18,
+        "jankPercent": 30.508474576271187
+      }
+    },
+    "portrait_20_swipes": {
+      "frames": 796,
+      "ui": {
+        "avg": 0.7767449748743719,
+        "p90": 0.395,
+        "worst": 23.239,
+        "jank": 10,
+        "jankPercent": 1.256281407035176
+      },
+      "raster": {
+        "avg": 23.800353015075373,
+        "p90": 41.859,
+        "worst": 100.429,
+        "jank": 444,
+        "jankPercent": 55.778894472361806
+      }
+    },
+    "unloaded_page_450_jump": {
+      "frames": 2,
+      "ui": {
+        "avg": 6.8255,
+        "p90": 13.593,
+        "worst": 13.593,
+        "jank": 0,
+        "jankPercent": 0.0
+      },
+      "raster": {
+        "avg": 85.397,
+        "p90": 155.923,
+        "worst": 155.923,
+        "jank": 1,
+        "jankPercent": 50.0
+      }
+    },
+    "landscape_20_swipes": {
+      "frames": 926,
+      "ui": {
+        "avg": 1.6844924406047515,
+        "p90": 0.539,
+        "worst": 50.718,
+        "jank": 40,
+        "jankPercent": 4.319654427645788
+      },
+      "raster": {
+        "avg": 22.73359071274298,
+        "p90": 54.415,
+        "worst": 108.777,
+        "jank": 361,
+        "jankPercent": 38.98488120950324
+      }
+    }
+  },
+  "full-grouping": {
+    "portrait_first_glyph_cold_swipe": {
+      "frames": 60,
+      "ui": {
+        "avg": 0.23941666666666667,
+        "p90": 0.226,
+        "worst": 4.141,
+        "jank": 0,
+        "jankPercent": 0.0
+      },
+      "raster": {
+        "avg": 2.7209333333333334,
+        "p90": 5.463,
+        "worst": 6.892,
+        "jank": 0,
+        "jankPercent": 0.0
+      }
+    },
+    "portrait_20_swipes": {
+      "frames": 1047,
+      "ui": {
+        "avg": 0.5902091690544412,
+        "p90": 0.26,
+        "worst": 24.661,
+        "jank": 9,
+        "jankPercent": 0.8595988538681948
+      },
+      "raster": {
+        "avg": 16.82416905444126,
+        "p90": 16.905,
+        "worst": 127.653,
+        "jank": 307,
+        "jankPercent": 29.32187201528176
+      }
+    },
+    "unloaded_page_450_jump": {
+      "frames": 2,
+      "ui": {
+        "avg": 6.3775,
+        "p90": 12.65,
+        "worst": 12.65,
+        "jank": 0,
+        "jankPercent": 0.0
+      },
+      "raster": {
+        "avg": 27.674,
+        "p90": 40.368,
+        "worst": 40.368,
+        "jank": 1,
+        "jankPercent": 50.0
+      }
+    },
+    "landscape_20_swipes": {
+      "frames": 1155,
+      "ui": {
+        "avg": 1.300791341991342,
+        "p90": 0.244,
+        "worst": 50.908,
+        "jank": 40,
+        "jankPercent": 3.463203463203463
+      },
+      "raster": {
+        "avg": 15.627988744588746,
+        "p90": 16.89,
+        "worst": 62.657,
+        "jank": 330,
+        "jankPercent": 28.571428571428573
+      }
+    }
+  },
+  "no-filters": {
+    "portrait_first_glyph_cold_swipe": {
+      "frames": 60,
+      "ui": {
+        "avg": 0.235,
+        "p90": 0.219,
+        "worst": 4.316,
+        "jank": 0,
+        "jankPercent": 0.0
+      },
+      "raster": {
+        "avg": 1.5879666666666667,
+        "p90": 3.181,
+        "worst": 4.58,
+        "jank": 0,
+        "jankPercent": 0.0
+      }
+    },
+    "portrait_20_swipes": {
+      "frames": 1103,
+      "ui": {
+        "avg": 0.5270407978241161,
+        "p90": 0.259,
+        "worst": 23.334,
+        "jank": 8,
+        "jankPercent": 0.7252946509519492
+      },
+      "raster": {
+        "avg": 12.94893109700816,
+        "p90": 16.815,
+        "worst": 69.984,
+        "jank": 230,
+        "jankPercent": 20.85222121486854
+      }
+    },
+    "unloaded_page_450_jump": {
+      "frames": 2,
+      "ui": {
+        "avg": 6.092499999999999,
+        "p90": 12.094,
+        "worst": 12.094,
+        "jank": 0,
+        "jankPercent": 0.0
+      },
+      "raster": {
+        "avg": 27.8935,
+        "p90": 40.305,
+        "worst": 40.305,
+        "jank": 1,
+        "jankPercent": 50.0
+      }
+    },
+    "landscape_20_swipes": {
+      "frames": 1167,
+      "ui": {
+        "avg": 1.1749391602399315,
+        "p90": 0.255,
+        "worst": 44.045,
+        "jank": 39,
+        "jankPercent": 3.341902313624679
+      },
+      "raster": {
+        "avg": 14.815788346186805,
+        "p90": 16.866,
+        "worst": 67.867,
+        "jank": 293,
+        "jankPercent": 25.107112253641816
+      }
+    }
+  }
+}

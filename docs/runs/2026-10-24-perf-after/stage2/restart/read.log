@@ -1,0 +1,54 @@
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+5 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                            9.5s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (111.0MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        264ms
+D/WindowLayoutComponentImpl( 7794): Register WindowLayoutInfoListener on Context=tech.ahmadjz.greymushaf.MainActivity@fce08e7, of which baseContext=android.app.ContextImpl@a8aae00
+I/adjz.greymushaf( 7794): Compiler allocated 5230KB to compile void android.view.ViewRootImpl.performTraversals(long)
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:39883/93WNZqNu8R4=/
+VMServiceFlutterDriver: Isolate found with number: 6080035961969455
+VMServiceFlutterDriver: Isolate 6080035961969455 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 7794): 00:00 +0: durable reveal across separate Android processes (read)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/InsetsController( 7794): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity]( 7794): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController( 7794): hide(ime())
+I/ImeTracker( 7794): tech.ahmadjz.greymushaf:5a3c136c: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+I/flutter ( 7794): Expected: ({bool black, int count}):<(black: true, count: 1)>
+I/flutter ( 7794):   Actual: ({bool black, int count}):<(black: false, count: 0)>
+I/flutter ( 7794): 
+I/flutter ( 7794): #0      fail (package:matcher/src/expect/expect.dart:187)
+I/flutter ( 7794): #1      _expect (package:matcher/src/expect/expect.dart:182)
+I/flutter ( 7794): #2      expect (package:matcher/src/expect/expect.dart:65)
+I/flutter ( 7794): #3      expect (package:flutter_test/src/widget_tester.dart:473)
+I/flutter ( 7794): #4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/integration_test/restart_proof_test.dart:45)
+I/flutter ( 7794): <asynchronous suspension>
+I/flutter ( 7794): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192)
+I/flutter ( 7794): <asynchronous suspension>
+I/flutter ( 7794): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953)
+I/flutter ( 7794): <asynchronous suspension>
+I/flutter ( 7794): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707)
+I/flutter ( 7794): <asynchronous suspension>
+I/flutter ( 7794): 00:00 +0: durable reveal across separate Android processes (read) [E]
+I/flutter ( 7794):   Test failed. See exception logs above.
+I/flutter ( 7794):   The test description was: durable reveal across separate Android processes (read)
+I/flutter ( 7794):   
+I/flutter ( 7794): 00:00 +0 -1: (tearDownAll)
+I/flutter ( 7794): 00:00 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: durable reveal across separate Android processes (read)
+Instance of 'FlutterErrorDetails'
+end of failure 1
+
+
+

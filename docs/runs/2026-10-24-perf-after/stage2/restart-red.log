@@ -1,0 +1,58 @@
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+5 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                           20.2s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (111.0MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        442ms
+I/Surface ( 6932): Creating surface for consumer unnamed-6932-0 with slotExpansion=1 for 64 slots
+I/Surface ( 6932): Creating surface for consumer VRI[MainActivity]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+I/Surface ( 6932): Creating surface for consumer unnamed-6932-1 with slotExpansion=1 for 64 slots
+I/Surface ( 6932): Creating surface for consumer bb289e8 SurfaceView[tech.ahmadjz.greymushaf/tech.ahmadjz.greymushaf.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+D/WindowLayoutComponentImpl( 6932): Register WindowLayoutInfoListener on Context=tech.ahmadjz.greymushaf.MainActivity@fce08e7, of which baseContext=android.app.ContextImpl@2104639
+I/adjz.greymushaf( 6932): Compiler allocated 5230KB to compile void android.view.ViewRootImpl.performTraversals(long)
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:45967/0Sg3HfzQMXw=/
+VMServiceFlutterDriver: Isolate found with number: 8524006585238299
+VMServiceFlutterDriver: Isolate 8524006585238299 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 6932): 00:00 +0: durable reveal across separate Android processes (read)
+D/InsetsController( 6932): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity]( 6932): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController( 6932): hide(ime())
+I/ImeTracker( 6932): tech.ahmadjz.greymushaf:d1619b98: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 6932): Expected: ({bool black, int count}):<(black: true, count: 1)>
+I/flutter ( 6932):   Actual: ({bool black, int count}):<(black: false, count: 0)>
+I/flutter ( 6932): 
+I/flutter ( 6932): #0      fail (package:matcher/src/expect/expect.dart:187)
+I/flutter ( 6932): #1      _expect (package:matcher/src/expect/expect.dart:182)
+I/flutter ( 6932): #2      expect (package:matcher/src/expect/expect.dart:65)
+I/flutter ( 6932): #3      expect (package:flutter_test/src/widget_tester.dart:473)
+I/flutter ( 6932): #4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/integration_test/restart_proof_test.dart:45)
+I/flutter ( 6932): <asynchronous suspension>
+I/flutter ( 6932): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192)
+I/flutter ( 6932): <asynchronous suspension>
+I/flutter ( 6932): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953)
+I/flutter ( 6932): <asynchronous suspension>
+I/flutter ( 6932): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707)
+I/flutter ( 6932): <asynchronous suspension>
+I/flutter ( 6932): 00:00 +0: durable reveal across separate Android processes (read) [E]
+I/flutter ( 6932):   Test failed. See exception logs above.
+I/flutter ( 6932):   The test description was: durable reveal across separate Android processes (read)
+I/flutter ( 6932):   
+I/flutter ( 6932): 00:00 +0 -1: (tearDownAll)
+I/flutter ( 6932): 00:00 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: durable reveal across separate Android processes (read)
+Instance of 'FlutterErrorDetails'
+end of failure 1
+
+
+

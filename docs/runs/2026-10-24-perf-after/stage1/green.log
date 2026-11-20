@@ -1,0 +1,4 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart: grouping preserves nonoverlapping paint and translated positions
+00:00 +1: /home/ahmadjz/Documents/Quran/app/test/flat_ink_test.dart: flat ink removes tajweed hues but preserves pale marker backgrounds and transparency
+00:00 +2: All tests passed!

@@ -1,0 +1,15 @@
+# Phone measurements — Redmi Note 9 Pro / arm64 profile / 60Hz
+
+Jank: duration > 1000/60.000004 ms; p90 nearest rank. Synthetic 250 ms drags; idle/settle/prefetch included.
+Redmi Note 9 Pro / arm64 profile / 60Hz portrait_first_glyph_cold_swipe: UI 0.742/0.699/13.617 ms; 0/55 over budget; raster 6.837/11.882/18.033 ms; 1/55 over budget
+Redmi Note 9 Pro / arm64 profile / 60Hz portrait_20_swipes: UI 1.511/0.833/78.203 ms; 28/989 over budget; raster 12.177/22.038/151.935 ms; 152/989 over budget
+Redmi Note 9 Pro / arm64 profile / 60Hz unloaded_page_450_jump: UI 16.313/32.467/32.467 ms; 1/2 over budget; raster 49.840/84.747/84.747 ms; 1/2 over budget
+Redmi Note 9 Pro / arm64 profile / 60Hz landscape_20_swipes: UI 1.992/0.844/73.902 ms; 24/1048 over budget; raster 10.040/14.809/82.676 ms; 92/1048 over budget
+Redmi Note 9 Pro / arm64 profile / 60Hz blank_portrait_20_swipes: UI 0.649/0.807/2.478 ms; 0/1096 over budget; raster 3.218/3.806/19.235 ms; 1/1096 over budget
+Redmi Note 9 Pro / arm64 profile / 60Hz blank_landscape_20_swipes: UI 0.651/0.790/2.678 ms; 0/1171 over budget; raster 3.189/3.752/9.441 ms; 0/1171 over budget
+Redmi Note 9 Pro / arm64 profile / 60Hz landscape_trace.json: 26905 events; relevant counts {'Animator::BeginFrame': 55, 'PAINT (root)': 55, 'PAINT': 55, 'POST_FRAME': 55, 'GPURasterizer::Draw': 55, 'Rasterizer::DoDraw': 55, 'Rasterizer::DrawToSurfaces': 55, 'CompositorContext::ScopedFrame::Raster': 55, 'LayerTree::Paint': 55, 'SurfaceFrame::Submit': 55, 'SurfaceFrame::Encode': 55, 'SurfaceFrame::BuildDisplayList': 55, 'CreateGlyphAtlas': 110, 'RepaintBoundary': 1, '_LoadedReaderPage': 2, 'PaintedInkPage': 2, 'PaintedWordLine': 30, 'RenderRepaintBoundary': 3, '_PageRender': 6, 'RenderCustomPaint': 2, 'BeginFrame idle callback': 2}
+Redmi Note 9 Pro / arm64 profile / 60Hz portrait_trace.json: 18592 events; relevant counts {'Animator::BeginFrame': 55, 'PAINT (root)': 50, 'PAINT': 50, 'POST_FRAME': 50, 'GPURasterizer::Draw': 50, 'Rasterizer::DoDraw': 50, 'Rasterizer::DrawToSurfaces': 50, 'CompositorContext::ScopedFrame::Raster': 50, 'LayerTree::Paint': 50, 'SurfaceFrame::Submit': 50, 'SurfaceFrame::Encode': 50, 'SurfaceFrame::BuildDisplayList': 50, 'CreateGlyphAtlas': 100, 'RepaintBoundary': 1, '_LoadedReaderPage': 1, 'PaintedInkPage': 1, 'PaintedWordLine': 15, 'RenderRepaintBoundary': 1, '_PageRender': 1, 'BeginFrame idle callback': 3}
+Redmi Note 9 Pro / arm64 profile / 60Hz blank/landscape=(False, False): last controller offset after release median 630.0 ms (not photon latency)
+Redmi Note 9 Pro / arm64 profile / 60Hz blank/landscape=(False, True): last controller offset after release median 710.3 ms (not photon latency)
+Redmi Note 9 Pro / arm64 profile / 60Hz blank/landscape=(True, False): last controller offset after release median 599.7 ms (not photon latency)
+Redmi Note 9 Pro / arm64 profile / 60Hz blank/landscape=(True, True): last controller offset after release median 682.6 ms (not photon latency)

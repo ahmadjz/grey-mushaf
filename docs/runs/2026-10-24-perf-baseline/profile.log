@@ -1,0 +1,89 @@
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+Got dependencies!
+4 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                           34.2s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (111.6MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        379ms
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:37705/ApVnvctUYG4=/
+VMServiceFlutterDriver: Isolate found with number: 6270730443144383
+VMServiceFlutterDriver: Isolate 6270730443144383 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 5877): 00:00 +0: repeatable reader profile baseline
+D/VRI[MainActivity]( 5877): WindowInsets changed: 1080x2400 
+D/InsetsController( 5877): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity]( 5877): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController( 5877): hide(ime())
+I/ImeTracker( 5877): tech.ahmadjz.greymushaf:65d8dee7: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 5877): READER_FIRST_FRAME 1792827569765
+W/InteractionJankMonitor( 5877): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=tech.ahmadjz.greymushaf
+I/flutter ( 5877): Bad state: Failed to connect to VM Service at ws://localhost:37705/ApVnvctUYG4=/ws.
+I/flutter ( 5877): This may happen if DDS is enabled. If this test was launched via `flutter drive`, try adding `--no-dds`.
+I/flutter ( 5877): The original exception was:
+I/flutter ( 5877): SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = localhost, port = 36086
+I/flutter ( 5877): #0      _NativeSocket.startConnect (dart:io-patch/socket_patch.dart:849)
+I/flutter ( 5877): #1      _RawSocket.startConnect (dart:io-patch/socket_patch.dart:2313)
+I/flutter ( 5877): #2      RawSocket.startConnect (dart:io-patch/socket_patch.dart:41)
+I/flutter ( 5877): #3      Socket._startConnect (dart:io-patch/socket_patch.dart:2574)
+I/flutter ( 5877): #4      Socket.startConnect (dart:io/socket.dart:918)
+I/flutter ( 5877): #5      _ConnectionTarget.connect (dart:_http/http_impl.dart:2701)
+I/flutter ( 5877): #6      _HttpClient._getConnection.connect (dart:_http/http_impl.dart:3200)
+I/flutter ( 5877): #7      _HttpClient._getConnection (dart:_http/http_impl.dart:3205)
+I/flutter ( 5877): #8      _HttpClient._openUrl (dart:_http/http_impl.dart:3026)
+I/flutter ( 5877): #9      _HttpClient.openUrl (dart:_http/http_impl.dart:2868)
+I/flutter ( 5877): #10     _WebSocketImpl.connect (dart:_http/websocket_impl.dart:1346)
+I/flutter ( 5877): #11     WebSocket.connect (dart:_http/websocket.dart:348)
+I/flutter ( 5877): #12     _vmServiceConnectUri (package:integration_test/integration_test.dart:467)
+I/flutter ( 5877): #13     IntegrationTestWidgetsFlutterBinding.enableTimeline (package:integration_test/integration_test.dart:264)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #14     IntegrationTestWidgetsFlutterBinding.traceTimeline (package:integration_test/integration_test.dart:296)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #15     IntegrationTestWidgetsFlutterBinding.traceAction (package:integration_test/integration_test.dart:356)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #16     main.<anonymous closure>.capture (file:///home/ahmadjz/Documents/Quran/app/integration_test/perf_baseline_test.dart:32)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #17     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/integration_test/perf_baseline_test.dart:50)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #18     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #19     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #20     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): 
+I/flutter ( 5877): #0      IntegrationTestWidgetsFlutterBinding.enableTimeline (package:integration_test/integration_test.dart:266)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #1      IntegrationTestWidgetsFlutterBinding.traceTimeline (package:integration_test/integration_test.dart:296)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #2      IntegrationTestWidgetsFlutterBinding.traceAction (package:integration_test/integration_test.dart:356)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #3      main.<anonymous closure>.capture (file:///home/ahmadjz/Documents/Quran/app/integration_test/perf_baseline_test.dart:32)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/integration_test/perf_baseline_test.dart:50)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707)
+I/flutter ( 5877): <asynchronous suspension>
+I/flutter ( 5877): 00:01 +0: repeatable reader profile baseline [E]
+I/flutter ( 5877):   Test failed. See exception logs above.
+I/flutter ( 5877):   The test description was: repeatable reader profile baseline
+I/flutter ( 5877):   
+I/flutter ( 5877): 00:01 +0 -1: (tearDownAll)
+I/flutter ( 5877): 00:01 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: repeatable reader profile baseline
+Instance of 'FlutterErrorDetails'
+end of failure 1
+
+
+

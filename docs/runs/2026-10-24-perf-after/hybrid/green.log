@@ -1,0 +1,4 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/grouped_ink_test.dart
+00:00 +0: hybrid excludes overhangs, near edges and both overlap partners
+00:00 +1: grouping preserves nonoverlapping paint and translated positions
+00:00 +2: All tests passed!

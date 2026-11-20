@@ -1,0 +1,79 @@
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+5 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                           19.5s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (111.0MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        302ms
+I/Surface (10893): Creating surface for consumer unnamed-10893-1 with slotExpansion=1 for 64 slots
+I/Surface (10893): Creating surface for consumer 728070b SurfaceView[tech.ahmadjz.greymushaf/tech.ahmadjz.greymushaf.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+D/WindowLayoutComponentImpl(10893): Register WindowLayoutInfoListener on Context=tech.ahmadjz.greymushaf.MainActivity@bdc36a6, of which baseContext=android.app.ContextImpl@e84c83
+I/adjz.greymushaf(10893): Compiler allocated 5230KB to compile void android.view.ViewRootImpl.performTraversals(long)
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40515/Bb7AJ5td8bo=/
+VMServiceFlutterDriver: Isolate found with number: 8563137499522167
+VMServiceFlutterDriver: Isolate 8563137499522167 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter (10893): 00:00 +0: repeatable reader profile baseline
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter (10893): READER_FIRST_FRAME 1792841048375
+D/InsetsController(10893): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](10893): WindowInsets changed: statusBars:null navigationBars:null 
+D/InsetsController(10893): hide(ime())
+I/ImeTracker(10893): tech.ahmadjz.greymushaf:b7a71584: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+W/InteractionJankMonitor(10893): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=tech.ahmadjz.greymushaf
+I/flutter (10893): READER_PAGE 2
+D/ProfileInstaller(10893): Installing profile for tech.ahmadjz.greymushaf
+I/flutter (10893): READER_PAGE 3
+I/flutter (10893): READER_PAGE 4
+I/flutter (10893): READER_PAGE 5
+I/flutter (10893): READER_PAGE 6
+I/flutter (10893): READER_PAGE 7
+I/flutter (10893): READER_PAGE 8
+I/flutter (10893): READER_PAGE 9
+I/flutter (10893): READER_PAGE 10
+I/flutter (10893): READER_PAGE 11
+I/flutter (10893): READER_PAGE 12
+I/flutter (10893): READER_PAGE 13
+I/flutter (10893): READER_PAGE 14
+I/flutter (10893): READER_PAGE 15
+I/flutter (10893): READER_PAGE 16
+I/flutter (10893): READER_PAGE 17
+I/flutter (10893): READER_PAGE 18
+I/flutter (10893): READER_PAGE 19
+I/flutter (10893): READER_PAGE 20
+I/flutter (10893): READER_PAGE 21
+I/flutter (10893): READER_PAGE 22
+I/flutter (10893): READER_PAGE 450
+D/VRI[MainActivity](10893): WindowInsets changed: 2400x1080 
+I/flutter (10893): READER_PAGE 451
+I/flutter (10893): READER_PAGE 453
+I/flutter (10893): READER_PAGE 455
+I/flutter (10893): READER_PAGE 457
+I/flutter (10893): READER_PAGE 459
+I/flutter (10893): READER_PAGE 461
+I/flutter (10893): READER_PAGE 463
+I/flutter (10893): READER_PAGE 465
+I/flutter (10893): READER_PAGE 467
+I/flutter (10893): READER_PAGE 469
+I/flutter (10893): READER_PAGE 471
+I/flutter (10893): READER_PAGE 473
+I/flutter (10893): READER_PAGE 475
+I/flutter (10893): READER_PAGE 477
+I/flutter (10893): READER_PAGE 479
+I/flutter (10893): READER_PAGE 481
+I/flutter (10893): READER_PAGE 483
+I/flutter (10893): READER_PAGE 485
+I/flutter (10893): READER_PAGE 487
+I/flutter (10893): READER_PAGE 489
+I/flutter (10893): 01:12 +1: (tearDownAll)
+I/flutter (10893): 01:12 +2: All tests passed!
+All tests passed.
+D/VRI[MainActivity](10893): WindowInsets changed: 1080x2400 
+Leaving the application running.

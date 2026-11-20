@@ -1,0 +1,2382 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/flat_ink_test.dart
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/flat_ink_test.dart: flat ink removes tajweed hues but preserves pale marker backgrounds and transparency
+00:00 +1: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: (setUpAll)
+00:00 +1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: (setUpAll)
+00:00 +2: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: (setUpAll)
+00:00 +2: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: headings are black inert ink; page 1 ayah remains revealable
+00:00 +3: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: headings are black inert ink; page 1 ayah remains revealable
+READER_PAGE 2
+READER_PAGE 50
+
+Warning: A call to longPress() with finder "Found 1 widget with key [<'heading-50-1'>]: [
+  SizedBox-[<'heading-50-1'>](width: 124.9, height: 42.3, renderObject: RenderConstrainedBox#6208c relayoutBoundary=up4),
+]" derived an Offset (Offset(300.0, 29.7)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#6208c relayoutBoundary=up4
+The hit test result at that offset is: HitTestResult(_RenderInkFeatures#c7f7b@Offset(300.0, 29.7), RenderPhysicalModel#10dbc@Offset(300.0, 29.7), RenderStack#0f1d6@Offset(300.0, 29.7), RenderCustomMultiChildLayoutBox#3c825@Offset(300.0, 29.7), _RenderInkFeatures#8af6d@Offset(300.0, 29.7), RenderPhysicalModel#f94ff@Offset(300.0, 29.7), RenderSemanticsAnnotations#a2b18@Offset(300.0, 29.7), RenderRepaintBoundary#b4402@Offset(300.0, 29.7), RenderIgnorePointer#e223d@Offset(300.0, 29.7), RenderAnimatedOpacity#11a4b@Offset(300.0, 29.7), RenderAnimatedOpacity#cde62@Offset(300.0, 29.7), _RenderColoredBox#d4b97@Offset(300.0, 29.7), RenderAnimatedOpacity#2dcca@Offset(300.0, 29.7), RenderIgnorePointer#33f5a@Offset(300.0, 29.7), RenderAnimatedOpacity#1022a@Offset(300.0, 29.7), RenderRepaintBoundary#97069@Offset(300.0, 29.7), RenderSemanticsAnnotations#bbc59@Offset(300.0, 29.7), RenderOffstage#cf302@Offset(300.0, 29.7), RenderSemanticsAnnotations#4b734@Offset(300.0, 29.7), _RenderTheater#5c844@Offset(300.0, 29.7), RenderAbsorbPointer#cfe74@Offset(300.0, 29.7), RenderPointerListener#fb1d5@Offset(300.0, 29.7), RenderSemanticsAnnotations#094db@Offset(300.0, 29.7), RenderCustomPaint#92f32@Offset(300.0, 29.7), RenderSemanticsAnnotations#1ff28@Offset(300.0, 29.7), RenderSemanticsAnnotations#1cd0b@Offset(300.0, 29.7), RenderSemanticsAnnotations#42bde@Offset(300.0, 29.7), RenderTapRegionSurface#6e176@Offset(300.0, 29.7), RenderSemanticsAnnotations#4e787@Offset(300.0, 29.7), RenderSemanticsAnnotations#3ad68@Offset(300.0, 29.7), HitTestEntry<HitTestTarget>#6b71d(_ReusableRenderView#ab24f), HitTestEntry<HitTestTarget>#7140c(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.longPress (package:flutter_test/src/controller.dart:1212:7)
+#3      longPressTarget (file:///home/ahmadjz/Documents/Quran/app/test/word_target.dart:79:14)
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/widget_test.dart:114:15)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "longPress()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'heading-50-1'>]: [
+  SizedBox-[<'heading-50-1'>](width: 124.9, height: 42.3, renderObject: RenderConstrainedBox#6208c relayoutBoundary=up4),
+]" derived an Offset (Offset(300.0, 29.7)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#6208c relayoutBoundary=up4
+The hit test result at that offset is: HitTestResult(_RenderInkFeatures#c7f7b@Offset(300.0, 29.7), RenderPhysicalModel#10dbc@Offset(300.0, 29.7), RenderStack#0f1d6@Offset(300.0, 29.7), RenderCustomMultiChildLayoutBox#3c825@Offset(300.0, 29.7), _RenderInkFeatures#8af6d@Offset(300.0, 29.7), RenderPhysicalModel#f94ff@Offset(300.0, 29.7), RenderSemanticsAnnotations#a2b18@Offset(300.0, 29.7), RenderRepaintBoundary#b4402@Offset(300.0, 29.7), RenderIgnorePointer#e223d@Offset(300.0, 29.7), RenderAnimatedOpacity#11a4b@Offset(300.0, 29.7), RenderAnimatedOpacity#cde62@Offset(300.0, 29.7), _RenderColoredBox#d4b97@Offset(300.0, 29.7), RenderAnimatedOpacity#2dcca@Offset(300.0, 29.7), RenderIgnorePointer#33f5a@Offset(300.0, 29.7), RenderAnimatedOpacity#1022a@Offset(300.0, 29.7), RenderRepaintBoundary#97069@Offset(300.0, 29.7), RenderSemanticsAnnotations#bbc59@Offset(300.0, 29.7), RenderOffstage#cf302@Offset(300.0, 29.7), RenderSemanticsAnnotations#4b734@Offset(300.0, 29.7), _RenderTheater#5c844@Offset(300.0, 29.7), RenderAbsorbPointer#cfe74@Offset(300.0, 29.7), RenderPointerListener#fb1d5@Offset(300.0, 29.7), RenderSemanticsAnnotations#094db@Offset(300.0, 29.7), RenderCustomPaint#92f32@Offset(300.0, 29.7), RenderSemanticsAnnotations#1ff28@Offset(300.0, 29.7), RenderSemanticsAnnotations#1cd0b@Offset(300.0, 29.7), RenderSemanticsAnnotations#42bde@Offset(300.0, 29.7), RenderTapRegionSurface#6e176@Offset(300.0, 29.7), RenderSemanticsAnnotations#4e787@Offset(300.0, 29.7), RenderSemanticsAnnotations#3ad68@Offset(300.0, 29.7), HitTestEntry<HitTestTarget>#788c8(_ReusableRenderView#ab24f), HitTestEntry<HitTestTarget>#da965(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      tapTarget (file:///home/ahmadjz/Documents/Quran/app/test/word_target.dart:75:14)
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/widget_test.dart:116:15)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+READER_PAGE 1
+00:00 +4: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +5: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +6: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +7: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +8: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +8: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: heading ink proportions match print, landscape=false
+READER_PAGE 2
+READER_PAGE 50
+READER_PAGE 2
+00:01 +9: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +9: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: heading ink proportions match print, landscape=true
+READER_PAGE 50
+READER_PAGE 1
+00:01 +10: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +11: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +11: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: drag crosses words and line break once, locks swipe until lift, ordinary swipe then changes page
+READER_PAGE 2
+00:01 +12: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +12: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: landscape puts odd page on right for both spreads
+READER_PAGE 47
+00:01 +13: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +14: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +14: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: empty gutter does nothing; dragging into each page counts once
+READER_PAGE 47
+00:01 +15: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +16: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +16: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: ink reaching into page padding still belongs to its word
+READER_PAGE 48
+00:01 +17: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +18: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +19: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:01 +19: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: attached off-screen bands cannot receive a press
+READER_PAGE 2
+00:02 +20: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:02 +21: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:02 +21: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: reader fills Size(411.4, 866.3) and opening pages use normal-page font size
+READER_PAGE 48
+READER_PAGE 2
+00:02 +22: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:02 +22: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: reader fills Size(914.3, 363.4) and opening pages use normal-page font size
+READER_PAGE 47
+READER_PAGE 1
+00:02 +23: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:02 +23: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: reader fills Size(800.0, 1224.0) and opening pages use normal-page font size
+READER_PAGE 48
+READER_PAGE 2
+00:02 +24: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:02 +24: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: reader fills Size(1280.0, 744.0) and opening pages use normal-page font size
+READER_PAGE 47
+READER_PAGE 1
+00:02 +25: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:02 +25: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: height-limited spread keeps justified text at the shared font scale
+READER_PAGE 47
+00:02 +26: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:02 +26: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: spread drag crosses a line break, locks swiping and counts each word once
+READER_PAGE 47
+READER_PAGE 1
+00:02 +27: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+00:02 +28: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 2
+READER_PAGE 3
+READER_PAGE 4
+READER_PAGE 5
+READER_PAGE 6
+READER_PAGE 7
+READER_PAGE 8
+READER_PAGE 9
+READER_PAGE 10
+READER_PAGE 11
+READER_PAGE 12
+READER_PAGE 13
+READER_PAGE 14
+READER_PAGE 15
+READER_PAGE 16
+READER_PAGE 17
+READER_PAGE 18
+READER_PAGE 19
+READER_PAGE 20
+READER_PAGE 21
+READER_PAGE 22
+READER_PAGE 23
+READER_PAGE 24
+READER_PAGE 25
+READER_PAGE 26
+READER_PAGE 27
+READER_PAGE 28
+READER_PAGE 29
+READER_PAGE 30
+READER_PAGE 31
+READER_PAGE 32
+READER_PAGE 33
+READER_PAGE 34
+READER_PAGE 35
+READER_PAGE 36
+READER_PAGE 37
+READER_PAGE 38
+READER_PAGE 39
+READER_PAGE 40
+READER_PAGE 41
+READER_PAGE 42
+READER_PAGE 43
+READER_PAGE 44
+READER_PAGE 45
+READER_PAGE 46
+READER_PAGE 47
+READER_PAGE 48
+READER_PAGE 49
+READER_PAGE 50
+READER_PAGE 51
+READER_PAGE 52
+READER_PAGE 53
+READER_PAGE 54
+READER_PAGE 55
+READER_PAGE 56
+READER_PAGE 57
+READER_PAGE 58
+READER_PAGE 59
+READER_PAGE 60
+READER_PAGE 61
+READER_PAGE 62
+READER_PAGE 63
+READER_PAGE 64
+READER_PAGE 65
+READER_PAGE 66
+READER_PAGE 67
+READER_PAGE 68
+READER_PAGE 69
+READER_PAGE 70
+READER_PAGE 71
+READER_PAGE 72
+READER_PAGE 73
+READER_PAGE 74
+READER_PAGE 75
+READER_PAGE 76
+READER_PAGE 77
+READER_PAGE 78
+READER_PAGE 79
+READER_PAGE 80
+READER_PAGE 81
+READER_PAGE 82
+READER_PAGE 83
+READER_PAGE 84
+READER_PAGE 85
+READER_PAGE 86
+READER_PAGE 87
+READER_PAGE 88
+00:06 +29: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 89
+READER_PAGE 90
+READER_PAGE 91
+READER_PAGE 92
+READER_PAGE 93
+READER_PAGE 94
+READER_PAGE 95
+READER_PAGE 96
+READER_PAGE 97
+READER_PAGE 98
+READER_PAGE 99
+READER_PAGE 100
+READER_PAGE 101
+READER_PAGE 102
+READER_PAGE 103
+READER_PAGE 104
+READER_PAGE 105
+READER_PAGE 106
+READER_PAGE 107
+READER_PAGE 108
+READER_PAGE 109
+READER_PAGE 110
+READER_PAGE 111
+READER_PAGE 112
+READER_PAGE 113
+READER_PAGE 114
+READER_PAGE 115
+READER_PAGE 116
+READER_PAGE 117
+READER_PAGE 118
+READER_PAGE 119
+READER_PAGE 120
+READER_PAGE 121
+READER_PAGE 122
+READER_PAGE 123
+READER_PAGE 124
+READER_PAGE 125
+READER_PAGE 126
+READER_PAGE 127
+READER_PAGE 128
+READER_PAGE 129
+READER_PAGE 130
+READER_PAGE 131
+READER_PAGE 132
+READER_PAGE 133
+READER_PAGE 134
+READER_PAGE 135
+READER_PAGE 136
+READER_PAGE 137
+READER_PAGE 138
+READER_PAGE 139
+READER_PAGE 140
+READER_PAGE 141
+READER_PAGE 142
+READER_PAGE 143
+READER_PAGE 144
+READER_PAGE 145
+READER_PAGE 146
+READER_PAGE 147
+READER_PAGE 148
+READER_PAGE 149
+READER_PAGE 150
+READER_PAGE 151
+READER_PAGE 152
+READER_PAGE 153
+READER_PAGE 154
+READER_PAGE 155
+READER_PAGE 156
+READER_PAGE 157
+READER_PAGE 158
+READER_PAGE 159
+READER_PAGE 160
+READER_PAGE 161
+READER_PAGE 162
+READER_PAGE 163
+READER_PAGE 164
+READER_PAGE 165
+READER_PAGE 166
+READER_PAGE 167
+READER_PAGE 168
+READER_PAGE 169
+READER_PAGE 170
+READER_PAGE 171
+READER_PAGE 172
+READER_PAGE 173
+READER_PAGE 174
+READER_PAGE 175
+READER_PAGE 176
+READER_PAGE 177
+READER_PAGE 178
+READER_PAGE 179
+READER_PAGE 180
+READER_PAGE 181
+READER_PAGE 182
+READER_PAGE 183
+READER_PAGE 184
+READER_PAGE 185
+READER_PAGE 186
+READER_PAGE 187
+READER_PAGE 188
+READER_PAGE 189
+READER_PAGE 190
+READER_PAGE 191
+00:09 +30: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 192
+READER_PAGE 193
+READER_PAGE 194
+READER_PAGE 195
+READER_PAGE 196
+READER_PAGE 197
+READER_PAGE 198
+READER_PAGE 199
+READER_PAGE 200
+READER_PAGE 201
+READER_PAGE 202
+READER_PAGE 203
+READER_PAGE 204
+READER_PAGE 205
+READER_PAGE 206
+READER_PAGE 207
+READER_PAGE 208
+READER_PAGE 209
+READER_PAGE 210
+READER_PAGE 211
+READER_PAGE 212
+READER_PAGE 213
+READER_PAGE 214
+READER_PAGE 215
+READER_PAGE 216
+READER_PAGE 217
+READER_PAGE 218
+READER_PAGE 219
+READER_PAGE 220
+READER_PAGE 221
+READER_PAGE 222
+READER_PAGE 223
+READER_PAGE 224
+READER_PAGE 225
+00:10 +31: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 226
+READER_PAGE 227
+READER_PAGE 228
+READER_PAGE 229
+READER_PAGE 230
+00:10 +32: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 231
+00:10 +32: /home/ahmadjz/Documents/Quran/app/test/reader_chrome_test.dart: page numbers fit below ink within their own pages at Size(411.0, 914.0)
+READER_PAGE 2
+READER_PAGE 47
+00:10 +32: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 232
+00:10 +32: /home/ahmadjz/Documents/Quran/app/test/reader_chrome_test.dart: page numbers fit below ink within their own pages at Size(411.0, 914.0)
+READER_PAGE 48
+00:10 +32: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 233
+00:10 +32: /home/ahmadjz/Documents/Quran/app/test/reader_chrome_test.dart: page numbers fit below ink within their own pages at Size(411.0, 914.0)
+READER_PAGE 50
+00:10 +32: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 234
+00:10 +33: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 235
+00:10 +33: /home/ahmadjz/Documents/Quran/app/test/reader_chrome_test.dart: page numbers fit below ink within their own pages at Size(914.0, 411.0)
+READER_PAGE 47
+00:10 +33: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 236
+00:10 +33: /home/ahmadjz/Documents/Quran/app/test/reader_chrome_test.dart: page numbers fit below ink within their own pages at Size(914.0, 411.0)
+READER_PAGE 50
+00:10 +34: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 237
+READER_PAGE 238
+READER_PAGE 239
+READER_PAGE 240
+READER_PAGE 241
+READER_PAGE 242
+READER_PAGE 243
+READER_PAGE 244
+READER_PAGE 245
+READER_PAGE 246
+READER_PAGE 247
+READER_PAGE 248
+READER_PAGE 249
+READER_PAGE 250
+READER_PAGE 251
+READER_PAGE 252
+READER_PAGE 253
+READER_PAGE 254
+READER_PAGE 255
+READER_PAGE 256
+READER_PAGE 257
+READER_PAGE 258
+READER_PAGE 259
+READER_PAGE 260
+READER_PAGE 261
+READER_PAGE 262
+READER_PAGE 263
+READER_PAGE 264
+READER_PAGE 265
+READER_PAGE 266
+READER_PAGE 267
+READER_PAGE 268
+READER_PAGE 269
+READER_PAGE 270
+READER_PAGE 271
+READER_PAGE 272
+READER_PAGE 273
+READER_PAGE 274
+READER_PAGE 275
+READER_PAGE 276
+READER_PAGE 277
+READER_PAGE 278
+READER_PAGE 279
+READER_PAGE 280
+READER_PAGE 281
+READER_PAGE 282
+READER_PAGE 283
+READER_PAGE 284
+READER_PAGE 285
+READER_PAGE 286
+READER_PAGE 287
+READER_PAGE 288
+READER_PAGE 289
+READER_PAGE 290
+READER_PAGE 291
+READER_PAGE 292
+READER_PAGE 293
+READER_PAGE 294
+READER_PAGE 295
+READER_PAGE 296
+READER_PAGE 297
+READER_PAGE 298
+READER_PAGE 299
+READER_PAGE 300
+READER_PAGE 301
+READER_PAGE 302
+READER_PAGE 303
+READER_PAGE 304
+READER_PAGE 305
+READER_PAGE 306
+READER_PAGE 307
+READER_PAGE 308
+READER_PAGE 309
+READER_PAGE 310
+READER_PAGE 311
+READER_PAGE 312
+READER_PAGE 313
+READER_PAGE 314
+READER_PAGE 315
+READER_PAGE 316
+READER_PAGE 317
+READER_PAGE 318
+READER_PAGE 319
+READER_PAGE 320
+READER_PAGE 321
+READER_PAGE 322
+READER_PAGE 323
+READER_PAGE 324
+READER_PAGE 325
+READER_PAGE 326
+READER_PAGE 327
+READER_PAGE 328
+READER_PAGE 329
+READER_PAGE 330
+READER_PAGE 331
+READER_PAGE 332
+READER_PAGE 333
+READER_PAGE 334
+READER_PAGE 335
+READER_PAGE 336
+READER_PAGE 337
+READER_PAGE 338
+READER_PAGE 339
+READER_PAGE 340
+READER_PAGE 341
+READER_PAGE 342
+READER_PAGE 343
+READER_PAGE 344
+READER_PAGE 345
+READER_PAGE 346
+READER_PAGE 347
+READER_PAGE 348
+READER_PAGE 349
+READER_PAGE 350
+READER_PAGE 351
+READER_PAGE 352
+READER_PAGE 353
+READER_PAGE 354
+READER_PAGE 355
+READER_PAGE 356
+READER_PAGE 357
+READER_PAGE 358
+READER_PAGE 359
+READER_PAGE 360
+READER_PAGE 361
+READER_PAGE 362
+READER_PAGE 363
+READER_PAGE 364
+00:14 +34: /home/ahmadjz/Documents/Quran/app/test/blank_tap_test.dart: between-line short tap toggles bars without re-greying the word
+READER_PAGE 48
+00:14 +34: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 365
+READER_PAGE 366
+READER_PAGE 367
+READER_PAGE 368
+READER_PAGE 369
+00:14 +35: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 370
+READER_PAGE 371
+READER_PAGE 372
+READER_PAGE 373
+READER_PAGE 374
+READER_PAGE 375
+READER_PAGE 376
+READER_PAGE 377
+READER_PAGE 378
+READER_PAGE 379
+READER_PAGE 380
+READER_PAGE 381
+READER_PAGE 382
+READER_PAGE 383
+READER_PAGE 384
+READER_PAGE 385
+READER_PAGE 386
+READER_PAGE 387
+READER_PAGE 388
+READER_PAGE 389
+READER_PAGE 390
+READER_PAGE 391
+READER_PAGE 392
+READER_PAGE 393
+READER_PAGE 394
+READER_PAGE 395
+READER_PAGE 396
+READER_PAGE 397
+READER_PAGE 398
+READER_PAGE 399
+READER_PAGE 400
+READER_PAGE 401
+READER_PAGE 402
+READER_PAGE 403
+READER_PAGE 404
+READER_PAGE 405
+READER_PAGE 406
+READER_PAGE 407
+READER_PAGE 408
+READER_PAGE 409
+READER_PAGE 410
+READER_PAGE 411
+READER_PAGE 412
+READER_PAGE 413
+READER_PAGE 414
+READER_PAGE 415
+READER_PAGE 416
+READER_PAGE 417
+READER_PAGE 418
+READER_PAGE 419
+READER_PAGE 420
+READER_PAGE 421
+READER_PAGE 422
+READER_PAGE 423
+READER_PAGE 424
+READER_PAGE 425
+READER_PAGE 426
+READER_PAGE 427
+READER_PAGE 428
+READER_PAGE 429
+READER_PAGE 430
+READER_PAGE 431
+READER_PAGE 432
+READER_PAGE 433
+READER_PAGE 434
+READER_PAGE 435
+READER_PAGE 436
+READER_PAGE 437
+READER_PAGE 438
+READER_PAGE 439
+READER_PAGE 440
+READER_PAGE 441
+READER_PAGE 442
+READER_PAGE 443
+READER_PAGE 444
+READER_PAGE 445
+READER_PAGE 446
+READER_PAGE 447
+READER_PAGE 448
+READER_PAGE 449
+READER_PAGE 450
+READER_PAGE 451
+READER_PAGE 452
+READER_PAGE 453
+READER_PAGE 454
+READER_PAGE 455
+READER_PAGE 456
+READER_PAGE 457
+READER_PAGE 458
+READER_PAGE 459
+READER_PAGE 460
+READER_PAGE 461
+READER_PAGE 462
+READER_PAGE 463
+READER_PAGE 464
+READER_PAGE 465
+READER_PAGE 466
+READER_PAGE 467
+READER_PAGE 468
+READER_PAGE 469
+READER_PAGE 470
+READER_PAGE 471
+READER_PAGE 472
+READER_PAGE 473
+READER_PAGE 474
+READER_PAGE 475
+══╡ EXCEPTION CAUGHT BY SCHEDULER LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during a scheduler callback:
+Invisible SemanticsNodes should not be added to the tree.
+The following invisible SemanticsNodes were added to the tree:
+SemanticsNode#887(dirty, Rect.fromLTRB(98.6, 743.9, 98.6, 801.0), invisible, identifier: "word-65459", label: "40:77:5; unrevealed; reveals 0", textDirection: rtl)
+which was added as a child of:
+  SemanticsNode#756(dirty, Rect.fromLTRB(0.0, 0.0, 411.4, 866.3), label: "٤٧٥", textDirection: ltr)
+An invisible SemanticsNode is one whose rect is not on screen hence not reachable for users, and its
+semantic information is not merged into a visible parent.
+An invisible SemanticsNode makes the accessibility experience confusing, as it does not provide any
+visual indication when the user selects it via accessibility technologies.
+Consider removing the above invisible SemanticsNodes if they were added by your
+RenderObject.assembleSemanticsNode implementation, or filing a bug on GitHub:
+  https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+
+When the exception was thrown, this was the stack:
+#0      SemanticsOwner.sendSemanticsUpdate.<anonymous closure> (package:flutter/src/semantics/semantics.dart:4954:7)
+#1      SemanticsOwner.sendSemanticsUpdate (package:flutter/src/semantics/semantics.dart:4973:6)
+#2      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1651:24)
+#3      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1653:15)
+#4      AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2445:35)
+#5      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#6      SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#7      SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#8      AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#13     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:719:23)
+#16     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#17     WidgetTester.pumpAndSettle (package:flutter_test/src/widget_tester.dart:712:27)
+#18     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart:49:22)
+<asynchronous suspension>
+#19     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#20     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY SCHEDULER LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during a scheduler callback:
+Invisible SemanticsNodes should not be added to the tree.
+The following invisible SemanticsNodes were added to the tree:
+SemanticsNode#887(dirty, Rect.fromLTRB(98.6, 743.9, 98.6, 801.0), invisible, identifier: "word-65459", label: "40:77:5; unrevealed; reveals 0", textDirection: rtl)
+which was added as a child of:
+  SemanticsNode#756(dirty, Rect.fromLTRB(0.0, 0.0, 411.4, 866.3), label: "٤٧٥", textDirection: ltr)
+An invisible SemanticsNode is one whose rect is not on screen hence not reachable for users, and its
+semantic information is not merged into a visible parent.
+An invisible SemanticsNode makes the accessibility experience confusing, as it does not provide any
+visual indication when the user selects it via accessibility technologies.
+Consider removing the above invisible SemanticsNodes if they were added by your
+RenderObject.assembleSemanticsNode implementation, or filing a bug on GitHub:
+  https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+
+When the exception was thrown, this was the stack:
+#0      SemanticsOwner.sendSemanticsUpdate.<anonymous closure> (package:flutter/src/semantics/semantics.dart:4954:7)
+#1      SemanticsOwner.sendSemanticsUpdate (package:flutter/src/semantics/semantics.dart:4973:6)
+#2      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1651:24)
+#3      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1653:15)
+#4      AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2445:35)
+#5      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#6      SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#7      SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#8      AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#13     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:719:23)
+<asynchronous suspension>
+#14     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#15     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart:49:9)
+<asynchronous suspension>
+#16     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#17     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+READER_PAGE 476
+READER_PAGE 477
+READER_PAGE 478
+READER_PAGE 479
+READER_PAGE 480
+READER_PAGE 481
+READER_PAGE 482
+READER_PAGE 483
+READER_PAGE 484
+READER_PAGE 485
+READER_PAGE 486
+READER_PAGE 487
+READER_PAGE 488
+READER_PAGE 489
+READER_PAGE 490
+READER_PAGE 491
+READER_PAGE 492
+READER_PAGE 493
+READER_PAGE 494
+READER_PAGE 495
+READER_PAGE 496
+READER_PAGE 497
+READER_PAGE 498
+READER_PAGE 499
+READER_PAGE 500
+00:18 +36: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 501
+READER_PAGE 502
+READER_PAGE 503
+READER_PAGE 504
+READER_PAGE 505
+READER_PAGE 506
+READER_PAGE 507
+READER_PAGE 508
+READER_PAGE 509
+READER_PAGE 510
+READER_PAGE 511
+READER_PAGE 512
+READER_PAGE 513
+READER_PAGE 514
+READER_PAGE 515
+READER_PAGE 516
+READER_PAGE 517
+READER_PAGE 518
+READER_PAGE 519
+READER_PAGE 520
+READER_PAGE 521
+READER_PAGE 522
+READER_PAGE 523
+READER_PAGE 524
+READER_PAGE 525
+READER_PAGE 526
+READER_PAGE 527
+READER_PAGE 528
+READER_PAGE 529
+READER_PAGE 530
+READER_PAGE 531
+READER_PAGE 532
+READER_PAGE 533
+READER_PAGE 534
+READER_PAGE 535
+READER_PAGE 536
+READER_PAGE 537
+READER_PAGE 538
+READER_PAGE 539
+READER_PAGE 540
+READER_PAGE 541
+READER_PAGE 542
+READER_PAGE 543
+READER_PAGE 544
+READER_PAGE 545
+READER_PAGE 546
+READER_PAGE 547
+READER_PAGE 548
+READER_PAGE 549
+READER_PAGE 550
+READER_PAGE 551
+READER_PAGE 552
+READER_PAGE 553
+READER_PAGE 554
+READER_PAGE 555
+READER_PAGE 556
+READER_PAGE 557
+READER_PAGE 558
+READER_PAGE 559
+READER_PAGE 560
+READER_PAGE 561
+READER_PAGE 562
+READER_PAGE 563
+READER_PAGE 564
+READER_PAGE 565
+READER_PAGE 566
+READER_PAGE 567
+READER_PAGE 568
+READER_PAGE 569
+READER_PAGE 570
+READER_PAGE 571
+READER_PAGE 572
+READER_PAGE 573
+READER_PAGE 574
+READER_PAGE 575
+READER_PAGE 576
+READER_PAGE 577
+READER_PAGE 578
+READER_PAGE 579
+READER_PAGE 580
+READER_PAGE 581
+READER_PAGE 582
+READER_PAGE 583
+READER_PAGE 584
+READER_PAGE 585
+READER_PAGE 586
+READER_PAGE 587
+READER_PAGE 588
+READER_PAGE 589
+READER_PAGE 590
+READER_PAGE 591
+READER_PAGE 592
+READER_PAGE 593
+READER_PAGE 594
+READER_PAGE 595
+READER_PAGE 596
+READER_PAGE 597
+READER_PAGE 598
+00:21 +37: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+READER_PAGE 599
+READER_PAGE 600
+READER_PAGE 601
+READER_PAGE 602
+READER_PAGE 603
+READER_PAGE 604
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:21 +37 -1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3) [E]
+  Test failed. See exception logs above.
+  The test description was: all line ink fits the page at Size(411.4, 866.3)
+  
+00:21 +37 -1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0)
+READER_PAGE 2
+READER_PAGE 3
+READER_PAGE 4
+READER_PAGE 5
+READER_PAGE 6
+READER_PAGE 7
+READER_PAGE 8
+READER_PAGE 9
+READER_PAGE 10
+READER_PAGE 11
+READER_PAGE 12
+READER_PAGE 13
+READER_PAGE 14
+READER_PAGE 15
+READER_PAGE 16
+READER_PAGE 17
+READER_PAGE 18
+READER_PAGE 19
+READER_PAGE 20
+READER_PAGE 21
+READER_PAGE 22
+READER_PAGE 23
+READER_PAGE 24
+READER_PAGE 25
+READER_PAGE 26
+READER_PAGE 27
+READER_PAGE 28
+READER_PAGE 29
+READER_PAGE 30
+READER_PAGE 31
+READER_PAGE 32
+READER_PAGE 33
+READER_PAGE 34
+READER_PAGE 35
+READER_PAGE 36
+READER_PAGE 37
+READER_PAGE 38
+READER_PAGE 39
+READER_PAGE 40
+READER_PAGE 41
+READER_PAGE 42
+READER_PAGE 43
+READER_PAGE 44
+READER_PAGE 45
+READER_PAGE 46
+READER_PAGE 47
+READER_PAGE 48
+READER_PAGE 49
+READER_PAGE 50
+READER_PAGE 51
+READER_PAGE 52
+READER_PAGE 53
+READER_PAGE 54
+READER_PAGE 55
+READER_PAGE 56
+READER_PAGE 57
+READER_PAGE 58
+READER_PAGE 59
+READER_PAGE 60
+READER_PAGE 61
+READER_PAGE 62
+READER_PAGE 63
+READER_PAGE 64
+READER_PAGE 65
+READER_PAGE 66
+READER_PAGE 67
+READER_PAGE 68
+READER_PAGE 69
+READER_PAGE 70
+READER_PAGE 71
+READER_PAGE 72
+READER_PAGE 73
+READER_PAGE 74
+READER_PAGE 75
+READER_PAGE 76
+READER_PAGE 77
+READER_PAGE 78
+READER_PAGE 79
+READER_PAGE 80
+READER_PAGE 81
+READER_PAGE 82
+READER_PAGE 83
+READER_PAGE 84
+READER_PAGE 85
+READER_PAGE 86
+READER_PAGE 87
+READER_PAGE 88
+READER_PAGE 89
+READER_PAGE 90
+READER_PAGE 91
+READER_PAGE 92
+READER_PAGE 93
+READER_PAGE 94
+READER_PAGE 95
+READER_PAGE 96
+READER_PAGE 97
+READER_PAGE 98
+READER_PAGE 99
+READER_PAGE 100
+READER_PAGE 101
+READER_PAGE 102
+READER_PAGE 103
+READER_PAGE 104
+READER_PAGE 105
+READER_PAGE 106
+READER_PAGE 107
+READER_PAGE 108
+READER_PAGE 109
+READER_PAGE 110
+READER_PAGE 111
+READER_PAGE 112
+READER_PAGE 113
+READER_PAGE 114
+READER_PAGE 115
+READER_PAGE 116
+READER_PAGE 117
+READER_PAGE 118
+00:28 +38 -1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0)
+READER_PAGE 119
+READER_PAGE 120
+READER_PAGE 121
+READER_PAGE 122
+READER_PAGE 123
+READER_PAGE 124
+READER_PAGE 125
+READER_PAGE 126
+READER_PAGE 127
+READER_PAGE 128
+READER_PAGE 129
+READER_PAGE 130
+READER_PAGE 131
+READER_PAGE 132
+READER_PAGE 133
+READER_PAGE 134
+READER_PAGE 135
+READER_PAGE 136
+READER_PAGE 137
+READER_PAGE 138
+READER_PAGE 139
+READER_PAGE 140
+READER_PAGE 141
+READER_PAGE 142
+READER_PAGE 143
+READER_PAGE 144
+READER_PAGE 145
+READER_PAGE 146
+READER_PAGE 147
+READER_PAGE 148
+READER_PAGE 149
+READER_PAGE 150
+READER_PAGE 151
+READER_PAGE 152
+READER_PAGE 153
+READER_PAGE 154
+READER_PAGE 155
+READER_PAGE 156
+READER_PAGE 157
+READER_PAGE 158
+READER_PAGE 159
+READER_PAGE 160
+READER_PAGE 161
+READER_PAGE 162
+READER_PAGE 163
+READER_PAGE 164
+READER_PAGE 165
+READER_PAGE 166
+READER_PAGE 167
+READER_PAGE 168
+READER_PAGE 169
+READER_PAGE 170
+READER_PAGE 171
+READER_PAGE 172
+READER_PAGE 173
+READER_PAGE 174
+READER_PAGE 175
+READER_PAGE 176
+READER_PAGE 177
+READER_PAGE 178
+READER_PAGE 179
+READER_PAGE 180
+READER_PAGE 181
+READER_PAGE 182
+READER_PAGE 183
+READER_PAGE 184
+READER_PAGE 185
+READER_PAGE 186
+READER_PAGE 187
+READER_PAGE 188
+READER_PAGE 189
+READER_PAGE 190
+READER_PAGE 191
+READER_PAGE 192
+READER_PAGE 193
+READER_PAGE 194
+READER_PAGE 195
+READER_PAGE 196
+READER_PAGE 197
+READER_PAGE 198
+READER_PAGE 199
+READER_PAGE 200
+READER_PAGE 201
+READER_PAGE 202
+READER_PAGE 203
+READER_PAGE 204
+READER_PAGE 205
+READER_PAGE 206
+READER_PAGE 207
+READER_PAGE 208
+READER_PAGE 209
+READER_PAGE 210
+READER_PAGE 211
+READER_PAGE 212
+READER_PAGE 213
+READER_PAGE 214
+READER_PAGE 215
+READER_PAGE 216
+READER_PAGE 217
+READER_PAGE 218
+READER_PAGE 219
+READER_PAGE 220
+READER_PAGE 221
+READER_PAGE 222
+READER_PAGE 223
+READER_PAGE 224
+READER_PAGE 225
+READER_PAGE 226
+READER_PAGE 227
+READER_PAGE 228
+READER_PAGE 229
+READER_PAGE 230
+READER_PAGE 231
+READER_PAGE 232
+READER_PAGE 233
+READER_PAGE 234
+READER_PAGE 235
+READER_PAGE 236
+READER_PAGE 237
+READER_PAGE 238
+READER_PAGE 239
+READER_PAGE 240
+READER_PAGE 241
+READER_PAGE 242
+READER_PAGE 243
+READER_PAGE 244
+READER_PAGE 245
+READER_PAGE 246
+READER_PAGE 247
+READER_PAGE 248
+READER_PAGE 249
+READER_PAGE 250
+READER_PAGE 251
+READER_PAGE 252
+READER_PAGE 253
+READER_PAGE 254
+READER_PAGE 255
+READER_PAGE 256
+READER_PAGE 257
+READER_PAGE 258
+READER_PAGE 259
+READER_PAGE 260
+READER_PAGE 261
+READER_PAGE 262
+READER_PAGE 263
+READER_PAGE 264
+READER_PAGE 265
+READER_PAGE 266
+READER_PAGE 267
+READER_PAGE 268
+READER_PAGE 269
+READER_PAGE 270
+READER_PAGE 271
+READER_PAGE 272
+READER_PAGE 273
+READER_PAGE 274
+READER_PAGE 275
+READER_PAGE 276
+READER_PAGE 277
+READER_PAGE 278
+READER_PAGE 279
+READER_PAGE 280
+READER_PAGE 281
+READER_PAGE 282
+READER_PAGE 283
+READER_PAGE 284
+READER_PAGE 285
+READER_PAGE 286
+READER_PAGE 287
+READER_PAGE 288
+READER_PAGE 289
+READER_PAGE 290
+READER_PAGE 291
+READER_PAGE 292
+READER_PAGE 293
+READER_PAGE 294
+READER_PAGE 295
+READER_PAGE 296
+READER_PAGE 297
+READER_PAGE 298
+READER_PAGE 299
+READER_PAGE 300
+00:33 +39 -1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0)
+READER_PAGE 301
+READER_PAGE 302
+READER_PAGE 303
+READER_PAGE 304
+READER_PAGE 305
+READER_PAGE 306
+READER_PAGE 307
+READER_PAGE 308
+READER_PAGE 309
+READER_PAGE 310
+READER_PAGE 311
+READER_PAGE 312
+READER_PAGE 313
+READER_PAGE 314
+READER_PAGE 315
+READER_PAGE 316
+READER_PAGE 317
+READER_PAGE 318
+READER_PAGE 319
+READER_PAGE 320
+READER_PAGE 321
+READER_PAGE 322
+READER_PAGE 323
+READER_PAGE 324
+READER_PAGE 325
+READER_PAGE 326
+READER_PAGE 327
+READER_PAGE 328
+READER_PAGE 329
+READER_PAGE 330
+READER_PAGE 331
+READER_PAGE 332
+READER_PAGE 333
+READER_PAGE 334
+READER_PAGE 335
+READER_PAGE 336
+READER_PAGE 337
+READER_PAGE 338
+READER_PAGE 339
+READER_PAGE 340
+READER_PAGE 341
+READER_PAGE 342
+READER_PAGE 343
+READER_PAGE 344
+READER_PAGE 345
+READER_PAGE 346
+READER_PAGE 347
+READER_PAGE 348
+READER_PAGE 349
+READER_PAGE 350
+READER_PAGE 351
+READER_PAGE 352
+READER_PAGE 353
+READER_PAGE 354
+READER_PAGE 355
+READER_PAGE 356
+READER_PAGE 357
+READER_PAGE 358
+READER_PAGE 359
+READER_PAGE 360
+READER_PAGE 361
+READER_PAGE 362
+READER_PAGE 363
+READER_PAGE 364
+READER_PAGE 365
+READER_PAGE 366
+READER_PAGE 367
+READER_PAGE 368
+READER_PAGE 369
+READER_PAGE 370
+READER_PAGE 371
+READER_PAGE 372
+READER_PAGE 373
+READER_PAGE 374
+READER_PAGE 375
+READER_PAGE 376
+READER_PAGE 377
+READER_PAGE 378
+READER_PAGE 379
+READER_PAGE 380
+READER_PAGE 381
+READER_PAGE 382
+READER_PAGE 383
+READER_PAGE 384
+READER_PAGE 385
+READER_PAGE 386
+READER_PAGE 387
+READER_PAGE 388
+READER_PAGE 389
+READER_PAGE 390
+READER_PAGE 391
+00:36 +40 -1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0)
+READER_PAGE 392
+READER_PAGE 393
+00:37 +41 -1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0)
+READER_PAGE 394
+00:37 +42 -1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0)
+READER_PAGE 395
+READER_PAGE 396
+READER_PAGE 397
+READER_PAGE 398
+READER_PAGE 399
+READER_PAGE 400
+READER_PAGE 401
+READER_PAGE 402
+READER_PAGE 403
+00:37 +43 -1: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0)
+READER_PAGE 404
+READER_PAGE 405
+READER_PAGE 406
+READER_PAGE 407
+READER_PAGE 408
+READER_PAGE 409
+READER_PAGE 410
+READER_PAGE 411
+READER_PAGE 412
+READER_PAGE 413
+READER_PAGE 414
+READER_PAGE 415
+READER_PAGE 416
+READER_PAGE 417
+READER_PAGE 418
+READER_PAGE 419
+READER_PAGE 420
+READER_PAGE 421
+READER_PAGE 422
+READER_PAGE 423
+READER_PAGE 424
+READER_PAGE 425
+READER_PAGE 426
+READER_PAGE 427
+READER_PAGE 428
+READER_PAGE 429
+READER_PAGE 430
+READER_PAGE 431
+READER_PAGE 432
+READER_PAGE 433
+READER_PAGE 434
+READER_PAGE 435
+READER_PAGE 436
+READER_PAGE 437
+READER_PAGE 438
+READER_PAGE 439
+READER_PAGE 440
+READER_PAGE 441
+READER_PAGE 442
+READER_PAGE 443
+READER_PAGE 444
+READER_PAGE 445
+READER_PAGE 446
+READER_PAGE 447
+READER_PAGE 448
+READER_PAGE 449
+READER_PAGE 450
+READER_PAGE 451
+READER_PAGE 452
+READER_PAGE 453
+READER_PAGE 454
+READER_PAGE 455
+READER_PAGE 456
+READER_PAGE 457
+READER_PAGE 458
+READER_PAGE 459
+READER_PAGE 460
+READER_PAGE 461
+READER_PAGE 462
+READER_PAGE 463
+READER_PAGE 464
+READER_PAGE 465
+READER_PAGE 466
+READER_PAGE 467
+READER_PAGE 468
+READER_PAGE 469
+READER_PAGE 470
+READER_PAGE 471
+READER_PAGE 472
+READER_PAGE 473
+READER_PAGE 474
+READER_PAGE 475
+══╡ EXCEPTION CAUGHT BY SCHEDULER LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during a scheduler callback:
+Invisible SemanticsNodes should not be added to the tree.
+The following invisible SemanticsNodes were added to the tree:
+SemanticsNode#887(dirty, Rect.fromLTRB(241.1, 1055.6, 241.1, 1136.6), invisible, identifier: "word-65459", label: "40:77:5; unrevealed; reveals 0", textDirection: rtl)
+which was added as a child of:
+  SemanticsNode#756(dirty, Rect.fromLTRB(0.0, 0.0, 800.0, 1224.0), label: "٤٧٥", textDirection: ltr)
+An invisible SemanticsNode is one whose rect is not on screen hence not reachable for users, and its
+semantic information is not merged into a visible parent.
+An invisible SemanticsNode makes the accessibility experience confusing, as it does not provide any
+visual indication when the user selects it via accessibility technologies.
+Consider removing the above invisible SemanticsNodes if they were added by your
+RenderObject.assembleSemanticsNode implementation, or filing a bug on GitHub:
+  https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+
+When the exception was thrown, this was the stack:
+#0      SemanticsOwner.sendSemanticsUpdate.<anonymous closure> (package:flutter/src/semantics/semantics.dart:4954:7)
+#1      SemanticsOwner.sendSemanticsUpdate (package:flutter/src/semantics/semantics.dart:4973:6)
+#2      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1651:24)
+#3      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1653:15)
+#4      AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2445:35)
+#5      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#6      SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#7      SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#8      AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#13     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:719:23)
+#16     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#17     WidgetTester.pumpAndSettle (package:flutter_test/src/widget_tester.dart:712:27)
+#18     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart:49:22)
+<asynchronous suspension>
+#19     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#20     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY SCHEDULER LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during a scheduler callback:
+Invisible SemanticsNodes should not be added to the tree.
+The following invisible SemanticsNodes were added to the tree:
+SemanticsNode#887(dirty, Rect.fromLTRB(241.1, 1055.6, 241.1, 1136.6), invisible, identifier: "word-65459", label: "40:77:5; unrevealed; reveals 0", textDirection: rtl)
+which was added as a child of:
+  SemanticsNode#756(dirty, Rect.fromLTRB(0.0, 0.0, 800.0, 1224.0), label: "٤٧٥", textDirection: ltr)
+An invisible SemanticsNode is one whose rect is not on screen hence not reachable for users, and its
+semantic information is not merged into a visible parent.
+An invisible SemanticsNode makes the accessibility experience confusing, as it does not provide any
+visual indication when the user selects it via accessibility technologies.
+Consider removing the above invisible SemanticsNodes if they were added by your
+RenderObject.assembleSemanticsNode implementation, or filing a bug on GitHub:
+  https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+
+When the exception was thrown, this was the stack:
+#0      SemanticsOwner.sendSemanticsUpdate.<anonymous closure> (package:flutter/src/semantics/semantics.dart:4954:7)
+#1      SemanticsOwner.sendSemanticsUpdate (package:flutter/src/semantics/semantics.dart:4973:6)
+#2      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1651:24)
+#3      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1653:15)
+#4      AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2445:35)
+#5      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#6      SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#7      SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#8      AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#13     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:719:23)
+<asynchronous suspension>
+#14     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#15     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart:49:9)
+<asynchronous suspension>
+#16     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#17     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+READER_PAGE 476
+READER_PAGE 477
+READER_PAGE 478
+READER_PAGE 479
+READER_PAGE 480
+READER_PAGE 481
+READER_PAGE 482
+READER_PAGE 483
+READER_PAGE 484
+READER_PAGE 485
+READER_PAGE 486
+READER_PAGE 487
+READER_PAGE 488
+READER_PAGE 489
+READER_PAGE 490
+READER_PAGE 491
+READER_PAGE 492
+READER_PAGE 493
+READER_PAGE 494
+READER_PAGE 495
+READER_PAGE 496
+READER_PAGE 497
+READER_PAGE 498
+READER_PAGE 499
+READER_PAGE 500
+READER_PAGE 501
+READER_PAGE 502
+READER_PAGE 503
+READER_PAGE 504
+READER_PAGE 505
+READER_PAGE 506
+READER_PAGE 507
+READER_PAGE 508
+READER_PAGE 509
+READER_PAGE 510
+READER_PAGE 511
+READER_PAGE 512
+READER_PAGE 513
+READER_PAGE 514
+READER_PAGE 515
+READER_PAGE 516
+READER_PAGE 517
+READER_PAGE 518
+READER_PAGE 519
+READER_PAGE 520
+READER_PAGE 521
+READER_PAGE 522
+READER_PAGE 523
+READER_PAGE 524
+READER_PAGE 525
+READER_PAGE 526
+READER_PAGE 527
+READER_PAGE 528
+READER_PAGE 529
+READER_PAGE 530
+READER_PAGE 531
+READER_PAGE 532
+READER_PAGE 533
+READER_PAGE 534
+READER_PAGE 535
+READER_PAGE 536
+READER_PAGE 537
+READER_PAGE 538
+READER_PAGE 539
+READER_PAGE 540
+READER_PAGE 541
+READER_PAGE 542
+READER_PAGE 543
+READER_PAGE 544
+READER_PAGE 545
+READER_PAGE 546
+READER_PAGE 547
+READER_PAGE 548
+READER_PAGE 549
+READER_PAGE 550
+READER_PAGE 551
+READER_PAGE 552
+READER_PAGE 553
+READER_PAGE 554
+READER_PAGE 555
+READER_PAGE 556
+READER_PAGE 557
+READER_PAGE 558
+READER_PAGE 559
+READER_PAGE 560
+READER_PAGE 561
+READER_PAGE 562
+READER_PAGE 563
+READER_PAGE 564
+READER_PAGE 565
+READER_PAGE 566
+READER_PAGE 567
+READER_PAGE 568
+READER_PAGE 569
+READER_PAGE 570
+READER_PAGE 571
+READER_PAGE 572
+READER_PAGE 573
+READER_PAGE 574
+READER_PAGE 575
+READER_PAGE 576
+READER_PAGE 577
+READER_PAGE 578
+READER_PAGE 579
+READER_PAGE 580
+READER_PAGE 581
+READER_PAGE 582
+READER_PAGE 583
+READER_PAGE 584
+READER_PAGE 585
+READER_PAGE 586
+READER_PAGE 587
+READER_PAGE 588
+READER_PAGE 589
+READER_PAGE 590
+READER_PAGE 591
+READER_PAGE 592
+READER_PAGE 593
+READER_PAGE 594
+READER_PAGE 595
+READER_PAGE 596
+READER_PAGE 597
+READER_PAGE 598
+READER_PAGE 599
+READER_PAGE 600
+READER_PAGE 601
+READER_PAGE 602
+READER_PAGE 603
+READER_PAGE 604
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:44 +43 -2: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+00:44 +43 -2: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0) [E]
+  Test failed. See exception logs above.
+  The test description was: all line ink fits the page at Size(800.0, 1224.0)
+  
+00:47 +43 -2: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(914.3, 363.4)
+READER_PAGE 3
+READER_PAGE 5
+READER_PAGE 7
+READER_PAGE 9
+READER_PAGE 11
+READER_PAGE 13
+READER_PAGE 15
+READER_PAGE 17
+READER_PAGE 19
+READER_PAGE 21
+READER_PAGE 23
+READER_PAGE 25
+READER_PAGE 27
+READER_PAGE 29
+READER_PAGE 31
+READER_PAGE 33
+READER_PAGE 35
+READER_PAGE 37
+READER_PAGE 39
+READER_PAGE 41
+READER_PAGE 43
+READER_PAGE 45
+READER_PAGE 47
+READER_PAGE 49
+READER_PAGE 51
+READER_PAGE 53
+READER_PAGE 55
+READER_PAGE 57
+READER_PAGE 59
+READER_PAGE 61
+READER_PAGE 63
+READER_PAGE 65
+READER_PAGE 67
+READER_PAGE 69
+READER_PAGE 71
+READER_PAGE 73
+READER_PAGE 75
+READER_PAGE 77
+READER_PAGE 79
+READER_PAGE 81
+READER_PAGE 83
+READER_PAGE 85
+READER_PAGE 87
+READER_PAGE 89
+00:49 +43 -2: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+READER_PAGE 2
+READER_PAGE 2
+00:49 +43 -2: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(914.3, 363.4)
+READER_PAGE 91
+READER_PAGE 93
+READER_PAGE 95
+READER_PAGE 97
+READER_PAGE 99
+READER_PAGE 101
+READER_PAGE 103
+READER_PAGE 105
+READER_PAGE 107
+READER_PAGE 109
+READER_PAGE 111
+READER_PAGE 113
+READER_PAGE 115
+READER_PAGE 117
+READER_PAGE 119
+READER_PAGE 121
+READER_PAGE 123
+READER_PAGE 125
+READER_PAGE 127
+READER_PAGE 129
+READER_PAGE 131
+READER_PAGE 133
+READER_PAGE 135
+READER_PAGE 137
+READER_PAGE 139
+READER_PAGE 141
+READER_PAGE 143
+READER_PAGE 145
+READER_PAGE 147
+READER_PAGE 149
+READER_PAGE 151
+READER_PAGE 153
+READER_PAGE 155
+READER_PAGE 157
+READER_PAGE 159
+READER_PAGE 161
+READER_PAGE 163
+READER_PAGE 165
+READER_PAGE 167
+READER_PAGE 169
+READER_PAGE 171
+READER_PAGE 173
+READER_PAGE 175
+READER_PAGE 177
+READER_PAGE 179
+READER_PAGE 181
+READER_PAGE 183
+READER_PAGE 185
+READER_PAGE 187
+READER_PAGE 189
+READER_PAGE 191
+READER_PAGE 193
+READER_PAGE 195
+READER_PAGE 197
+READER_PAGE 199
+READER_PAGE 201
+READER_PAGE 203
+00:52 +43 -2: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+READER_PAGE 187
+00:52 +43 -2: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(914.3, 363.4)
+READER_PAGE 205
+00:52 +43 -2: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+READER_PAGE 187
+00:52 +43 -2: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(914.3, 363.4)
+READER_PAGE 207
+READER_PAGE 209
+READER_PAGE 211
+READER_PAGE 213
+READER_PAGE 215
+READER_PAGE 217
+READER_PAGE 219
+READER_PAGE 221
+READER_PAGE 223
+READER_PAGE 225
+READER_PAGE 227
+READER_PAGE 229
+READER_PAGE 231
+READER_PAGE 233
+READER_PAGE 235
+READER_PAGE 237
+READER_PAGE 239
+READER_PAGE 241
+READER_PAGE 243
+READER_PAGE 245
+READER_PAGE 247
+READER_PAGE 249
+READER_PAGE 251
+READER_PAGE 253
+READER_PAGE 255
+READER_PAGE 257
+READER_PAGE 259
+READER_PAGE 261
+READER_PAGE 263
+READER_PAGE 265
+READER_PAGE 267
+READER_PAGE 269
+READER_PAGE 271
+READER_PAGE 273
+READER_PAGE 275
+READER_PAGE 277
+READER_PAGE 279
+READER_PAGE 281
+READER_PAGE 283
+READER_PAGE 285
+READER_PAGE 287
+READER_PAGE 289
+READER_PAGE 291
+READER_PAGE 293
+READER_PAGE 295
+READER_PAGE 297
+READER_PAGE 299
+READER_PAGE 301
+READER_PAGE 303
+READER_PAGE 305
+READER_PAGE 307
+READER_PAGE 309
+READER_PAGE 311
+READER_PAGE 313
+READER_PAGE 315
+00:55 +43 -2: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+READER_PAGE 604
+00:55 +43 -2: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(914.3, 363.4)
+READER_PAGE 317
+00:55 +43 -2: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+READER_PAGE 604
+00:55 +43 -2: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(914.3, 363.4)
+READER_PAGE 319
+READER_PAGE 321
+READER_PAGE 323
+READER_PAGE 325
+READER_PAGE 327
+READER_PAGE 329
+READER_PAGE 331
+READER_PAGE 333
+READER_PAGE 335
+READER_PAGE 337
+READER_PAGE 339
+READER_PAGE 341
+READER_PAGE 343
+READER_PAGE 345
+READER_PAGE 347
+READER_PAGE 349
+READER_PAGE 351
+READER_PAGE 353
+READER_PAGE 355
+READER_PAGE 357
+READER_PAGE 359
+READER_PAGE 361
+READER_PAGE 363
+READER_PAGE 365
+READER_PAGE 367
+READER_PAGE 369
+READER_PAGE 371
+READER_PAGE 373
+READER_PAGE 375
+READER_PAGE 377
+READER_PAGE 379
+READER_PAGE 381
+READER_PAGE 383
+READER_PAGE 385
+READER_PAGE 387
+READER_PAGE 389
+READER_PAGE 391
+READER_PAGE 393
+READER_PAGE 395
+READER_PAGE 397
+READER_PAGE 399
+READER_PAGE 401
+READER_PAGE 403
+READER_PAGE 405
+READER_PAGE 407
+READER_PAGE 409
+READER_PAGE 411
+READER_PAGE 413
+READER_PAGE 415
+READER_PAGE 417
+READER_PAGE 419
+READER_PAGE 421
+READER_PAGE 423
+READER_PAGE 425
+READER_PAGE 427
+READER_PAGE 429
+READER_PAGE 431
+READER_PAGE 433
+READER_PAGE 435
+READER_PAGE 437
+READER_PAGE 439
+READER_PAGE 441
+READER_PAGE 443
+READER_PAGE 445
+READER_PAGE 447
+READER_PAGE 449
+READER_PAGE 451
+READER_PAGE 453
+READER_PAGE 455
+READER_PAGE 457
+READER_PAGE 459
+READER_PAGE 461
+READER_PAGE 463
+READER_PAGE 465
+READER_PAGE 467
+READER_PAGE 469
+READER_PAGE 471
+READER_PAGE 473
+READER_PAGE 475
+══╡ EXCEPTION CAUGHT BY SCHEDULER LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during a scheduler callback:
+Invisible SemanticsNodes should not be added to the tree.
+The following invisible SemanticsNodes were added to the tree:
+SemanticsNode#650(dirty, Rect.fromLTRB(183.1, 303.8, 183.1, 327.0), invisible, identifier: "word-65459", label: "40:77:5; unrevealed; reveals 0", textDirection: rtl)
+which was added as a child of:
+  SemanticsNode#519(dirty, Rect.fromLTRB(457.1, 0.0, 914.3, 363.4), label: "٤٧٥", textDirection: ltr)
+An invisible SemanticsNode is one whose rect is not on screen hence not reachable for users, and its
+semantic information is not merged into a visible parent.
+An invisible SemanticsNode makes the accessibility experience confusing, as it does not provide any
+visual indication when the user selects it via accessibility technologies.
+Consider removing the above invisible SemanticsNodes if they were added by your
+RenderObject.assembleSemanticsNode implementation, or filing a bug on GitHub:
+  https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+
+When the exception was thrown, this was the stack:
+#0      SemanticsOwner.sendSemanticsUpdate.<anonymous closure> (package:flutter/src/semantics/semantics.dart:4954:7)
+#1      SemanticsOwner.sendSemanticsUpdate (package:flutter/src/semantics/semantics.dart:4973:6)
+#2      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1651:24)
+#3      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1653:15)
+#4      AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2445:35)
+#5      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#6      SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#7      SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#8      AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#13     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:719:23)
+#16     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#17     WidgetTester.pumpAndSettle (package:flutter_test/src/widget_tester.dart:712:27)
+#18     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart:49:22)
+<asynchronous suspension>
+#19     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#20     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY SCHEDULER LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during a scheduler callback:
+Invisible SemanticsNodes should not be added to the tree.
+The following invisible SemanticsNodes were added to the tree:
+SemanticsNode#650(dirty, Rect.fromLTRB(183.1, 303.8, 183.1, 327.0), invisible, identifier: "word-65459", label: "40:77:5; unrevealed; reveals 0", textDirection: rtl)
+which was added as a child of:
+  SemanticsNode#519(dirty, Rect.fromLTRB(457.1, 0.0, 914.3, 363.4), label: "٤٧٥", textDirection: ltr)
+An invisible SemanticsNode is one whose rect is not on screen hence not reachable for users, and its
+semantic information is not merged into a visible parent.
+An invisible SemanticsNode makes the accessibility experience confusing, as it does not provide any
+visual indication when the user selects it via accessibility technologies.
+Consider removing the above invisible SemanticsNodes if they were added by your
+RenderObject.assembleSemanticsNode implementation, or filing a bug on GitHub:
+  https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+
+When the exception was thrown, this was the stack:
+#0      SemanticsOwner.sendSemanticsUpdate.<anonymous closure> (package:flutter/src/semantics/semantics.dart:4954:7)
+#1      SemanticsOwner.sendSemanticsUpdate (package:flutter/src/semantics/semantics.dart:4973:6)
+#2      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1651:24)
+#3      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1653:15)
+#4      AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2445:35)
+#5      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#6      SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#7      SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#8      AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#13     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:719:23)
+<asynchronous suspension>
+#14     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#15     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart:49:9)
+<asynchronous suspension>
+#16     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#17     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+READER_PAGE 477
+READER_PAGE 479
+READER_PAGE 481
+READER_PAGE 483
+READER_PAGE 485
+READER_PAGE 487
+READER_PAGE 489
+READER_PAGE 491
+READER_PAGE 493
+READER_PAGE 495
+READER_PAGE 497
+READER_PAGE 499
+READER_PAGE 501
+READER_PAGE 503
+READER_PAGE 505
+READER_PAGE 507
+READER_PAGE 509
+READER_PAGE 511
+READER_PAGE 513
+READER_PAGE 515
+READER_PAGE 517
+READER_PAGE 519
+READER_PAGE 521
+READER_PAGE 523
+READER_PAGE 525
+READER_PAGE 527
+READER_PAGE 529
+READER_PAGE 531
+READER_PAGE 533
+READER_PAGE 535
+READER_PAGE 537
+READER_PAGE 539
+READER_PAGE 541
+READER_PAGE 543
+READER_PAGE 545
+READER_PAGE 547
+READER_PAGE 549
+READER_PAGE 551
+READER_PAGE 553
+READER_PAGE 555
+READER_PAGE 557
+READER_PAGE 559
+READER_PAGE 561
+READER_PAGE 563
+READER_PAGE 565
+READER_PAGE 567
+READER_PAGE 569
+READER_PAGE 571
+READER_PAGE 573
+READER_PAGE 575
+READER_PAGE 577
+READER_PAGE 579
+READER_PAGE 581
+READER_PAGE 583
+READER_PAGE 585
+READER_PAGE 587
+READER_PAGE 589
+READER_PAGE 591
+READER_PAGE 593
+READER_PAGE 595
+READER_PAGE 597
+READER_PAGE 599
+READER_PAGE 601
+READER_PAGE 603
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+01:02 +43 -3: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+01:02 +43 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(914.3, 363.4) [E]
+  Test failed. See exception logs above.
+  The test description was: all line ink fits the page at Size(914.3, 363.4)
+  
+01:03 +43 -3: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+READER_PAGE 187
+READER_PAGE 187
+01:05 +43 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 3
+READER_PAGE 5
+READER_PAGE 7
+READER_PAGE 9
+READER_PAGE 11
+READER_PAGE 13
+READER_PAGE 15
+READER_PAGE 17
+READER_PAGE 19
+READER_PAGE 21
+READER_PAGE 23
+READER_PAGE 25
+READER_PAGE 27
+READER_PAGE 29
+READER_PAGE 31
+READER_PAGE 33
+READER_PAGE 35
+READER_PAGE 37
+READER_PAGE 39
+01:06 +43 -3: /home/ahmadjz/Documents/Quran/app/test/lazy_bundle_test.dart: prepared global size equals eager shaping, including pages 1, 2, 187, 604
+READER_PAGE 603
+READER_PAGE 603
+01:06 +43 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 41
+01:06 +44 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 43
+READER_PAGE 45
+READER_PAGE 47
+READER_PAGE 49
+READER_PAGE 51
+READER_PAGE 53
+READER_PAGE 55
+READER_PAGE 57
+01:07 +45 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 59
+READER_PAGE 61
+01:07 +46 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+01:07 +47 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 63
+READER_PAGE 65
+READER_PAGE 67
+READER_PAGE 69
+READER_PAGE 71
+01:07 +48 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+01:07 +49 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 73
+READER_PAGE 75
+READER_PAGE 77
+READER_PAGE 79
+READER_PAGE 81
+READER_PAGE 83
+01:07 +50 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 85
+01:07 +50 -3: /home/ahmadjz/Documents/Quran/app/test/bundle_fault_test.dart: rotation during swipe prefetch must still permit forward navigation
+READER_PAGE 2
+01:07 +50 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 87
+01:07 +50 -3: /home/ahmadjz/Documents/Quran/app/test/bundle_fault_test.dart: rotation during swipe prefetch must still permit forward navigation
+READER_PAGE 3
+01:08 +50 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 89
+01:08 +50 -3: /home/ahmadjz/Documents/Quran/app/test/bundle_fault_test.dart: rotation during swipe prefetch must still permit forward navigation
+READER_PAGE 5
+01:08 +51 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 91
+READER_PAGE 93
+01:08 +51 -3: /home/ahmadjz/Documents/Quran/app/test/bundle_fault_test.dart: failed far jump keeps page visible and offers a working retry
+READER_PAGE 187
+01:08 +51 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 95
+01:08 +52 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+01:08 +52 -3: /home/ahmadjz/Documents/Quran/app/test/bundle_fault_test.dart: swipe prefetch failure is caught and its retry reloads JSON
+READER_PAGE 2
+READER_PAGE 3
+01:08 +52 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 97
+01:08 +52 -3: /home/ahmadjz/Documents/Quran/app/test/bundle_fault_test.dart: swipe prefetch failure is caught and its retry reloads JSON
+READER_PAGE 21
+READER_PAGE 5
+01:08 +52 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 99
+01:08 +53 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+01:08 +53 -3: /home/ahmadjz/Documents/Quran/app/test/bundle_fault_test.dart: navigation uses prepared word metrics without runtime shaping
+READER_PAGE 2
+READER_PAGE 3
+01:08 +53 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 101
+01:08 +54 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 103
+READER_PAGE 105
+READER_PAGE 107
+01:08 +55 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+01:08 +56 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+01:08 +57 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 109
+READER_PAGE 111
+READER_PAGE 113
+READER_PAGE 115
+01:08 +58 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 117
+READER_PAGE 119
+01:08 +59 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 121
+READER_PAGE 123
+READER_PAGE 125
+READER_PAGE 127
+READER_PAGE 129
+READER_PAGE 131
+READER_PAGE 133
+01:09 +60 -3: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+READER_PAGE 135
+READER_PAGE 137
+READER_PAGE 139
+READER_PAGE 141
+READER_PAGE 143
+READER_PAGE 145
+READER_PAGE 147
+READER_PAGE 149
+READER_PAGE 151
+READER_PAGE 153
+READER_PAGE 155
+READER_PAGE 157
+READER_PAGE 159
+READER_PAGE 161
+READER_PAGE 163
+READER_PAGE 165
+READER_PAGE 167
+READER_PAGE 169
+READER_PAGE 171
+READER_PAGE 173
+READER_PAGE 175
+READER_PAGE 177
+READER_PAGE 179
+READER_PAGE 181
+READER_PAGE 183
+READER_PAGE 185
+READER_PAGE 187
+READER_PAGE 189
+READER_PAGE 191
+READER_PAGE 193
+READER_PAGE 195
+READER_PAGE 197
+READER_PAGE 199
+READER_PAGE 201
+READER_PAGE 203
+READER_PAGE 205
+READER_PAGE 207
+READER_PAGE 209
+READER_PAGE 211
+READER_PAGE 213
+READER_PAGE 215
+READER_PAGE 217
+READER_PAGE 219
+READER_PAGE 221
+READER_PAGE 223
+READER_PAGE 225
+READER_PAGE 227
+READER_PAGE 229
+READER_PAGE 231
+READER_PAGE 233
+READER_PAGE 235
+READER_PAGE 237
+READER_PAGE 239
+READER_PAGE 241
+READER_PAGE 243
+READER_PAGE 245
+READER_PAGE 247
+READER_PAGE 249
+READER_PAGE 251
+READER_PAGE 253
+READER_PAGE 255
+READER_PAGE 257
+READER_PAGE 259
+READER_PAGE 261
+READER_PAGE 263
+READER_PAGE 265
+READER_PAGE 267
+READER_PAGE 269
+READER_PAGE 271
+READER_PAGE 273
+READER_PAGE 275
+READER_PAGE 277
+READER_PAGE 279
+READER_PAGE 281
+READER_PAGE 283
+READER_PAGE 285
+READER_PAGE 287
+READER_PAGE 289
+READER_PAGE 291
+READER_PAGE 293
+READER_PAGE 295
+READER_PAGE 297
+READER_PAGE 299
+READER_PAGE 301
+READER_PAGE 303
+READER_PAGE 305
+READER_PAGE 307
+READER_PAGE 309
+READER_PAGE 311
+READER_PAGE 313
+READER_PAGE 315
+READER_PAGE 317
+READER_PAGE 319
+READER_PAGE 321
+READER_PAGE 323
+READER_PAGE 325
+READER_PAGE 327
+READER_PAGE 329
+READER_PAGE 331
+READER_PAGE 333
+READER_PAGE 335
+READER_PAGE 337
+READER_PAGE 339
+READER_PAGE 341
+READER_PAGE 343
+READER_PAGE 345
+READER_PAGE 347
+READER_PAGE 349
+READER_PAGE 351
+READER_PAGE 353
+READER_PAGE 355
+READER_PAGE 357
+READER_PAGE 359
+READER_PAGE 361
+READER_PAGE 363
+READER_PAGE 365
+READER_PAGE 367
+READER_PAGE 369
+READER_PAGE 371
+READER_PAGE 373
+READER_PAGE 375
+READER_PAGE 377
+READER_PAGE 379
+READER_PAGE 381
+READER_PAGE 383
+READER_PAGE 385
+READER_PAGE 387
+READER_PAGE 389
+READER_PAGE 391
+READER_PAGE 393
+READER_PAGE 395
+READER_PAGE 397
+READER_PAGE 399
+READER_PAGE 401
+READER_PAGE 403
+READER_PAGE 405
+READER_PAGE 407
+READER_PAGE 409
+READER_PAGE 411
+READER_PAGE 413
+READER_PAGE 415
+READER_PAGE 417
+READER_PAGE 419
+READER_PAGE 421
+READER_PAGE 423
+READER_PAGE 425
+READER_PAGE 427
+READER_PAGE 429
+READER_PAGE 431
+READER_PAGE 433
+READER_PAGE 435
+READER_PAGE 437
+READER_PAGE 439
+READER_PAGE 441
+READER_PAGE 443
+READER_PAGE 445
+READER_PAGE 447
+READER_PAGE 449
+READER_PAGE 451
+READER_PAGE 453
+READER_PAGE 455
+READER_PAGE 457
+READER_PAGE 459
+READER_PAGE 461
+READER_PAGE 463
+READER_PAGE 465
+READER_PAGE 467
+READER_PAGE 469
+READER_PAGE 471
+READER_PAGE 473
+READER_PAGE 475
+══╡ EXCEPTION CAUGHT BY SCHEDULER LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during a scheduler callback:
+Invisible SemanticsNodes should not be added to the tree.
+The following invisible SemanticsNodes were added to the tree:
+SemanticsNode#650(dirty, Rect.fromLTRB(224.3, 636.3, 224.3, 685.0), invisible, identifier: "word-65459", label: "40:77:5; unrevealed; reveals 0", textDirection: rtl)
+which was added as a child of:
+  SemanticsNode#519(dirty, Rect.fromLTRB(640.0, 0.0, 1280.0, 744.0), label: "٤٧٥", textDirection: ltr)
+An invisible SemanticsNode is one whose rect is not on screen hence not reachable for users, and its
+semantic information is not merged into a visible parent.
+An invisible SemanticsNode makes the accessibility experience confusing, as it does not provide any
+visual indication when the user selects it via accessibility technologies.
+Consider removing the above invisible SemanticsNodes if they were added by your
+RenderObject.assembleSemanticsNode implementation, or filing a bug on GitHub:
+  https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+
+When the exception was thrown, this was the stack:
+#0      SemanticsOwner.sendSemanticsUpdate.<anonymous closure> (package:flutter/src/semantics/semantics.dart:4954:7)
+#1      SemanticsOwner.sendSemanticsUpdate (package:flutter/src/semantics/semantics.dart:4973:6)
+#2      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1651:24)
+#3      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1653:15)
+#4      AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2445:35)
+#5      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#6      SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#7      SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#8      AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#13     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:719:23)
+#16     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#17     WidgetTester.pumpAndSettle (package:flutter_test/src/widget_tester.dart:712:27)
+#18     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart:49:22)
+<asynchronous suspension>
+#19     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#20     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY SCHEDULER LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during a scheduler callback:
+Invisible SemanticsNodes should not be added to the tree.
+The following invisible SemanticsNodes were added to the tree:
+SemanticsNode#650(dirty, Rect.fromLTRB(224.3, 636.3, 224.3, 685.0), invisible, identifier: "word-65459", label: "40:77:5; unrevealed; reveals 0", textDirection: rtl)
+which was added as a child of:
+  SemanticsNode#519(dirty, Rect.fromLTRB(640.0, 0.0, 1280.0, 744.0), label: "٤٧٥", textDirection: ltr)
+An invisible SemanticsNode is one whose rect is not on screen hence not reachable for users, and its
+semantic information is not merged into a visible parent.
+An invisible SemanticsNode makes the accessibility experience confusing, as it does not provide any
+visual indication when the user selects it via accessibility technologies.
+Consider removing the above invisible SemanticsNodes if they were added by your
+RenderObject.assembleSemanticsNode implementation, or filing a bug on GitHub:
+  https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+
+When the exception was thrown, this was the stack:
+#0      SemanticsOwner.sendSemanticsUpdate.<anonymous closure> (package:flutter/src/semantics/semantics.dart:4954:7)
+#1      SemanticsOwner.sendSemanticsUpdate (package:flutter/src/semantics/semantics.dart:4973:6)
+#2      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1651:24)
+#3      PipelineOwner.flushSemantics (package:flutter/src/rendering/object.dart:1653:15)
+#4      AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2445:35)
+#5      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#6      SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#7      SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#8      AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#13     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:719:23)
+<asynchronous suspension>
+#14     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#15     main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart:49:9)
+<asynchronous suspension>
+#16     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#17     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+READER_PAGE 477
+READER_PAGE 479
+READER_PAGE 481
+READER_PAGE 483
+READER_PAGE 485
+READER_PAGE 487
+READER_PAGE 489
+READER_PAGE 491
+READER_PAGE 493
+READER_PAGE 495
+READER_PAGE 497
+READER_PAGE 499
+READER_PAGE 501
+READER_PAGE 503
+READER_PAGE 505
+READER_PAGE 507
+READER_PAGE 509
+READER_PAGE 511
+READER_PAGE 513
+READER_PAGE 515
+READER_PAGE 517
+READER_PAGE 519
+READER_PAGE 521
+READER_PAGE 523
+READER_PAGE 525
+READER_PAGE 527
+READER_PAGE 529
+READER_PAGE 531
+READER_PAGE 533
+READER_PAGE 535
+READER_PAGE 537
+READER_PAGE 539
+READER_PAGE 541
+READER_PAGE 543
+READER_PAGE 545
+READER_PAGE 547
+READER_PAGE 549
+READER_PAGE 551
+READER_PAGE 553
+READER_PAGE 555
+READER_PAGE 557
+READER_PAGE 559
+READER_PAGE 561
+READER_PAGE 563
+READER_PAGE 565
+READER_PAGE 567
+READER_PAGE 569
+READER_PAGE 571
+READER_PAGE 573
+READER_PAGE 575
+READER_PAGE 577
+READER_PAGE 579
+READER_PAGE 581
+READER_PAGE 583
+READER_PAGE 585
+READER_PAGE 587
+READER_PAGE 589
+READER_PAGE 591
+READER_PAGE 593
+READER_PAGE 595
+READER_PAGE 597
+READER_PAGE 599
+READER_PAGE 601
+READER_PAGE 603
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+01:22 +60 -4: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0) [E]
+  Test failed. See exception logs above.
+  The test description was: all line ink fits the page at Size(1280.0, 744.0)
+  
+01:22 +60 -4: /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: (tearDownAll)
+01:22 +60 -4: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(1280.0, 744.0)
+  /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(411.4, 866.3)
+  /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(800.0, 1224.0)
+  /home/ahmadjz/Documents/Quran/app/test/line_bounds_test.dart: all line ink fits the page at Size(914.3, 363.4)

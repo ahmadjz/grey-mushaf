@@ -1,0 +1,1788 @@
+[   +7 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[   +4 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +12 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[  +30 ms] Skipping pub get: version match.
+[  +13 ms] Found plugin integration_test at /home/ahmadjz/src/flutter/packages/integration_test/
+[  +14 ms] Found plugin sqflite at /home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite-2.4.5/
+[   +1 ms] Found plugin sqflite_darwin at /home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.4+1/
+[   +1 ms] Found plugin sqflite_android at /home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_android-2.4.5/
+[   +6 ms] Found plugin integration_test at /home/ahmadjz/src/flutter/packages/integration_test/
+[   +8 ms] Found plugin sqflite at /home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite-2.4.5/
+[   +1 ms] Found plugin sqflite_darwin at /home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.4+1/
+[        ] Found plugin sqflite_android at /home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_android-2.4.5/
+[        ] Generating /home/ahmadjz/Documents/Quran/app/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+[  +11 ms] executing: /opt/android-studio/jbr/bin/java -version
+[  +31 ms] Exit code 0 from: /opt/android-studio/jbr/bin/java -version
+[        ] openjdk version "21.0.10" 2026-01-20
+           OpenJDK Runtime Environment (build 21.0.10+-14961533-b1163.108)
+           OpenJDK 64-Bit Server VM (build 21.0.10+-14961533-b1163.108, mixed mode)
+[   +3 ms] Top-level Gradle build file not found, skipping migration of task "clean".
+[        ] executing: /opt/android-studio/jbr/bin/java --version
+[  +28 ms] Exit code 0 from: /opt/android-studio/jbr/bin/java --version
+[        ] openjdk 21.0.10 2026-01-20
+           OpenJDK Runtime Environment (build 21.0.10+-14961533-b1163.108)
+           OpenJDK 64-Bit Server VM (build 21.0.10+-14961533-b1163.108, mixed mode)
+[        ] Version of Java is different than impacted version, no migration attempted.
+[        ] CMake project not found, skipping support Android 15 16k page size migration.
+[        ] The developer has already configured the Built-In Kotlin flag, skipping migration.
+[        ] The developer has already configured the new DSL flag, skipping migration.
+[   +1 ms] Using gradle from /home/ahmadjz/Documents/Quran/app/android/gradlew.
+[   +5 ms] LocalFile: '/home/ahmadjz/Documents/Quran/app/android/build.gradle.kts' doesn't provide an AGP version. Checking settings.
+[        ] LocalFile: '/home/ahmadjz/Documents/Quran/app/android/settings.gradle.kts' provides AGP version: 9.1.0
+[        ] Running Gradle task 'assembleRelease'...
+[        ] executing: [/home/ahmadjz/Documents/Quran/app/android/] /home/ahmadjz/Documents/Quran/app/android/gradlew --full-stacktrace --info -Pverbose=true -Ptarget-platform=android-arm64 -Ptarget=lib/main.dart -Pbase-application-name=android.app.Application -Pdart-defines=RkxVVFRFUl9CVUlMRF9OQU1FPTAuMS4w,RkxVVFRFUl9CVUlMRF9OVU1CRVI9MQ==,RkxVVFRFUl9WRVJTSU9OPTMuNDcuNQ==,RkxVVFRFUl9DSEFOTkVMPVt1c2VyLWJyYW5jaF0=,RkxVVFRFUl9HSVRfVVJMPWh0dHBzOi8vZ2l0aHViLmNvbS9mbHV0dGVyL2ZsdXR0ZXIuZ2l0,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049NmExOWNjYTU2NA==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049YWY3ZTc5NmUxNg==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My4xMy40 -Pdart-obfuscation=false -Ptrack-widget-creation=true -Ptree-shake-icons=true -Psplit-per-abi=true -Pflutter.androidSdkRoot=/home/ahmadjz/Android/Sdk -Pflutter.installedNdkVersions=28.2.13676358 -Pflutter.sdkManagerPath=/home/ahmadjz/Android/Sdk/cmdline-tools/latest/bin/sdkmanager assembleRelease
+[ +214 ms] Initialized native services in: /home/ahmadjz/.gradle/native
+[        ] Initialized jansi services in: /home/ahmadjz/.gradle/native
+[ +107 ms] To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+[        ] Starting process 'Gradle build daemon'. Working directory: /home/ahmadjz/.gradle/daemon/9.3.1 Command: /opt/android-studio/jbr/bin/java --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-opens=java.base/java.nio.charset=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.xml/javax.xml.namespace=ALL-UNNAMED --add-opens=java.base/java.time=ALL-UNNAMED -XX:MaxMetaspaceSize=4G -XX:ReservedCodeCacheSize=512m -XX:+HeapDumpOnOutOfMemoryError -Xmx8G -Dfile.encoding=UTF-8 -Duser.country -Duser.language=en -Duser.variant -cp /home/ahmadjz/.gradle/wrapper/dists/gradle-9.3.1-all/9ot9r568e8zfvvd4mn8rbu1j0/gradle-9.3.1/lib/gradle-daemon-main-9.3.1.jar -javaagent:/home/ahmadjz/.gradle/wrapper/dists/gradle-9.3.1-all/9ot9r568e8zfvvd4mn8rbu1j0/gradle-9.3.1/lib/agents/gradle-instrumentation-agent-9.3.1.jar org.gradle.launcher.daemon.bootstrap.GradleDaemon 9.3.1
+[        ] Successfully started process 'Gradle build daemon'
+[ +499 ms] An attempt to start the daemon took 0.443 secs.
+[        ] The client will now receive all logging from the daemon (pid: 1900564). The daemon log file: /home/ahmadjz/.gradle/daemon/9.3.1/daemon-1900564.out.log
+[        ] Daemon will be stopped at the end of the build 
+[ +199 ms] Using 32 worker leases.
+[        ] Operational build model parameters: {requiresToolingModels=false, parallelProjectExecution=false, configureOnDemand=false, configurationCache=false, configurationCacheParallelStore=false, configurationCacheParallelLoad=true, isolatedProjects=false, parallelProjectConfiguration=false, intermediateModelCache=false, parallelToolingApiActions=false, invalidateCoupledProjects=false, modelAsProjectDependency=false, resilientModelBuilding=false}
+[  +99 ms] Received JVM installation metadata from '/opt/android-studio/jbr': {JAVA_HOME=/opt/android-studio/jbr, JAVA_VERSION=21.0.10, JAVA_VENDOR=JetBrains s.r.o., RUNTIME_NAME=OpenJDK Runtime Environment, RUNTIME_VERSION=21.0.10+-14961533-b1163.108, VM_NAME=OpenJDK 64-Bit Server VM, VM_VERSION=21.0.10+-14961533-b1163.108, VM_VENDOR=JetBrains s.r.o., OS_ARCH=amd64}
+[  +99 ms] Watching the file system is configured to be enabled if available
+[        ] Now considering [/home/ahmadjz/Documents/Quran/app/android] as hierarchies to watch
+[        ] File system watching is active
+[ +199 ms] Starting Build
+[ +200 ms] Now considering [/home/ahmadjz/src/flutter/packages/flutter_tools/gradle, /home/ahmadjz/Documents/Quran/app/android] as hierarchies to watch
+[+1100 ms] > Configure project :gradle
+[        ] Evaluating project ':gradle' using build file '/home/ahmadjz/src/flutter/packages/flutter_tools/gradle/build.gradle.kts'.
+[        ] Resolved plugin [id: 'org.gradle.java-gradle-plugin']
+[        ] Resolved plugin [id: 'org.gradle.groovy']
+[        ] Resolved plugin [id: 'org.gradle.kotlin.kotlin-dsl', version: '6.4.2']
+[        ] Resolved plugin [id: 'org.jetbrains.kotlin.jvm', version: '2.2.20']
+[        ] Build 27ea9d5f-c0fd-4366-a208-774e5f12717a is started
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[        ] kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+[        ] kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+[        ] file or directory '/home/ahmadjz/src/flutter/packages/flutter_tools/gradle/src/main/java', not found
+[        ] Resolved plugin [id: 'dev.flutter.flutter-plugin-loader', version: '1.0.0']
+[        ] Resolved plugin [id: 'com.android.application', version: '9.1.0', apply: false]
+[        ] Resolved plugin [id: 'org.jetbrains.kotlin.android', version: '2.4.0', apply: false]
+[  +99 ms] Resolve mutations for :gradle:checkKotlinGradlePluginConfigurationErrors (Thread[#173,Execution worker,5,main]) started.
+[        ] :gradle:checkKotlinGradlePluginConfigurationErrors (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :gradle:checkKotlinGradlePluginConfigurationErrors SKIPPED
+[        ] Skipping task ':gradle:checkKotlinGradlePluginConfigurationErrors' as task onlyIf 'errorDiagnostics are present' is false.
+[        ] Resolve mutations for :gradle:compileKotlin (Thread[#173,Execution worker,5,main]) started.
+[        ] :gradle:compileKotlin (Thread[#173,Execution worker,5,main]) started.
+[  +99 ms] > Task :gradle:compileKotlin UP-TO-DATE
+[        ] Caching disabled for task ':gradle:compileKotlin' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':gradle:compileKotlin' as it is up-to-date.
+[        ] Resolve mutations for :gradle:compileJava (Thread[#173,Execution worker,5,main]) started.
+[        ] :gradle:compileJava (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :gradle:compileJava NO-SOURCE
+[        ] Skipping task ':gradle:compileJava' as it has no source files and no previous output files.
+[        ] Resolve mutations for :gradle:compileGroovy (Thread[#173,Execution worker,5,main]) started.
+[        ] :gradle:compileGroovy (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :gradle:compileGroovy NO-SOURCE
+[        ] Skipping task ':gradle:compileGroovy' as it has no source files and no previous output files.
+[        ] Resolve mutations for :gradle:pluginDescriptors (Thread[#173,Execution worker,5,main]) started.
+[        ] :gradle:pluginDescriptors (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :gradle:pluginDescriptors UP-TO-DATE
+[        ] Caching disabled for task ':gradle:pluginDescriptors' because:
+[        ]   Build cache is disabled
+[        ]   Not worth caching
+[        ] Skipping task ':gradle:pluginDescriptors' as it is up-to-date.
+[        ] Resolve mutations for :gradle:processResources (Thread[#173,Execution worker,5,main]) started.
+[        ] :gradle:processResources (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :gradle:processResources UP-TO-DATE
+[        ] Caching disabled for task ':gradle:processResources' because:
+[        ]   Build cache is disabled
+[        ]   Not worth caching
+[        ] Skipping task ':gradle:processResources' as it is up-to-date.
+[        ] Resolve mutations for :gradle:classes (Thread[#173,Execution worker,5,main]) started.
+[        ] :gradle:classes (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :gradle:classes UP-TO-DATE
+[        ] Skipping task ':gradle:classes' as it has no actions.
+[        ] Resolve mutations for :gradle:jar (Thread[#173,Execution worker,5,main]) started.
+[        ] :gradle:jar (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :gradle:jar UP-TO-DATE
+[        ] Caching disabled for task ':gradle:jar' because:
+[        ]   Build cache is disabled
+[        ]   Not worth caching
+[        ] Skipping task ':gradle:jar' as it is up-to-date.
+[ +198 ms] Settings evaluated using settings file '/home/ahmadjz/Documents/Quran/app/android/settings.gradle.kts'.
+[        ] Projects loaded. Root project using build file '/home/ahmadjz/Documents/Quran/app/android/build.gradle.kts'.
+[        ] Included projects: [root project 'android', project ':app', project ':integration_test', project ':sqflite_android']
+[+1099 ms] > Configure project :app
+[        ] Evaluating project ':app' using build file '/home/ahmadjz/Documents/Quran/app/android/app/build.gradle.kts'.
+[        ] Resolved plugin [id: 'com.android.application']
+[        ] Resolved plugin [id: 'dev.flutter.flutter-gradle-plugin']
+[        ] WARNING: The option setting 'android.builtInKotlin=false' is deprecated.
+[        ] The current default is 'true'.
+[        ] It will be removed in version 10.0 of the Android Gradle plugin.
+[        ] WARNING: The option setting 'android.newDsl=false' is deprecated.
+[        ] The current default is 'true'.
+[        ] It will be removed in version 10.0 of the Android Gradle plugin.
+[        ] Using default execution profile
+[        ] Build 7c025df0-35f1-40db-a5b5-92a989e15ebf is started
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[        ] Using Kotlin Gradle Plugin gradle813 variant
+[        ] w: [33m[1m⚠️ Deprecated 'org.jetbrains.kotlin.android' plugin usage[0m[0m
+[        ] The 'org.jetbrains.kotlin.android' plugin in project ':app' is no longer required for Kotlin support since AGP 9.0.
+[        ] [32m[1mSolution:[0m[0m
+[        ] [32m[3mRemove both `android.builtInKotlin=true` and `android.newDsl=false` from `gradle.properties`, then migrate to built-in Kotlin.[0m[0m
+[        ] [36mSee [0m[34mhttps://kotl.in/gradle/agp-built-in-kotlin[0m[36m for more details.[0m
+[        ] > Configure project :
+[        ] Evaluating root project 'android' using build file '/home/ahmadjz/Documents/Quran/app/android/build.gradle.kts'.
+[ +298 ms] > Configure project :integration_test
+[        ] Evaluating project ':integration_test' using build file '/home/ahmadjz/src/flutter/packages/integration_test/android/build.gradle.kts'.
+[        ] Resolved plugin [id: 'com.android.library']
+[        ] Using default execution profile
+[        ] w: [33m[1m⚠️ Deprecated 'org.jetbrains.kotlin.android' plugin usage[0m[0m
+[        ] The 'org.jetbrains.kotlin.android' plugin in project ':integration_test' is no longer required for Kotlin support since AGP 9.0.
+[        ] [32m[1mSolution:[0m[0m
+[        ] [32m[3mRemove both `android.builtInKotlin=true` and `android.newDsl=false` from `gradle.properties`, then migrate to built-in Kotlin.[0m[0m
+[        ] [36mSee [0m[34mhttps://kotl.in/gradle/agp-built-in-kotlin[0m[36m for more details.[0m
+[ +199 ms] > Configure project :sqflite_android
+[        ] Evaluating project ':sqflite_android' using build file '/home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_android-2.4.5/android/build.gradle'.
+[        ] Using default execution profile
+[        ] w: [33m[1m⚠️ Deprecated 'org.jetbrains.kotlin.android' plugin usage[0m[0m
+[        ] The 'org.jetbrains.kotlin.android' plugin in project ':sqflite_android' is no longer required for Kotlin support since AGP 9.0.
+[        ] [32m[1mSolution:[0m[0m
+[        ] [32m[3mRemove both `android.builtInKotlin=true` and `android.newDsl=false` from `gradle.properties`, then migrate to built-in Kotlin.[0m[0m
+[        ] [36mSee [0m[34mhttps://kotl.in/gradle/agp-built-in-kotlin[0m[36m for more details.[0m
+[        ] All projects evaluated.
+[        ] Task name matched 'assembleRelease'
+[        ] Selected primary task 'assembleRelease' from project :
+[ +399 ms] Adding -Xuse-inline-scopes-numbers Kotlin compiler flag for task :app:compileDebugAndroidTestKotlin
+[        ] Adding -Xuse-inline-scopes-numbers Kotlin compiler flag for task :app:compileDebugKotlin
+[  +99 ms] Adding -Xuse-inline-scopes-numbers Kotlin compiler flag for task :app:compileProfileKotlin
+[ +200 ms] Tasks to be executed: [task ':app:ReleaseMinSdkCheck', task ':app:verifyMushafBundle', task ':app:compileFlutterBuildRelease', task ':app:copyJniLibsflutterBuildRelease', task ':app:validateCompileSdkVersion', task ':app:preBuild', task ':app:preReleaseBuild', task ':app:mergeReleaseJniLibFolders', task ':sqflite_android:preBuild', task ':sqflite_android:preReleaseBuild', task ':sqflite_android:mergeReleaseJniLibFolders', task ':sqflite_android:mergeReleaseNativeLibs', task ':sqflite_android:copyReleaseJniLibsProjectOnly', task ':app:mergeReleaseNativeLibs', task ':app:stripReleaseDebugSymbols', task ':app:extractReleaseNativeSymbolTables', task ':app:mergeReleaseNativeDebugMetadata', task ':sqflite_android:checkKotlinGradlePluginConfigurationErrors', task ':sqflite_android:generateReleaseResources', task ':sqflite_android:packageReleaseResources', task ':sqflite_android:processReleaseNavigationResources', task ':sqflite_android:parseReleaseLocalResources', task ':sqflite_android:generateReleaseRFile', task ':sqflite_android:compileReleaseKotlin', task ':sqflite_android:javaPreCompileRelease', task ':sqflite_android:compileReleaseJavaWithJavac', task ':sqflite_android:mergeReleaseGeneratedProguardFiles', task ':sqflite_android:exportReleaseConsumerProguardFiles', task ':app:buildKotlinToolingMetadata', task ':app:checkReleaseDuplicateClasses', task ':app:checkKotlinGradlePluginConfigurationErrors', task ':app:cleanMergeReleaseAssets', task ':app:generateReleaseAssets', task ':sqflite_android:generateReleaseAssets', task ':sqflite_android:mergeReleaseAssets', task ':app:mergeReleaseAssets', task ':app:copyFlutterAssetsRelease', task ':app:generateReleaseResources', task ':app:packageReleaseResources', task ':app:processReleaseNavigationResources', task ':app:parseReleaseLocalResources', task ':app:generateReleaseRFile', task ':sqflite_android:bundleLibCompileToJarRelease', task ':app:compileReleaseKotlin', task ':app:javaPreCompileRelease', task ':app:compileReleaseJavaWithJavac', task ':sqflite_android:prepareReleaseArtProfile', task ':app:mergeReleaseArtProfile', task ':sqflite_android:writeReleaseAarMetadata', task ':app:checkReleaseAarMetadata', task ':app:mapReleaseSourceSetPaths', task ':app:compileReleaseNavigationResources', task ':app:mergeReleaseResources', task ':app:createReleaseCompatibleScreenManifests', task ':app:extractDeepLinksRelease', task ':sqflite_android:extractDeepLinksRelease', task ':sqflite_android:processReleaseManifest', task ':app:processReleaseMainManifest', task ':app:outputReleaseAppLinkSettings', task ':app:processReleaseManifest', task ':app:processReleaseManifestForPackage', task ':sqflite_android:mapReleaseSourceSetPaths', task ':sqflite_android:compileReleaseLibraryResources', task ':app:processReleaseResources', task ':sqflite_android:bundleLibRuntimeToJarRelease', task ':app:expandReleaseArtProfileWildcards', task ':app:extractProguardFiles', task ':app:mergeReleaseGeneratedProguardFiles', task ':app:processReleaseJavaRes', task ':sqflite_android:processReleaseJavaRes', task ':app:mergeReleaseJavaResource', task ':app:mergeReleaseStartupProfile', task ':app:minifyReleaseWithR8', task ':app:compileReleaseArtProfile', task ':app:compressReleaseAssets', task ':app:extractReleaseVersionControlInfo', task ':sqflite_android:createFullJarRelease', task ':sqflite_android:extractProguardFiles', task ':sqflite_android:generateReleaseLintModel', task ':sqflite_android:prepareLintJarForPublish', task ':app:generateReleaseLintVitalReportModel', task ':sqflite_android:checkReleaseAarMetadata', task ':sqflite_android:stripReleaseDebugSymbols', task ':sqflite_android:copyReleaseJniLibsProjectAndLocalJars', task ':sqflite_android:extractDeepLinksForAarRelease', task ':sqflite_android:extractReleaseAnnotations', task ':sqflite_android:mergeReleaseConsumerProguardFiles', task ':sqflite_android:mergeReleaseJavaResource', task ':sqflite_android:syncReleaseLibJars', task ':sqflite_android:bundleReleaseLocalLintAar', task ':sqflite_android:lintVitalAnalyzeRelease', task ':sqflite_android:writeReleaseLintModelMetadata', task ':app:lintVitalAnalyzeRelease', task ':sqflite_android:generateReleaseLintVitalModel', task ':app:lintVitalReportRelease', task ':app:lintVitalRelease', task ':app:convertShrunkResourcesToBinaryRelease', task ':app:optimizeReleaseResources', task ':app:collectReleaseDependencies', task ':app:sdkReleaseDependencyData', task ':app:validateSigningRelease', task ':app:writeReleaseAppMetadata', task ':app:writeReleaseSigningConfigVersions', task ':app:packageRelease', task ':app:createReleaseApkListingFileRedirect', task ':app:assembleRelease', task ':integration_test:preBuild', task ':integration_test:preReleaseBuild', task ':integration_test:checkReleaseAarMetadata', task ':integration_test:mergeReleaseJniLibFolders', task ':integration_test:mergeReleaseNativeLibs', task ':integration_test:stripReleaseDebugSymbols', task ':integration_test:copyReleaseJniLibsProjectAndLocalJars', task ':integration_test:extractDeepLinksForAarRelease', task ':integration_test:checkKotlinGradlePluginConfigurationErrors', task ':integration_test:generateReleaseResources', task ':integration_test:packageReleaseResources', task ':integration_test:processReleaseNavigationResources', task ':integration_test:parseReleaseLocalResources', task ':integration_test:generateReleaseRFile', task ':integration_test:compileReleaseKotlin', task ':integration_test:extractReleaseAnnotations', task ':integration_test:generateReleaseAssets', task ':integration_test:mergeReleaseAssets', task ':integration_test:javaPreCompileRelease', task ':integration_test:compileReleaseJavaWithJavac', task ':integration_test:mergeReleaseGeneratedProguardFiles', task ':integration_test:mergeReleaseConsumerProguardFiles', task ':integration_test:prepareLintJarForPublish', task ':integration_test:prepareReleaseArtProfile', task ':integration_test:processReleaseManifest', task ':integration_test:processReleaseJavaRes', task ':integration_test:mergeReleaseJavaResource', task ':integration_test:syncReleaseLibJars', task ':integration_test:writeReleaseAarMetadata', task ':integration_test:bundleReleaseAar', task ':integration_test:mapReleaseSourceSetPaths', task ':integration_test:mergeReleaseResources', task ':integration_test:verifyReleaseResources', task ':integration_test:assembleRelease', task ':sqflite_android:bundleReleaseAar', task ':sqflite_android:mergeReleaseResources', task ':sqflite_android:verifyReleaseResources', task ':sqflite_android:assembleRelease']
+[   +1 ms] Tasks that were excluded: []
+[        ] work action Parameters of FilterShrinkerRulesTransform (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] work action Parameters of ExtractAarTransform (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] Resolve mutations for :app:ReleaseMinSdkCheck (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:ReleaseMinSdkCheck (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:ReleaseMinSdkCheck
+[        ] Caching disabled for task ':app:ReleaseMinSdkCheck' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:ReleaseMinSdkCheck' is not up-to-date because:
+[        ]   Task has not declared any outputs despite executing actions.
+[        ] Resolve mutations for :app:verifyMushafBundle (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:verifyMushafBundle (Thread[#175,Execution worker Thread 3,5,main]) started.
+[ +197 ms] > Task :app:verifyMushafBundle
+[        ] Caching disabled for task ':app:verifyMushafBundle' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:verifyMushafBundle' is not up-to-date because:
+[        ]   Task has not declared any outputs despite executing actions.
+[        ] Resolve mutations for :app:compileFlutterBuildRelease (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:compileFlutterBuildRelease (Thread[#175,Execution worker Thread 3,5,main]) started.
+[+1999 ms] > Task :app:compileFlutterBuildRelease
+[        ] Caching disabled for task ':app:compileFlutterBuildRelease' because:
+[        ]   Build cache is disabled
+[        ]   Caching has not been enabled for the task
+[        ] Task ':app:compileFlutterBuildRelease' is not up-to-date because:
+[        ]   Value of input property 'targetPlatformValues' has changed for task ':app:compileFlutterBuildRelease'
+[        ]   Value of input property 'verbose' has changed for task ':app:compileFlutterBuildRelease'
+[        ] Starting process 'command '/home/ahmadjz/src/flutter/bin/flutter''. Working directory: /home/ahmadjz/Documents/Quran/app Command: /home/ahmadjz/src/flutter/bin/flutter --verbose assemble --no-version-check --depfile /home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release/flutter_build.d --output /home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release -dTargetFile=lib/main.dart -dTargetPlatform=android -dBuildMode=release -dTrackWidgetCreation=true -dTreeShakeIcons=true --DartDefines=RkxVVFRFUl9CVUlMRF9OQU1FPTAuMS4w,RkxVVFRFUl9CVUlMRF9OVU1CRVI9MQ==,RkxVVFRFUl9WRVJTSU9OPTMuNDcuNQ==,RkxVVFRFUl9DSEFOTkVMPVt1c2VyLWJyYW5jaF0=,RkxVVFRFUl9HSVRfVVJMPWh0dHBzOi8vZ2l0aHViLmNvbS9mbHV0dGVyL2ZsdXR0ZXIuZ2l0,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049NmExOWNjYTU2NA==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049YWY3ZTc5NmUxNg==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My4xMy40 -dFlavor= -dAndroidArchs=android-arm64 -dMinSdkVersion=24 android_aot_bundle_release_android-arm64
+[        ] Successfully started process 'command '/home/ahmadjz/src/flutter/bin/flutter''
+[        ] [   +7 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[        ] [   +4 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] [  +17 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[        ] [   +4 ms] Initializing file store
+[        ] [   +9 ms] Done initializing file store
+[        ] [  +42 ms] Skipping target: gen_dart_plugin_registrant
+[        ] [        ] Skipping target: build_hooks
+[        ] [        ] Skipping target: gen_localizations
+[        ] [ +149 ms] kernel_snapshot_program: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: /home/ahmadjz/Documents/Quran/app/lib/main.dart,/home/ahmadjz/Documents/Quran/app/lib/flat_ink.dart}
+[        ] [   +4 ms] /home/ahmadjz/src/flutter/bin/cache/dart-sdk/bin/dartaotruntime /home/ahmadjz/src/flutter/bin/cache/dart-sdk/bin/snapshots/frontend_server_aot.dart.snapshot --sdk-root /home/ahmadjz/src/flutter/bin/cache/artifacts/engine/common/flutter_patched_sdk_product/ --target=flutter --no-print-incremental-dependencies -DFLUTTER_BUILD_NAME=0.1.0 -DFLUTTER_BUILD_NUMBER=1 -DFLUTTER_VERSION=3.47.5 -DFLUTTER_CHANNEL=[user-branch] -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=6a19cca564 -DFLUTTER_ENGINE_REVISION=af7e796e16 -DFLUTTER_DART_VERSION=3.13.4 -DFLUTTER_APP_FLAVOR= -Ddart.vm.profile=false -Ddart.vm.product=true --delete-tostring-package-uri=dart:ui --delete-tostring-package-uri=package:flutter --aot --tfa --target-os android --packages /home/ahmadjz/Documents/Quran/app/.dart_tool/package_config.json --output-dill /home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/app.dill --depfile /home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/kernel_snapshot_program.d --source file:///home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/dart_plugin_registrant.dart --source package:flutter/src/dart_plugin_registrant.dart -Dflutter.dart_plugin_registrant=file:///home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/dart_plugin_registrant.dart --verbosity=error --recorded-uses=/home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/recorded_uses.json package:greymushaf/main.dart
+[+3796 ms] [+5409 ms] kernel_snapshot_program: Complete
+[ +199 ms] [ +161 ms] Skipping target: link_hooks
+[        ] [        ] android_aot_release_android-arm64: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: /home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/app.dill}
+[        ] [   +1 ms] targetingApplePlatform = false
+[        ] [        ] extractAppleDebugSymbols = true
+[        ] [        ] targetingAndroidPlatform = true
+[        ] [        ] executing: /home/ahmadjz/src/flutter/bin/cache/artifacts/engine/android-arm64-release/linux-x64/gen_snapshot --deterministic --snapshot_kind=app-aot-elf --elf=/home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/arm64-v8a/app.so /home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/app.dill
+[        ] [        ] Skipping target: install_code_assets
+[        ] [   +5 ms] invalidated build due to missing files: /home/ahmadjz/Documents/Quran/app/DOES_NOT_EXIST_RERUN_FOR_WILDCARD342574924
+[+1099 ms] [+1163 ms] aot_android_asset_bundle: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: /home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/app.dill, InvalidatedReasonKind.inputMissing: The following inputs were missing: /home/ahmadjz/Documents/Quran/app/DOES_NOT_EXIST_RERUN_FOR_WILDCARD342574924}
+[ +100 ms] [ +103 ms] Manifest contained wildcard assets. Inserting missing file into build graph to force rerun. for more information see #56466.
+[ +100 ms] [  +58 ms] impellerc command: [/home/ahmadjz/src/flutter/bin/cache/artifacts/engine/linux-x64/impellerc, --sksl, --runtime-stage-gles, --runtime-stage-gles3, --runtime-stage-vulkan, --iplr, --sl=/home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release/flutter_assets/shaders/ink_sparkle.frag, --spirv=/home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release/flutter_assets/shaders/ink_sparkle.frag.spirv, --input=/home/ahmadjz/src/flutter/packages/flutter/lib/src/material/shaders/ink_sparkle.frag, --input-type=frag, --include=/home/ahmadjz/src/flutter/packages/flutter/lib/src/material/shaders, --include=/home/ahmadjz/src/flutter/bin/cache/artifacts/engine/linux-x64/shader_lib]
+[        ] [        ] impellerc command: [/home/ahmadjz/src/flutter/bin/cache/artifacts/engine/linux-x64/impellerc, --sksl, --runtime-stage-gles, --runtime-stage-gles3, --runtime-stage-vulkan, --iplr, --sl=/home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release/flutter_assets/shaders/stretch_effect.frag, --spirv=/home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release/flutter_assets/shaders/stretch_effect.frag.spirv, --input=/home/ahmadjz/src/flutter/packages/flutter/lib/src/widgets/shaders/stretch_effect.frag, --input-type=frag, --include=/home/ahmadjz/src/flutter/packages/flutter/lib/src/widgets/shaders, --include=/home/ahmadjz/src/flutter/bin/cache/artifacts/engine/linux-x64/shader_lib]
+[        ] [  +20 ms] Running command: /home/ahmadjz/src/flutter/bin/cache/dart-sdk/bin/dart /home/ahmadjz/src/flutter/bin/cache/artifacts/engine/linux-x64/const_finder.dart.snapshot --kernel-file /home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/app.dill --class-library-uri package:flutter/src/widgets/icon_data.dart --class-name IconData --annotation-class-name _StaticIconProvider --annotation-class-library-uri package:flutter/src/widgets/icon_data.dart
+[ +299 ms] [ +321 ms] Expected to find fontFamily for constant IconData with codepoint: 128842, but found fontFamily: null. This usually means you are relying on the system font. Alternatively, font families in an IconData class can be provided in the assets section of your pubspec.yaml, or you are missing "uses-material-design: true".
+[        ] [        ] Running font-subset: /home/ahmadjz/src/flutter/bin/cache/artifacts/engine/linux-x64/font-subset /home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release/flutter_assets/fonts/MaterialIcons-Regular.otf /home/ahmadjz/src/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf, using codepoints 57502 57501 57706
+[        ] [   +4 ms] Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 1096 bytes (99.9% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+[        ] [   +3 ms] aot_android_asset_bundle: Complete
+[+2799 ms] [+2721 ms] android_aot_release_android-arm64: Complete
+[        ] [  +15 ms] android_aot_bundle_release_android-arm64: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: /home/ahmadjz/Documents/Quran/app/.dart_tool/flutter_build/430e303bb51b05f59192513edc9c1894/arm64-v8a/app.so, InvalidatedReasonKind.outputMissing: The following outputs were missing: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release/arm64-v8a/app.so}
+[        ] [   +2 ms] android_aot_bundle_release_android-arm64: Complete
+[        ] [  +15 ms] Persisting file store
+[        ] [   +7 ms] Done persisting file store
+[        ] [  +16 ms] build succeeded.
+[        ] [   +2 ms] "flutter assemble" took 10,271ms.
+[        ] [        ] Running 1 shutdown hook
+[        ] [        ] Shutdown hooks complete
+[        ] [        ] exiting with code 0
+[ +199 ms] Resolve mutations for :app:copyJniLibsflutterBuildRelease (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:copyJniLibsflutterBuildRelease (Thread[#175,Execution worker Thread 3,5,main]) started.
+[  +99 ms] > Task :app:copyJniLibsflutterBuildRelease
+[        ] Caching disabled for task ':app:copyJniLibsflutterBuildRelease' because:
+[        ]   Build cache is disabled
+[        ]   Caching has not been enabled for the task
+[        ] Task ':app:copyJniLibsflutterBuildRelease' is not up-to-date because:
+[        ]   Value of input property 'targetPlatforms' has changed for task ':app:copyJniLibsflutterBuildRelease'
+[        ] file or directory '/home/ahmadjz/Documents/Quran/app/build/app/intermediates/flutter/release/native_assets/jniLibs/lib/arm64-v8a', not found
+[        ] Resolve mutations for :app:validateCompileSdkVersion (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:validateCompileSdkVersion (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:validateCompileSdkVersion
+[        ] Caching disabled for task ':app:validateCompileSdkVersion' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:validateCompileSdkVersion' is not up-to-date because:
+[        ]   Task has not declared any outputs despite executing actions.
+[        ] Resolve mutations for :app:preBuild (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:preBuild (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:preBuild
+[        ] Skipping task ':app:preBuild' as it has no actions.
+[        ] Resolve mutations for :app:preReleaseBuild (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:preReleaseBuild (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:preReleaseBuild
+[        ] Skipping task ':app:preReleaseBuild' as it has no actions.
+[        ] Resolve mutations for :app:mergeReleaseJniLibFolders (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:mergeReleaseJniLibFolders (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:mergeReleaseJniLibFolders
+[        ] Caching disabled for task ':app:mergeReleaseJniLibFolders' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Task ':app:mergeReleaseJniLibFolders' is not up-to-date because:
+[        ]   Input property 'sourceFolderInputs' file /home/ahmadjz/Documents/Quran/app/build/app/generated/jniLibs/copyJniLibsflutterBuildRelease/x86_64 has been removed.
+[        ]   Input property 'sourceFolderInputs' file /home/ahmadjz/Documents/Quran/app/build/app/generated/jniLibs/copyJniLibsflutterBuildRelease/x86_64/libapp.so has been removed.
+[        ]   Input property 'sourceFolderInputs' file /home/ahmadjz/Documents/Quran/app/build/app/generated/jniLibs/copyJniLibsflutterBuildRelease/arm64-v8a has been added.
+[        ]   and more...
+[        ] Resolve mutations for :sqflite_android:preBuild (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :sqflite_android:preBuild (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :sqflite_android:preBuild UP-TO-DATE
+[        ] Skipping task ':sqflite_android:preBuild' as it has no actions.
+[        ] Resolve mutations for :sqflite_android:preReleaseBuild (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :sqflite_android:preReleaseBuild (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :sqflite_android:preReleaseBuild UP-TO-DATE
+[        ] Skipping task ':sqflite_android:preReleaseBuild' as it has no actions.
+[        ] Resolve mutations for :sqflite_android:mergeReleaseJniLibFolders (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :sqflite_android:mergeReleaseJniLibFolders (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :sqflite_android:mergeReleaseJniLibFolders UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:mergeReleaseJniLibFolders' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':sqflite_android:mergeReleaseJniLibFolders' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:mergeReleaseNativeLibs (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :sqflite_android:mergeReleaseNativeLibs (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :sqflite_android:mergeReleaseNativeLibs NO-SOURCE
+[        ] Skipping task ':sqflite_android:mergeReleaseNativeLibs' as it has no source files and no previous output files.
+[        ] Resolve mutations for :sqflite_android:copyReleaseJniLibsProjectOnly (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :sqflite_android:copyReleaseJniLibsProjectOnly (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :sqflite_android:copyReleaseJniLibsProjectOnly UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:copyReleaseJniLibsProjectOnly' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:copyReleaseJniLibsProjectOnly' as it is up-to-date.
+[        ] work action resolve jni (project :sqflite_android) (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] Resolve mutations for :app:mergeReleaseNativeLibs (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:mergeReleaseNativeLibs (Thread[#175,Execution worker Thread 3,5,main]) started.
+[  +97 ms] Resolve mutations for :sqflite_android:checkKotlinGradlePluginConfigurationErrors (Thread[#176,Execution worker Thread 4,5,main]) started.
+[        ] :sqflite_android:checkKotlinGradlePluginConfigurationErrors (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:checkKotlinGradlePluginConfigurationErrors SKIPPED
+[        ] Skipping task ':sqflite_android:checkKotlinGradlePluginConfigurationErrors' as task onlyIf 'errorDiagnostics are present' is false.
+[        ] Resolve mutations for :sqflite_android:generateReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:generateReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:generateReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:generateReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:generateReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:packageReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:packageReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:packageReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:packageReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:packageReleaseResources' as it is up-to-date.
+[        ] work action resolve packageReleaseResources (project :sqflite_android) (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:processReleaseNavigationResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:processReleaseNavigationResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:processReleaseNavigationResources UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:processReleaseNavigationResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:processReleaseNavigationResources' as it is up-to-date.
+[        ] work action resolve release (project :sqflite_android) (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:parseReleaseLocalResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:parseReleaseLocalResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:parseReleaseLocalResources UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:parseReleaseLocalResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:parseReleaseLocalResources' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:generateReleaseRFile (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:generateReleaseRFile (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:generateReleaseRFile UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:generateReleaseRFile' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:generateReleaseRFile' as it is up-to-date.
+[        ] work action resolve package-aware-r.txt (project :sqflite_android) (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:compileReleaseKotlin (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:compileReleaseKotlin (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:compileReleaseKotlin NO-SOURCE
+[        ] Skipping task ':sqflite_android:compileReleaseKotlin' as it has no source files and no previous output files.
+[        ] Resolve mutations for :sqflite_android:javaPreCompileRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:javaPreCompileRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:javaPreCompileRelease UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:javaPreCompileRelease' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:javaPreCompileRelease' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:compileReleaseJavaWithJavac (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:compileReleaseJavaWithJavac (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:compileReleaseJavaWithJavac UP-TO-DATE
+[        ] Custom actions are attached to task ':sqflite_android:compileReleaseJavaWithJavac'.
+[        ] Caching disabled for task ':sqflite_android:compileReleaseJavaWithJavac' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:compileReleaseJavaWithJavac' as it is up-to-date.
+[        ] No compile result for :sqflite_android:compileReleaseJavaWithJavac
+[        ] No compile result for :sqflite_android:compileReleaseJavaWithJavac
+[        ] No compile result for :sqflite_android:compileReleaseJavaWithJavac
+[        ] Resolve mutations for :sqflite_android:mergeReleaseGeneratedProguardFiles (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:mergeReleaseGeneratedProguardFiles (Thread[#172,included builds,5,main]) started.
+[        ] > Task :sqflite_android:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:mergeReleaseGeneratedProguardFiles' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':sqflite_android:mergeReleaseGeneratedProguardFiles' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:exportReleaseConsumerProguardFiles (Thread[#172,included builds,5,main]) started.
+[        ] :sqflite_android:exportReleaseConsumerProguardFiles (Thread[#172,included builds,5,main]) started.
+[        ] > Task :sqflite_android:exportReleaseConsumerProguardFiles UP-TO-DATE
+[        ] file or directory '/home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_android-2.4.5/android/src/main/keepRules', not found
+[        ] file or directory '/home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_android-2.4.5/android/src/release/keepRules', not found
+[        ] Caching disabled for task ':sqflite_android:exportReleaseConsumerProguardFiles' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:exportReleaseConsumerProguardFiles' as it is up-to-date.
+[        ] work action resolve exportReleaseConsumerProguardFiles (project :sqflite_android) (Thread[#172,included builds,5,main]) started.
+[        ] FilterShrinkerRulesTransform (Thread[#172,included builds,5,main]) started.
+[        ] Resolve mutations for :app:buildKotlinToolingMetadata (Thread[#181,Execution worker Thread 9,5,main]) started.
+[        ] :app:buildKotlinToolingMetadata (Thread[#181,Execution worker Thread 9,5,main]) started.
+[  +97 ms] > Task :app:buildKotlinToolingMetadata UP-TO-DATE
+[        ] Caching disabled for task ':app:buildKotlinToolingMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':app:buildKotlinToolingMetadata' as it is up-to-date.
+[        ] Resolve mutations for :app:checkReleaseDuplicateClasses (Thread[#181,Execution worker Thread 9,5,main]) started.
+[        ] :app:checkReleaseDuplicateClasses (Thread[#181,Execution worker Thread 9,5,main]) started.
+[        ] Resolve mutations for :app:checkKotlinGradlePluginConfigurationErrors (Thread[#192,Execution worker Thread 20,5,main]) started.
+[        ] :app:checkKotlinGradlePluginConfigurationErrors (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] > Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+[        ] Skipping task ':app:checkKotlinGradlePluginConfigurationErrors' as task onlyIf 'errorDiagnostics are present' is false.
+[        ] Resolve mutations for :app:cleanMergeReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :app:cleanMergeReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] > Task :app:checkReleaseDuplicateClasses
+[        ] Caching disabled for task ':app:checkReleaseDuplicateClasses' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:checkReleaseDuplicateClasses' is not up-to-date because:
+[        ]   Input property 'enumeratedClasses' file /home/ahmadjz/.gradle/caches/9.3.1/transforms/967c9d07b6b505dfaecd75ae6a841456/transformed/x86_64_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded has been removed.
+[        ]   Input property 'enumeratedClasses' file /home/ahmadjz/.gradle/caches/9.3.1/transforms/92d0f25897b0ce4cea6718d3ecc60c3c/transformed/arm64_v8a_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded has been added.
+[        ] > Task :app:cleanMergeReleaseAssets
+[        ] Caching disabled for task ':app:cleanMergeReleaseAssets' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:cleanMergeReleaseAssets' is not up-to-date because:
+[        ]   Task has not declared any outputs despite executing actions.
+[        ] Resolve mutations for :app:generateReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :app:generateReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] > Task :app:generateReleaseAssets UP-TO-DATE
+[        ] Skipping task ':app:generateReleaseAssets' as it has no actions.
+[        ] Resolve mutations for :sqflite_android:generateReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :sqflite_android:generateReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] > Task :sqflite_android:generateReleaseAssets UP-TO-DATE
+[        ] Skipping task ':sqflite_android:generateReleaseAssets' as it has no actions.
+[        ] Resolve mutations for :sqflite_android:mergeReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :sqflite_android:mergeReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] > Task :sqflite_android:mergeReleaseAssets UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:mergeReleaseAssets' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':sqflite_android:mergeReleaseAssets' as it is up-to-date.
+[        ] work action resolve mergeReleaseAssets (project :sqflite_android) (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] Resolve mutations for :app:mergeReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :app:mergeReleaseAssets (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] > Task :app:mergeReleaseAssets
+[        ] Caching disabled for task ':app:mergeReleaseAssets' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Task ':app:mergeReleaseAssets' is not up-to-date because:
+[        ]   Output property 'outputDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/assets/release/mergeReleaseAssets has been removed.
+[        ] The input changes require a full rebuild for incremental task ':app:mergeReleaseAssets'.
+[        ] Resolve mutations for :app:copyFlutterAssetsRelease (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:copyFlutterAssetsRelease (Thread[#173,Execution worker,5,main]) started.
+[ +198 ms] > Task :app:mergeReleaseNativeLibs
+[        ] Caching disabled for task ':app:mergeReleaseNativeLibs' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:mergeReleaseNativeLibs' is not up-to-date because:
+[        ]   Input property 'externalLibNativeLibs' file /home/ahmadjz/.gradle/caches/9.3.1/transforms/0087ad7ea3f9a7838a79f6f35e8d8bce/transformed/x86_64_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/x86_64/libflutter.so has been removed.
+[        ]   Input property 'externalLibNativeLibs' file /home/ahmadjz/.gradle/caches/9.3.1/transforms/65be3ee3868288c6758f059ad0e127a4/transformed/arm64_v8a_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/arm64-v8a/libflutter.so has been added.
+[        ]   Input property 'projectNativeLibs' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/x86_64/libapp.so has been removed.
+[        ]   and more...
+[  +99 ms] > Task :app:copyFlutterAssetsRelease
+[        ] Caching disabled for task ':app:copyFlutterAssetsRelease' because:
+[        ]   Build cache is disabled
+[        ]   Not worth caching
+[        ] Task ':app:copyFlutterAssetsRelease' is not up-to-date because:
+[        ]   Output property 'destinationDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/assets/release/mergeReleaseAssets/flutter_assets has been removed.
+[        ]   Output property 'destinationDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/assets/release/mergeReleaseAssets/flutter_assets/AssetManifest.bin has been removed.
+[        ]   Output property 'destinationDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/assets/release/mergeReleaseAssets/flutter_assets/FontManifest.json has been removed.
+[        ]   and more...
+[        ] Resolve mutations for :app:stripReleaseDebugSymbols (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:stripReleaseDebugSymbols (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] Resolve mutations for :app:generateReleaseResources (Thread[#182,Execution worker Thread 10,5,main]) started.
+[        ] :app:generateReleaseResources (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:generateReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':app:generateReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:generateReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :app:packageReleaseResources (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:packageReleaseResources (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:packageReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':app:packageReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:packageReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :app:processReleaseNavigationResources (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:processReleaseNavigationResources (Thread[#173,Execution worker,5,main]) started.
+[  +98 ms] > Task :app:processReleaseNavigationResources UP-TO-DATE
+[        ] Caching disabled for task ':app:processReleaseNavigationResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:processReleaseNavigationResources' as it is up-to-date.
+[        ] Resolve mutations for :app:parseReleaseLocalResources (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:parseReleaseLocalResources (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:parseReleaseLocalResources UP-TO-DATE
+[        ] Caching disabled for task ':app:parseReleaseLocalResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:parseReleaseLocalResources' as it is up-to-date.
+[        ] Resolve mutations for :app:generateReleaseRFile (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:generateReleaseRFile (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:generateReleaseRFile UP-TO-DATE
+[        ] Caching disabled for task ':app:generateReleaseRFile' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:generateReleaseRFile' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:bundleLibCompileToJarRelease (Thread[#173,Execution worker,5,main]) started.
+[        ] :sqflite_android:bundleLibCompileToJarRelease (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :sqflite_android:bundleLibCompileToJarRelease UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:bundleLibCompileToJarRelease' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':sqflite_android:bundleLibCompileToJarRelease' as it is up-to-date.
+[        ] work action resolve classes.jar (project :sqflite_android) (Thread[#173,Execution worker,5,main]) started.
+[        ] Resolve mutations for :app:compileReleaseKotlin (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:compileReleaseKotlin (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:compileReleaseKotlin UP-TO-DATE
+[        ] Caching disabled for task ':app:compileReleaseKotlin' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:compileReleaseKotlin' as it is up-to-date.
+[        ] Resolve mutations for :app:javaPreCompileRelease (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:javaPreCompileRelease (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:javaPreCompileRelease UP-TO-DATE
+[        ] Caching disabled for task ':app:javaPreCompileRelease' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:javaPreCompileRelease' as it is up-to-date.
+[        ] Resolve mutations for :app:compileReleaseJavaWithJavac (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:compileReleaseJavaWithJavac (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:compileReleaseJavaWithJavac UP-TO-DATE
+[        ] Custom actions are attached to task ':app:compileReleaseJavaWithJavac'.
+[        ] Caching disabled for task ':app:compileReleaseJavaWithJavac' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:compileReleaseJavaWithJavac' as it is up-to-date.
+[        ] No compile result for :app:compileReleaseJavaWithJavac
+[        ] No compile result for :app:compileReleaseJavaWithJavac
+[        ] No compile result for :app:compileReleaseJavaWithJavac
+[        ] Resolve mutations for :sqflite_android:prepareReleaseArtProfile (Thread[#173,Execution worker,5,main]) started.
+[        ] :sqflite_android:prepareReleaseArtProfile (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :sqflite_android:prepareReleaseArtProfile UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:prepareReleaseArtProfile' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:prepareReleaseArtProfile' as it is up-to-date.
+[        ] work action resolve baseline-prof.txt (project :sqflite_android) (Thread[#173,Execution worker,5,main]) started.
+[        ] Resolve mutations for :app:mergeReleaseArtProfile (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:mergeReleaseArtProfile (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:mergeReleaseArtProfile UP-TO-DATE
+[        ] Caching disabled for task ':app:mergeReleaseArtProfile' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':app:mergeReleaseArtProfile' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:writeReleaseAarMetadata (Thread[#173,Execution worker,5,main]) started.
+[        ] :sqflite_android:writeReleaseAarMetadata (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :sqflite_android:writeReleaseAarMetadata UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:writeReleaseAarMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:writeReleaseAarMetadata' as it is up-to-date.
+[        ] work action resolve aar-metadata.properties (project :sqflite_android) (Thread[#173,Execution worker,5,main]) started.
+[        ] Resolve mutations for :app:checkReleaseAarMetadata (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:checkReleaseAarMetadata (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:stripReleaseDebugSymbols
+[        ] Caching disabled for task ':app:stripReleaseDebugSymbols' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:stripReleaseDebugSymbols' is not up-to-date because:
+[        ]   Input property 'inputDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libapp.so has been removed.
+[        ]   Input property 'inputDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libflutter.so has been removed.
+[        ]   Input property 'inputDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libapp.so has been added.
+[        ]   and more...
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is /home/ahmadjz/Android/Sdk
+[        ] C/C++: sdkFolder is /home/ahmadjz/Android/Sdk
+[        ] Starting process 'command '/home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip''. Working directory: /home/ahmadjz/Documents/Quran/app/android/app Command: /home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded -o /home/ahmadjz/Documents/Quran/app/build/app/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/arm64-v8a/libapp.so /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libapp.so
+[        ] Starting process 'command '/home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip''. Working directory: /home/ahmadjz/Documents/Quran/app/android/app Command: /home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded -o /home/ahmadjz/Documents/Quran/app/build/app/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/arm64-v8a/libflutter.so /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libflutter.so
+[        ] Successfully started process 'command '/home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip''
+[        ] Successfully started process 'command '/home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip''
+[        ] > Task :app:checkReleaseAarMetadata UP-TO-DATE
+[        ] Caching disabled for task ':app:checkReleaseAarMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':app:checkReleaseAarMetadata' as it is up-to-date.
+[        ] Resolve mutations for :app:extractReleaseNativeSymbolTables (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:extractReleaseNativeSymbolTables (Thread[#173,Execution worker,5,main]) started.
+[        ] Resolve mutations for :app:mapReleaseSourceSetPaths (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:mapReleaseSourceSetPaths (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:mapReleaseSourceSetPaths UP-TO-DATE
+[        ] Caching disabled for task ':app:mapReleaseSourceSetPaths' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':app:mapReleaseSourceSetPaths' as it is up-to-date.
+[        ] Resolve mutations for :app:compileReleaseNavigationResources (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:compileReleaseNavigationResources (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:compileReleaseNavigationResources UP-TO-DATE
+[        ] Caching disabled for task ':app:compileReleaseNavigationResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:compileReleaseNavigationResources' as it is up-to-date.
+[        ] Resolve mutations for :app:mergeReleaseResources (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:mergeReleaseResources (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:mergeReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':app:mergeReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:mergeReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :app:createReleaseCompatibleScreenManifests (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:createReleaseCompatibleScreenManifests (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:createReleaseCompatibleScreenManifests
+[        ] Caching disabled for task ':app:createReleaseCompatibleScreenManifests' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:createReleaseCompatibleScreenManifests' is not up-to-date because:
+[        ]   Input property 'variantOutputs.$0.filters.$0' has been added for task ':app:createReleaseCompatibleScreenManifests'
+[        ]   Input property 'variantOutputs.$0.filters.$0.filterType' has been added for task ':app:createReleaseCompatibleScreenManifests'
+[        ]   Input property 'variantOutputs.$0.filters.$0.identifier' has been added for task ':app:createReleaseCompatibleScreenManifests'
+[        ] Resolve mutations for :app:extractDeepLinksRelease (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :app:extractDeepLinksRelease (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :app:extractDeepLinksRelease UP-TO-DATE
+[        ] Caching disabled for task ':app:extractDeepLinksRelease' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:extractDeepLinksRelease' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:extractDeepLinksRelease (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :sqflite_android:extractDeepLinksRelease (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] > Task :sqflite_android:extractDeepLinksRelease UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:extractDeepLinksRelease' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:extractDeepLinksRelease' as it is up-to-date.
+[        ] work action resolve navigation.json (project :sqflite_android) (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:processReleaseManifest (Thread[#175,Execution worker Thread 3,5,main]) started.
+[        ] :sqflite_android:processReleaseManifest (Thread[#197,Execution worker Thread 25,5,main]) started.
+[        ] > Task :sqflite_android:processReleaseManifest UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:processReleaseManifest' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:processReleaseManifest' as it is up-to-date.
+[        ] work action resolve AndroidManifest.xml (project :sqflite_android) (Thread[#197,Execution worker Thread 25,5,main]) started.
+[        ] Resolve mutations for :app:processReleaseMainManifest (Thread[#197,Execution worker Thread 25,5,main]) started.
+[        ] :app:processReleaseMainManifest (Thread[#197,Execution worker Thread 25,5,main]) started.
+[  +95 ms] > Task :app:extractReleaseNativeSymbolTables
+[        ] Caching disabled for task ':app:extractReleaseNativeSymbolTables' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:extractReleaseNativeSymbolTables' is not up-to-date because:
+[        ]   Input property 'inputDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64 has been removed.
+[        ]   Input property 'inputDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libapp.so has been removed.
+[        ]   Input property 'inputDir' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libflutter.so has been removed.
+[        ]   and more...
+[        ] C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+[        ] C/C++: android.ndkPath from module build.gradle is not set
+[        ] C/C++: ndk.dir in local.properties is not set
+[        ] C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+[        ] C/C++: sdkFolder is /home/ahmadjz/Android/Sdk
+[        ] Starting process 'command '/home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objcopy''. Working directory: /home/ahmadjz/Documents/Quran/app/android/app Command: /home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objcopy --strip-debug /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libapp.so /home/ahmadjz/Documents/Quran/app/build/app/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/arm64-v8a/libapp.so.sym
+[        ] Starting process 'command '/home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objcopy''. Working directory: /home/ahmadjz/Documents/Quran/app/android/app Command: /home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objcopy --strip-debug /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libflutter.so /home/ahmadjz/Documents/Quran/app/build/app/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/arm64-v8a/libflutter.so.sym
+[        ] Successfully started process 'command '/home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objcopy''
+[        ] Successfully started process 'command '/home/ahmadjz/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objcopy''
+[        ] > Task :app:processReleaseMainManifest
+[        ] Caching disabled for task ':app:processReleaseMainManifest' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:processReleaseMainManifest' is not up-to-date because:
+[        ]   Value of input property 'versionCode' has changed for task ':app:processReleaseMainManifest'
+[        ] Loading library manifest /home/ahmadjz/Documents/Quran/app/build/sqflite_android/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/f50199c6f2c0bda4d178780a23cc1f50/transformed/fragment-1.7.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/3af980662234f52902de775e9c6e354f/transformed/window-1.2.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/169afe10ff2f01272b137719d317fb78/transformed/window-java-1.2.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/670c42120b4e285772fcf22135293e72/transformed/activity-1.8.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/1910b6d9312a778ba1bce42e0ad447b6/transformed/loader-1.0.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/9c03e2381136b6831b281ff9bd73cf46/transformed/viewpager-1.0.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/5bf42ee1243bc8553b0b0f5e9217a5e8/transformed/lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/1ff99216ea621199391367349185a5c0/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/516b6a68a64c500f5e831b94e32b4b7c/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/3426c2155b5573e7f9d7789e3d58fffa/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/099fa84de9a3b9c91d7f9d4a61afe2f1/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/a43546c48c53a32da39ad0ea3035f870/transformed/core-ktx-1.13.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/21a45a15f5191e49ad41c7805a88b8dc/transformed/customview-1.0.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/36b2cade356a97d2665ce9d4675dfa9b/transformed/core-1.13.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/21147ec51953fdf1826caf13610476e6/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/24758a678aa8332920bcf354b2fc92ed/transformed/savedstate-1.2.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/42f0716bc5eb5cfd74a36d49e6ecb34d/transformed/annotation-experimental-1.4.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/9b4102c231a6286b797c71f1baf13a34/transformed/startup-runtime-1.1.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/b29c715449f72c435a349c85b3d0caea/transformed/tracing-1.2.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/9742857b1348f9280538369b25be1b97/transformed/exifinterface-1.4.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/676a00389ce276119408c3f879732fa3/transformed/core-runtime-2.2.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/cd2c59b851083326f63879acf62ab040/transformed/versionedparcelable-1.1.1/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/edd921f3d079cdfa25fa38fcddc7d994/transformed/interpolator-1.0.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/351270bffe273cd281381403a975b48c/transformed/core-1.0.0/AndroidManifest.xml
+[        ] Loading library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/8ae01703e8ba44e569ce5fa8506d081c/transformed/relinker-1.4.5/AndroidManifest.xml
+[        ] Merging main manifest /home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml
+[        ] Merging library manifest /home/ahmadjz/Documents/Quran/app/build/sqflite_android/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml
+[        ] Merging manifest with lower [:sqflite_android] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [:sqflite_android] AndroidManifest.xml:5:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/f50199c6f2c0bda4d178780a23cc1f50/transformed/fragment-1.7.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.fragment:fragment:1.7.1] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.fragment:fragment:1.7.1] AndroidManifest.xml:5:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/3af980662234f52902de775e9c6e354f/transformed/window-1.2.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.window:window:1.2.0] AndroidManifest.xml:17:1-31:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.window:window:1.2.0] AndroidManifest.xml:20:5-44
+[        ] application defined in both files...
+[        ] Merging application with lower [androidx.window:window:1.2.0] AndroidManifest.xml:22:5-29:19
+[        ] Adopted [uses-library: null]
+[        ] Adopted [uses-library: null]
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/169afe10ff2f01272b137719d317fb78/transformed/window-java-1.2.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.window:window-java:1.2.0] AndroidManifest.xml:17:1-21:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.window:window-java:1.2.0] AndroidManifest.xml:19:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/670c42120b4e285772fcf22135293e72/transformed/activity-1.8.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.activity:activity:1.8.1] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.activity:activity:1.8.1] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/1910b6d9312a778ba1bce42e0ad447b6/transformed/loader-1.0.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.loader:loader:1.0.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.loader:loader:1.0.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/9c03e2381136b6831b281ff9bd73cf46/transformed/viewpager-1.0.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.viewpager:viewpager:1.0.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.viewpager:viewpager:1.0.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/5bf42ee1243bc8553b0b0f5e9217a5e8/transformed/lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] AndroidManifest.xml:5:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/1ff99216ea621199391367349185a5c0/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.lifecycle:lifecycle-livedata:2.7.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.lifecycle:lifecycle-livedata:2.7.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/516b6a68a64c500f5e831b94e32b4b7c/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.lifecycle:lifecycle-viewmodel:2.7.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.lifecycle:lifecycle-viewmodel:2.7.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/3426c2155b5573e7f9d7789e3d58fffa/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.lifecycle:lifecycle-livedata-core:2.7.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.lifecycle:lifecycle-livedata-core:2.7.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/099fa84de9a3b9c91d7f9d4a61afe2f1/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/a43546c48c53a32da39ad0ea3035f870/transformed/core-ktx-1.13.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.core:core-ktx:1.13.1] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.core:core-ktx:1.13.1] AndroidManifest.xml:5:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/21a45a15f5191e49ad41c7805a88b8dc/transformed/customview-1.0.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.customview:customview:1.0.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.customview:customview:1.0.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/36b2cade356a97d2665ce9d4675dfa9b/transformed/core-1.13.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.core:core:1.13.1] AndroidManifest.xml:17:1-30:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.core:core:1.13.1] AndroidManifest.xml:20:5-44
+[        ] Adopted [permission: null]
+[        ] Adopted [uses-permission: null]
+[        ] application defined in both files...
+[        ] Merging application with lower [androidx.core:core:1.13.1] AndroidManifest.xml:28:5-89
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/21147ec51953fdf1826caf13610476e6/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.lifecycle:lifecycle-runtime:2.7.0] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.lifecycle:lifecycle-runtime:2.7.0] AndroidManifest.xml:5:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.lifecycle:lifecycle-process:2.7.0] AndroidManifest.xml:17:1-35:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.lifecycle:lifecycle-process:2.7.0] AndroidManifest.xml:21:5-44
+[        ] application defined in both files...
+[        ] Merging application with lower [androidx.lifecycle:lifecycle-process:2.7.0] AndroidManifest.xml:23:5-33:19
+[        ] Adopted [provider: null]
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/24758a678aa8332920bcf354b2fc92ed/transformed/savedstate-1.2.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.savedstate:savedstate:1.2.1] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.savedstate:savedstate:1.2.1] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/42f0716bc5eb5cfd74a36d49e6ecb34d/transformed/annotation-experimental-1.4.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.annotation:annotation-experimental:1.4.0] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.annotation:annotation-experimental:1.4.0] AndroidManifest.xml:5:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.profileinstaller:profileinstaller:1.3.1] AndroidManifest.xml:17:1-55:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.profileinstaller:profileinstaller:1.3.1] AndroidManifest.xml:21:5-44
+[        ] application defined in both files...
+[        ] Merging application with lower [androidx.profileinstaller:profileinstaller:1.3.1] AndroidManifest.xml:23:5-53:19
+[        ] provider#androidx.startup.InitializationProvider defined in both files...
+[        ] Merging provider#androidx.startup.InitializationProvider with lower [androidx.profileinstaller:profileinstaller:1.3.1] AndroidManifest.xml:24:9-32:20
+[        ] Adopted [meta-data: null]
+[        ] Adopted [receiver: null]
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/9b4102c231a6286b797c71f1baf13a34/transformed/startup-runtime-1.1.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.startup:startup-runtime:1.1.1] AndroidManifest.xml:17:1-33:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.startup:startup-runtime:1.1.1] AndroidManifest.xml:21:5-23:41
+[        ] application defined in both files...
+[        ] Merging application with lower [androidx.startup:startup-runtime:1.1.1] AndroidManifest.xml:25:5-31:19
+[        ] provider#androidx.startup.InitializationProvider defined in both files...
+[        ] Merging provider#androidx.startup.InitializationProvider with lower [androidx.startup:startup-runtime:1.1.1] AndroidManifest.xml:26:9-30:34
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/b29c715449f72c435a349c85b3d0caea/transformed/tracing-1.2.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.tracing:tracing:1.2.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.tracing:tracing:1.2.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/9742857b1348f9280538369b25be1b97/transformed/exifinterface-1.4.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.exifinterface:exifinterface:1.4.1] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.exifinterface:exifinterface:1.4.1] AndroidManifest.xml:5:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/676a00389ce276119408c3f879732fa3/transformed/core-runtime-2.2.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.arch.core:core-runtime:2.2.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.arch.core:core-runtime:2.2.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/cd2c59b851083326f63879acf62ab040/transformed/versionedparcelable-1.1.1/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.versionedparcelable:versionedparcelable:1.1.1] AndroidManifest.xml:17:1-27:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.versionedparcelable:versionedparcelable:1.1.1] AndroidManifest.xml:20:5-22:41
+[        ] application defined in both files...
+[        ] Merging application with lower [androidx.versionedparcelable:versionedparcelable:1.1.1] AndroidManifest.xml:24:5-25:19
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/edd921f3d079cdfa25fa38fcddc7d994/transformed/interpolator-1.0.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.interpolator:interpolator:1.0.0] AndroidManifest.xml:17:1-22:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.interpolator:interpolator:1.0.0] AndroidManifest.xml:20:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/351270bffe273cd281381403a975b48c/transformed/core-1.0.0/AndroidManifest.xml
+[        ] Merging manifest with lower [androidx.window.extensions.core:core:1.0.0] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [androidx.window.extensions.core:core:1.0.0] AndroidManifest.xml:5:5-44
+[        ] Merging library manifest /home/ahmadjz/.gradle/caches/9.3.1/transforms/8ae01703e8ba44e569ce5fa8506d081c/transformed/relinker-1.4.5/AndroidManifest.xml
+[        ] Merging manifest with lower [com.getkeepsafe.relinker:relinker:1.4.5] AndroidManifest.xml:2:1-7:12
+[        ] uses-sdk defined in both files...
+[        ] Merging uses-sdk with lower [com.getkeepsafe.relinker:relinker:1.4.5] AndroidManifest.xml:5:5-43
+[        ] Merging result: SUCCESS
+[        ] 1<?xml version="1.0" encoding="utf-8"?>
+[        ] 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+[        ] 3    package="tech.ahmadjz.greymushaf"
+[        ] 4    android:versionCode="2001"
+[        ] 5    android:versionName="0.1.0" >
+[        ] 6
+[        ] 7    <uses-sdk
+[        ] 7-->INJECTED
+[        ] 8        android:minSdkVersion="24"
+[        ] 8-->INJECTED
+[        ] 9        android:targetSdkVersion="36" />
+[        ] 9-->INJECTED
+[        ] 10    <!--
+[        ] 11         Required to query activities that can process text, see:
+[        ] 12         https://developer.android.com/training/package-visibility and
+[        ] 13         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+[        ] 14
+[        ] 15         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+[        ] 16    -->
+[        ] 17    <queries>
+[        ] 17-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:39:5-44:15
+[        ] 18        <intent>
+[        ] 18-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:40:9-43:18
+[        ] 19            <action android:name="android.intent.action.PROCESS_TEXT" />
+[        ] 19-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:41:13-72
+[        ] 19-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:41:21-70
+[        ] 20
+[        ] 21            <data android:mimeType="text/plain" />
+[        ] 21-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:42:13-50
+[        ] 21-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:42:19-48
+[        ] 22        </intent>
+[        ] 23    </queries>
+[        ] 24
+[        ] 25    <permission
+[        ] 25-->[androidx.core:core:1.13.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/36b2cade356a97d2665ce9d4675dfa9b/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+[        ] 26        android:name="tech.ahmadjz.greymushaf.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+[        ] 26-->[androidx.core:core:1.13.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/36b2cade356a97d2665ce9d4675dfa9b/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+[        ] 27        android:protectionLevel="signature" />
+[        ] 27-->[androidx.core:core:1.13.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/36b2cade356a97d2665ce9d4675dfa9b/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+[        ] 28
+[        ] 29    <uses-permission android:name="tech.ahmadjz.greymushaf.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+[        ] 29-->[androidx.core:core:1.13.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/36b2cade356a97d2665ce9d4675dfa9b/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+[        ] 29-->[androidx.core:core:1.13.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/36b2cade356a97d2665ce9d4675dfa9b/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+[        ] 30
+[        ] 31    <application
+[        ] 31-->INJECTED
+[        ] 32        android:name="android.app.Application"
+[        ] 32-->INJECTED
+[        ] 33        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+[        ] 33-->[androidx.core:core:1.13.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/36b2cade356a97d2665ce9d4675dfa9b/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+[        ] 34        android:extractNativeLibs="false"
+[        ] 34-->INJECTED
+[        ] 35        android:icon="@mipmap/ic_launcher"
+[        ] 35-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:5:9-43
+[        ] 36        android:label="greymushaf" >
+[        ] 36-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:3:9-35
+[        ] 37        <activity
+[        ] 37-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:6:9-27:20
+[        ] 38            android:name="tech.ahmadjz.greymushaf.MainActivity"
+[        ] 38-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:7:13-41
+[        ] 39            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+[        ] 39-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:12:13-163
+[        ] 40            android:exported="true"
+[        ] 40-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:8:13-36
+[        ] 41            android:hardwareAccelerated="true"
+[        ] 41-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:13:13-47
+[        ] 42            android:launchMode="singleTop"
+[        ] 42-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:9:13-43
+[        ] 43            android:taskAffinity=""
+[        ] 43-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:10:13-36
+[        ] 44            android:theme="@style/LaunchTheme"
+[        ] 44-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:11:13-47
+[        ] 45            android:windowSoftInputMode="adjustResize" >
+[        ] 45-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:14:13-55
+[        ] 46
+[        ] 47            <!--
+[        ] 48                 Specifies an Android theme to apply to this Activity as soon as
+[        ] 49                 the Android process has started. This theme is visible to the user
+[        ] 50                 while the Flutter UI initializes. After that, this theme continues
+[        ] 51                 to determine the Window background behind the Flutter UI.
+[        ] 52            -->
+[        ] 53            <meta-data
+[        ] 53-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:19:13-22:17
+[        ] 54                android:name="io.flutter.embedding.android.NormalTheme"
+[        ] 54-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:20:15-70
+[        ] 55                android:resource="@style/NormalTheme" />
+[        ] 55-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:21:15-52
+[        ] 56
+[        ] 57            <intent-filter>
+[        ] 57-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:23:13-26:29
+[        ] 58                <action android:name="android.intent.action.MAIN" />
+[        ] 58-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:24:17-68
+[        ] 58-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:24:25-66
+[        ] 59
+[        ] 60                <category android:name="android.intent.category.LAUNCHER" />
+[        ] 60-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:25:17-76
+[        ] 60-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:25:27-74
+[        ] 61            </intent-filter>
+[        ] 62        </activity>
+[        ] 63        <!--
+[        ] 64             Don't delete the meta-data below.
+[        ] 65             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+[        ] 66        -->
+[        ] 67        <meta-data
+[        ] 67-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:30:9-32:33
+[        ] 68            android:name="flutterEmbedding"
+[        ] 68-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:31:13-44
+[        ] 69            android:value="2" />
+[        ] 69-->/home/ahmadjz/Documents/Quran/app/android/app/src/main/AndroidManifest.xml:32:13-30
+[        ] 70
+[        ] 71        <uses-library
+[        ] 71-->[androidx.window:window:1.2.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/3af980662234f52902de775e9c6e354f/transformed/window-1.2.0/AndroidManifest.xml:23:9-25:40
+[        ] 72            android:name="androidx.window.extensions"
+[        ] 72-->[androidx.window:window:1.2.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/3af980662234f52902de775e9c6e354f/transformed/window-1.2.0/AndroidManifest.xml:24:13-54
+[        ] 73            android:required="false" />
+[        ] 73-->[androidx.window:window:1.2.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/3af980662234f52902de775e9c6e354f/transformed/window-1.2.0/AndroidManifest.xml:25:13-37
+[        ] 74        <uses-library
+[        ] 74-->[androidx.window:window:1.2.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/3af980662234f52902de775e9c6e354f/transformed/window-1.2.0/AndroidManifest.xml:26:9-28:40
+[        ] 75            android:name="androidx.window.sidecar"
+[        ] 75-->[androidx.window:window:1.2.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/3af980662234f52902de775e9c6e354f/transformed/window-1.2.0/AndroidManifest.xml:27:13-51
+[        ] 76            android:required="false" />
+[        ] 76-->[androidx.window:window:1.2.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/3af980662234f52902de775e9c6e354f/transformed/window-1.2.0/AndroidManifest.xml:28:13-37
+[        ] 77
+[        ] 78        <provider
+[        ] 78-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+[        ] 79            android:name="androidx.startup.InitializationProvider"
+[        ] 79-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
+[        ] 80            android:authorities="tech.ahmadjz.greymushaf.androidx-startup"
+[        ] 80-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
+[        ] 81            android:exported="false" >
+[        ] 81-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
+[        ] 82            <meta-data
+[        ] 82-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+[        ] 83                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+[        ] 83-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+[        ] 84                android:value="androidx.startup" />
+[        ] 84-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/ahmadjz/.gradle/caches/9.3.1/transforms/a3de873eaa28f37d5d7edb46f82942a3/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+[        ] 85            <meta-data
+[        ] 85-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+[        ] 86                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+[        ] 86-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+[        ] 87                android:value="androidx.startup" />
+[        ] 87-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+[        ] 88        </provider>
+[        ] 89
+[        ] 90        <receiver
+[        ] 90-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+[        ] 91            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+[        ] 91-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+[        ] 92            android:directBootAware="false"
+[        ] 92-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+[        ] 93            android:enabled="true"
+[        ] 93-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+[        ] 94            android:exported="true"
+[        ] 94-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+[        ] 95            android:permission="android.permission.DUMP" >
+[        ] 95-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+[        ] 96            <intent-filter>
+[        ] 96-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+[        ] 97                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+[        ] 97-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+[        ] 97-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+[        ] 98            </intent-filter>
+[        ] 99            <intent-filter>
+[        ] 99-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+[        ] 100                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+[        ] 100-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+[        ] 100-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+[        ] 101            </intent-filter>
+[        ] 102            <intent-filter>
+[        ] 102-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+[        ] 103                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+[        ] 103-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+[        ] 103-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+[        ] 104            </intent-filter>
+[        ] 105            <intent-filter>
+[        ] 105-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+[        ] 106                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+[        ] 106-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+[        ] 106-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/ahmadjz/.gradle/caches/9.3.1/transforms/9769e122bbba14d4a075c4f9208443ae/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+[        ] 107            </intent-filter>
+[        ] 108        </receiver>
+[        ] 109    </application>
+[        ] 110
+[        ] 111</manifest>
+[        ] Merged manifest saved to /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_manifest/release/processReleaseMainManifest/AndroidManifest.xml
+[        ] Resolve mutations for :app:mergeReleaseNativeDebugMetadata (Thread[#197,Execution worker Thread 25,5,main]) started.
+[        ] :app:mergeReleaseNativeDebugMetadata (Thread[#197,Execution worker Thread 25,5,main]) started.
+[        ] Resolve mutations for :app:outputReleaseAppLinkSettings (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:outputReleaseAppLinkSettings (Thread[#173,Execution worker,5,main]) started.
+[  +90 ms] > Task :app:outputReleaseAppLinkSettings
+[        ] Caching disabled for task ':app:outputReleaseAppLinkSettings' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:outputReleaseAppLinkSettings' is not up-to-date because:
+[        ]   Input property 'manifestFile' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_manifest/release/processReleaseMainManifest/AndroidManifest.xml has changed.
+[        ] Resolve mutations for :app:processReleaseManifest (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:processReleaseManifest (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:processReleaseManifest
+[        ] Caching disabled for task ':app:processReleaseManifest' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:processReleaseManifest' is not up-to-date because:
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0' has been added for task ':app:processReleaseManifest'
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0.filterType' has been added for task ':app:processReleaseManifest'
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0.identifier' has been added for task ':app:processReleaseManifest'
+[        ] Resolve mutations for :app:processReleaseManifestForPackage (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:processReleaseManifestForPackage (Thread[#173,Execution worker,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:mapReleaseSourceSetPaths (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] :sqflite_android:mapReleaseSourceSetPaths (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] > Task :sqflite_android:mapReleaseSourceSetPaths UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:mapReleaseSourceSetPaths' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:mapReleaseSourceSetPaths' as it is up-to-date.
+[        ] work action resolve file-map.txt (project :sqflite_android) (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:compileReleaseLibraryResources (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] :sqflite_android:compileReleaseLibraryResources (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] > Task :sqflite_android:compileReleaseLibraryResources UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:compileReleaseLibraryResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:compileReleaseLibraryResources' as it is up-to-date.
+[        ] work action resolve out (project :sqflite_android) (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:bundleLibRuntimeToJarRelease (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] :sqflite_android:bundleLibRuntimeToJarRelease (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] > Task :sqflite_android:bundleLibRuntimeToJarRelease UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:bundleLibRuntimeToJarRelease' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':sqflite_android:bundleLibRuntimeToJarRelease' as it is up-to-date.
+[        ] work action resolve classes.jar (project :sqflite_android) (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] Resolve mutations for :app:extractProguardFiles (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] :app:extractProguardFiles (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] > Task :app:extractProguardFiles UP-TO-DATE
+[        ] Caching disabled for task ':app:extractProguardFiles' because:
+[        ]   Build cache is disabled
+[        ]   Fast task
+[        ] Skipping task ':app:extractProguardFiles' as it is up-to-date.
+[        ] Resolve mutations for :app:processReleaseJavaRes (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] :app:processReleaseJavaRes (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] > Task :app:processReleaseJavaRes UP-TO-DATE
+[        ] file or directory '/home/ahmadjz/Documents/Quran/app/android/app/src/main/resources', not found
+[        ] file or directory '/home/ahmadjz/Documents/Quran/app/android/app/src/release/resources', not found
+[        ] Caching disabled for task ':app:processReleaseJavaRes' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':app:processReleaseJavaRes' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:processReleaseJavaRes (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] :sqflite_android:processReleaseJavaRes (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] > Task :sqflite_android:processReleaseJavaRes NO-SOURCE
+[        ] file or directory '/home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_android-2.4.5/android/src/main/resources', not found
+[        ] file or directory '/home/ahmadjz/.pub-cache/hosted/pub.dev/sqflite_android-2.4.5/android/src/release/resources', not found
+[        ] Skipping task ':sqflite_android:processReleaseJavaRes' as it has no source files and no previous output files.
+[        ] work action resolve out (project :sqflite_android) (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] Resolve mutations for :app:mergeReleaseJavaResource (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] :app:mergeReleaseJavaResource (Thread[#179,Execution worker Thread 7,5,main]) started.
+[        ] Resolve mutations for :app:mergeReleaseStartupProfile (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :app:mergeReleaseStartupProfile (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :app:mergeReleaseStartupProfile UP-TO-DATE
+[        ] Caching disabled for task ':app:mergeReleaseStartupProfile' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':app:mergeReleaseStartupProfile' as it is up-to-date.
+[        ] Resolve mutations for :app:compressReleaseAssets (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :app:compressReleaseAssets (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :app:compressReleaseAssets UP-TO-DATE
+[        ] Caching disabled for task ':app:compressReleaseAssets' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:compressReleaseAssets' as it is up-to-date.
+[        ] Resolve mutations for :app:extractReleaseVersionControlInfo (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :app:extractReleaseVersionControlInfo (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :app:extractReleaseVersionControlInfo UP-TO-DATE
+[        ] Caching disabled for task ':app:extractReleaseVersionControlInfo' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':app:extractReleaseVersionControlInfo' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:createFullJarRelease (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:createFullJarRelease (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:createFullJarRelease UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:createFullJarRelease' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':sqflite_android:createFullJarRelease' as it is up-to-date.
+[        ] work action resolve full.jar (project :sqflite_android) (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] work action resolve full.jar (project :sqflite_android) (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:extractProguardFiles (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:extractProguardFiles (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:extractProguardFiles UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:extractProguardFiles' because:
+[        ]   Build cache is disabled
+[        ]   Fast task
+[        ] Skipping task ':sqflite_android:extractProguardFiles' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:generateReleaseLintModel (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:generateReleaseLintModel (Thread[#178,Execution worker Thread 6,5,main]) started.
+[  +96 ms] > Task :sqflite_android:generateReleaseLintModel UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:generateReleaseLintModel' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:generateReleaseLintModel' as it is up-to-date.
+[        ] work action resolve generateReleaseLintModel (project :sqflite_android) (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] work action resolve generateReleaseLintModel (project :sqflite_android) (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:prepareLintJarForPublish (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:prepareLintJarForPublish (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:prepareLintJarForPublish UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:prepareLintJarForPublish' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:prepareLintJarForPublish' as it is up-to-date.
+[        ] work action resolve lint.jar (project :sqflite_android) (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] work action resolve lint.jar (project :sqflite_android) (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] Resolve mutations for :app:generateReleaseLintVitalReportModel (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :app:generateReleaseLintVitalReportModel (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :app:generateReleaseLintVitalReportModel
+[        ] Caching disabled for task ':app:generateReleaseLintVitalReportModel' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:generateReleaseLintVitalReportModel' is not up-to-date because:
+[        ]   Input property 'variantInputs.mainArtifact.artifactCollectionsInputs.compileClasspath.allFileCollection' file /home/ahmadjz/.gradle/caches/modules-2/files-2.1/io.flutter/x86_64_release/1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/bee4419d4048c23bdce1f039984fbdd5ca5eff20/x86_64_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded.jar has been removed.
+[        ]   Input property 'variantInputs.mainArtifact.artifactCollectionsInputs.compileClasspath.allFileCollection' file /home/ahmadjz/.gradle/caches/modules-2/files-2.1/io.flutter/arm64_v8a_release/1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/955faf7ff0953eee876acea5dc17759e1d4481c6/arm64_v8a_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded.jar has been added.
+[        ]   Input property 'variantInputs.mainArtifact.artifactCollectionsInputs.level1RuntimeArtifactCollections.runtimeArtifactsFileCollection' file /home/ahmadjz/.gradle/caches/modules-2/files-2.1/io.flutter/x86_64_release/1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/bee4419d4048c23bdce1f039984fbdd5ca5eff20/x86_64_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded.jar has been removed.
+[        ]   and more...
+[        ] Resolve mutations for :sqflite_android:checkReleaseAarMetadata (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:checkReleaseAarMetadata (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:checkReleaseAarMetadata UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:checkReleaseAarMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:checkReleaseAarMetadata' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:stripReleaseDebugSymbols (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:stripReleaseDebugSymbols (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:stripReleaseDebugSymbols NO-SOURCE
+[        ] Skipping task ':sqflite_android:stripReleaseDebugSymbols' as it has no source files and no previous output files.
+[        ] Resolve mutations for :sqflite_android:copyReleaseJniLibsProjectAndLocalJars (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:copyReleaseJniLibsProjectAndLocalJars (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:copyReleaseJniLibsProjectAndLocalJars' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:copyReleaseJniLibsProjectAndLocalJars' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:extractDeepLinksForAarRelease (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:extractDeepLinksForAarRelease (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:extractDeepLinksForAarRelease UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:extractDeepLinksForAarRelease' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:extractDeepLinksForAarRelease' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:extractReleaseAnnotations (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:extractReleaseAnnotations (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:extractReleaseAnnotations UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:extractReleaseAnnotations' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:extractReleaseAnnotations' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:mergeReleaseConsumerProguardFiles (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:mergeReleaseConsumerProguardFiles (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:mergeReleaseConsumerProguardFiles UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:mergeReleaseConsumerProguardFiles' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':sqflite_android:mergeReleaseConsumerProguardFiles' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:mergeReleaseJavaResource (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:mergeReleaseJavaResource (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:mergeReleaseJavaResource UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:mergeReleaseJavaResource' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:mergeReleaseJavaResource' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:syncReleaseLibJars (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:syncReleaseLibJars (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:syncReleaseLibJars UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:syncReleaseLibJars' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:syncReleaseLibJars' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:bundleReleaseLocalLintAar (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] :sqflite_android:bundleReleaseLocalLintAar (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] > Task :sqflite_android:bundleReleaseLocalLintAar UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:bundleReleaseLocalLintAar' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:bundleReleaseLocalLintAar' as it is up-to-date.
+[        ] work action resolve out.aar (project :sqflite_android) (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] work action resolve out.aar (project :sqflite_android) (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] ExtractAarTransform (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] ExtractAarTransform (Thread[#178,Execution worker Thread 6,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:lintVitalAnalyzeRelease (Thread[#196,Execution worker Thread 24,5,main]) started.
+[        ] :sqflite_android:lintVitalAnalyzeRelease (Thread[#196,Execution worker Thread 24,5,main]) started.
+[  +97 ms] Resolve mutations for :sqflite_android:writeReleaseLintModelMetadata (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] :sqflite_android:writeReleaseLintModelMetadata (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] > Task :sqflite_android:writeReleaseLintModelMetadata UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:writeReleaseLintModelMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:writeReleaseLintModelMetadata' as it is up-to-date.
+[        ] work action resolve lint-model-metadata.properties (project :sqflite_android) (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] work action resolve lint-model-metadata.properties (project :sqflite_android) (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] Resolve mutations for :sqflite_android:generateReleaseLintVitalModel (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] :sqflite_android:generateReleaseLintVitalModel (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] > Task :app:mergeReleaseJavaResource
+[        ] Caching disabled for task ':app:mergeReleaseJavaResource' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:mergeReleaseJavaResource' is not up-to-date because:
+[        ]   Input property 'externalLibJavaRes.fileCollection' file /home/ahmadjz/.gradle/caches/modules-2/files-2.1/io.flutter/x86_64_release/1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/bee4419d4048c23bdce1f039984fbdd5ca5eff20/x86_64_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded.jar has been removed.
+[        ]   Input property 'externalLibJavaRes.fileCollection' file /home/ahmadjz/.gradle/caches/modules-2/files-2.1/io.flutter/arm64_v8a_release/1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/955faf7ff0953eee876acea5dc17759e1d4481c6/arm64_v8a_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded.jar has been added.
+[        ] > Task :sqflite_android:generateReleaseLintVitalModel UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:generateReleaseLintVitalModel' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:generateReleaseLintVitalModel' as it is up-to-date.
+[        ] work action resolve generateReleaseLintVitalModel (project :sqflite_android) (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] work action resolve generateReleaseLintVitalModel (project :sqflite_android) (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] Resolve mutations for :app:collectReleaseDependencies (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] :app:collectReleaseDependencies (Thread[#177,Execution worker Thread 5,5,main]) started.
+[        ] > Task :app:collectReleaseDependencies
+[        ] Caching disabled for task ':app:collectReleaseDependencies' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:collectReleaseDependencies' is not up-to-date because:
+[        ]   Value of input property 'rootComponent' has changed for task ':app:collectReleaseDependencies'
+[        ] Resolve mutations for :app:sdkReleaseDependencyData (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :app:sdkReleaseDependencyData (Thread[#199,Execution worker Thread 27,5,main]) started.
+[  +99 ms] > Task :app:sdkReleaseDependencyData
+[        ] Caching disabled for task ':app:sdkReleaseDependencyData' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:sdkReleaseDependencyData' is not up-to-date because:
+[        ]   Input property 'dependencies' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/metadata_library_dependencies_report/release/collectReleaseDependencies/dependencies.pb has changed.
+[        ] Resolve mutations for :app:validateSigningRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :app:validateSigningRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :app:validateSigningRelease UP-TO-DATE
+[        ] Caching disabled for task ':app:validateSigningRelease' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':app:validateSigningRelease' as it is up-to-date.
+[        ] Resolve mutations for :app:writeReleaseAppMetadata (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :app:writeReleaseAppMetadata (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :app:writeReleaseAppMetadata UP-TO-DATE
+[        ] Caching disabled for task ':app:writeReleaseAppMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':app:writeReleaseAppMetadata' as it is up-to-date.
+[        ] Resolve mutations for :app:writeReleaseSigningConfigVersions (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :app:writeReleaseSigningConfigVersions (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :app:writeReleaseSigningConfigVersions UP-TO-DATE
+[        ] Caching disabled for task ':app:writeReleaseSigningConfigVersions' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':app:writeReleaseSigningConfigVersions' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:preBuild (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:preBuild (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:preBuild UP-TO-DATE
+[        ] Skipping task ':integration_test:preBuild' as it has no actions.
+[        ] Resolve mutations for :integration_test:preReleaseBuild (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:preReleaseBuild (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:preReleaseBuild UP-TO-DATE
+[        ] Skipping task ':integration_test:preReleaseBuild' as it has no actions.
+[        ] Resolve mutations for :integration_test:checkReleaseAarMetadata (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:checkReleaseAarMetadata (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:checkReleaseAarMetadata UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:checkReleaseAarMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':integration_test:checkReleaseAarMetadata' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:mergeReleaseJniLibFolders (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:mergeReleaseJniLibFolders (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:mergeReleaseJniLibFolders UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:mergeReleaseJniLibFolders' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':integration_test:mergeReleaseJniLibFolders' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:mergeReleaseNativeLibs (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:mergeReleaseNativeLibs (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:mergeReleaseNativeLibs NO-SOURCE
+[        ] Skipping task ':integration_test:mergeReleaseNativeLibs' as it has no source files and no previous output files.
+[        ] Resolve mutations for :integration_test:stripReleaseDebugSymbols (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:stripReleaseDebugSymbols (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:stripReleaseDebugSymbols NO-SOURCE
+[        ] Skipping task ':integration_test:stripReleaseDebugSymbols' as it has no source files and no previous output files.
+[        ] Resolve mutations for :integration_test:copyReleaseJniLibsProjectAndLocalJars (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:copyReleaseJniLibsProjectAndLocalJars (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:copyReleaseJniLibsProjectAndLocalJars' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':integration_test:copyReleaseJniLibsProjectAndLocalJars' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:extractDeepLinksForAarRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:extractDeepLinksForAarRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:extractDeepLinksForAarRelease UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:extractDeepLinksForAarRelease' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:extractDeepLinksForAarRelease' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:checkKotlinGradlePluginConfigurationErrors (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:checkKotlinGradlePluginConfigurationErrors (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:checkKotlinGradlePluginConfigurationErrors SKIPPED
+[        ] Skipping task ':integration_test:checkKotlinGradlePluginConfigurationErrors' as task onlyIf 'errorDiagnostics are present' is false.
+[        ] Resolve mutations for :integration_test:generateReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:generateReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:generateReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:generateReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:generateReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:packageReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[  +97 ms] :integration_test:packageReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:packageReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:packageReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:packageReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:processReleaseNavigationResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:processReleaseNavigationResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:processReleaseNavigationResources UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:processReleaseNavigationResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:processReleaseNavigationResources' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:parseReleaseLocalResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:parseReleaseLocalResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:parseReleaseLocalResources UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:parseReleaseLocalResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:parseReleaseLocalResources' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:generateReleaseRFile (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:generateReleaseRFile (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:generateReleaseRFile UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:generateReleaseRFile' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:generateReleaseRFile' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:compileReleaseKotlin (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:compileReleaseKotlin (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:compileReleaseKotlin NO-SOURCE
+[        ] Skipping task ':integration_test:compileReleaseKotlin' as it has no source files and no previous output files.
+[        ] Resolve mutations for :integration_test:extractReleaseAnnotations (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:extractReleaseAnnotations (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:extractReleaseAnnotations UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:extractReleaseAnnotations' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:extractReleaseAnnotations' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:generateReleaseAssets (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:generateReleaseAssets (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:generateReleaseAssets UP-TO-DATE
+[        ] Skipping task ':integration_test:generateReleaseAssets' as it has no actions.
+[        ] Resolve mutations for :integration_test:mergeReleaseAssets (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:mergeReleaseAssets (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:mergeReleaseAssets UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:mergeReleaseAssets' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':integration_test:mergeReleaseAssets' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:javaPreCompileRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:javaPreCompileRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:javaPreCompileRelease UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:javaPreCompileRelease' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:javaPreCompileRelease' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:compileReleaseJavaWithJavac (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:compileReleaseJavaWithJavac (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:compileReleaseJavaWithJavac UP-TO-DATE
+[        ] Custom actions are attached to task ':integration_test:compileReleaseJavaWithJavac'.
+[        ] Caching disabled for task ':integration_test:compileReleaseJavaWithJavac' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:compileReleaseJavaWithJavac' as it is up-to-date.
+[        ] No compile result for :integration_test:compileReleaseJavaWithJavac
+[        ] No compile result for :integration_test:compileReleaseJavaWithJavac
+[        ] No compile result for :integration_test:compileReleaseJavaWithJavac
+[        ] Resolve mutations for :integration_test:mergeReleaseGeneratedProguardFiles (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:mergeReleaseGeneratedProguardFiles (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:mergeReleaseGeneratedProguardFiles' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':integration_test:mergeReleaseGeneratedProguardFiles' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:mergeReleaseConsumerProguardFiles (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:mergeReleaseConsumerProguardFiles (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:mergeReleaseConsumerProguardFiles UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:mergeReleaseConsumerProguardFiles' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':integration_test:mergeReleaseConsumerProguardFiles' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:prepareLintJarForPublish (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:prepareLintJarForPublish (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:prepareLintJarForPublish UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:prepareLintJarForPublish' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':integration_test:prepareLintJarForPublish' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:prepareReleaseArtProfile (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:prepareReleaseArtProfile (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:prepareReleaseArtProfile UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:prepareReleaseArtProfile' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':integration_test:prepareReleaseArtProfile' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:processReleaseManifest (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:processReleaseManifest (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:processReleaseManifest UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:processReleaseManifest' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:processReleaseManifest' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:processReleaseJavaRes (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:processReleaseJavaRes (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:processReleaseJavaRes NO-SOURCE
+[        ] file or directory '/home/ahmadjz/src/flutter/packages/integration_test/android/src/main/resources', not found
+[        ] file or directory '/home/ahmadjz/src/flutter/packages/integration_test/android/src/release/resources', not found
+[        ] Skipping task ':integration_test:processReleaseJavaRes' as it has no source files and no previous output files.
+[        ] Resolve mutations for :integration_test:mergeReleaseJavaResource (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:mergeReleaseJavaResource (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:mergeReleaseJavaResource UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:mergeReleaseJavaResource' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':integration_test:mergeReleaseJavaResource' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:syncReleaseLibJars (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:syncReleaseLibJars (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:syncReleaseLibJars UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:syncReleaseLibJars' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:syncReleaseLibJars' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:writeReleaseAarMetadata (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:writeReleaseAarMetadata (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:writeReleaseAarMetadata UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:writeReleaseAarMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':integration_test:writeReleaseAarMetadata' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:bundleReleaseAar (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:bundleReleaseAar (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:bundleReleaseAar UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:bundleReleaseAar' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':integration_test:bundleReleaseAar' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:mapReleaseSourceSetPaths (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:mapReleaseSourceSetPaths (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:mapReleaseSourceSetPaths UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:mapReleaseSourceSetPaths' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':integration_test:mapReleaseSourceSetPaths' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:mergeReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:mergeReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:mergeReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:mergeReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:mergeReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:verifyReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:verifyReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:verifyReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':integration_test:verifyReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':integration_test:verifyReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :integration_test:assembleRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :integration_test:assembleRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :integration_test:assembleRelease UP-TO-DATE
+[        ] Skipping task ':integration_test:assembleRelease' as it has no actions.
+[        ] Resolve mutations for :sqflite_android:bundleReleaseAar (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:bundleReleaseAar (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:bundleReleaseAar UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:bundleReleaseAar' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Skipping task ':sqflite_android:bundleReleaseAar' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:mergeReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:mergeReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:mergeReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:mergeReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:mergeReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:verifyReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:verifyReleaseResources (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:verifyReleaseResources UP-TO-DATE
+[        ] Caching disabled for task ':sqflite_android:verifyReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':sqflite_android:verifyReleaseResources' as it is up-to-date.
+[        ] Resolve mutations for :sqflite_android:assembleRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] :sqflite_android:assembleRelease (Thread[#203,Execution worker Thread 31,5,main]) started.
+[        ] > Task :sqflite_android:assembleRelease UP-TO-DATE
+[        ] Skipping task ':sqflite_android:assembleRelease' as it has no actions.
+[        ] > Task :app:processReleaseManifestForPackage
+[        ] Custom actions are attached to task ':app:processReleaseManifestForPackage'.
+[        ] Caching disabled for task ':app:processReleaseManifestForPackage' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:processReleaseManifestForPackage' is not up-to-date because:
+[        ]   Input property 'mergedManifests' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_manifests/release/processReleaseManifest/AndroidManifest.xml has been removed.
+[        ]   Input property 'mergedManifests' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_manifests/release/processReleaseManifest/output-metadata.json has changed.
+[        ]   Input property 'mergedManifests' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/merged_manifests/release/processReleaseManifest/arm64-v8a has been added.
+[        ]   and more...
+[        ] Resolve mutations for :app:processReleaseResources (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:processReleaseResources (Thread[#173,Execution worker,5,main]) started.
+[  +95 ms] > Task :app:mergeReleaseNativeDebugMetadata
+[        ] Caching disabled for task ':app:mergeReleaseNativeDebugMetadata' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:mergeReleaseNativeDebugMetadata' is not up-to-date because:
+[        ]   Input property 'inputFiles' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/x86_64/libapp.so.sym has been removed.
+[        ]   Input property 'inputFiles' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/x86_64/libflutter.so.sym has been removed.
+[        ]   Input property 'inputFiles' file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/arm64-v8a/libapp.so.sym has been added.
+[        ]   and more...
+[ +199 ms] > Task :app:processReleaseResources
+[        ] Caching disabled for task ':app:processReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:processReleaseResources' is not up-to-date because:
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0' has been added for task ':app:processReleaseResources'
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0.filterType' has been added for task ':app:processReleaseResources'
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0.identifier' has been added for task ':app:processReleaseResources'
+[        ] The input changes require a full rebuild for incremental task ':app:processReleaseResources'.
+[        ] AAPT2 aapt2-9.1.0-14792394-linux Daemon #0: starting
+[        ] Aapt output file /home/ahmadjz/Documents/Quran/app/build/app/intermediates/linked_resources_proto_format/release/processReleaseResources/linked-resources-proto-format-arm64-v8aRelease.ap_
+[        ] Resolve mutations for :app:expandReleaseArtProfileWildcards (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:expandReleaseArtProfileWildcards (Thread[#173,Execution worker,5,main]) started.
+[        ] Resolve mutations for :app:mergeReleaseGeneratedProguardFiles (Thread[#197,Execution worker Thread 25,5,main]) started.
+[        ] :app:mergeReleaseGeneratedProguardFiles (Thread[#197,Execution worker Thread 25,5,main]) started.
+[        ] > Task :app:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+[        ] Caching disabled for task ':app:mergeReleaseGeneratedProguardFiles' because:
+[        ]   Build cache is disabled
+[        ]   Simple merging task
+[        ] Skipping task ':app:mergeReleaseGeneratedProguardFiles' as it is up-to-date.
+[  +99 ms] > Task :app:expandReleaseArtProfileWildcards
+[        ] Caching disabled for task ':app:expandReleaseArtProfileWildcards' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:expandReleaseArtProfileWildcards' is not up-to-date because:
+[        ]   Input property 'projectClasses' file /home/ahmadjz/.gradle/caches/modules-2/files-2.1/io.flutter/x86_64_release/1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/bee4419d4048c23bdce1f039984fbdd5ca5eff20/x86_64_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded.jar has been removed.
+[        ]   Input property 'projectClasses' file /home/ahmadjz/.gradle/caches/modules-2/files-2.1/io.flutter/arm64_v8a_release/1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded/955faf7ff0953eee876acea5dc17759e1d4481c6/arm64_v8a_release-1.0.0-af7e796e161ae0bb1ff0758c71a7105418bd9ded.jar has been added.
+[        ] Resolve mutations for :app:minifyReleaseWithR8 (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:minifyReleaseWithR8 (Thread[#173,Execution worker,5,main]) started.
+[+1299 ms] > Task :sqflite_android:lintVitalAnalyzeRelease
+[        ] Caching disabled for task ':sqflite_android:lintVitalAnalyzeRelease' because:
+[        ]   Build cache is disabled
+[        ] Task ':sqflite_android:lintVitalAnalyzeRelease' is not up-to-date because:
+[        ]   Value of input property 'printStackTrace' has changed for task ':sqflite_android:lintVitalAnalyzeRelease'
+[        ] Android Lint: Creating lint class loader 32.1.0_true
+[+4999 ms] > Task :app:minifyReleaseWithR8
+[        ] file or directory '/home/ahmadjz/Documents/Quran/app/android/app/src/main/keepRules', not found
+[        ] file or directory '/home/ahmadjz/Documents/Quran/app/android/app/src/release/keepRules', not found
+[        ] Caching disabled for task ':app:minifyReleaseWithR8' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:minifyReleaseWithR8' is not up-to-date because:
+[        ]   Input property 'resourceShrinkingParams.multiOutputHandler.variantOutputs.$0.filters.$0' has been added for task ':app:minifyReleaseWithR8'
+[        ]   Input property 'resourceShrinkingParams.multiOutputHandler.variantOutputs.$0.filters.$0.filterType' has been added for task ':app:minifyReleaseWithR8'
+[        ]   Input property 'resourceShrinkingParams.multiOutputHandler.variantOutputs.$0.filters.$0.identifier' has been added for task ':app:minifyReleaseWithR8'
+[        ] R8 is a new Android code shrinker. If you experience any issues, please file a bug at
+[        ] https://issuetracker.google.com, using 'Shrinker (R8)' as component name.
+[        ] Current version is: 9.1.31.
+[        ] file or directory '/home/ahmadjz/Documents/Quran/app/build/app/intermediates/generated_proguard_file/release/mergeReleaseGeneratedProguardFiles/proguard.txt', not found
+[        ] file or directory '/home/ahmadjz/Documents/Quran/app/android/app/src/main/keepRules', not found
+[        ] file or directory '/home/ahmadjz/Documents/Quran/app/android/app/src/release/keepRules', not found
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:21:1-22:1: R8: Proguard configuration rule does not match anything: `-keep public class com.google.vending.licensing.ILicensingService`
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:22:1-23:1: R8: Proguard configuration rule does not match anything: `-keep public class com.android.vending.licensing.ILicensingService`
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:23:1-24:1: R8: Proguard configuration rule does not match anything: `-keep public class com.google.android.vending.licensing.ILicensingService`
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:55:1-57:2: R8: Proguard configuration rule does not match anything: `-keepclassmembers class * {
+[        ]   @android.webkit.JavascriptInterface <methods>;
+[        ] }`
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:68:1-70:1: R8: Proguard configuration rule does not match anything: `-keep class android.support.annotation.Keep`
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:70:1-52: R8: Proguard configuration rule does not match anything: `-keep @android.support.annotation.Keep class * {
+[        ]   *;
+[        ] }`
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:72:1-74:2: R8: Proguard configuration rule does not match anything: `-keepclasseswithmembers class * {
+[        ]   @android.support.annotation.Keep <methods>;
+[        ] }`
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:76:1-78:2: R8: Proguard configuration rule does not match anything: `-keepclasseswithmembers class * {
+[        ]   @android.support.annotation.Keep <fields>;
+[        ] }`
+[        ] INFO: /home/ahmadjz/Documents/Quran/app/build/app/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.1.0:80:1-82:2: R8: Proguard configuration rule does not match anything: `-keepclasseswithmembers class * {
+[        ]   @android.support.annotation.Keep <init>(...);
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/f50199c6f2c0bda4d178780a23cc1f50/transformed/fragment-1.7.1/proguard.txt:16:1-19:2: R8: Proguard configuration rule does not match anything: `-if public class ** extends androidx.fragment.app.Fragment
+[        ] -keepclasseswithmembers,allowrepackaging,allowobfuscation public class <1> {
+[        ]   public <init>();
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/f50199c6f2c0bda4d178780a23cc1f50/transformed/fragment-1.7.1/proguard.txt:24:1-29:2: R8: Proguard configuration rule does not match anything: `-if class androidx.fragment.app.FragmentTransition {
+[        ]   private static androidx.fragment.app.FragmentTransitionImpl resolveSupportImpl();
+[        ] }
+[        ] -keep class androidx.transition.FragmentTransitionSupport {
+[        ]   public <init>();
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/516b6a68a64c500f5e831b94e32b4b7c/transformed/lifecycle-viewmodel-2.7.0/proguard.txt:5:1-7:2: R8: Proguard configuration rule does not match anything: `-keepclassmembers,allowrepackaging,allowobfuscation class * extends androidx.lifecycle.AndroidViewModel {
+[        ]   <init>(android.app.Application);
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/099fa84de9a3b9c91d7f9d4a61afe2f1/transformed/lifecycle-viewmodel-savedstate-2.7.0/proguard.txt:1:1-3:2: R8: Proguard configuration rule does not match anything: `-keepclassmembers,allowrepackaging,allowobfuscation class * extends androidx.lifecycle.ViewModel {
+[        ]   <init>(androidx.lifecycle.SavedStateHandle);
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/099fa84de9a3b9c91d7f9d4a61afe2f1/transformed/lifecycle-viewmodel-savedstate-2.7.0/proguard.txt:5:1-7:2: R8: Proguard configuration rule does not match anything: `-keepclassmembers,allowrepackaging,allowobfuscation class * extends androidx.lifecycle.AndroidViewModel {
+[        ]   <init>(android.app.Application,androidx.lifecycle.SavedStateHandle);
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/21147ec51953fdf1826caf13610476e6/transformed/lifecycle-runtime-2.7.0/proguard.txt:10:1-12:2: R8: Proguard configuration rule does not match anything: `-keep class * implements androidx.lifecycle.GeneratedAdapter {
+[        ]   <init>(...);
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/21147ec51953fdf1826caf13610476e6/transformed/lifecycle-runtime-2.7.0/proguard.txt:14:1-16:2: R8: Proguard configuration rule does not match anything: `-keepclassmembers class ** {
+[        ]   @androidx.lifecycle.OnLifecycleEvent *;
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/4471f36c5baef67ab11b8cdc2622104d/transformed/shrink-rules/lib/META-INF/proguard/androidx-annotations.pro:4:1-6:2: R8: Proguard configuration rule does not match anything: `-keepclasseswithmembers class * {
+[        ]   @androidx.annotation.Keep <methods>;
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/4471f36c5baef67ab11b8cdc2622104d/transformed/shrink-rules/lib/META-INF/proguard/androidx-annotations.pro:8:1-10:2: R8: Proguard configuration rule does not match anything: `-keepclasseswithmembers class * {
+[        ]   @androidx.annotation.Keep <fields>;
+[        ] }`
+[        ] INFO: /home/ahmadjz/.gradle/caches/9.3.1/transforms/4471f36c5baef67ab11b8cdc2622104d/transformed/shrink-rules/lib/META-INF/proguard/androidx-annotations.pro:12:1-14:2: R8: Proguard configuration rule does not match anything: `-keepclasseswithmembers class * {
+[        ]   @androidx.annotation.Keep <init>(...);
+[        ] }`
+[        ] Resolve mutations for :app:compileReleaseArtProfile (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:compileReleaseArtProfile (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:compileReleaseArtProfile UP-TO-DATE
+[        ] Caching disabled for task ':app:compileReleaseArtProfile' because:
+[        ]   Build cache is disabled
+[        ] Skipping task ':app:compileReleaseArtProfile' as it is up-to-date.
+[        ] Resolve mutations for :app:convertShrunkResourcesToBinaryRelease (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:convertShrunkResourcesToBinaryRelease (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:convertShrunkResourcesToBinaryRelease
+[        ] Custom actions are attached to task ':app:convertShrunkResourcesToBinaryRelease'.
+[        ] Caching disabled for task ':app:convertShrunkResourcesToBinaryRelease' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:convertShrunkResourcesToBinaryRelease' is not up-to-date because:
+[        ]   Input property 'multiOutputHandler.variantOutputs.$0.filters.$0' has been added for task ':app:convertShrunkResourcesToBinaryRelease'
+[        ]   Input property 'multiOutputHandler.variantOutputs.$0.filters.$0.filterType' has been added for task ':app:convertShrunkResourcesToBinaryRelease'
+[        ]   Input property 'multiOutputHandler.variantOutputs.$0.filters.$0.identifier' has been added for task ':app:convertShrunkResourcesToBinaryRelease'
+[        ] Resolve mutations for :app:optimizeReleaseResources (Thread[#173,Execution worker,5,main]) started.
+[        ] :app:optimizeReleaseResources (Thread[#173,Execution worker,5,main]) started.
+[        ] > Task :app:optimizeReleaseResources
+[        ] Custom actions are attached to task ':app:optimizeReleaseResources'.
+[        ] Caching disabled for task ':app:optimizeReleaseResources' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:optimizeReleaseResources' is not up-to-date because:
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0' has been added for task ':app:optimizeReleaseResources'
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0.filterType' has been added for task ':app:optimizeReleaseResources'
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0.identifier' has been added for task ':app:optimizeReleaseResources'
+[+20797 ms] work action resolve out (project :sqflite_android) (Thread[#196,Execution worker Thread 24,5,main]) started.
+[        ] work action resolve out (project :sqflite_android) (Thread[#196,Execution worker Thread 24,5,main]) started.
+[        ] Resolve mutations for :app:lintVitalAnalyzeRelease (Thread[#196,Execution worker Thread 24,5,main]) started.
+[        ] :app:lintVitalAnalyzeRelease (Thread[#196,Execution worker Thread 24,5,main]) started.
+[+1999 ms] > Task :app:lintVitalAnalyzeRelease
+[        ] Caching disabled for task ':app:lintVitalAnalyzeRelease' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:lintVitalAnalyzeRelease' is not up-to-date because:
+[        ]   Value of input property 'printStackTrace' has changed for task ':app:lintVitalAnalyzeRelease'
+[        ] Android Lint: Reusing lint classloader 32.1.0_true
+[        ] Resolve mutations for :app:lintVitalReportRelease (Thread[#196,Execution worker Thread 24,5,main]) started.
+[        ] :app:lintVitalReportRelease (Thread[#196,Execution worker Thread 24,5,main]) started.
+[        ] > Task :app:lintVitalReportRelease
+[        ] Caching disabled for task ':app:lintVitalReportRelease' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:lintVitalReportRelease' is not up-to-date because:
+[        ]   Value of input property 'printStackTrace' has changed for task ':app:lintVitalReportRelease'
+[        ] Android Lint: Reusing lint classloader 32.1.0_true
+[        ] Resolve mutations for :app:lintVitalRelease (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :app:lintVitalRelease (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] > Task :app:lintVitalRelease
+[        ] Caching disabled for task ':app:lintVitalRelease' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:lintVitalRelease' is not up-to-date because:
+[        ]   Task.upToDateWhen is false.
+[        ] Resolve mutations for :app:packageRelease (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :app:packageRelease (Thread[#184,Execution worker Thread 12,5,main]) started.
+[+1299 ms] > Task :app:packageRelease
+[        ] Custom actions are attached to task ':app:packageRelease'.
+[        ] Caching disabled for task ':app:packageRelease' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:packageRelease' is not up-to-date because:
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0' has been added for task ':app:packageRelease'
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0.filterType' has been added for task ':app:packageRelease'
+[        ]   Input property 'outputsHandler.variantOutputs.$0.filters.$0.identifier' has been added for task ':app:packageRelease'
+[        ] The input changes require a full rebuild for incremental task ':app:packageRelease'.
+[        ] Resolve mutations for :app:createReleaseApkListingFileRedirect (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :app:createReleaseApkListingFileRedirect (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] > Task :app:createReleaseApkListingFileRedirect
+[        ] Caching disabled for task ':app:createReleaseApkListingFileRedirect' because:
+[        ]   Build cache is disabled
+[        ]   Caching has been disabled for the task
+[        ] Task ':app:createReleaseApkListingFileRedirect' is not up-to-date because:
+[        ]   Input property 'listingFile' file /home/ahmadjz/Documents/Quran/app/build/app/outputs/apk/release/output-metadata.json has changed.
+[        ] Resolve mutations for :app:assembleRelease (Thread[#184,Execution worker Thread 12,5,main]) started.
+[        ] :app:assembleRelease (Thread[#184,Execution worker Thread 12,5,main]) started.
+[ +899 ms] > Task :app:assembleRelease
+[        ] Caching disabled for task ':app:assembleRelease' because:
+[        ]   Build cache is disabled
+[        ] Task ':app:assembleRelease' is not up-to-date because:
+[        ]   Task has not declared any outputs despite executing actions.
+[        ] Build 27ea9d5f-c0fd-4366-a208-774e5f12717a is closed
+[        ] AAPT2 aapt2-9.1.0-14792394-linux Daemon #0: shutdown
+[        ] Android Lint: Disposing Uast application environment in lint classloader [32.1.0_true]
+[        ] Build 7c025df0-35f1-40db-a5b5-92a989e15ebf is closed
+[        ] [Incubating] Problems report is available at: file:///home/ahmadjz/Documents/Quran/app/build/reports/problems/problems-report.html
+[        ] Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+[        ] You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+[        ] For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+[        ] BUILD SUCCESSFUL in 49s
+[        ] 126 actionable tasks: 35 executed, 91 up-to-date
+[ +138 ms] Running Gradle task 'assembleRelease'... (completed in 49.4s)
+[        ] Calculate SHA1: LocalDirectory: '/home/ahmadjz/Documents/Quran/app/build/app/outputs/flutter-apk'/app-arm64-v8a-release.apk
+[ +328 ms] ✓ Built build/app/outputs/flutter-apk/app-arm64-v8a-release.apk (88.1MB)
+[   +1 ms] "flutter apk" took 49,875ms.
+[        ] Running 1 shutdown hook
+[        ] Shutdown hooks complete
+[        ] exiting with code 0

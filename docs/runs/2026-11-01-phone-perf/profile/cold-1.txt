@@ -1,0 +1,13 @@
+1793515838518
+Starting: Intent { cmp=tech.ahmadjz.greymushaf/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: tech.ahmadjz.greymushaf/.MainActivity
+TotalTime: 1764
+WaitTime: 1788
+Complete
+--------- beginning of main
+11-01 09:50:39.042 13551 13583 I flutter : The Dart VM service is listening on http://127.0.0.1:39517/aI7oIwpMx-Q=/
+11-01 09:50:39.044 13551 13572 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+11-01 09:50:39.062 13551 13572 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+11-01 09:50:40.188 13551 13551 I flutter : READER_FIRST_FRAME 1793515840188

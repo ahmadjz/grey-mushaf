@@ -1,0 +1,132 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart: (setUpAll)
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: (setUpAll)
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/save_feedback_test.dart: failed mid-drag save retains later words until Retry commits each
+00:03 +1: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.dark and survives resume
+00:06 +2: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.dark and survives resume
+00:06 +3: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:07 +4: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:07 +5: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:07 +5: /home/ahmadjz/Documents/Quran/app/test/reader_chrome_test.dart: page numbers fit below ink within their own pages at Size(411.0, 914.0)
+READER_PAGE 2
+READER_PAGE 47
+READER_PAGE 48
+READER_PAGE 50
+00:07 +6: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:07 +6: /home/ahmadjz/Documents/Quran/app/test/reader_chrome_test.dart: page numbers fit below ink within their own pages at Size(914.0, 411.0)
+READER_PAGE 47
+READER_PAGE 50
+00:07 +7: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:08 +8: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:08 +8: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: headings are black inert ink; page 1 ayah remains revealable
+READER_PAGE 2
+READER_PAGE 50
+
+Warning: A call to longPress() with finder "Found 1 widget with key [<'heading-50-1'>]: [
+  SizedBox-[<'heading-50-1'>](width: 124.9, height: 42.3, renderObject: RenderConstrainedBox#ed253 relayoutBoundary=up4),
+]" derived an Offset (Offset(300.0, 29.7)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#ed253 relayoutBoundary=up4
+The hit test result at that offset is: HitTestResult(_RenderInkFeatures#fe0cc@Offset(300.0, 29.7), RenderPhysicalModel#9211d@Offset(300.0, 29.7), RenderStack#380c9@Offset(300.0, 29.7), RenderCustomMultiChildLayoutBox#1d2d7@Offset(300.0, 29.7), _RenderInkFeatures#426b3@Offset(300.0, 29.7), RenderPhysicalModel#4f8ce@Offset(300.0, 29.7), RenderSemanticsAnnotations#93e5a@Offset(300.0, 29.7), RenderRepaintBoundary#b747c@Offset(300.0, 29.7), RenderIgnorePointer#868b5@Offset(300.0, 29.7), RenderAnimatedOpacity#dab49@Offset(300.0, 29.7), RenderAnimatedOpacity#166d6@Offset(300.0, 29.7), _RenderColoredBox#6fcad@Offset(300.0, 29.7), RenderAnimatedOpacity#127dd@Offset(300.0, 29.7), RenderIgnorePointer#fde44@Offset(300.0, 29.7), RenderAnimatedOpacity#3800e@Offset(300.0, 29.7), RenderRepaintBoundary#d8ba2@Offset(300.0, 29.7), RenderSemanticsAnnotations#1bbd4@Offset(300.0, 29.7), RenderOffstage#30155@Offset(300.0, 29.7), RenderSemanticsAnnotations#0bcb3@Offset(300.0, 29.7), _RenderTheater#f82bf@Offset(300.0, 29.7), RenderAbsorbPointer#efe28@Offset(300.0, 29.7), RenderPointerListener#dbf32@Offset(300.0, 29.7), RenderSemanticsAnnotations#e9e59@Offset(300.0, 29.7), RenderCustomPaint#1e83e@Offset(300.0, 29.7), RenderSemanticsAnnotations#083cc@Offset(300.0, 29.7), RenderSemanticsAnnotations#68b69@Offset(300.0, 29.7), RenderSemanticsAnnotations#17877@Offset(300.0, 29.7), RenderTapRegionSurface#2fd3e@Offset(300.0, 29.7), RenderSemanticsAnnotations#6a873@Offset(300.0, 29.7), RenderSemanticsAnnotations#8e513@Offset(300.0, 29.7), HitTestEntry<HitTestTarget>#57477(_ReusableRenderView#009a2), HitTestEntry<HitTestTarget>#5a430(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.longPress (package:flutter_test/src/controller.dart:1212:7)
+#3      longPressTarget (file:///home/ahmadjz/Documents/Quran/app/test/word_target.dart:82:14)
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/widget_test.dart:114:15)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "longPress()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'heading-50-1'>]: [
+  SizedBox-[<'heading-50-1'>](width: 124.9, height: 42.3, renderObject: RenderConstrainedBox#ed253 relayoutBoundary=up4),
+]" derived an Offset (Offset(300.0, 29.7)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#ed253 relayoutBoundary=up4
+The hit test result at that offset is: HitTestResult(_RenderInkFeatures#fe0cc@Offset(300.0, 29.7), RenderPhysicalModel#9211d@Offset(300.0, 29.7), RenderStack#380c9@Offset(300.0, 29.7), RenderCustomMultiChildLayoutBox#1d2d7@Offset(300.0, 29.7), _RenderInkFeatures#426b3@Offset(300.0, 29.7), RenderPhysicalModel#4f8ce@Offset(300.0, 29.7), RenderSemanticsAnnotations#93e5a@Offset(300.0, 29.7), RenderRepaintBoundary#b747c@Offset(300.0, 29.7), RenderIgnorePointer#868b5@Offset(300.0, 29.7), RenderAnimatedOpacity#dab49@Offset(300.0, 29.7), RenderAnimatedOpacity#166d6@Offset(300.0, 29.7), _RenderColoredBox#6fcad@Offset(300.0, 29.7), RenderAnimatedOpacity#127dd@Offset(300.0, 29.7), RenderIgnorePointer#fde44@Offset(300.0, 29.7), RenderAnimatedOpacity#3800e@Offset(300.0, 29.7), RenderRepaintBoundary#d8ba2@Offset(300.0, 29.7), RenderSemanticsAnnotations#1bbd4@Offset(300.0, 29.7), RenderOffstage#30155@Offset(300.0, 29.7), RenderSemanticsAnnotations#0bcb3@Offset(300.0, 29.7), _RenderTheater#f82bf@Offset(300.0, 29.7), RenderAbsorbPointer#efe28@Offset(300.0, 29.7), RenderPointerListener#dbf32@Offset(300.0, 29.7), RenderSemanticsAnnotations#e9e59@Offset(300.0, 29.7), RenderCustomPaint#1e83e@Offset(300.0, 29.7), RenderSemanticsAnnotations#083cc@Offset(300.0, 29.7), RenderSemanticsAnnotations#68b69@Offset(300.0, 29.7), RenderSemanticsAnnotations#17877@Offset(300.0, 29.7), RenderTapRegionSurface#2fd3e@Offset(300.0, 29.7), RenderSemanticsAnnotations#6a873@Offset(300.0, 29.7), RenderSemanticsAnnotations#8e513@Offset(300.0, 29.7), HitTestEntry<HitTestTarget>#5793a(_ReusableRenderView#009a2), HitTestEntry<HitTestTarget>#b6307(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      tapTarget (file:///home/ahmadjz/Documents/Quran/app/test/word_target.dart:78:14)
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/widget_test.dart:116:15)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+READER_PAGE 1
+00:08 +9: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +10: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +11: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +12: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +13: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +13: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: heading ink proportions match print, landscape=false
+READER_PAGE 2
+READER_PAGE 50
+READER_PAGE 2
+00:09 +14: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +14: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: heading ink proportions match print, landscape=true
+READER_PAGE 50
+READER_PAGE 1
+00:09 +15: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +16: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +16: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: drag crosses words and line break once, locks swipe until lift, ordinary swipe then changes page
+READER_PAGE 2
+00:09 +17: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +17: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: landscape puts odd page on right for both spreads
+READER_PAGE 47
+00:09 +18: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +19: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:09 +19: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: empty gutter does nothing; dragging into each page counts once
+READER_PAGE 47
+00:09 +20: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +21: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +21: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: ink reaching into page padding still belongs to its word
+READER_PAGE 48
+00:10 +22: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +23: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +24: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +24: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: attached off-screen bands cannot receive a press
+READER_PAGE 2
+00:10 +25: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +26: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +26: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: reader fills Size(411.4, 866.3) and opening pages use normal-page font size
+READER_PAGE 48
+READER_PAGE 2
+00:10 +27: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +27: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: reader fills Size(914.3, 363.4) and opening pages use normal-page font size
+READER_PAGE 47
+READER_PAGE 1
+00:10 +28: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +28: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: reader fills Size(800.0, 1224.0) and opening pages use normal-page font size
+READER_PAGE 48
+READER_PAGE 2
+00:10 +29: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +29: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: reader fills Size(1280.0, 744.0) and opening pages use normal-page font size
+READER_PAGE 47
+READER_PAGE 1
+00:10 +30: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +30: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: height-limited spread keeps justified text at the shared font scale
+READER_PAGE 47
+00:10 +31: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +31: /home/ahmadjz/Documents/Quran/app/test/widget_test.dart: spread drag crosses a line break, locks swiping and counts each word once
+READER_PAGE 47
+READER_PAGE 1
+00:10 +32: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:10 +33: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: manual mode ignores platform Brightness.light and survives resume
+00:12 +34: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: dark page-1 basmallah uses committed state through failures and Retry
+00:15 +35: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: actual ayah numeral preserves interior ink and black field
+00:15 +36: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: all three heading forms render white pixels on black
+00:15 +37: /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: (tearDownAll)
+00:15 +37: All tests passed!

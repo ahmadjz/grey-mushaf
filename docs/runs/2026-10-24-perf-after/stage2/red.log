@@ -1,0 +1,32 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/page_ink_test.dart
+test/page_ink_test.dart:3:8: Error: Error when reading 'lib/page_ink.dart': No such file or directory
+import 'package:greymushaf/page_ink.dart';
+       ^
+test/page_ink_test.dart:8:19: Error: Method not found: 'PageInkController'.
+    final model = PageInkController(MemoryRevealStore());
+                  ^^^^^^^^^^^^^^^^^
+test/page_ink_test.dart:10:55: Error: Method not found: 'PaintedWordLine'.
+      child: PaintedInkPage(controller: model, child: PaintedWordLine(
+                                                      ^^^^^^^^^^^^^^^
+test/page_ink_test.dart:10:14: Error: Method not found: 'PaintedInkPage'.
+      child: PaintedInkPage(controller: model, child: PaintedWordLine(
+             ^^^^^^^^^^^^^^
+00:00 +0 -1: loading /home/ahmadjz/Documents/Quran/app/test/page_ink_test.dart [E]
+  Failed to load "/home/ahmadjz/Documents/Quran/app/test/page_ink_test.dart":
+  Compilation failed for testPath=/home/ahmadjz/Documents/Quran/app/test/page_ink_test.dart: test/page_ink_test.dart:3:8: Error: Error when reading 'lib/page_ink.dart': No such file or directory
+  import 'package:greymushaf/page_ink.dart';
+         ^
+  test/page_ink_test.dart:8:19: Error: Method not found: 'PageInkController'.
+      final model = PageInkController(MemoryRevealStore());
+                    ^^^^^^^^^^^^^^^^^
+  test/page_ink_test.dart:10:55: Error: Method not found: 'PaintedWordLine'.
+        child: PaintedInkPage(controller: model, child: PaintedWordLine(
+                                                        ^^^^^^^^^^^^^^^
+  test/page_ink_test.dart:10:14: Error: Method not found: 'PaintedInkPage'.
+        child: PaintedInkPage(controller: model, child: PaintedWordLine(
+               ^^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/test/page_ink_test.dart: loading /home/ahmadjz/Documents/Quran/app/test/page_ink_test.dart

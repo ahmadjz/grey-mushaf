@@ -1,0 +1,12 @@
+1793515931126
+Starting: Intent { cmp=tech.ahmadjz.greymushaf/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: tech.ahmadjz.greymushaf/.MainActivity
+TotalTime: 1264
+WaitTime: 1278
+Complete
+--------- beginning of main
+11-01 09:52:11.383 14199 14220 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+11-01 09:52:11.399 14199 14220 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+11-01 09:52:12.299 14199 14199 I flutter : READER_FIRST_FRAME 1793515932299

@@ -1,0 +1,137 @@
+Resolving dependencies...
+Downloading packages...
+  crypto 3.0.7 (3.0.8 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  sqflite 2.4.5 (2.4.6 available)
+  sqflite_android 2.4.5 (2.4.6 available)
+  sqflite_common 2.5.14 (2.5.17 available)
+  sqflite_darwin 2.4.4+1 (2.4.6 available)
+  sqflite_platform_interface 2.4.3 (2.4.4 available)
+  synchronized 3.5.0 (3.6.1+1 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.4 available)
+  web 1.1.1 (1.1.2 available)
+Got dependencies!
+12 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleProfile'...                           23.0s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (127.6MB)
+Installing build/app/outputs/flutter-apk/app-profile.apk...        313ms
+D/WindowLayoutComponentImpl(21052): Register WindowLayoutInfoListener on Context=tech.ahmadjz.greymushaf.MainActivity@bdc36a6, of which baseContext=android.app.ContextImpl@e84c83
+I/adjz.greymushaf(21052): Compiler allocated 5230KB to compile void android.view.ViewRootImpl.performTraversals(long)
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40613/BbvpxwchGZY=/
+VMServiceFlutterDriver: Isolate found with number: 320992157078983
+VMServiceFlutterDriver: Isolate 320992157078983 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter (21052): 00:00 +0: repeatable reader profile baseline
+I/flutter (21052): READER_FIRST_FRAME 1795184883432
+D/InsetsController(21052): Setting requestedVisibleTypes to 496 (was 503)
+D/VRI[MainActivity](21052): WindowInsets changed: statusBars:null navigationBars:null 
+VMServiceFlutterDriver: Connected to Flutter application.
+D/InsetsController(21052): hide(ime())
+I/ImeTracker(21052): tech.ahmadjz.greymushaf:c8b017a0: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+W/InteractionJankMonitor(21052): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=tech.ahmadjz.greymushaf
+I/flutter (21052): READER_PAGE 2
+D/ProfileInstaller(21052): Installing profile for tech.ahmadjz.greymushaf
+I/flutter (21052): READER_PAGE 3
+I/flutter (21052): READER_PAGE 4
+I/flutter (21052): READER_PAGE 5
+I/flutter (21052): READER_PAGE 6
+I/flutter (21052): READER_PAGE 7
+I/flutter (21052): READER_PAGE 8
+I/flutter (21052): READER_PAGE 9
+I/flutter (21052): READER_PAGE 10
+I/flutter (21052): READER_PAGE 11
+I/flutter (21052): READER_PAGE 12
+I/flutter (21052): READER_PAGE 13
+I/flutter (21052): READER_PAGE 14
+I/flutter (21052): READER_PAGE 15
+I/flutter (21052): READER_PAGE 16
+I/flutter (21052): READER_PAGE 17
+I/flutter (21052): READER_PAGE 18
+I/flutter (21052): READER_PAGE 19
+I/flutter (21052): READER_PAGE 20
+I/flutter (21052): READER_PAGE 21
+I/flutter (21052): READER_PAGE 22
+I/flutter (21052): READER_PAGE 23
+I/flutter (21052): READER_PAGE 24
+I/flutter (21052): READER_PAGE 25
+I/flutter (21052): READER_PAGE 26
+I/flutter (21052): READER_PAGE 27
+I/flutter (21052): READER_PAGE 28
+I/flutter (21052): READER_PAGE 29
+I/flutter (21052): READER_PAGE 30
+I/flutter (21052): READER_PAGE 31
+I/flutter (21052): READER_PAGE 32
+I/flutter (21052): READER_PAGE 33
+I/flutter (21052): READER_PAGE 34
+I/flutter (21052): READER_PAGE 35
+I/flutter (21052): READER_PAGE 36
+I/flutter (21052): READER_PAGE 37
+I/flutter (21052): READER_PAGE 38
+I/flutter (21052): READER_PAGE 39
+I/flutter (21052): READER_PAGE 40
+I/flutter (21052): READER_PAGE 41
+I/flutter (21052): READER_PAGE 42
+I/flutter (21052): READER_PAGE 43
+I/flutter (21052): READER_PAGE 44
+I/flutter (21052): READER_PAGE 45
+I/flutter (21052): READER_PAGE 46
+I/flutter (21052): READER_PAGE 47
+I/flutter (21052): READER_PAGE 450
+D/VRI[MainActivity](21052): WindowInsets changed: 2400x1080 
+I/flutter (21052): READER_PAGE 451
+I/flutter (21052): READER_PAGE 453
+I/flutter (21052): READER_PAGE 455
+I/flutter (21052): READER_PAGE 457
+I/flutter (21052): READER_PAGE 459
+I/flutter (21052): READER_PAGE 461
+I/flutter (21052): READER_PAGE 463
+I/flutter (21052): READER_PAGE 465
+I/flutter (21052): READER_PAGE 467
+I/flutter (21052): READER_PAGE 469
+I/flutter (21052): READER_PAGE 471
+I/flutter (21052): READER_PAGE 473
+I/flutter (21052): READER_PAGE 475
+I/flutter (21052): READER_PAGE 477
+I/flutter (21052): READER_PAGE 479
+I/flutter (21052): READER_PAGE 481
+I/flutter (21052): READER_PAGE 483
+I/flutter (21052): READER_PAGE 485
+I/flutter (21052): READER_PAGE 487
+I/flutter (21052): READER_PAGE 489
+I/flutter (21052): READER_PAGE 491
+I/flutter (21052): READER_PAGE 493
+I/flutter (21052): READER_PAGE 495
+I/flutter (21052): READER_PAGE 497
+I/flutter (21052): READER_PAGE 499
+I/flutter (21052): READER_PAGE 501
+I/flutter (21052): READER_PAGE 503
+I/flutter (21052): READER_PAGE 505
+I/flutter (21052): READER_PAGE 507
+I/flutter (21052): READER_PAGE 509
+I/flutter (21052): READER_PAGE 511
+I/flutter (21052): READER_PAGE 513
+I/flutter (21052): READER_PAGE 515
+I/flutter (21052): READER_PAGE 517
+I/flutter (21052): READER_PAGE 519
+I/flutter (21052): READER_PAGE 521
+I/flutter (21052): READER_PAGE 523
+I/flutter (21052): READER_PAGE 525
+I/flutter (21052): READER_PAGE 527
+I/flutter (21052): READER_PAGE 529
+I/flutter (21052): READER_PAGE 531
+I/flutter (21052): READER_PAGE 533
+I/flutter (21052): READER_PAGE 535
+I/flutter (21052): READER_PAGE 537
+I/flutter (21052): READER_PAGE 539
+I/flutter (21052): READER_PAGE 541
+D/VRI[MainActivity](21052): WindowInsets changed: 1080x2400 
+I/flutter (21052): READER_PAGE 542
+D/VRI[MainActivity](21052): WindowInsets changed: 2400x1080 
+I/flutter (21052): 02:35 +1: (tearDownAll)
+I/flutter (21052): 02:35 +2: All tests passed!
+D/VRI[MainActivity](21052): WindowInsets changed: 1080x2400 
+All tests passed.

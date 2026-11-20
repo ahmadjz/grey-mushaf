@@ -1,0 +1,17 @@
+{
+  "head": "4e648bdc1659b48c820652beb69fad15d3d7fc58",
+  "apk": "/home/ahmadjz/Documents/Quran/grey-mushaf.apk",
+  "bytes": 88076901,
+  "MiB": 84.0,
+  "sha256": "c3c0325406f7ef3bce4a28ab92ba21050b2fe07a4de4ff7f7dd855ad7047b4ac",
+  "pages": 604,
+  "page_fonts": 604,
+  "verified_asset_hashes": 1212,
+  "native_libraries": [
+    "lib/arm64-v8a/libapp.so",
+    "lib/arm64-v8a/libflutter.so"
+  ],
+  "verifyMushafBundle": "PASS in release build.log:224; BUILD SUCCESSFUL at :1780",
+  "dev_only_integration_test_registered": false,
+  "gitignored": true
+}

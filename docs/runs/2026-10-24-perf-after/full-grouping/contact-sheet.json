@@ -1,0 +1,98 @@
+[
+  {
+    "image": "spread-49-50-dark-128-unrevealed.png",
+    "pixel": [
+      1580,
+      955
+    ],
+    "crop": [
+      1560,
+      935,
+      1600,
+      975
+    ],
+    "changed": 2,
+    "total": 2592000,
+    "maxDelta": 50
+  },
+  {
+    "image": "page-187-dark-128-unrevealed.png",
+    "pixel": [
+      153,
+      1540
+    ],
+    "crop": [
+      133,
+      1520,
+      173,
+      1560
+    ],
+    "changed": 1,
+    "total": 2592000,
+    "maxDelta": 24
+  },
+  {
+    "image": "page-63-dark-128-unrevealed.png",
+    "pixel": [
+      281,
+      1321
+    ],
+    "crop": [
+      261,
+      1301,
+      301,
+      1341
+    ],
+    "changed": 3,
+    "total": 2592000,
+    "maxDelta": 19
+  },
+  {
+    "image": "page-63-dark-128-unrevealed.png",
+    "pixel": [
+      281,
+      1322
+    ],
+    "crop": [
+      261,
+      1302,
+      301,
+      1342
+    ],
+    "changed": 3,
+    "total": 2592000,
+    "maxDelta": 7
+  },
+  {
+    "image": "page-63-dark-128-unrevealed.png",
+    "pixel": [
+      281,
+      1320
+    ],
+    "crop": [
+      261,
+      1300,
+      301,
+      1340
+    ],
+    "changed": 3,
+    "total": 2592000,
+    "maxDelta": 6
+  },
+  {
+    "image": "spread-49-50-dark-128-unrevealed.png",
+    "pixel": [
+      1580,
+      956
+    ],
+    "crop": [
+      1560,
+      936,
+      1600,
+      976
+    ],
+    "changed": 2,
+    "total": 2592000,
+    "maxDelta": 5
+  }
+]

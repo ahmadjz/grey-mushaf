@@ -1,0 +1,33 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: production page marker preserves numeral and black field
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: a numeric value within <2> of <41.0>
+  Actual: <6.592156862745099>
+   Which:  differs by <34.4078431372549>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart:216:11)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart line 216
+The test description was:
+  production page marker preserves numeral and black field
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +0 -1: production page marker preserves numeral and black field [E]
+  Test failed. See exception logs above.
+  The test description was: production page marker preserves numeral and black field
+  
+00:03 +0 -1: (tearDownAll)
+00:03 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/test/dark_mode_test.dart: production page marker preserves numeral and black field

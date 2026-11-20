@@ -1,0 +1,144 @@
+00:00 +0: loading /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: (setUpAll)
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: (setUpAll)
+00:00 +0: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: a Boox starts in black and white without the colour row
+00:00 +1: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: a Boox starts in black and white without the colour row
+00:00 +2: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the top bar spans the screen from the very top
+00:00 +3: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: a phone keeps the colour row and natural colours
+00:00 +4: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the bar title follows the page after a swipe
+READER_PAGE 216
+00:01 +5: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: the Settings switch turns B/W off and remembers it
+00:01 +6: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +7: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +8: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +8: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: in B/W an arrow changes the page at once
+READER_PAGE 216
+00:01 +9: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +9: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: in colour an arrow also changes the page at once
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: <0>
+  Actual: <-368.5637980699539>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/black_white_test.dart:167:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/ahmadjz/Documents/Quran/app/test/black_white_test.dart line 167
+The test description was:
+  in colour an arrow also changes the page at once
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +9 -1: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: the menu holds the dark mode switch and Settings
+00:01 +9 -1: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: in colour an arrow also changes the page at once [E]
+  Test failed. See exception logs above.
+  The test description was: in colour an arrow also changes the page at once
+  
+00:01 +10 -1: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: the search shade is grey in B/W and blue in colour
+00:01 +11 -1: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: the search shade is grey in B/W and blue in colour
+00:01 +12 -1: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: landscape borders the outer edges and the spine once
+00:01 +13 -1: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: B/W borders and header line are at least 1 px
+00:01 +14 -1: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: arrows turn pages without revealing or showing the bars
+READER_PAGE 216
+READER_PAGE 217
+00:01 +15 -1: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: arrows turn pages without revealing or showing the bars
+READER_PAGE 218
+00:01 +16 -1: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: B/W errors are not red
+00:01 +17 -1: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a landscape arrow moves a whole spread
+00:01 +17 -1: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+READER_PAGE 2
+READER_PAGE 3
+00:01 +17 -1: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a landscape arrow moves a whole spread
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: no matching candidates
+  Actual: _KeyWidgetFinder:<Found 1 widget with key [<'page-215'>]: [
+            SizedBox-[<'page-215'>](renderObject: RenderConstrainedBox#88c07 relayoutBoundary=up3),
+          ]>
+   Which: means one was found but none were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart:281:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart line 281
+The test description was:
+  a landscape arrow moves a whole spread
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +17 -2: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+00:01 +17 -2: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a landscape arrow moves a whole spread [E]
+  Test failed. See exception logs above.
+  The test description was: a landscape arrow moves a whole spread
+  
+00:01 +18 -2: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+00:01 +19 -2: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+00:02 +19 -2: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: after a failed load the next arrow still moves one page
+READER_PAGE 2
+00:02 +19 -2: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk true
+READER_PAGE 2
+00:02 +20 -2: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: after a failed load the next arrow still moves one page
+00:02 +20 -2: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+READER_PAGE 3
+00:03 +20 -2: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: after a failed load the next arrow still moves one page
+READER_PAGE 3
+00:03 +21 -2: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+00:03 +22 -2: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+00:03 +22 -2: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: rotating during an arrow turn keeps the arrows in step
+READER_PAGE 217
+00:03 +22 -2: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: [2]
+  Actual: [3]
+   Which: at location [0] is <3> instead of <2>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/ahmadjz/Documents/Quran/app/test/black_white_test.dart:292:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/ahmadjz/Documents/Quran/app/test/black_white_test.dart line 292
+The test description was:
+  rapid arrows on loaded pages land without a slide, eInk false
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +22 -3: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: rotating during an arrow turn keeps the arrows in step
+00:03 +22 -3: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false [E]
+  Test failed. See exception logs above.
+  The test description was: rapid arrows on loaded pages land without a slide, eInk false
+  
+00:03 +22 -3: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: rotating during an arrow turn keeps the arrows in step
+READER_PAGE 219
+READER_PAGE 217
+00:03 +23 -3: /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: dark mode in B/W keeps a grey shade and white marks
+00:03 +24 -3: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a swipe during a held arrow load resets the arrow target
+READER_PAGE 2
+00:03 +25 -3: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a swipe during a held arrow load resets the arrow target
+00:03 +26 -3: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a swipe during a held arrow load resets the arrow target
+READER_PAGE 1
+READER_PAGE 2
+00:06 +27 -3: /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: (tearDownAll)
+00:06 +27 -3: Some tests failed.
+
+Failing tests:
+  /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: in colour an arrow also changes the page at once
+  /home/ahmadjz/Documents/Quran/app/test/black_white_test.dart: rapid arrows on loaded pages land without a slide, eInk false
+  /home/ahmadjz/Documents/Quran/app/test/top_bar_test.dart: a landscape arrow moves a whole spread

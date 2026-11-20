@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/sync.dart';
-import 'package:greymushaf/sync_local.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 
@@ -194,28 +193,22 @@ void main() {
   });
 
   test(
-    'another account gets only changes made while signed out (R81)',
+    'changes made while signed out upload at the next sign-in (R81)',
     () async {
-      local.pending.add(wordRecord('u1'));
       await signIn();
       await engine.sync();
       local.values['cursor_word'] = '9';
       await engine.signOut();
+      local.pending.add(wordRecord('u2'));
       await signIn();
       expect(local.values['cursor_word'], '9');
-
-      await engine.signOut();
-      local.pending.add(wordRecord('u2'));
-      server.user = 'user-b';
-      await signIn();
-      expect(local.values.containsKey('cursor_word'), isFalse);
       await engine.sync();
       expect(
         [
           for (final r in server.records['word_actions']!)
             (r['uuid'], r['user']),
         ],
-        [('u1', 'user-a'), ('u2', 'user-b')],
+        [('u2', 'user-a')],
       );
     },
   );
@@ -240,12 +233,12 @@ void main() {
   });
 
   test(
-    'switching account mid-upload never sends the new data as the old user',
+    'signing out while an upload is acknowledged sends nothing more',
     () async {
-      local.pending.add(wordRecord('u1'));
+      local.pending.addAll([wordRecord('u1'), wordRecord('u2')]);
       final reached = Completer<void>();
       final release = Completer<void>();
-      server.pauseCreate = (request) {
+      local.pauseAck = () {
         if (reached.isCompleted) return Future.value();
         reached.complete();
         return release.future;
@@ -254,26 +247,43 @@ void main() {
       final running = engine.sync();
       await reached.future;
       await engine.signOut();
-      server.user = 'user-b';
-      await signIn();
-      local.pending.add(
-        SyncRecord(SyncKind.mark, 'm1', fakeDevice, 5, {
-          'word': fakeWord,
-          'kind': 'shape',
-          'style': '',
-          'color': '',
-        }),
-      );
+      int posts() => server.requests
+          .where((r) => r.startsWith('POST /api/collections/word'))
+          .length;
+      final before = posts();
       release.complete();
       await running;
-      await engine.sync();
-      expect(
-        server.records['mark_actions']!.map((r) => r['user']),
-        everyElement('user-b'),
-      );
-      expect(server.records['mark_actions'], hasLength(1));
+      expect(posts(), before);
+      expect(server.records['word_actions'], hasLength(1));
     },
   );
+
+  test(
+    'another account cannot sign in on a device holding this account (R83)',
+    () async {
+      local.pending.add(wordRecord('u1'));
+      await signIn();
+      await engine.sync();
+      await engine.signOut();
+      server.user = 'user-b';
+      await expectLater(signIn(), throwsA(isA<OtherAccount>()));
+      expect(engine.signedIn, isFalse);
+      expect(local.values['owner'], 'user-a');
+      expect(server.records['word_actions']!.map((r) => r['user']), ['user-a']);
+      server.user = 'user-a';
+      await signIn();
+      expect(engine.signedIn, isTrue);
+    },
+  );
+
+  test('an unexpected local error during sync shows as a problem', () async {
+    await signIn();
+    await engine.sync();
+    local.failPending = StateError('disk');
+    await engine.sync();
+    expect(engine.problem, isA<Refused>());
+    expect(engine.syncing, isFalse);
+  });
 
   test('disposing mid-upload does not notify a disposed engine', () async {
     local.pending.add(wordRecord('u1'));

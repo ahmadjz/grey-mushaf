@@ -25,19 +25,24 @@ class FakeLocal implements SyncLocal {
   Future<List<SyncRecord>> pendingUploads(
     SyncKind kind, {
     int limit = 200,
-  }) async => [
-    for (final r in pending)
-      if (r.kind == kind && !uploaded.contains(r.uuid)) r,
-  ].take(limit).toList();
+  }) async => failPending != null
+      ? throw failPending!
+      : [
+          for (final r in pending)
+            if (r.kind == kind && !uploaded.contains(r.uuid)) r,
+        ].take(limit).toList();
   @override
   Future<int> pendingCount() async =>
       pending.where((r) => !uploaded.contains(r.uuid)).length;
   final serverTimes = <String, int>{};
+  Future<void> Function()? pauseAck;
+  Object? failPending;
   @override
   Future<void> markUploaded(
     SyncRecord record, {
     required int serverTime,
   }) async {
+    await pauseAck?.call();
     uploaded.add(record.uuid);
     serverTimes[record.uuid] = serverTime;
   }

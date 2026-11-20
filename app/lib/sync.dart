@@ -32,6 +32,13 @@ class NotVerified extends SyncProblem {
   const NotVerified() : super('This account is not verified yet');
 }
 
+class OtherAccount extends SyncProblem {
+  const OtherAccount()
+    : super(
+        "This device holds another account's words. Sign in with that account.",
+      );
+}
+
 class _Stale implements Exception {
   const _Stale();
 }
@@ -300,8 +307,10 @@ class SyncEngine extends ChangeNotifier {
 
   Future<void> signIn(String email, String password) async {
     final session = await api.signIn(email.trim(), password);
+    final owner = local.syncValue('owner');
+    if (owner != null && owner != session.user) throw const OtherAccount();
     _generation++;
-    final changedAccount = local.syncValue('owner') != session.user;
+    final changedAccount = owner == null;
     await local.saveSyncValues({
       'token': session.token,
       'token_at': '${DateTime.now().millisecondsSinceEpoch}',
@@ -381,6 +390,10 @@ class SyncEngine extends ChangeNotifier {
       }
     } on SyncProblem catch (error) {
       if (generation == _generation) problem = error;
+    } catch (_) {
+      if (generation == _generation) {
+        problem = const Refused('Sync failed, will try again');
+      }
     } finally {
       syncing = false;
       await _countWaiting();
@@ -397,6 +410,7 @@ class SyncEngine extends ChangeNotifier {
       final batch = await local.pendingUploads(kind, limit: pageSize);
       if (batch.isEmpty) return;
       for (final record in batch) {
+        _check(generation);
         final serverTime = await api.create(token, kind.collection, {
           'user': owner,
           'uuid': record.uuid,
@@ -414,6 +428,7 @@ class SyncEngine extends ChangeNotifier {
     final key = 'cursor_${kind.name}';
     var cursor = int.tryParse(local.syncValue(key) ?? '') ?? 0;
     while (true) {
+      _check(generation);
       final items = await api.listAfter(
         token,
         kind.collection,

@@ -79,12 +79,38 @@ void main() {
       expect(controller().page, closeTo(before + 1, .01));
     }
 
+    void expectShown(int group) {
+      final landscape =
+          tester.view.physicalSize.width > tester.view.physicalSize.height;
+      expect(controller().page, closeTo(group.toDouble(), .01));
+      final pages = landscape ? [2 * group + 1, 2 * group + 2] : [group + 1];
+      for (final page in pages) {
+        expect(find.byKey(ValueKey('page-$page')), findsOneWidget);
+      }
+    }
+
+    Future<void> arrow(int taps) async {
+      final before = controller().page!.round();
+      for (var i = 0; i < taps; i++) {
+        await tester.tap(find.byKey(const ValueKey('arrow-next')));
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      await settle();
+      expectShown(before + taps);
+    }
+
     await capture('portrait_first_glyph_cold_swipe', swipe);
     await capture('portrait_20_swipes', () async {
       for (var i = 0; i < 20; i++) {
         await swipe();
       }
     });
+    await capture('portrait_20_arrows', () async {
+      for (var i = 0; i < 20; i++) {
+        await arrow(1);
+      }
+    });
+    await capture('portrait_rapid_arrows', () => arrow(5));
     // Physics prevents gestures into unloaded pages; measure a cold jump separately.
     await capture('unloaded_page_450_jump', () async {
       controller().jumpToPage(449);
@@ -106,6 +132,12 @@ void main() {
         await swipe();
       }
     });
+    await capture('landscape_20_arrows', () async {
+      for (var i = 0; i < 20; i++) {
+        await arrow(1);
+      }
+    });
+    await capture('landscape_rapid_arrows', () => arrow(5));
     // Instrumented paint traces are separate from the headline frame samples.
     binding.reportData ??= {};
     binding.reportData!['trace_colour_groups'] = [

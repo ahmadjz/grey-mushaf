@@ -58,7 +58,7 @@ reviewers Fable medium + Sol medium (fresh), then Opus full check · base 3c6ee6
   p604.ttf 200 with cookie, DELETE 204, then 401.
 - Other sites ahmadjz/office/tariq/sohba/visa 200 before and after.
 - Release APK rebuilt (new Imlaei index + web package builds for Android), copied to grey-mushaf.apk,
-  installed over the app on the phone 2be3110f (data kept, opens: READER_FIRST_FRAME). Boox not attached.
+  installed over the app on the phone 2be3110f and the Boox 655E999A (data kept, both open: READER_FIRST_FRAME; the Boox app was user-disabled again, pm enable fixed it).
 
 ## Exit check
 
@@ -70,5 +70,5 @@ reviewers Fable medium + Sol medium (fresh), then Opus full check · base 3c6ee6
 ## Next action
 
 Owner signs in at https://mushaf.ahmadjz.tech and on the phone; check both show the same words.
-Install grey-mushaf.apk on the Boox (655E999A) when attached. Two-tab sign-out stays LOW (open).
+Two-tab sign-out stays LOW (open).
 Export stays on hold (R84).

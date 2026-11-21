@@ -347,7 +347,9 @@ void main() {
         if (span is TextSpan && span.style != null) spans.add(span);
         return true;
       });
-      final match = spans.firstWhere((span) => span.text!.contains('الذين'));
+      final match = spans.firstWhere(
+        (span) => foldQuery(span.text!).contains('الذين'),
+      );
       expect(match.style!.fontWeight == FontWeight.bold, blackWhite);
       expect(match.style!.decoration == TextDecoration.underline, blackWhite);
     }

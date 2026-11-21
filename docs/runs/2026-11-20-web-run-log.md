@@ -20,7 +20,19 @@ reviewers Fable medium + Sol medium (fresh), then Opus full check · base 3c6ee6
   - Uncommitted in ~/Documents/vps-infra: pocketbase-mushaf/compose.yml mounts
     /srv/mushaf.ahmadjz.tech/web:/pb/web:ro.
 - 5 review — r1 done (Fable agent; Sol thread 01a1fad0).
-- 6–8 — not started.
+- 6 Claude checks + 7 fixes — done 2026-11-21.
+  - r1 fixes in dce65eb (cookie queue, Retry on load failure, public route 404 for api/ and
+    assets/assets, cookie Max-Age = token lifetime, drag guard, deploy script hardening).
+    Two-tab sign-out (Fable M3) downgraded to LOW: needs two open tabs, same account stays signed in,
+    no data crosses accounts; Fable agreed LOW in r2.
+  - r2 (Fable: 0 C/H, 1 M, 5 L; Sol: 3 H, 1 M) fixed in 1027bfb: path normalised before the check
+    (encoded `.`/`..`/`//` spellings, seen live by both), session calls have no client timeout so the
+    queue really waits, failed DELETE retried every 30 s, late 401 of an old token ignored, failed
+    sign-out save shows "Sign in again", `_problem` cleared on sign-out, `_cookieCleared` reset before
+    POST, queue errors caught, wheel claims only mostly-vertical scrolls, stage dir checked.
+  - dce65eb: B/W search test now ignores vowel marks (new Imlaei text, QUL 54, installed 2026-11-21).
+  - Gates: flutter analyze ok · flutter test 204 passed · pytest PocketBase 26 passed.
+  - No third review round (skill rule); Opus full check of web_shell.dart and web.pb.js done.
 
 ## Evidence
 
@@ -34,33 +46,29 @@ reviewers Fable medium + Sol medium (fresh), then Opus full check · base 3c6ee6
   still black.
 - Not run: VPS deploy, prod checks, Android release build with the new dependency.
 
-## Review r1 findings to fix (verify each at its line first)
+## Deploy (2026-11-21) — done
 
-1. HIGH web_shell.dart:72 — an openReader() failure (not a SyncProblem) leaves a spinner forever; the
-   failed _readerLoad and rootBundle's cached failed load block recovery. Catch all errors, show Retry,
-   reset _readerLoad, evict the rootBundle cache (or reload the page).
-2. HIGH deploy_web.sh:9 — `--exclude` keeps a stale public/assets/assets, and then
-   `/assets%2Fassets/...` serves private files signed out (seen live by Sol). Use `--delete-excluded`;
-   make the public route refuse any path under assets/assets; ship web.pb.js from the script; check $1.
-3. MEDIUM web_shell.dart:58/66 — cookie races: a late POST after DELETE restores the cookie; a late
-   DELETE after the next sign-in clears the new cookie; a failed DELETE leaves the cookie
-   (closeWebSession's catchError on a record future throws ArgumentError). Serialise session calls in
-   one queue; always DELETE on sign-out and on a signed-out start; consider Max-Age from token expiry.
-   Add fault-injection tests.
-4. MEDIUM main.dart:467 — keys and wheel turn pages while a long-press is held (bypasses the drag lock).
-5. MEDIUM web.pb.js:4 — the SPA catch-all turns unknown /api/* GETs into 200 HTML; return 404 there.
-6. MEDIUM reveal_store.dart:668 — two tabs: tab B's refresh writes the token back after tab A signed out.
-7. LOW — create /srv/mushaf.ahmadjz.tech/web before `up`; horizontal-only wheel events are claimed;
-   continuous scrolling gives one turn until a pause.
+- Uploaded build to /srv/mushaf.ahmadjz.tech/web/{public 42M, private 150M}; web.pb.js to pb_hooks;
+  compose backed up (compose.yml.bak-2026-11-21) and pocketbase-mushaf recreated with /pb/web:ro
+  (vps-infra 4970b89, local, not pushed). Caddy untouched.
+- Prod probes: / 200 (Grey mushaf), /surah/2 200, /api/health 200, /_/ 200, superusers by name and id
+  404, gated page/font signed out 401, garbage cookie 401, `/assets%2Fassets/...` and
+  `/assets/%2e/assets/...` 404, /api/not-a-route 404.
+- Signed in (temp verified user mypfcp5d6n4qxkb, deleted after, 204): session 204, page 50 and
+  p604.ttf 200 with cookie, DELETE 204, then 401.
+- Other sites ahmadjz/office/tariq/sohba/visa 200 before and after.
+- Release APK rebuilt (new Imlaei index + web package builds for Android), copied to grey-mushaf.apk,
+  installed over the app on the phone 2be3110f (data kept, opens: READER_FIRST_FRAME). Boox not attached.
+
+## Exit check
+
+- R85 same address: done (prod probes). R86/R87 gate: done. R88 sign-in first, keeps words after
+  reload: seen locally in Chrome; on prod not observed (needs the owner's account).
+- R56 mouse/keys: tests + local Chrome; prod not observed.
+- Not observed: owner sign-in on the web, phone and Boox agreeing after sign-in, Boox install.
 
 ## Next action
 
-Fix 1–6 test first (writer = the Opus session), rerun the gates and the local Chrome proof, r2 with
-the same reviewers (Sol: codex-reply 01a1fad0), Opus full check. Then deploy: mkdir the web dir,
-`scripts/deploy_web.sh <stage> vps`, copy web.pb.js to /srv/mushaf.ahmadjz.tech/pb_hooks, commit
-vps-infra, `docker compose up -d` for pocketbase-mushaf only, prod curl probes (shell 200, gated
-401/200, superusers 404, other sites unchanged), owner signs in at https://mushaf.ahmadjz.tech. Then
-push main.
-
-Separate: install grey-mushaf.apk on the phone and Boox when attached (rebuild first: the new web
-dependency must still build for Android).
+Owner signs in at https://mushaf.ahmadjz.tech and on the phone; check both show the same words.
+Install grey-mushaf.apk on the Boox (655E999A) when attached. Two-tab sign-out stays LOW (open).
+Export stays on hold (R84).

@@ -22,6 +22,7 @@ class _WebShellState extends State<WebShell> {
   Future<Widget>? _readerLoad;
   Widget? _reader;
   String? _problem;
+  Timer? _clearRetry;
 
   String? get _token => widget.engine.local.syncValue('token');
 
@@ -35,12 +36,15 @@ class _WebShellState extends State<WebShell> {
   @override
   void dispose() {
     widget.engine.removeListener(_changed);
+    _clearRetry?.cancel();
     super.dispose();
   }
 
   void _changed() {
-    if (_token == null && (_reader != null || _readerLoad != null)) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
+    if (_token == null) {
+      if (_reader != null || _readerLoad != null) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
       _reader = null;
       _readerLoad = null;
       _problem = null;
@@ -50,7 +54,9 @@ class _WebShellState extends State<WebShell> {
   }
 
   void _settleCookie() {
-    _cookieCalls = _cookieCalls.then((_) => _cookieStep());
+    _cookieCalls = _cookieCalls
+        .then((_) => _cookieStep())
+        .catchError((Object error) => debugPrint('Web session: $error'));
   }
 
   Future<void> _cookieStep() async {
@@ -64,15 +70,22 @@ class _WebShellState extends State<WebShell> {
         _cookieCleared = true;
         _cookieToken = null;
       } on Object {
-        return;
+        _clearRetry?.cancel();
+        _clearRetry = Timer(const Duration(seconds: 30), _settleCookie);
       }
       return;
     }
     if (token != _cookieToken) {
+      _cookieCleared = false;
       try {
         await api.openWebSession(token);
       } on SignedOut {
-        await widget.engine.signOut();
+        if (_token != token) return;
+        try {
+          await widget.engine.signOut();
+        } on Object {
+          if (mounted) setState(() => _problem = 'Sign in again');
+        }
         return;
       } on SyncProblem catch (problem) {
         if (mounted && _token == token) {

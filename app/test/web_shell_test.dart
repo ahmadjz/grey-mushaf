@@ -209,4 +209,88 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(server.sessions, ['DELETE null']);
   });
+
+  testWidgets('a failed cookie clear keeps retrying while signed out', (
+    tester,
+  ) async {
+    server.sessionStatus = 503;
+    await show(tester);
+    server.sessionStatus = 204;
+    await tester.pump(const Duration(seconds: 31));
+    await tester.pumpAndSettle();
+    expect(server.sessions, ['DELETE null', 'DELETE null']);
+    await tester.pump(const Duration(minutes: 2));
+    expect(server.sessions, ['DELETE null', 'DELETE null']);
+  });
+
+  testWidgets('a late refusal of an old token keeps a newer sign-in', (
+    tester,
+  ) async {
+    await local.saveSyncValues({'token': 'old', 'owner': 'user-a'});
+    final release = Completer<void>();
+    server.sessionStatusOf = (request) =>
+        request.headers['Authorization'] == 'old' ? 401 : 204;
+    server.pauseSession = (request) async {
+      if (request.headers['Authorization'] == 'old') await release.future;
+    };
+    await tester.pumpWidget(
+      MaterialApp(
+        home: WebShell(
+          engine: engine,
+          openReader: () async => const Text('reader'),
+        ),
+      ),
+    );
+    await local.saveSyncValues({'token': 'newer'});
+    engine.localChanged();
+    release.complete();
+    await tester.pumpAndSettle();
+    expect(engine.signedIn, isTrue);
+    expect(server.sessions, ['POST old', 'POST newer']);
+    expect(find.text('reader'), findsOneWidget);
+    await tester.pump(const Duration(seconds: 4));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('a sign-in after a failed one opens the reader, not Retry', (
+    tester,
+  ) async {
+    await local.saveSyncValues({'token': 'old', 'owner': 'user-a'});
+    server.sessionStatus = 503;
+    await show(tester);
+    expect(find.text('Retry'), findsOneWidget);
+    await engine.signOut();
+    await tester.pumpAndSettle();
+    server.sessionStatus = 204;
+    await signIn(tester);
+    expect(find.text('reader'), findsOneWidget);
+  });
+
+  testWidgets('a session answered after a client failure is still cleared', (
+    tester,
+  ) async {
+    await show(tester);
+    server.sessionStatusOf = (request) => request.method == 'POST' ? 503 : 204;
+    await signIn(tester);
+    await engine.signOut();
+    await tester.pumpAndSettle();
+    expect(server.sessions.first, 'DELETE null');
+    expect(server.sessions.last, 'DELETE null');
+    expect(server.sessions.where((s) => s.startsWith('DELETE')), hasLength(2));
+  });
+
+  testWidgets('a failing sign-out does not stop later cookie calls', (
+    tester,
+  ) async {
+    await local.saveSyncValues({'token': 'old', 'owner': 'user-a'});
+    server.sessionStatus = 401;
+    local.failSaves = true;
+    await show(tester);
+    expect(tester.takeException(), isNull);
+    expect(find.text('Sign in again'), findsOneWidget);
+    local.failSaves = false;
+    await engine.signOut();
+    await tester.pumpAndSettle();
+    expect(server.sessions.last, 'DELETE null');
+  });
 }

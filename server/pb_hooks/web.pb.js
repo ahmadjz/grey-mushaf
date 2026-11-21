@@ -2,7 +2,13 @@
 // The mushaf files sit in private/, outside the public dir, so no path spelling can reach them through the shell route.
 
 routerAdd("GET", "/{path...}", (e) => {
-  const path = e.request.pathValue("path").toLowerCase();
+  const parts = [];
+  for (const part of e.request.pathValue("path").toLowerCase().split("/")) {
+    if (part === "" || part === ".") continue;
+    if (part === "..") parts.pop();
+    else parts.push(part);
+  }
+  const path = parts.join("/");
   if (path === "api" || path.startsWith("api/") || path.startsWith("assets/assets")) {
     throw new NotFoundError();
   }

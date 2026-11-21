@@ -19,8 +19,12 @@ class FakeLocal implements SyncLocal {
   @override
   String? syncValue(String key) => values[key];
   @override
-  Future<void> saveSyncValues(Map<String, String?> changes) async =>
-      changes.forEach((k, v) => v == null ? values.remove(k) : values[k] = v);
+  Future<void> saveSyncValues(Map<String, String?> changes) async {
+    if (failSaves) throw StateError('disk full');
+    changes.forEach((k, v) => v == null ? values.remove(k) : values[k] = v);
+  }
+
+  bool failSaves = false;
   @override
   Future<List<SyncRecord>> pendingUploads(
     SyncKind kind, {
@@ -77,6 +81,7 @@ class FakeServer {
   final sessions = <String>[];
   int sessionStatus = 204;
   Future<void> Function(http.Request)? pauseSession;
+  int Function(http.Request)? sessionStatusOf;
 
   Future<http.Response> handle(http.Request request) async {
     requests.add('${request.method} ${request.url.path}');
@@ -88,7 +93,7 @@ class FakeServer {
     if (path == '/api/mushaf/session') {
       sessions.add('${request.method} ${request.headers['Authorization']}');
       await pauseSession?.call(request);
-      return http.Response('', sessionStatus);
+      return http.Response('', sessionStatusOf?.call(request) ?? sessionStatus);
     }
     final body = request.body.isEmpty ? null : jsonDecode(request.body) as Map;
     if (path.endsWith('/auth-with-password')) {

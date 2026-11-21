@@ -306,14 +306,22 @@ def test_no_path_spelling_reaches_the_mushaf_signed_out(server, path):
 
 def test_a_stale_copy_in_the_public_folder_is_never_served(server):
     base, _ = server
-    for path in ('/assets%2Fassets/mushaf/50.json', '/assets/assets%2Fmushaf/50.json'):
-        status, _, body = fetch(base, 'GET', path)
+    for path in ('/assets%2Fassets/mushaf/50.json', '/assets/assets%2Fmushaf/50.json',
+                 '/assets/%2e/assets/mushaf/50.json', '/x/%2e%2e/assets/assets/mushaf/50.json',
+                 '/assets%2F%2Fassets/mushaf/50.json', '/%2Fassets/assets/mushaf/50.json',
+                 '/assets/%2E/./assets/mushaf/50.json', '/.%2Fassets/assets/mushaf/50.json',
+                 '/x%2F..%2Fassets/assets/mushaf/50.json', '/assets%2F.%2Fassets/mushaf/50.json'):
+        status, headers, body = fetch(base, 'GET', path)
+        for _ in range(3):
+            if status not in (301, 307, 308):
+                break
+            status, headers, body = fetch(base, 'GET', headers['Location'])
         assert b'stale' not in body and status == 404
 
 
 def test_unknown_api_paths_stay_api_errors(server):
     base, _ = server
-    for path in ('/api/', '/api/not-a-route', '/api/mushaf/nothing'):
+    for path in ('/api/', '/api/not-a-route', '/api/mushaf/nothing', '/%2FAPI/x'):
         status, _, body = fetch(base, 'GET', path)
         assert status == 404 and b'shell' not in body
 

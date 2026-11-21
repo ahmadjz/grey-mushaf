@@ -3,6 +3,9 @@
 set -euo pipefail
 [ $# -ge 1 ] || { echo "usage: $0 <stage-dir> [vps]" >&2; exit 2; }
 stage=$(realpath -m "$1")
+if [ -e "$stage" ] && [ -n "$(ls -A "$stage" | grep -vxE 'public|private')" ]; then
+  echo "$stage holds other files; use an empty or previous stage dir" >&2; exit 2
+fi
 root=$(realpath "$(dirname "$0")/..")
 cd "$root/app"
 [ -f web/sqlite3.wasm ] || dart run sqflite_common_ffi_web:setup

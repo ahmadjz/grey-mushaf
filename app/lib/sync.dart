@@ -65,6 +65,7 @@ class PocketBaseApi {
     String path, {
     Object? body,
     String? token,
+    Duration? timeout = _timeout,
   }) async {
     final request = http.Request(method, Uri.parse('$base$path'))
       ..headers['Content-Type'] = 'application/json';
@@ -72,9 +73,10 @@ class PocketBaseApi {
     if (body != null) request.body = jsonEncode(body);
     try {
       for (var attempt = 1; ; attempt++) {
-        final response = await http.Response.fromStream(
-          await _client.send(_copy(request)).timeout(_timeout),
-        ).timeout(_timeout);
+        final sent = _client.send(_copy(request));
+        final streamed = await (timeout == null ? sent : sent.timeout(timeout));
+        final read = http.Response.fromStream(streamed);
+        final response = await (timeout == null ? read : read.timeout(timeout));
         if (response.statusCode == 429 && attempt < 6) {
           await Future<void>.delayed(retryDelay * attempt);
           continue;
@@ -130,6 +132,7 @@ class PocketBaseApi {
       'POST',
       '/api/mushaf/session',
       token: token,
+      timeout: null,
     );
     if (status == 204) return;
     if (status == 401 || status == 403) throw const SignedOut();
@@ -137,7 +140,11 @@ class PocketBaseApi {
   }
 
   Future<void> closeWebSession() async {
-    final (status, body) = await _send('DELETE', '/api/mushaf/session');
+    final (status, body) = await _send(
+      'DELETE',
+      '/api/mushaf/session',
+      timeout: null,
+    );
     if (status != 204) {
       throw Refused(_message(body) ?? 'Server error ($status)');
     }

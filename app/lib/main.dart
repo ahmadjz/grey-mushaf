@@ -444,7 +444,10 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   }
 
   void _wheelTurn(PointerSignalEvent event) {
-    if (event is! PointerScrollEvent || event.scrollDelta.dy == 0) return;
+    if (event is! PointerScrollEvent ||
+        event.scrollDelta.dy.abs() <= event.scrollDelta.dx.abs()) {
+      return;
+    }
     if (_dragging) return;
     GestureBinding.instance.pointerSignalResolver.register(event, (event) {
       final dy = (event as PointerScrollEvent).scrollDelta.dy;

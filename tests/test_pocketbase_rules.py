@@ -42,6 +42,8 @@ def server(tmp_path_factory):
     (web / 'public' / 'assets').mkdir(parents=True)
     (web / 'public' / 'index.html').write_text('<html>shell</html>')
     (web / 'public' / 'assets' / 'AssetManifest.bin.json').write_text('"manifest"')
+    (web / 'public' / 'assets' / 'assets' / 'mushaf').mkdir(parents=True)
+    (web / 'public' / 'assets' / 'assets' / 'mushaf' / '50.json').write_text('{"page": 50, "stale": 1}')
     (web / 'private' / 'mushaf').mkdir(parents=True)
     (web / 'private' / 'mushaf' / '50.json').write_text('{"page": 50}')
     with socket.socket() as probe:
@@ -294,7 +296,30 @@ def test_the_cookie_alone_never_reads_or_writes_records(server):
     '/private/mushaf/50.json',
     '/../private/mushaf/50.json',
     '/%2e%2e/private/mushaf/50.json',
+    '/ASSETS%2Fassets/mushaf/50.json',
+    '/assets%2fASSETS%2fmushaf%2f50.json',
 ])
 def test_no_path_spelling_reaches_the_mushaf_signed_out(server, path):
     base, _ = server
     assert b'"page": 50' not in fetch(base, 'GET', path)[2]
+
+
+def test_a_stale_copy_in_the_public_folder_is_never_served(server):
+    base, _ = server
+    for path in ('/assets%2Fassets/mushaf/50.json', '/assets/assets%2Fmushaf/50.json'):
+        status, _, body = fetch(base, 'GET', path)
+        assert b'stale' not in body and status == 404
+
+
+def test_unknown_api_paths_stay_api_errors(server):
+    base, _ = server
+    for path in ('/api/', '/api/not-a-route', '/api/mushaf/nothing'):
+        status, _, body = fetch(base, 'GET', path)
+        assert status == 404 and b'shell' not in body
+
+
+def test_the_cookie_ends_when_the_token_does(server):
+    base, admin = server
+    _, token = sign_up(base, admin)
+    cookie = session_cookie(fetch(base, 'POST', '/api/mushaf/session', token=token)[1])
+    assert 0 < int(cookie['max-age']) <= 604800

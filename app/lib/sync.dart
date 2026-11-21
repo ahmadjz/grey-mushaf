@@ -136,7 +136,12 @@ class PocketBaseApi {
     throw Refused(_message(body) ?? 'Server error ($status)');
   }
 
-  Future<void> closeWebSession() => _send('DELETE', '/api/mushaf/session');
+  Future<void> closeWebSession() async {
+    final (status, body) = await _send('DELETE', '/api/mushaf/session');
+    if (status != 204) {
+      throw Refused(_message(body) ?? 'Server error ($status)');
+    }
+  }
 
   Future<Session> refresh(String token) async {
     final (status, body) = await _send(

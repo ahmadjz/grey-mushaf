@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'account_screen.dart';
 import 'sync.dart';
@@ -15,11 +16,12 @@ class WebShell extends StatefulWidget {
 }
 
 class _WebShellState extends State<WebShell> {
+  Future<void> _cookieCalls = Future.value();
   String? _cookieToken;
+  bool _cookieCleared = false;
   Future<Widget>? _readerLoad;
   Widget? _reader;
-  SyncProblem? _problem;
-  int _attempt = 0;
+  String? _problem;
 
   String? get _token => widget.engine.local.syncValue('token');
 
@@ -27,7 +29,7 @@ class _WebShellState extends State<WebShell> {
   void initState() {
     super.initState();
     widget.engine.addListener(_changed);
-    if (_token case final token?) unawaited(_open(token));
+    _settleCookie();
   }
 
   @override
@@ -37,55 +39,82 @@ class _WebShellState extends State<WebShell> {
   }
 
   void _changed() {
-    final token = _token;
-    if (token == null) {
-      _attempt++;
-      if (_cookieToken != null || _reader != null) {
-        _closeCookie();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-      }
-      _cookieToken = null;
+    if (_token == null && (_reader != null || _readerLoad != null)) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      _reader = null;
       _readerLoad = null;
-      setState(() {
-        _reader = null;
-        _problem = null;
-      });
-      return;
+      _problem = null;
     }
-    if (token != _cookieToken) unawaited(_open(token));
+    setState(() {});
+    _settleCookie();
   }
 
-  void _closeCookie() =>
-      unawaited(widget.engine.api.closeWebSession().catchError((_) {}));
+  void _settleCookie() {
+    _cookieCalls = _cookieCalls.then((_) => _cookieStep());
+  }
 
-  Future<void> _open(String token) async {
-    final attempt = ++_attempt;
-    _cookieToken = token;
-    _problem = null;
-    try {
-      await widget.engine.api.openWebSession(token);
-      if (attempt != _attempt) {
-        if (_token == null) _closeCookie();
+  Future<void> _cookieStep() async {
+    if (!mounted) return;
+    final token = _token;
+    final api = widget.engine.api;
+    if (token == null) {
+      if (_cookieCleared) return;
+      try {
+        await api.closeWebSession();
+        _cookieCleared = true;
+        _cookieToken = null;
+      } on Object {
         return;
       }
-      final reader = await (_readerLoad ??= widget.openReader());
-      if (attempt != _attempt || !mounted) return;
-      setState(() => _reader = reader);
-    } on SignedOut {
-      if (attempt != _attempt) return;
-      await widget.engine.signOut();
-    } on SyncProblem catch (problem) {
-      if (attempt != _attempt || !mounted) return;
-      _cookieToken = null;
-      setState(() => _problem = problem);
+      return;
     }
+    if (token != _cookieToken) {
+      try {
+        await api.openWebSession(token);
+      } on SignedOut {
+        await widget.engine.signOut();
+        return;
+      } on SyncProblem catch (problem) {
+        if (mounted && _token == token) {
+          setState(() => _problem = problem.message);
+        }
+        return;
+      }
+      _cookieToken = token;
+      _cookieCleared = false;
+    }
+    _loadReader();
+  }
+
+  void _loadReader() {
+    if (_token == null) return;
+    if (_reader != null || _readerLoad != null || _problem != null) return;
+    final load = _readerLoad = widget.openReader();
+    load.then(
+      (reader) {
+        if (!mounted || _readerLoad != load) return;
+        setState(() => _reader = reader);
+      },
+      onError: (Object _) {
+        if (!mounted || _readerLoad != load) return;
+        setState(() {
+          _readerLoad = null;
+          _problem = "Couldn't load the mushaf";
+        });
+      },
+    );
+  }
+
+  void _retry() {
+    rootBundle.clear();
+    setState(() => _problem = null);
+    _settleCookie();
   }
 
   @override
   Widget build(BuildContext context) {
     if (_reader case final reader?) return reader;
-    final token = _token;
-    if (token == null) {
+    if (_token == null) {
       return AccountScreen(engine: widget.engine, popOnSignIn: false);
     }
     if (_problem case final problem?) {
@@ -94,11 +123,8 @@ class _WebShellState extends State<WebShell> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(problem.message),
-              TextButton(
-                onPressed: () => unawaited(_open(token)),
-                child: const Text('Retry'),
-              ),
+              Text(problem),
+              TextButton(onPressed: _retry, child: const Text('Retry')),
             ],
           ),
         ),

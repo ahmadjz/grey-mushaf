@@ -76,6 +76,7 @@ class FakeServer {
   String user = 'user-a';
   final sessions = <String>[];
   int sessionStatus = 204;
+  Future<void> Function(http.Request)? pauseSession;
 
   Future<http.Response> handle(http.Request request) async {
     requests.add('${request.method} ${request.url.path}');
@@ -86,6 +87,7 @@ class FakeServer {
     final path = request.url.path;
     if (path == '/api/mushaf/session') {
       sessions.add('${request.method} ${request.headers['Authorization']}');
+      await pauseSession?.call(request);
       return http.Response('', sessionStatus);
     }
     final body = request.body.isEmpty ? null : jsonDecode(request.body) as Map;

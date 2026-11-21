@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:greymushaf/sync.dart';
@@ -11,6 +13,7 @@ void main() {
   late FakeServer server;
   late SyncEngine engine;
   late int readersOpened;
+  late int failReaderLoads;
 
   setUp(() {
     local = FakeLocal();
@@ -22,6 +25,7 @@ void main() {
       poll: null,
     );
     readersOpened = 0;
+    failReaderLoads = 0;
   });
 
   Future<void> show(WidgetTester tester) async {
@@ -30,6 +34,7 @@ void main() {
         home: WebShell(
           engine: engine,
           openReader: () async {
+            if (failReaderLoads-- > 0) throw StateError('asset 503');
             readersOpened++;
             return const Scaffold(body: Text('reader'));
           },
@@ -56,7 +61,7 @@ void main() {
     expect(find.byKey(const ValueKey('account-email')), findsOneWidget);
     expect(find.text('reader'), findsNothing);
     expect(readersOpened, 0);
-    expect(server.sessions, isEmpty);
+    expect(server.sessions, ['DELETE null']);
   });
 
   testWidgets('signing in opens the cookie session, then the reader', (
@@ -64,7 +69,7 @@ void main() {
   ) async {
     await show(tester);
     await signIn(tester);
-    expect(server.sessions, ['POST token-user-a']);
+    expect(server.sessions, ['DELETE null', 'POST token-user-a']);
     expect(find.text('reader'), findsOneWidget);
     expect(readersOpened, 1);
   });
@@ -109,7 +114,11 @@ void main() {
     await tester.pumpAndSettle();
     await engine.signOut();
     await tester.pumpAndSettle();
-    expect(server.sessions.last, 'DELETE null');
+    expect(server.sessions, [
+      'DELETE null',
+      'POST token-user-a',
+      'DELETE null',
+    ]);
     expect(find.text('settings'), findsNothing);
     expect(find.text('reader'), findsNothing);
     expect(find.byKey(const ValueKey('account-email')), findsOneWidget);
@@ -128,5 +137,76 @@ void main() {
     await tester.tap(find.text('Retry'));
     await tester.pumpAndSettle();
     expect(find.text('reader'), findsOneWidget);
+  });
+
+  testWidgets('a failed mushaf load offers Retry, which loads again', (
+    tester,
+  ) async {
+    await local.saveSyncValues({'token': 'old', 'owner': 'user-a'});
+    failReaderLoads = 1;
+    await show(tester);
+    expect(find.text('Retry'), findsOneWidget);
+    expect(find.text('reader'), findsNothing);
+    await tester.tap(find.text('Retry'));
+    await tester.pumpAndSettle();
+    expect(find.text('reader'), findsOneWidget);
+  });
+
+  testWidgets('sign-out waits for a slow sign-in cookie, then clears it', (
+    tester,
+  ) async {
+    await local.saveSyncValues({'token': 'old', 'owner': 'user-a'});
+    final release = Completer<void>();
+    server.pauseSession = (request) async {
+      if (request.method == 'POST') await release.future;
+    };
+    await tester.pumpWidget(
+      MaterialApp(
+        home: WebShell(
+          engine: engine,
+          openReader: () async => const Text('reader'),
+        ),
+      ),
+    );
+    await engine.signOut();
+    await tester.pump();
+    expect(server.sessions, ['POST old']);
+    release.complete();
+    await tester.pumpAndSettle();
+    expect(server.sessions, ['POST old', 'DELETE null']);
+    expect(find.text('reader'), findsNothing);
+    expect(find.byKey(const ValueKey('account-email')), findsOneWidget);
+  });
+
+  testWidgets('a sign-in after a slow sign-out sets the cookie last', (
+    tester,
+  ) async {
+    final release = Completer<void>();
+    server.pauseSession = (request) async {
+      if (request.method == 'DELETE') await release.future;
+    };
+    await show(tester);
+    await tester.enterText(find.byKey(const ValueKey('account-email')), 'a@x');
+    await tester.enterText(
+      find.byKey(const ValueKey('account-password')),
+      'right-password',
+    );
+    await tester.tap(find.text('Sign in'));
+    await tester.pump();
+    await tester.pump();
+    expect(server.sessions, ['DELETE null']);
+    release.complete();
+    await tester.pumpAndSettle();
+    expect(server.sessions, ['DELETE null', 'POST token-user-a']);
+    expect(find.text('reader'), findsOneWidget);
+  });
+
+  testWidgets('a failed cookie clear is retried at the next start', (
+    tester,
+  ) async {
+    server.sessionStatus = 503;
+    await show(tester);
+    expect(tester.takeException(), isNull);
+    expect(server.sessions, ['DELETE null']);
   });
 }

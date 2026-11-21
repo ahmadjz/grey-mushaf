@@ -109,4 +109,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(store.states.values.where((s) => s.black), isNotEmpty);
   });
+
+  testWidgets('keys and the wheel wait while a word is held', (tester) async {
+    await open(tester, const Size(411, 914));
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byKey(const ValueKey('page-215'))),
+      kind: PointerDeviceKind.mouse,
+    );
+    await tester.pump(const Duration(milliseconds: 700));
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowLeft);
+    await tester.pump();
+    await wheel(tester, 100);
+    expect(showing(215), isTrue);
+    expect(showing(216), isFalse);
+    await gesture.up();
+    await tester.pumpAndSettle();
+  });
 }

@@ -444,13 +444,14 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
   }
 
   void _wheelTurn(PointerSignalEvent event) {
-    if (event is! PointerScrollEvent) return;
+    if (event is! PointerScrollEvent || event.scrollDelta.dy == 0) return;
+    if (_dragging) return;
     GestureBinding.instance.pointerSignalResolver.register(event, (event) {
       final dy = (event as PointerScrollEvent).scrollDelta.dy;
       final burst = _wheelBurst?.isActive ?? false;
       _wheelBurst?.cancel();
       _wheelBurst = Timer(const Duration(milliseconds: 200), () {});
-      if (!burst && dy != 0) _turn(dy > 0 ? 1 : -1);
+      if (!burst) _turn(dy > 0 ? 1 : -1);
     });
   }
 
@@ -458,6 +459,7 @@ class _ReaderState extends State<Reader> with WidgetsBindingObserver {
     if (event is! KeyDownEvent && event is! KeyRepeatEvent) {
       return KeyEventResult.ignored;
     }
+    if (_dragging) return KeyEventResult.ignored;
     final delta = switch (event.logicalKey) {
       LogicalKeyboardKey.arrowLeft => 1,
       LogicalKeyboardKey.arrowRight => -1,
